@@ -44,10 +44,10 @@ TLDR:
 # Organisation 
 Die Zuständigkeiten wurden wie folgt ausgesucht:
 
-Jennifer - Testerin (Stellvertetende Architektin ) 
-Christoph - CI-Manager (Stellvertretender GUI-Mensch) 
-Jonas - Projektmanager
-Nicole - GUI-Mensch (Stellvertretende Projektmanagerin) 
-Haris - Stellvertretender Tester &  CI-Manager
-Timon - Architekt 
+Jennifer - Testerin (Stellvertetende Architektin )    
+Christoph - CI-Manager (Stellvertretender GUI-Mensch)    
+Jonas - Projektmanager   
+Nicole - GUI-Mensch (Stellvertretende Projektmanagerin)    
+Haris - Stellvertretender Tester &  CI-Manager    
+Timon - Architekt    
 
