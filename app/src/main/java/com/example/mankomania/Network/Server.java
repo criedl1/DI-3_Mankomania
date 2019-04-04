@@ -10,10 +10,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 // Server class
-public class Server
+public class Server extends Thread
 {
-    public static void main(String[] args) throws IOException
-    {
+    final protected GameData GAMEDATA;
+
+    public Server(GameData GAMEDATA) {
+        this.GAMEDATA = GAMEDATA;
+    }
+
+    public static void main(String[] args) throws IOException {
         // server is listening on port 5056
         ServerSocket serverSocket = new ServerSocket(5056);
 
@@ -25,12 +30,12 @@ public class Server
 
             try
             {
-                // socket object to receive incoming client requests
+                // SOCKET object to receive incoming client requests
                 socket = serverSocket.accept();
 
                 System.out.println("A new client is connected : " + socket);
 
-                // obtaining input and out streams
+                // obtaining INPUT and out streams
                 PrintWriter output =  new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
                 BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -48,5 +53,9 @@ public class Server
                 e.printStackTrace();
             }
         }
+    }
+
+    public void run(){
+        //TODO
     }
 }

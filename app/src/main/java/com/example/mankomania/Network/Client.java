@@ -11,10 +11,11 @@ import java.net.Socket;
 import java.util.Scanner;
 
 // Client class
-public class Client
+public class Client extends Thread
 {
-    public static void main(String[] args) throws IOException
-    {
+    final protected GameData GAMEDATA = new GameData();
+
+    public static void main(String[] args) throws IOException {
         try
         {
             Scanner scn = new Scanner(System.in);
@@ -25,7 +26,7 @@ public class Client
             // establish the connection with server port 5056
             Socket socket = new Socket(ip, 5056);
 
-            // obtaining input and out
+            // obtaining INPUT and out
             PrintWriter output =  new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -43,5 +44,65 @@ public class Client
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void run(){
+        //TODO
+    }
+
+    public boolean isTurn(){
+        //TODO
+        return false;
+    }
+
+    public int getPlayerNumber(){
+        //TODO
+        return -1;
+    }
+
+    public void setMoney(int player, int money){
+        //TODO
+    }
+    public int getMoney(int player){
+        //TODO
+        return -1;
+    }
+
+    public void setPosition(int player, int money){
+        //TODO
+    }
+    public int getPosition(int player){
+        //TODO
+        return -1;
+    }
+
+    public void setLotto(int money){
+        //TODO
+    }
+    public int getLotto(){
+        //TODO
+        return -1;
+    }
+
+    public void setIron(int player, int count){
+        //TODO
+    }
+    public int getIron(int player){
+        //TODO
+        return -1;
+    }
+
+    //TODO ETC
+
+    public void setCheater(int player, boolean isCheater){
+        //TODO
+    }
+    public boolean getCheater(int player){
+        //TODO
+        return false;
+    }
+
+    public void nextTurn(){
+        //TODO
     }
 }

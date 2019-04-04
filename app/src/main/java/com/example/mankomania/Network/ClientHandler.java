@@ -7,16 +7,16 @@ import java.net.Socket;
 
 // ClientHandler class
 class ClientHandler extends Thread {
-    final BufferedReader input;
-    final PrintWriter output;
-    final Socket socket;
+    final protected BufferedReader INPUT;
+    final protected PrintWriter OUTPUT;
+    final protected Socket SOCKET;
 
 
     // Constructor
     public ClientHandler(Socket socket, BufferedReader input, PrintWriter output) {
-        this.socket = socket;
-        this.input = input;
-        this.output = output;
+        this.SOCKET = socket;
+        this.INPUT = input;
+        this.OUTPUT = output;
     }
 
     @Override
@@ -25,10 +25,10 @@ class ClientHandler extends Thread {
         try {
 
             // Say Hello to Client
-            output.println("Hello");
+            OUTPUT.println("Hello");
 
             // receive the answer from client
-            String in = input.readLine();
+            String in = INPUT.readLine();
 
             //Print Answer
             System.out.println("in = " + in);
@@ -39,8 +39,8 @@ class ClientHandler extends Thread {
 
         try {
             // closing resources
-            this.input.close();
-            this.output.close();
+            this.INPUT.close();
+            this.OUTPUT.close();
 
         } catch (IOException e) {
             e.printStackTrace();
