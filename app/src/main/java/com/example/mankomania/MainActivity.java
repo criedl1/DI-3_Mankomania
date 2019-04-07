@@ -1,5 +1,6 @@
 package com.example.mankomania;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //openColorActivity();
+                openColorActivity();
             }
         });
 
@@ -61,5 +62,10 @@ public class MainActivity extends AppCompatActivity {
                 //openDozenActivity();
             }
         });
+    }
+
+    public void openColorActivity(){
+        Intent it = new Intent(this, ColorActivity.class);
+        startActivity(it);
     }
 }
