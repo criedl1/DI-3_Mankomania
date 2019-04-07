@@ -2,13 +2,21 @@ package com.example.mankomania;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 public class RouletteActivity extends AppCompatActivity {
+
+    Animation rotate;
+    ImageView iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_roulette);
+        setContentView(R.layout.activity_rotate);
+
+        iv = (ImageView) findViewById(R.id.imageView);
     }
 
     public Field[] setUpFields() {
@@ -63,5 +71,15 @@ public class RouletteActivity extends AppCompatActivity {
     public static double randomNumber(){
         double randomNumber = (int) (Math.random() *36) + 0;
         return randomNumber;
+    }
+
+    public void startRotating () {
+
+        try {
+            rotate = AnimationUtils.loadAnimation(this, R.anim.rotate);
+            iv.startAnimation(rotate);
+        } catch (Exception e) {
+            System.out.println("Fehler: " + e.getMessage());
+        }
     }
 }
