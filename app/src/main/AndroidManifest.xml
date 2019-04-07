@@ -9,7 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".map_view4"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".map_view3"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".map_view2"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".start_view"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

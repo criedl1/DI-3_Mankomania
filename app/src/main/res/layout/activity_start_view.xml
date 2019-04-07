@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".start_view">
+
+    <ImageView
+        android:id="@+id/imageViewUrlaub"
+        android:layout_width="210dp"
+        android:layout_height="280dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="66dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/next1"
+        app:layout_constraintStart_toEndOf="@+id/imageViewStart"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher_foreground" />
+
+    <ImageView
+        android:id="@+id/imageViewStart"
+        android:layout_width="210dp"
+        android:layout_height="280dp"
+        android:layout_marginStart="127dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="66dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewUrlaub"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher_foreground_start" />
+
+    <Button
+        android:id="@+id/next1"
+        android:layout_width="50dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="165dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="166dp"
+        android:background="@mipmap/ic_further_round"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewUrlaub"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/figure1"
+        android:layout_width="84dp"
+        android:layout_height="89dp"
+        app:srcCompat="@mipmap/ic_figure1_round"
+        tools:layout_editor_absoluteX="220dp"
+        tools:layout_editor_absoluteY="245dp" />
+
+    <ImageView
+        android:id="@+id/figure2"
+        android:layout_width="84dp"
+        android:layout_height="89dp"
+        app:srcCompat="@mipmap/ic_figure2_round"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="90dp" />
+
+    <ImageView
+        android:id="@+id/figure3"
+        android:layout_width="84dp"
+        android:layout_height="89dp"
+        app:srcCompat="@mipmap/ic_figure3_round"
+        tools:layout_editor_absoluteX="204dp"
+        tools:layout_editor_absoluteY="97dp" />
+
+    <ImageView
+        android:id="@+id/figure4"
+        android:layout_width="84dp"
+        android:layout_height="89dp"
+        app:srcCompat="@mipmap/ic_figure4_round"
+        tools:layout_editor_absoluteX="91dp"
+        tools:layout_editor_absoluteY="205dp" />
+
+    <Button
+        android:id="@+id/moveTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="moveTest"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="181dp" />
+</android.support.constraint.ConstraintLayout>
