@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         dozen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //openDozenActivity();
+                openDozenActivity();
             }
         });
     }
@@ -71,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openNumberActivity(){
         Intent it = new Intent(this, NumberActivity.class);
+        startActivity(it);
+    }
+
+    public void openDozenActivity(){
+        Intent it = new Intent(this, DozenActivity.class);
         startActivity(it);
     }
 }
