@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //openNumberActivity();
+                openNumberActivity();
             }
         });
 
@@ -66,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openColorActivity(){
         Intent it = new Intent(this, ColorActivity.class);
+        startActivity(it);
+    }
+
+    public void openNumberActivity(){
+        Intent it = new Intent(this, NumberActivity.class);
         startActivity(it);
     }
 }

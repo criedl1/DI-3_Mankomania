@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ColorActivity"></activity>
+        <activity android:name=".NumberActivity" />
+        <activity android:name=".ColorActivity" />
         <activity android:name=".RouletteActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
