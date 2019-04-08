@@ -1,6 +1,6 @@
 package com.example.mankomania;
 
-public enum enum_color {
+public enum ColorEnum {
     RED,
     BLACK,
     GREEN,

@@ -1,15 +1,15 @@
 package com.example.mankomania;
 
-public class Field {
-    enum_color color;
+public class FieldClass {
+    ColorEnum color;
     int value;
 
-    public Field(enum_color color, int value) {
+    public FieldClass(ColorEnum color, int value) {
         this.color = color;
         this.value = value;
     }
 
-    public enum_color getColor() {
+    public ColorEnum getColor() {
         return color;
     }
 

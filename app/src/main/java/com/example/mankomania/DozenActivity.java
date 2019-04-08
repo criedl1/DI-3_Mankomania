@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 public class DozenActivity extends AppCompatActivity {
 
-    RouletteActivity roulette = new RouletteActivity();
-    Field[] array = roulette.setUpFields();
+    RouletteClass roulette = new RouletteClass();
+    FieldClass[] array = roulette.setUpFields();
 
     TextView selectDozen;
     Button btn1;
@@ -60,11 +60,11 @@ public class DozenActivity extends AppCompatActivity {
         int money = 1000000; //nur zu Testzwecken
 
         String returnString = null;
-        double randomNumber = roulette.randomNumber();
+        double rouletteNumber = roulette.spinIt();
         int dozen = 0;
 
         for(int i = 0; i < array.length; i++){
-            if(array[i].getValue() == randomNumber){
+            if(array[i].getValue() == rouletteNumber){
                 if(array[i].getValue() <= 12){
                     dozen = 1;
                 }

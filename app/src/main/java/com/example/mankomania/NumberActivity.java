@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class NumberActivity extends AppCompatActivity {
 
-    RouletteActivity roulette = new RouletteActivity();
+    RouletteClass roulette = new RouletteClass();
     EditText number;
     TextView selectNumber;
     Button go;
@@ -43,10 +43,10 @@ public class NumberActivity extends AppCompatActivity {
 
         int money = 1000000; //nur zu Testzwecken
 
-        double randomNumber = roulette.randomNumber();
+        double rouletteNumber = roulette.spinIt();
         String returnString = null;
 
-        if (randomNumber == choosenNumber) {
+        if (rouletteNumber == choosenNumber) {
             money = money + 145000;  //--> 150000 - 5000 Einsatz
             //ODER muss Kontostand ständig angezeigt werden?
             returnString = "Du hast gewonnen!";

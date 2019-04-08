@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 public class ColorActivity extends AppCompatActivity {
 
-    RouletteActivity roulette = new RouletteActivity();
-    Field[] array = roulette.setUpFields();
+    RouletteClass roulette = new RouletteClass();
+    FieldClass[] array = roulette.setUpFields();
 
     Button red;
     Button black;
@@ -33,7 +33,7 @@ public class ColorActivity extends AppCompatActivity {
         red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinWheel(enum_color.RED);
+                checkWin(ColorEnum.RED);
                 openRotateActivity();
             }
         });
@@ -41,21 +41,22 @@ public class ColorActivity extends AppCompatActivity {
         black.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinWheel(enum_color.BLACK);
+                checkWin(ColorEnum.BLACK);
                 openRotateActivity();
             }
         });
     }
 
-    public String spinWheel(enum_color choosenColor){
+    public String checkWin(ColorEnum choosenColor){
+        //calculates if user wins or not
 
         int money = 1000000; //nur zu Testzwecken
 
-        double randomNumber = roulette.randomNumber();
+        double rouletteNumber = roulette.spinIt();
         String returnString = null;
 
         for(int i = 0; i < array.length; i++){
-            if(randomNumber == array[i].getValue()){
+            if(rouletteNumber == array[i].getValue()){
                 if(array[i].getColor() == choosenColor){
                     money = money + 30000;  //--> 80000-50000 Einsatz
                     //ODER muss Kontostand ständig angezeigt werden?
