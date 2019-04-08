@@ -10,17 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".map_view4"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name=".map_view3"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".map_view2"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".start_view"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape">

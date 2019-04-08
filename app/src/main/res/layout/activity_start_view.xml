@@ -7,7 +7,7 @@
     tools:context=".start_view">
 
     <ImageView
-        android:id="@+id/imageViewUrlaub"
+        android:id="@+id/imageView2"
         android:layout_width="210dp"
         android:layout_height="280dp"
         android:layout_marginStart="28dp"
@@ -31,7 +31,7 @@
         android:layout_marginBottom="66dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewUrlaub"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher_foreground_start" />
@@ -47,7 +47,7 @@
         android:background="@mipmap/ic_further_round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageViewUrlaub"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -79,14 +79,29 @@
         android:layout_width="84dp"
         android:layout_height="89dp"
         app:srcCompat="@mipmap/ic_figure4_round"
-        tools:layout_editor_absoluteX="91dp"
-        tools:layout_editor_absoluteY="205dp" />
+        tools:layout_editor_absoluteX="136dp"
+        tools:layout_editor_absoluteY="229dp" />
 
     <Button
         android:id="@+id/moveTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="moveTest"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="181dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <Button
+        android:id="@+id/back1"
+        android:layout_width="50dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="166dp"
+        android:background="@mipmap/ic_back_round"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/moveTest" />
+
 </android.support.constraint.ConstraintLayout>

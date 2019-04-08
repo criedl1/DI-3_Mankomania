@@ -11,11 +11,20 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-
 import java.util.Timer;
 
 
 public class start_view extends AppCompatActivity {
+
+    private static Button next;
+    private static Button back;
+    private static ImageView imgview1;
+    private static ImageView imgview2;
+    private int currentField;
+    int[] fields1 ={R.drawable.field_start, R.drawable.field_aktie1, R.drawable.field_lottery, R.drawable.field_casino,
+            R.drawable.field_getsomemoney, R.drawable.field_aktie2, R.drawable.field_casino, R.drawable.field_aktie3, R.drawable.field_casino};
+    int[] fields2 = {R.drawable.field_casino, R.drawable.field_lottery, R.drawable.field_getsomemoney, R.drawable.field_aktie2,
+            R.drawable.field_casino, R.drawable.field_seeparkhotel, R.drawable.field_aktie3, R.drawable.field_getsomemoney, R.drawable.field_aktie3};
 
     private Player player1;
     private Player player2;
@@ -53,11 +62,16 @@ public class start_view extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_view);
+
         initButtons();
+
+
+
         figure1 = (ImageView)findViewById(R.id.figure1);
         figure2 = (ImageView)findViewById(R.id.figure2);
         figure3 = (ImageView)findViewById(R.id.figure3);
         figure4 = (ImageView)findViewById(R.id.figure4);
+
 
         field1 = 300;
         field2 = 1000;
@@ -84,40 +98,17 @@ public class start_view extends AppCompatActivity {
         player1 = new Player(figure1);
 
 
-  /*  timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                changePosition();
-                }
-            });
-}
-        },0,50);
-*/
     }
     public void movePlayer(Player player, int fields){
         player.setCurrentField(player.getCurrentField()+fields);
-      /*  while(player.getFigure().getX() < field2) {
-            player.getFigure().setX(player.getFigure().getX()+10);
-            try {
-                TimeUnit.MILLISECONDS.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            player.getFigure().invalidate();
-        }
-        player.getFigure().setX(field2);*/
         float distance = field2-player.getFigure().getX()+player.getFigure().getWidth();
-
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
         animation.setDuration(2000);
         animation.start();
 
 
     }
-
+    
     public void changePosition(){
         //Speed
         figure1X +=30;
@@ -148,13 +139,32 @@ public class start_view extends AppCompatActivity {
 
 
  private void initButtons() {
-        Button nextButton = (Button) findViewById(R.id.next1);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(start_view.this, map_view2.class));
-            }
-        });
+     imgview1 = (ImageView) findViewById(R.id.imageViewStart);
+     imgview2 = (ImageView) findViewById(R.id.imageView2);
+     next = (Button)findViewById(R.id.next1);
+     back = (Button)findViewById(R.id.back1);
+     next.setOnClickListener(
+             new View.OnClickListener(){
+                 @Override
+                 public void onClick(View view) {
+                     currentField++;
+                     currentField = currentField % fields1.length;
+                     imgview1.setImageResource(fields1[currentField]);
+                     imgview2.setImageResource(fields2[currentField]);
+                 }
+             }
+     );
+     back.setOnClickListener(
+             new View.OnClickListener(){
+                 @Override
+                 public void onClick(View view) {
+                     currentField++;
+                     currentField = currentField % fields1.length;
+                     imgview1.setImageResource(fields1[currentField]);
+                     imgview2.setImageResource(fields2[currentField]);
+                 }
+             }
+     );
 
     Button moveTest = (Button) findViewById(R.id.moveTest);
         moveTest.setOnClickListener(new View.OnClickListener() {
