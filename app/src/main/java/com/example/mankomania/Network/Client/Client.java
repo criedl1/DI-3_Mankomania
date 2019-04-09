@@ -41,6 +41,10 @@ public class Client extends Thread {
             //Answer Server
             output.println(in + " back");
 
+            //read Server message
+            in = input.readLine();
+            System.out.println("in = " + in);
+
             // closing resources
             scn.close();
             output.close();

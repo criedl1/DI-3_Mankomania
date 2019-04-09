@@ -2,47 +2,41 @@ package com.example.mankomania.Network.Server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Queue;
 
-// ClientHandler class
 class ClientHandler extends Thread {
     final private Socket SOCKET;
+    private final PrintWriter OUTPUT;
+    private final BufferedReader INPUT;
+    private Queue<String[]> queue;
 
-
-    // Constructor
-    public ClientHandler(Socket socket) {
+    public ClientHandler(Socket socket, Queue queue) throws Exception{
         this.SOCKET = socket;
+        this.OUTPUT = new PrintWriter(new BufferedWriter(new OutputStreamWriter(SOCKET.getOutputStream())), true);
+        this.INPUT = new BufferedReader(new InputStreamReader(SOCKET.getInputStream()));
+        this.queue = queue;
     }
 
     @Override
     public void run() {
-
         try {
-            // obtaining INPUT and out streams
-            PrintWriter output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(SOCKET.getOutputStream())), true);
-            BufferedReader input = new BufferedReader(new InputStreamReader(SOCKET.getInputStream()));
-
-
-
             // Say Hello to Client
-            output.println("Hello");
+            send("Hello");
 
-            // receive the answer from client
-            String in = input.readLine();
+            // start ServerListener for incoming Messages
+            ServerListener serverListener = new ServerListener(INPUT,queue);
+            serverListener.start();
 
-            // Print Answer
-            System.out.println("in = " + in);
-
-            // closing resources
-            input.close();
-            output.close();
-            SOCKET.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void send(String string){
+        OUTPUT.println(string);
     }
 }

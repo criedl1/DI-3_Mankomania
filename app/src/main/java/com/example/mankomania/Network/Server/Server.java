@@ -4,35 +4,53 @@ import com.example.mankomania.GameData.GameData;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 // Server class
 public class Server extends Thread {
-    final private GameData GAMEDATA;
+    private static GameData gameData;
+    private static Queue<String> queue = new LinkedBlockingQueue<>();
+    private static Socket[] sockets;
+    private static ClientHandler[] clientHandlers;
 
     public Server(GameData GameData) {
-        this.GAMEDATA = GameData;
+        this.gameData = GameData;
     }
 
     public void run() {
         try {
+            // 0 Player are Connected
+            int playerCount = 0;
+
             // server is listening on port 5056
             ServerSocket serverSocket = new ServerSocket(5056);
-            int playerCount = 0;
-            Socket[] sockets = new Socket[GAMEDATA.getPlayers().length];
 
-            while (playerCount<GAMEDATA.getPlayers().length) {
+            // set arrays for sockets and Handlers
+            sockets = new Socket[gameData.getPlayers().length];
+            clientHandlers = new ClientHandler[gameData.getPlayers().length];
+
+            //Wait for all Player to connect
+            while (playerCount< gameData.getPlayers().length) {
+
                 // SOCKET object to receive incoming client requests
                 sockets[playerCount] = serverSocket.accept();
                 System.out.println("A new client is connected : " + sockets[playerCount]);
 
-                // create a new thread object
-                Thread t = new ClientHandler(sockets[playerCount]);
-                // Start Thread
-                t.start();
+                // create a new ClientHandler object and start it
+                clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue);
+                clientHandlers[playerCount].start();
 
                 // increase countPlayer
                 playerCount++;
             }
+
+            // All Players are Connected
+            System.out.println("Got them all");
+
+            //Start the Queue Handler which handles the incoming Messages
+            ServerQueueHandler serverQueueHandler = new ServerQueueHandler(clientHandlers,queue);
+            serverQueueHandler.start();
 
         } catch (Exception e) {
             e.printStackTrace();

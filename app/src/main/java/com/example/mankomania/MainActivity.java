@@ -39,13 +39,15 @@ public class MainActivity extends AppCompatActivity {
         Server server = new Server(gameData);
         server.start();
 
+        //start local Server
         Client client = new Client("localhost");
         client.start();
     }
 
+    // Specify Game Data here
     private GameData generateGameData() {
         GameData gameData = new GameData();
-        gameData.setPlayer(new String[2]);
+        gameData.setPlayer(new String[1]);
         gameData.setMoney(new int[]{1000000,1000000});
         gameData.setPosition(new int[]{0,0});
         return gameData;
