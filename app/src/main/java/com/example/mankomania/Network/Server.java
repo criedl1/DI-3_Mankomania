@@ -1,61 +1,40 @@
 package com.example.mankomania.Network;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 // Server class
-public class Server extends Thread
-{
-    final protected GameData GAMEDATA;
+public class Server extends Thread {
+    final private GameData GAMEDATA;
 
-    public Server(GameData GAMEDATA) {
-        this.GAMEDATA = GAMEDATA;
+    public Server(GameData GameData) {
+        this.GAMEDATA = GameData;
     }
 
-    public static void main(String[] args) throws IOException {
-        // server is listening on port 5056
-        ServerSocket serverSocket = new ServerSocket(5056);
+    public void run() {
+        try {
+            // server is listening on port 5056
+            ServerSocket serverSocket = new ServerSocket(5056);
+            int playerCount = 0;
+            Socket[] sockets = new Socket[GAMEDATA.getPlayers().length];
 
-        // running infinite loop for getting
-        // client request
-        while (true)
-        {
-            Socket socket = null;
-
-            try
-            {
+            while (playerCount<GAMEDATA.getPlayers().length) {
                 // SOCKET object to receive incoming client requests
-                socket = serverSocket.accept();
-
-                System.out.println("A new client is connected : " + socket);
-
-                // obtaining INPUT and out streams
-                PrintWriter output =  new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                System.out.println("Assigning new thread for this client");
+                sockets[playerCount] = serverSocket.accept();
+                System.out.println("A new client is connected : " + sockets[playerCount]);
 
                 // create a new thread object
-                Thread t = new ClientHandler(socket, input, output);
-
-                // Invoking the start() method
+                Thread t = new ClientHandler(sockets[playerCount]);
+                // Start Thread
                 t.start();
 
+                // increase countPlayer
+                playerCount++;
             }
-            catch (Exception e){
-                socket.close();
-                e.printStackTrace();
-            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public void run(){
-        //TODO
-    }
 }

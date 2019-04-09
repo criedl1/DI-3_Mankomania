@@ -1,47 +1,46 @@
 package com.example.mankomania.Network;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 // ClientHandler class
 class ClientHandler extends Thread {
-    final protected BufferedReader INPUT;
-    final protected PrintWriter OUTPUT;
-    final protected Socket SOCKET;
+    final private Socket SOCKET;
 
 
     // Constructor
-    public ClientHandler(Socket socket, BufferedReader input, PrintWriter output) {
+    public ClientHandler(Socket socket) {
         this.SOCKET = socket;
-        this.INPUT = input;
-        this.OUTPUT = output;
     }
 
     @Override
     public void run() {
 
         try {
+            // obtaining INPUT and out streams
+            PrintWriter output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(SOCKET.getOutputStream())), true);
+            BufferedReader input = new BufferedReader(new InputStreamReader(SOCKET.getInputStream()));
+
+
 
             // Say Hello to Client
-            OUTPUT.println("Hello");
+            output.println("Hello");
 
             // receive the answer from client
-            String in = INPUT.readLine();
+            String in = input.readLine();
 
-            //Print Answer
+            // Print Answer
             System.out.println("in = " + in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-
-        try {
             // closing resources
-            this.INPUT.close();
-            this.OUTPUT.close();
-
+            input.close();
+            output.close();
+            SOCKET.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
