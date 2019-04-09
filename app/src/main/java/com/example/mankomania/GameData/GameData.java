@@ -1,4 +1,4 @@
-package com.example.mankomania.Network;
+package com.example.mankomania.GameData;
 
 public class GameData {
     private String[] Players;

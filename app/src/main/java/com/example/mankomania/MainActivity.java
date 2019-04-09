@@ -7,14 +7,10 @@ import android.text.format.Formatter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.example.mankomania.Network.Client;
-import com.example.mankomania.Network.GameData;
-import com.example.mankomania.Network.Server;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import com.example.mankomania.Network.Client.Client;
+import com.example.mankomania.GameData.GameData;
+import com.example.mankomania.Network.Server.Server;
 
 public class MainActivity extends AppCompatActivity {
 

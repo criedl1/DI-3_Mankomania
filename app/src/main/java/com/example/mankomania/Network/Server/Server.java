@@ -1,4 +1,6 @@
-package com.example.mankomania.Network;
+package com.example.mankomania.Network.Server;
+
+import com.example.mankomania.GameData.GameData;
 
 import java.net.ServerSocket;
 import java.net.Socket;

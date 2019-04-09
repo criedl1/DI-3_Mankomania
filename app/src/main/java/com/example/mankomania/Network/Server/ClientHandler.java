@@ -1,4 +1,4 @@
-package com.example.mankomania.Network;
+package com.example.mankomania.Network.Server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -1,4 +1,6 @@
-package com.example.mankomania.Network;
+package com.example.mankomania.Network.Client;
+
+import com.example.mankomania.GameData.GameData;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
