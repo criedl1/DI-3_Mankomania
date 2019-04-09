@@ -31,19 +31,7 @@ public class Server extends Thread {
             clientHandlers = new ClientHandler[gameData.getPlayers().length];
 
             //Wait for all Player to connect
-            while (playerCount< gameData.getPlayers().length) {
-
-                // SOCKET object to receive incoming client requests
-                sockets[playerCount] = serverSocket.accept();
-                System.out.println("A new client is connected : " + sockets[playerCount]);
-
-                // create a new ClientHandler object and start it
-                clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue);
-                clientHandlers[playerCount].start();
-
-                // increase countPlayer
-                playerCount++;
-            }
+            connectPlayers(playerCount, serverSocket);
 
             // All Players are Connected
             System.out.println("Got them all");
@@ -54,6 +42,21 @@ public class Server extends Thread {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void connectPlayers(int playerCount, ServerSocket serverSocket) throws Exception {
+        while (playerCount< gameData.getPlayers().length) {
+            // SOCKET object to receive incoming client requests
+            sockets[playerCount] = serverSocket.accept();
+            System.out.println("A new client is connected : " + sockets[playerCount]);
+
+            // create a new ClientHandler object and start it
+            clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue);
+            clientHandlers[playerCount].start();
+
+            // increase countPlayer
+            playerCount++;
         }
     }
 

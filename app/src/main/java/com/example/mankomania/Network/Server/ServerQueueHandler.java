@@ -12,6 +12,7 @@ public class ServerQueueHandler extends Thread{
     }
 
     public void run(){
+        //Maybe ThreadPool for Speed up
         String in;
         try{
             while(true){
