@@ -1,70 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".start_view">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="210dp"
-        android:layout_height="280dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="66dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/next1"
-        app:layout_constraintStart_toEndOf="@+id/imageViewStart"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_foreground" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="210dp"
+            android:layout_height="280dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="65dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="66dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/next1"
+            app:layout_constraintStart_toEndOf="@+id/imageViewStart"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_launcher_foreground" />
+
+        <ImageView
+            android:id="@+id/imageViewStart"
+            android:layout_width="210dp"
+            android:layout_height="280dp"
+            android:layout_marginStart="127dp"
+            android:layout_marginTop="65dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="66dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_launcher_foreground_start" />
+
+        <Button
+            android:id="@+id/next1"
+            android:layout_width="50dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="165dp"
+            android:layout_marginEnd="52dp"
+            android:layout_marginBottom="166dp"
+            android:background="@mipmap/ic_further_round"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/moveTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="5dp"
+            android:text="moveTest"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewStart"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/back1"
+            android:layout_width="50dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="88dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="166dp"
+            android:background="@mipmap/ic_back_round"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewStart"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/moveTest"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="122dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="565dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="45dp"
+            android:layout_marginBottom="23dp"
+            android:text="money:"
+            app:layout_constraintBottom_toTopOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/imageViewStart"
-        android:layout_width="210dp"
-        android:layout_height="280dp"
-        android:layout_marginStart="127dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="66dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_foreground_start" />
-
-    <Button
-        android:id="@+id/next1"
-        android:layout_width="50dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="165dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginBottom="166dp"
-        android:background="@mipmap/ic_further_round"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/figure1"
+        android:id="@+id/figure4"
         android:layout_width="84dp"
         android:layout_height="89dp"
-        app:srcCompat="@mipmap/ic_figure1_round"
-        tools:layout_editor_absoluteX="236dp"
+        app:srcCompat="@mipmap/ic_figure4_round"
+        tools:layout_editor_absoluteX="136dp"
         tools:layout_editor_absoluteY="229dp" />
-
-    <ImageView
-        android:id="@+id/figure2"
-        android:layout_width="84dp"
-        android:layout_height="89dp"
-        app:srcCompat="@mipmap/ic_figure2_round"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="90dp" />
 
     <ImageView
         android:id="@+id/figure3"
@@ -75,40 +119,19 @@
         tools:layout_editor_absoluteY="97dp" />
 
     <ImageView
-        android:id="@+id/figure4"
+        android:id="@+id/figure2"
         android:layout_width="84dp"
         android:layout_height="89dp"
-        app:srcCompat="@mipmap/ic_figure4_round"
-        tools:layout_editor_absoluteX="136dp"
+        app:srcCompat="@mipmap/ic_figure2_round"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="90dp" />
+
+    <ImageView
+        android:id="@+id/figure1"
+        android:layout_width="84dp"
+        android:layout_height="89dp"
+        app:srcCompat="@mipmap/ic_figure1_round"
+        tools:layout_editor_absoluteX="236dp"
         tools:layout_editor_absoluteY="229dp" />
 
-    <Button
-        android:id="@+id/moveTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="5dp"
-        android:text="moveTest"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewStart"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/back1"
-        android:layout_width="50dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="166dp"
-        android:background="@mipmap/ic_back_round"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewStart"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/moveTest"
-        app:layout_constraintVertical_bias="1.0" />
-
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>

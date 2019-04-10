@@ -74,7 +74,6 @@ public class start_view extends AppCompatActivity {
         figure3 = (ImageView)findViewById(R.id.figure3);
         figure4 = (ImageView)findViewById(R.id.figure4);
 
-
         field1 = 300;
         field2 = 1000;
 
