@@ -22,9 +22,9 @@ public class start_view extends AppCompatActivity {
     private static ImageView imgview2;
     private int currentField;
     int[] fields1 ={R.drawable.field_start, R.drawable.field_aktie1, R.drawable.field_lottery, R.drawable.field_casino,
-            R.drawable.field_getsomemoney, R.drawable.field_aktie2, R.drawable.field_casino, R.drawable.field_aktie3, R.drawable.field_casino};
-    int[] fields2 = {R.drawable.field_casino, R.drawable.field_lottery, R.drawable.field_getsomemoney, R.drawable.field_aktie2,
-            R.drawable.field_casino, R.drawable.field_seeparkhotel, R.drawable.field_aktie3, R.drawable.field_getsomemoney, R.drawable.field_aktie3};
+            R.drawable.field_getsomemoney, R.drawable.field_alterplatz, R.drawable.field_aktie2, R.drawable.field_casino, R.drawable.field_aktie3, R.drawable.field_casino, R.drawable.field_alterplatz, R.drawable.field_horserace, R.drawable.field_lindwurm};
+    int[] fields2 = {R.drawable.field_horserace, R.drawable.field_casino, R.drawable.field_lindwurm, R.drawable.field_lottery, R.drawable.field_zoo, R.drawable.field_getsomemoney, R.drawable.field_aktie2,
+            R.drawable.field_casino, R.drawable.field_seeparkhotel, R.drawable.field_aktie3, R.drawable.field_zoo, R.drawable.field_stadium, R.drawable.field_getsomemoney, R.drawable.field_aktie3};
 
     private Player player1;
     private Player player2;
@@ -108,7 +108,7 @@ public class start_view extends AppCompatActivity {
 
 
     }
-    
+
     public void changePosition(){
         //Speed
         figure1X +=30;
