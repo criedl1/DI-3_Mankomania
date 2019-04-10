@@ -55,8 +55,8 @@
         android:layout_width="84dp"
         android:layout_height="89dp"
         app:srcCompat="@mipmap/ic_figure1_round"
-        tools:layout_editor_absoluteX="220dp"
-        tools:layout_editor_absoluteY="245dp" />
+        tools:layout_editor_absoluteX="236dp"
+        tools:layout_editor_absoluteY="229dp" />
 
     <ImageView
         android:id="@+id/figure2"
@@ -86,9 +86,14 @@
         android:id="@+id/moveTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="5dp"
         android:text="moveTest"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="29dp" />
+        app:layout_constraintEnd_toStartOf="@+id/imageViewStart"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/back1"
@@ -101,7 +106,9 @@
         android:background="@mipmap/ic_back_round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageViewStart"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/moveTest" />
+        app:layout_constraintTop_toBottomOf="@+id/moveTest"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>
