@@ -79,9 +79,15 @@ public class ClientQueueHandler extends Thread{
             case "spinWheel":
                 spinWheel(jsonObject);
                 break;
+            case "StartTurn":
+                startTurn(jsonObject);
             default:
                 break;
         }
+    }
+
+    private void startTurn(JsonObject jsonObject) {
+       // TODO Start your Turn
     }
 
     private void spinWheel(JsonObject jsonObject) {

@@ -37,10 +37,15 @@ public class Server extends Thread {
             //Wait for all Player to connect
             connectPlayers(serverSocket);
 
-            //Start the Queue Handler which handles the incoming Messages
+            //Queue Handler which handles the incoming Messages
             ServerQueueHandler serverQueueHandler = new ServerQueueHandler(clientHandlers,queue,gameData);
+
             // Send GameData to all
             sendGameData(serverQueueHandler);
+
+            // Start with Player 0
+            clientHandlers[0].giveTurn();
+
             // Start listening
             serverQueueHandler.start();
 

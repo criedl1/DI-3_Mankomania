@@ -38,6 +38,14 @@ class ClientHandler extends Thread {
         }
     }
 
+    public void giveTurn() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("OPERATION","StartTurn");
+        jsonObject.addProperty("Player", id);
+        //Send only one Player
+        send(jsonObject.toString());
+    }
+
     public void sendID() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("OPERATION", "SET_ID");
