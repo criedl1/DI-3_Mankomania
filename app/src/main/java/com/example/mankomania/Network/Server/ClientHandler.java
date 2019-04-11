@@ -32,23 +32,19 @@ class ClientHandler extends Thread {
         try {
             // start ServerListener for incoming Messages
             ServerListener serverListener = new ServerListener(INPUT,queue);
-            sendID();
-            sendPlayerCount();
             serverListener.start();
-
-            sendID();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void sendID() {
+    public void sendID() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("OPERATION", "SET_ID");
         jsonObject.addProperty("ID",id);
         send(jsonObject.toString());
     }
-    private void sendPlayerCount() {
+    public void sendPlayerCount() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("OPERATION", "SET_PLAYER_COUNT");
         jsonObject.addProperty("COUNT",playerCount);

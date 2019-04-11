@@ -38,7 +38,7 @@ public class Server extends Thread {
             connectPlayers(serverSocket);
 
             //Start the Queue Handler which handles the incoming Messages
-            ServerQueueHandler serverQueueHandler = new ServerQueueHandler(clientHandlers,queue);
+            ServerQueueHandler serverQueueHandler = new ServerQueueHandler(clientHandlers,queue,gameData);
             // Send GameData to all
             sendGameData(serverQueueHandler);
             // Start listening
@@ -50,9 +50,10 @@ public class Server extends Thread {
     }
 
     private void sendGameData(ServerQueueHandler serverQueueHandler){
+
         for (int i=0; i<PLAYERCOUNT;i++) {
-            serverQueueHandler.setPlayer(i,gameData.getPlayers()[i]);
-            serverQueueHandler.setMoney(i,gameData.getMoney()[i]);
+            serverQueueHandler.sendPlayer(i,gameData.getPlayers()[i]);
+            serverQueueHandler.sendMoney(i,gameData.getMoney()[i]);
         }
     }
 
@@ -106,6 +107,8 @@ public class Server extends Thread {
             // create a new ClientHandler object and start it
             clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue,playerCount,PLAYERCOUNT);
             clientHandlers[playerCount].start();
+            clientHandlers[playerCount].sendPlayerCount();
+            clientHandlers[playerCount].sendID();
 
             // increase countPlayer
             playerCount++;

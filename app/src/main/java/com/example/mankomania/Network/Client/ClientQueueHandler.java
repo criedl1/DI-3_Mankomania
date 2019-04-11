@@ -47,10 +47,10 @@ public class ClientQueueHandler extends Thread{
             case "SET_PLAYER_COUNT":
                 generateGameData(jsonToInt(jsonObject,"COUNT"));
                 break;
-            case "setPlayer":
+            case "sendPlayer":
                 setPlayerId(jsonObject);
                 break;
-            case "setMoney":
+            case "sendMoney":
                 setMoney(jsonObject);
                 break;
             case "setPosition":

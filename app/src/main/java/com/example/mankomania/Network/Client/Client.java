@@ -62,7 +62,7 @@ public class Client extends Thread {
 
     public void setMoneyOnServer(int idx, int money){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setMoney");
+        json.addProperty("OPERATION","sendMoney");
         json.addProperty("PLAYER", idx);
         json.addProperty("Money", money);
         output.println(json.toString());
