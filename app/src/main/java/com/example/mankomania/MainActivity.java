@@ -36,25 +36,13 @@ public class MainActivity extends AppCompatActivity {
         // Get IP Address
         et.setText(getIPAddress());
 
-        // Create game data and set init values
-        GameData gameData = generateGameData();
-
         // Start Server
-        Server server = new Server(gameData);
+        Server server = new Server(1,1000000);
         server.start();
 
         //start local Server
         Client client = new Client("localhost");
         client.start();
-    }
-
-    // Specify Game Data here
-    private GameData generateGameData() {
-        GameData gameData = new GameData();
-        gameData.setPlayer(new String[1]);
-        gameData.setMoney(new int[]{1000000,1000000});
-        gameData.setPosition(new int[]{0,0});
-        return gameData;
     }
 
     private String getIPAddress() {

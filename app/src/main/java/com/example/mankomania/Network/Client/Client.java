@@ -58,26 +58,4 @@ public class Client extends Thread {
     public void setId(String id) {
         this.id = id;
     }
-
-    public void setMoney(int player, int money) throws Exception{
-        //TODO
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("ID",1);
-        output.println(jsonObject);
-    }
-
-    public int getMoney(int player) {
-        //TODO
-        return -1;
-    }
-
-    public void setPosition(int player, int money) {
-        //TODO
-    }
-
-    public int getPosition(int player) {
-        //TODO
-        return -1;
-    }
-
 }

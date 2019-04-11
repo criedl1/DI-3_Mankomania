@@ -36,12 +36,13 @@ public class ClientQueueHandler extends Thread{
 
         switch (jsonObject.get("OPERATION").getAsString()) {
             // set ID of the Client
-            case "ID":
+            case "SET_ID":
                 client.setId(jsonObject.get("ID").getAsString());
                 break;
             default:
                 break;
         }
+        System.out.println("jsonObject = " + jsonObject);
     }
 
     public void toUpperLayer(String in){

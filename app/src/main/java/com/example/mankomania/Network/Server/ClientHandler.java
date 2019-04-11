@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.util.Queue;
 
 class ClientHandler extends Thread {
-    final private Socket SOCKET;
+    private final Socket SOCKET;
     private final PrintWriter OUTPUT;
     private final BufferedReader INPUT;
     private Queue<String[]> queue;
@@ -30,6 +30,7 @@ class ClientHandler extends Thread {
         try {
             // start ServerListener for incoming Messages
             ServerListener serverListener = new ServerListener(INPUT,queue);
+            sendID();
             serverListener.start();
 
             // Send ID to Client
@@ -41,7 +42,7 @@ class ClientHandler extends Thread {
 
     private void sendID() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("OPERATION", "ID");
+        jsonObject.addProperty("OPERATION", "SET_ID");
         jsonObject.addProperty("ID",id);
         send(jsonObject.toString());
     }
