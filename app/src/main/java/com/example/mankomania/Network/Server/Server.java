@@ -53,15 +53,6 @@ public class Server extends Thread {
         for (int i=0; i<PLAYERCOUNT;i++) {
             serverQueueHandler.setPlayer(i,gameData.getPlayers()[i]);
             serverQueueHandler.setMoney(i,gameData.getMoney()[i]);
-            serverQueueHandler.setPosition(i,gameData.getPosition()[i]);
-            serverQueueHandler.setHypoAktie(i,gameData.getHypoAktie()[i]);
-            serverQueueHandler.setStrabagAktie(i,gameData.getStrabagAktie()[i]);
-            serverQueueHandler.setInfineonAktie(i,gameData.getInfineonAktie()[i]);
-            serverQueueHandler.setCheater(i,gameData.getIsCheater()[i]);
-        }
-        serverQueueHandler.setLotto(gameData.getLotto());
-        for (int i=0; i<gameData.getHotels().length;i++) {
-            serverQueueHandler.setHotel(i,0);
         }
     }
 
@@ -113,7 +104,7 @@ public class Server extends Thread {
             gameData.setPlayers(arr);
 
             // create a new ClientHandler object and start it
-            clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue,playerCount);
+            clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue,playerCount,PLAYERCOUNT);
             clientHandlers[playerCount].start();
 
             // increase countPlayer

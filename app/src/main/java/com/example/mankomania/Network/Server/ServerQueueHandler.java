@@ -24,7 +24,6 @@ public class ServerQueueHandler extends Thread{
                     in = queue.poll();
                     handleMessage(in);
                 }
-
             }
         }catch (Exception e){
             e.printStackTrace();

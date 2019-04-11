@@ -16,13 +16,15 @@ class ClientHandler extends Thread {
     private final BufferedReader INPUT;
     private Queue<String[]> queue;
     private int id;
+    private int playerCount;
 
-    public ClientHandler(Socket socket, Queue queue, int id) throws Exception{
+    public ClientHandler(Socket socket, Queue queue, int id, int playerCount) throws Exception{
         this.SOCKET = socket;
         this.OUTPUT = new PrintWriter(new BufferedWriter(new OutputStreamWriter(SOCKET.getOutputStream())), true);
         this.INPUT = new BufferedReader(new InputStreamReader(SOCKET.getInputStream()));
         this.queue = queue;
         this.id = id;
+        this.playerCount = playerCount;
     }
 
     @Override
@@ -31,9 +33,9 @@ class ClientHandler extends Thread {
             // start ServerListener for incoming Messages
             ServerListener serverListener = new ServerListener(INPUT,queue);
             sendID();
+            sendPlayerCount();
             serverListener.start();
 
-            // Send ID to Client
             sendID();
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,6 +46,12 @@ class ClientHandler extends Thread {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("OPERATION", "SET_ID");
         jsonObject.addProperty("ID",id);
+        send(jsonObject.toString());
+    }
+    private void sendPlayerCount() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("OPERATION", "SET_PLAYER_COUNT");
+        jsonObject.addProperty("COUNT",playerCount);
         send(jsonObject.toString());
     }
 

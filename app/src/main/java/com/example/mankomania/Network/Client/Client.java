@@ -18,12 +18,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 // Client class
 public class Client extends Thread {
-    private static GameData gameData = new GameData();
+    private final GameData gameData = new GameData();
     private static String ipHost;
     private static PrintWriter output;
     private static BufferedReader input;
     private Queue<String> queue;
-    private String id;
+    private int idx;
 
     public Client(String ipHost){
         this.ipHost = ipHost;
@@ -48,14 +48,14 @@ public class Client extends Thread {
             clientListener.start();
 
             // start CLienQueueHandler
-            ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue,this);
+            ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue,this, gameData);
             clientQueueHandler.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdx(int idx) {
+        this.idx = idx;
     }
 }
