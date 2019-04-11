@@ -1,5 +1,6 @@
 package com.example.mankomania;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,10 @@ import android.widget.EditText;
 import com.example.mankomania.Network.Client.Client;
 import com.example.mankomania.GameData.GameData;
 import com.example.mankomania.Network.Server.Server;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
+    Client client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
         Server server = new Server(1,1000000);
         server.start();
 
-        //start local Server
-        Client client = new Client("localhost");
-        client.start();
+        openMap("localhost");
     }
 
     public void btn_Connect_To_Lobby (View v)throws Exception{
@@ -54,9 +55,14 @@ public class MainActivity extends AppCompatActivity {
         btn_create.setEnabled(false);
         btn_connect.setEnabled(false);
 
-        //Start Client
-        Client client = new Client(et.getText().toString());
-        client.start();
+        openMap(et.getText().toString());
+    }
+
+    public void openMap(String ip){
+        // TODO open Map here and Start Client in Map
+        Intent intent = new Intent(this,Example.class);
+        intent.putExtra("IP",ip);
+        startActivity(intent);
     }
 
     private String getIPAddress() {
