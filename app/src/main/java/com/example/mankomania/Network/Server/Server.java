@@ -33,9 +33,6 @@ public class Server extends Thread {
             //Wait for all Player to connect
             connectPlayers(playerCount, serverSocket);
 
-            // All Players are Connected
-            System.out.println("Got them all");
-
             //Start the Queue Handler which handles the incoming Messages
             ServerQueueHandler serverQueueHandler = new ServerQueueHandler(clientHandlers,queue);
             serverQueueHandler.start();
@@ -49,10 +46,9 @@ public class Server extends Thread {
         while (playerCount< gameData.getPlayers().length) {
             // SOCKET object to receive incoming client requests
             sockets[playerCount] = serverSocket.accept();
-            System.out.println("A new client is connected : " + sockets[playerCount]);
 
             // create a new ClientHandler object and start it
-            clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue);
+            clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue,playerCount);
             clientHandlers[playerCount].start();
 
             // increase countPlayer

@@ -2,6 +2,9 @@ package com.example.mankomania.Network.Client;
 
 import com.example.mankomania.GameData.GameData;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -20,6 +23,7 @@ public class Client extends Thread {
     private static PrintWriter output;
     private static BufferedReader input;
     private Queue<String> queue;
+    private String id;
 
     public Client(String ipHost){
         this.ipHost = ipHost;
@@ -44,21 +48,22 @@ public class Client extends Thread {
             clientListener.start();
 
             // start CLienQueueHandler
-            ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue);
+            ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue,this);
             clientQueueHandler.start();
-
-            //For Testing
-            setMoney(0,0);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void setMoney(int player, int money) {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setMoney(int player, int money) throws Exception{
         //TODO
-        output.println("Hello from CLient");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("ID",1);
+        output.println(jsonObject);
     }
 
     public int getMoney(int player) {

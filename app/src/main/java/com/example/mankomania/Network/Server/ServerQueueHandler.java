@@ -1,10 +1,14 @@
 package com.example.mankomania.Network.Server;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.util.Queue;
 
 public class ServerQueueHandler extends Thread{
     ClientHandler[] clientHandlers;
     private Queue<String> queue;
+
 
     public ServerQueueHandler(ClientHandler[] clientHandlers, Queue queue){
         this.queue = queue;
@@ -18,17 +22,19 @@ public class ServerQueueHandler extends Thread{
                 // wait for a new message in the queue
                 if(!queue.isEmpty()){
                     in = queue.poll();
-
-                    // TODO Handle Message
-
-                    // send Command
-                    sendAllClients(in);
+                    handleMessage(in);
                 }
 
             }
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void handleMessage(String in) {
+        // TODO Handle Message
+        JsonParser parser = new JsonParser();
+        JsonObject jsonObject = parser.parse(in).getAsJsonObject();
     }
 
     private void sendAllClients(String in) {

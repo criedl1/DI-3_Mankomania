@@ -1,5 +1,7 @@
 package com.example.mankomania.Network.Server;
 
+import com.google.gson.JsonObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -13,27 +15,35 @@ class ClientHandler extends Thread {
     private final PrintWriter OUTPUT;
     private final BufferedReader INPUT;
     private Queue<String[]> queue;
+    private int id;
 
-    public ClientHandler(Socket socket, Queue queue) throws Exception{
+    public ClientHandler(Socket socket, Queue queue, int id) throws Exception{
         this.SOCKET = socket;
         this.OUTPUT = new PrintWriter(new BufferedWriter(new OutputStreamWriter(SOCKET.getOutputStream())), true);
         this.INPUT = new BufferedReader(new InputStreamReader(SOCKET.getInputStream()));
         this.queue = queue;
+        this.id = id;
     }
 
     @Override
     public void run() {
         try {
-            // Say Hello to Client
-            send("Hello");
-
             // start ServerListener for incoming Messages
             ServerListener serverListener = new ServerListener(INPUT,queue);
             serverListener.start();
 
+            // Send ID to Client
+            sendID();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void sendID() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("OPERATION", "ID");
+        jsonObject.addProperty("ID",id);
+        send(jsonObject.toString());
     }
 
     public void send(String string){
