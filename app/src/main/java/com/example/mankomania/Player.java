@@ -1,25 +1,37 @@
 package com.example.mankomania;
 
 import android.widget.ImageView;
+import android.widget.TextView;
 
-public class Player {
+public class Player extends start_view{
 
     private ImageView figure;
     private int currentField;
     private int money;
+    private int updatemoney;
+    private TextView currentmoney;
 
-    public Player(ImageView figure) {
-        currentField = 0;
-        money = 1000000;
+    public Player(ImageView figure, TextView currentmoney) {
+         currentField = 0;
+        //money = 1005;
         this.figure = figure;
+        this. currentmoney = currentmoney;
+        currentmoney.setText(Integer.toString(1000000));
+
     }
 
     public void addMoney(int amount) {
-        money = money+amount;
+
+        money = Integer.parseInt(currentmoney.getText().toString());
+        updatemoney = money + amount;
+        currentmoney.setText(Integer.toString(updatemoney));
     }
 
+
     public void removeMoney(int amount) {
-        money = money-amount;
+        money = Integer.parseInt(currentmoney.getText().toString());
+        updatemoney = money - amount;
+        currentmoney.setText(Integer.toString(updatemoney));
     }
 
     public ImageView getFigure() {
@@ -42,5 +54,6 @@ public class Player {
     public void setMoney(int money) {
         this.money = money;
     }
+
 }
 
