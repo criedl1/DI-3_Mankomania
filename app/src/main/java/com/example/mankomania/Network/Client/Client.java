@@ -11,6 +11,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.concurrent.LinkedBlockingQueue;
 
 // Client class
 public class Client extends Thread {
@@ -26,7 +27,7 @@ public class Client extends Thread {
 
     public void run() {
         try {
-            Scanner scn = new Scanner(System.in);
+            queue = new LinkedBlockingQueue<>();
 
             // getting localhost ip
             InetAddress ip = InetAddress.getByName(ipHost);
