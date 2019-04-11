@@ -12,7 +12,6 @@ public class ServerQueueHandler extends Thread{
     }
 
     public void run(){
-        //Maybe ThreadPool for Speed up
         String in;
         try{
             while(true){
@@ -20,7 +19,7 @@ public class ServerQueueHandler extends Thread{
                 if(!queue.isEmpty()){
                     in = queue.poll();
 
-                    //TODO Handle Message
+                    // TODO Handle Message
 
                     // send Command
                     sendAllClients(in);

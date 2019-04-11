@@ -9,12 +9,16 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Queue;
 import java.util.Scanner;
 
 // Client class
 public class Client extends Thread {
-    final protected GameData GAMEDATA = new GameData();
-    private String ipHost;
+    private static GameData gameData = new GameData();
+    private static String ipHost;
+    private static PrintWriter output;
+    private static BufferedReader input;
+    private Queue<String> queue;
 
     public Client(String ipHost){
         this.ipHost = ipHost;
@@ -31,24 +35,21 @@ public class Client extends Thread {
             Socket socket = new Socket(ip, 5056);
 
             // obtaining INPUT and out
-            PrintWriter output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-            BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            //read Server message
-            String in = input.readLine();
-            System.out.println("in = " + in);
+            // start ClientListener for incoming Messages
+            ClientListener clientListener = new ClientListener(input,queue);
+            clientListener.start();
 
-            //Answer Server
-            output.println(in + " back");
+            // start CLienQueueHandler
+            ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue);
+            clientQueueHandler.start();
 
-            //read Server message
-            in = input.readLine();
-            System.out.println("in = " + in);
+            //For Testing
+            setMoney(0,0);
 
-            // closing resources
-            scn.close();
-            output.close();
-            input.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,6 +57,7 @@ public class Client extends Thread {
 
     public void setMoney(int player, int money) {
         //TODO
+        output.println("Hello from CLient");
     }
 
     public int getMoney(int player) {
