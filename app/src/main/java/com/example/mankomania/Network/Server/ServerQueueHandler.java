@@ -64,13 +64,30 @@ public class ServerQueueHandler extends Thread{
             case "rollDice":
                 rollDice(jsonObject);
                 break;
+            case "spinWheel":
+                spinWheel(jsonObject);
+                break;
             default:
                 break;
         }
     }
 
+    private void spinWheel(JsonObject jsonObject) {
+        // TODO Spin the Wheel ServerSide
+        int player = jsonToInt(jsonObject,"Player");
+        sendSpinResult(player,21);
+    }
+
+    private void sendSpinResult(int idx, int result) {
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","spinWheel");
+        json.addProperty("Result", result);
+        json.addProperty("Player", idx);
+        sendAllClients(json.toString());
+    }
+
     private void rollDice(JsonObject jsonObject) {
-        //TODO Roll the Dice ServerSide
+        // TODO Roll the Dice ServerSide
         int player = jsonToInt(jsonObject,"Player");
         sendDiceResult(player, 7);
     }

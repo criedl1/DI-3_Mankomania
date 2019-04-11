@@ -133,4 +133,11 @@ public class Client extends Thread {
         json.addProperty("Player",idx);
         output.println(json.toString());
     }
+
+    public void spin_the_wheel(){
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","spinWheel");
+        json.addProperty("Player",idx);
+        output.println(json.toString());
+    }
 }

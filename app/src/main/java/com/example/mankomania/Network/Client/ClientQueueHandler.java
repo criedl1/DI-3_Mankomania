@@ -72,19 +72,30 @@ public class ClientQueueHandler extends Thread{
                 break;
             case "setHotel":
                 setHotel(jsonObject);
+                break;
             case "rollDice":
                 rollDice(jsonObject);
+                break;
+            case "spinWheel":
+                spinWheel(jsonObject);
                 break;
             default:
                 break;
         }
     }
 
+    private void spinWheel(JsonObject jsonObject) {
+        int player = jsonToInt(jsonObject,"Player");
+        int result = jsonToInt(jsonObject,"Result");
+
+        // TODO Spin the Wheel on the UI
+    }
+
     private void rollDice(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject,"Player");
         int result = jsonToInt(jsonObject,"Result");
 
-        //TODO Roll on the UI
+        //TODO Roll the Dices on the UI
     }
 
     private void setHotel(JsonObject jsonObject) {
