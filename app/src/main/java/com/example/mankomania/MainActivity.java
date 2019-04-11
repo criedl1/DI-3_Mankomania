@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         btn_create.setEnabled(false);
         btn_connect.setEnabled(false);
 
-        // Get IP Address
+        // Set IP Address
         et.setText(getIPAddress());
 
         // Start Server
@@ -42,6 +42,20 @@ public class MainActivity extends AppCompatActivity {
 
         //start local Server
         Client client = new Client("localhost");
+        client.start();
+    }
+
+    public void btn_Connect_To_Lobby (View v)throws Exception{
+        EditText et = (EditText) findViewById(R.id.textinput);
+        Button btn_create = (Button) findViewById(R.id.btnCreateLobby);
+        Button btn_connect = (Button) findViewById(R.id.btnConnectToLobby);
+
+        // Disable Buttons
+        btn_create.setEnabled(false);
+        btn_connect.setEnabled(false);
+
+        //Start Client
+        Client client = new Client(et.getText().toString());
         client.start();
     }
 
