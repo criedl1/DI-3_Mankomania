@@ -37,7 +37,6 @@ public class ClientQueueHandler extends Thread{
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
 
-        System.out.println("jsonObject = " + jsonObject);
         switch (jsonToString(jsonObject,"OPERATION")) {
             // set ID of the Client
             case "SET_ID":
@@ -73,10 +72,19 @@ public class ClientQueueHandler extends Thread{
                 break;
             case "setHotel":
                 setHotel(jsonObject);
+            case "rollDice":
+                rollDice(jsonObject);
                 break;
             default:
                 break;
         }
+    }
+
+    private void rollDice(JsonObject jsonObject) {
+        int player = jsonToInt(jsonObject,"Player");
+        int result = jsonToInt(jsonObject,"Result");
+
+        //TODO Roll on the UI
     }
 
     private void setHotel(JsonObject jsonObject) {
@@ -88,7 +96,7 @@ public class ClientQueueHandler extends Thread{
         arr[hotel] = owner;
         gameData.setHotels(arr);
 
-        //TODO Hotel Action
+        //TODO Hotel Actions and UI
     }
 
     private void setLotto(JsonObject jsonObject) {
@@ -168,6 +176,8 @@ public class ClientQueueHandler extends Thread{
         //Change GameData
         arr[player] = money;
         gameData.setMoney(arr);
+
+        // TODO Update UI
     }
 
     private void setPlayerId(JsonObject jsonObject) {

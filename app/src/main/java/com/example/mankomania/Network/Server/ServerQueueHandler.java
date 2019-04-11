@@ -61,9 +61,26 @@ public class ServerQueueHandler extends Thread{
             case "setHotel":
                 setHotel(jsonObject);
                 break;
+            case "rollDice":
+                rollDice(jsonObject);
+                break;
             default:
                 break;
         }
+    }
+
+    private void rollDice(JsonObject jsonObject) {
+        //TODO Roll the Dice ServerSide
+        int player = jsonToInt(jsonObject,"Player");
+        sendDiceResult(player, 7);
+    }
+
+    private void sendDiceResult(int idx,int result) {
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","rollDice");
+        json.addProperty("Result", result);
+        json.addProperty("Player", idx);
+        sendAllClients(json.toString());
     }
 
     private void setHotel(JsonObject jsonObject) {

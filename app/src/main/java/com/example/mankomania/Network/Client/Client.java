@@ -126,4 +126,11 @@ public class Client extends Thread {
     public String getOwnIP(){
         return gameData.getPlayers()[idx];
     }
+
+    public void roll_the_dice(){
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","rollDice");
+        json.addProperty("Player",idx);
+        output.println(json.toString());
+    }
 }
