@@ -1,6 +1,7 @@
 package com.example.mankomania.Network.Client;
 
 import com.example.mankomania.GameData.GameData;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -57,5 +58,68 @@ public class Client extends Thread {
 
     public void setIdx(int idx) {
         this.idx = idx;
+    }
+
+    public void setMoneyOnServer(int idx, int money){
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","setMoney");
+        json.addProperty("PLAYER", idx);
+        json.addProperty("Money", money);
+        output.println(json.toString());
+    }
+
+    public void setPostionOnServer(int idx, int pos){
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","setPosition");
+        json.addProperty("PLAYER", idx);
+        json.addProperty("Position", pos);
+        output.println(json.toString());
+    }
+
+    public void setHypoAktieOnServer(int idx, int count){
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","setHypoAktie");
+        json.addProperty("PLAYER", idx);
+        json.addProperty("Count", count);
+        output.println(json.toString());
+    }
+
+    public void setStrabagAktieOnServer(int idx, int count){
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","setStrabagAktie");
+        json.addProperty("PLAYER", idx);
+        json.addProperty("Count", count);
+        output.println(json.toString());
+    }
+
+    public void setInfineonAktieOnServer(int idx, int count){
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","setInfineonAktie");
+        json.addProperty("PLAYER", idx);
+        json.addProperty("Count", count);
+        output.println(json.toString());
+    }
+
+    public void setCheaterOnServer(int idx, boolean cheater){
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","setCheater");
+        json.addProperty("PLAYER", idx);
+        json.addProperty("Cheater", cheater);
+        output.println(json.toString());
+    }
+
+    public void setLottoOnServer(int amount){
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","setLotto");
+        json.addProperty("Amount", amount);
+        output.println(json.toString());
+    }
+
+    public void setHotelOnServer(int idx, int owner){
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","setHotel");
+        json.addProperty("Hotel", idx);
+        json.addProperty("Owner", owner);
+        output.println(json.toString());
     }
 }
