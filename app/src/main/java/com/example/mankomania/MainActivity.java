@@ -3,6 +3,8 @@ package com.example.mankomania;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.Formatter;
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void btn_Create_Lobby (View v) throws Exception {
+    public void btn_Create_Lobby_OnClick(View v) throws Exception {
         EditText et = (EditText) findViewById(R.id.textinput);
         Button btn_create = (Button) findViewById(R.id.btnCreateLobby);
         Button btn_connect = (Button) findViewById(R.id.btnConnectToLobby);
@@ -43,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
         Server server = new Server(1,1000000);
         server.start();
 
-        openMap("localhost");
+        openMap(et.getText().toString());
     }
 
-    public void btn_Connect_To_Lobby (View v)throws Exception{
+    public void btn_Connect_To_Lobby_OnClick(View v)throws Exception{
         EditText et = (EditText) findViewById(R.id.textinput);
         Button btn_create = (Button) findViewById(R.id.btnCreateLobby);
         Button btn_connect = (Button) findViewById(R.id.btnConnectToLobby);

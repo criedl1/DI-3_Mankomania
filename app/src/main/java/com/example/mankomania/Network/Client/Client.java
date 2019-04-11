@@ -122,4 +122,8 @@ public class Client extends Thread {
         json.addProperty("Owner", owner);
         output.println(json.toString());
     }
+
+    public String getOwnIP(){
+        return gameData.getPlayers()[idx];
+    }
 }
