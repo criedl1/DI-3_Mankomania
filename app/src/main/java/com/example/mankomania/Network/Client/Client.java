@@ -127,16 +127,23 @@ public class Client extends Thread {
         return gameData.getPlayers()[idx];
     }
 
-    public void roll_the_dice(){
+    public void rollTheDice(){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","rollDice");
         json.addProperty("Player",idx);
         output.println(json.toString());
     }
 
-    public void spin_the_wheel(){
+    public void spinTheWheel(){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","spinWheel");
+        json.addProperty("Player",idx);
+        output.println(json.toString());
+    }
+
+    public void endTurn(){
+        JsonObject json = new JsonObject();
+        json.addProperty("OPERATION","endTurn");
         json.addProperty("Player",idx);
         output.println(json.toString());
     }

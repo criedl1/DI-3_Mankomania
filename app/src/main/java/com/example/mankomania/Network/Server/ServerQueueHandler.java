@@ -67,20 +67,24 @@ public class ServerQueueHandler extends Thread{
             case "spinWheel":
                 spinWheel(jsonObject);
                 break;
-            //case "startTurn":
-                //startTurn(jsonObject);
-                //break;
+            case "endTurn":
+                endTurn(jsonObject);
+                break;
             default:
                 break;
         }
     }
 
-    private void startTurn(JsonObject jsonObject) {
+    private void endTurn(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject,"Player");
-        sendTurn(player);
+
+        player++;
+        player = player%gameData.getPlayers().length;
+
+        startTurn(player);
     }
 
-    private void sendTurn(int player) {
+    private void startTurn(int player) {
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","StartTurn");
         json.addProperty("Player", player);
