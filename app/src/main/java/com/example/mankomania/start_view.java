@@ -1,20 +1,17 @@
 package com.example.mankomania;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.Timer;
 
 
 public class start_view extends AppCompatActivity {
@@ -66,9 +63,10 @@ public class start_view extends AppCompatActivity {
 
     private float field1;
     private float field2;
+    private float field0;
 
     //Initialize Class
-    private Handler handler = new Handler();
+  //  private Handler handler = new Handler();
 
 
     @Override
@@ -87,6 +85,7 @@ public class start_view extends AppCompatActivity {
         //Position on fields for figures
         field1 = 300;
         field2 = 1000;
+        field0 = -50;
 
         //Get screen size
         WindowManager wm = getWindowManager();
@@ -113,57 +112,52 @@ public class start_view extends AppCompatActivity {
         player3 = new Player(figure3,money);
         player4 = new Player(figure4,money);
 
+        updateField();
 
 
     }
-    public void movePlayer(Player player, int fields){
-        //player.setCurrentField(player.getCurrentField()+fields);
-        // float distance = field2-player.getFigure().getX()+player.getFigure().getWidth();
-        float distance = 1000f;
+    public void movePlayerOut(Player player){
+        float distance;
+        boolean playeronleft= (player.getCurrentField() & 1) == 0;
+        if(playeronleft) {
+            distance = screenWidth;
+        } else {
+            distance = screenWidth;
+        }
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
-        animation.setDuration(2000);
+        animation.setDuration(5000);
+        animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                step2();
+            }
+        });
         animation.start();
 
-
-
     }
-    public void movePlayer2(Player player, int fields){
+
+    public void movePlayerIn(Player player){
+        float distance;
+        boolean playeronleft= (player.getCurrentField() & 1) == 0;
+        if(playeronleft) {
+            distance = field1-field0;
+        } else {
+            distance =field2-field0;
+        }
+        player.getFigure().setX(field0);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
+        animation.setDuration(5000);
+        animation.start();
+    }
+
+   /* public void movePlayer2(Player player, int fields){
         //player.setCurrentField(player.getCurrentField()+fields);
         // float distance = field2-player.getFigure().getX()+player.getFigure().getWidth();
         float distance = -1000f;
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
         animation.setDuration(2000);
         animation.start();
-
-
-
-    }
-
-  /* public void changePosition(){
-        //Speed
-        figure1X +=30;
-        figure2X +=30;
-        figure3X +=30;
-        figure4X +=30;
-        if(figure1.getX() > screenWidth) {
-        figure1X = -100.0f;
-
-        }
-        figure1.setX(figure1X);
-        if(figure2.getX() > screenWidth) {
-            figure2X = -100.0f;
-        }
-        figure2.setX(figure2X);
-        if(figure3.getX() > screenWidth) {
-            figure3X = -100.0f;
-        }
-        figure3.setX(figure3X);
-        if(figure4.getX() > screenWidth) {
-            figure4X = -100.0f;
-        }
-        figure4.setX(figure4X);
-        }*/
-
+    }*/
 
 
  private void initButtons() {
@@ -194,7 +188,7 @@ public class start_view extends AppCompatActivity {
         @Override
         public void onClick(View view) {
 
-          movePlayer(player1,1);
+        //movePlayerOut(player1,1);
         }
     });
 
@@ -203,7 +197,7 @@ public class start_view extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 player1.addMoney(12345);
-                movePlayer2(player1,1);
+             //   movePlayer2(player1,1);
 
 
             }
@@ -214,17 +208,33 @@ public class start_view extends AppCompatActivity {
         würfeln.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int würfelergebnis = throwDie()+throwDie();
+               /*int würfelergebnis = throwDie()+throwDie();
                 Player cPlayer = getCurrentPlayer();
+                movePlayerOut(cPlayer);
                 cPlayer.moveFields(würfelergebnis, allfields.length);
+                movePlayerIn(cPlayer);
                 displayField(cPlayer.getCurrentField());
                 setCurrentPlayer(cPlayer);
-                nextPlayer();
-
+                nextPlayer();*/
+               step1();
             }
         });
 
 }
+    public void step1() {
+        Player cPlayer = getCurrentPlayer();
+        displayField(cPlayer.getCurrentField());
+        movePlayerOut(cPlayer);
+    }
+    public void step2() {
+        int würfelergebnis = throwDie()+throwDie();
+        Player cPlayer = getCurrentPlayer();
+        cPlayer.moveFields(würfelergebnis, allfields.length);
+        movePlayerIn(cPlayer);
+        displayField(cPlayer.getCurrentField());
+        setCurrentPlayer(cPlayer);
+        nextPlayer();
+    }
     public int throwDie()
     {
         return (int)(Math.random() * 6) + 1;
@@ -255,8 +265,7 @@ public class start_view extends AppCompatActivity {
         currentField+=2;
         // Log.d("ds","xx");
         currentField = currentField % allfields.length;
-        imgview1.setImageResource(allfields[currentField]);
-        imgview2.setImageResource(allfields[currentField+1]);
+        updateField();
     }
 
     public void furtherSideofMap() {
@@ -266,8 +275,7 @@ public class start_view extends AppCompatActivity {
         } else {
             currentField=allfields.length+currentField;
         }
-        imgview1.setImageResource(allfields[currentField]);
-        imgview2.setImageResource(allfields[currentField+1]);
+       updateField();
     }
 
     public void displayField(int field) {
@@ -275,8 +283,55 @@ public class start_view extends AppCompatActivity {
         if ( (currentField & 1) != 0 ) { currentField--;}
 
         currentField = currentField % allfields.length;
+        updateField();
+    }
+
+    public void updateField() {
+        updatePlayers();
         imgview1.setImageResource(allfields[currentField]);
         imgview2.setImageResource(allfields[currentField+1]);
     }
+    public void updatePlayers() {
+        if(player1.getCurrentField() == currentField) {
+            player1.getFigure().setX(field1);
+            player1.getFigure().setVisibility(View.VISIBLE);
+        }else if(player1.getCurrentField() == currentField+1) {
+            player1.getFigure().setX(field2);
+            player1.getFigure().setVisibility(View.VISIBLE);
+        }
+        else {
+            player1.getFigure().setVisibility(View.INVISIBLE);
+        }
+        if(player2.getCurrentField() == currentField) {
+            player2.getFigure().setX(field1);
+            player2.getFigure().setVisibility(View.VISIBLE);
+        }else if(player2.getCurrentField() == currentField+1) {
+            player2.getFigure().setX(field2);
+            player2.getFigure().setVisibility(View.VISIBLE);
+        }
+        else {
+            player2.getFigure().setVisibility(View.INVISIBLE);
+        }
+        if(player3.getCurrentField() == currentField) {
+            player3.getFigure().setX(field1);
+            player3.getFigure().setVisibility(View.VISIBLE);
+        }else if(player3.getCurrentField() == currentField+1) {
+            player3.getFigure().setX(field2);
+            player3.getFigure().setVisibility(View.VISIBLE);
+        }
+        else {
+            player3.getFigure().setVisibility(View.INVISIBLE);
+        }
+        if(player4.getCurrentField() == currentField) {
+            player4.getFigure().setX(field1);
+            player4.getFigure().setVisibility(View.VISIBLE);
+        }else if(player4.getCurrentField() == currentField+1) {
+            player4.getFigure().setX(field2);
+            player4.getFigure().setVisibility(View.VISIBLE);
+        }
+        else {
+            player4.getFigure().setVisibility(View.INVISIBLE);
+        }
 
+    }
 }
