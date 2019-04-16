@@ -23,25 +23,10 @@ public class start_view extends AppCompatActivity {
     private static Button back;
     private static ImageView imgview1;
     private static ImageView imgview2;
-    private int currentField;
-    private int counter;
+    private int currentField=0;
+    private int currentPlayer = 1;
+    private int numberofplayers = 2;
     private static TextView money;
-
-    int[] fields1 ={
-            R.drawable.field_start, R.drawable.field_aktie1, R.drawable.field_lindwurm,
-            R.drawable.field_lottery, R.drawable.field_casino, R.drawable.field_getsomemoney,
-            R.drawable.field_alterplatz, R.drawable.field_aktie2, R.drawable.field_horserace,
-            R.drawable.field_stadium, R.drawable.field_casino, R.drawable.field_alterplatz,
-            R.drawable.field_horserace, R.drawable.field_lindwurm,R.drawable.field_klage,
-            R.drawable.field_hotelsandwirth, R.drawable.field_getsomemoney, R.drawable.field_aktie2};
-
-    int[] fields2 = {
-            R.drawable.field_woerthersee, R.drawable.field_horserace, R.drawable.field_casino,
-            R.drawable.field_zoo, R.drawable.field_aktie3, R.drawable.field_lindwurm,
-            R.drawable.field_woerthersee, R.drawable.field_klage, R.drawable.field_casino,
-            R.drawable.field_seeparkhotel, R.drawable.field_plattenwirt, R.drawable.field_zoo,
-            R.drawable.field_stadium, R.drawable.field_getsomemoney, R.drawable.field_aktie3,
-            R.drawable.field_aktie1, R.drawable.field_casino, R.drawable.field_zoo};
 
     int[] allfields = { R.drawable.field_start, R.drawable.field_aktie1, R.drawable.field_lindwurm,
             R.drawable.field_lottery, R.drawable.field_casino, R.drawable.field_getsomemoney,
@@ -132,16 +117,29 @@ public class start_view extends AppCompatActivity {
 
     }
     public void movePlayer(Player player, int fields){
-        player.setCurrentField(player.getCurrentField()+fields);
-        float distance = field2-player.getFigure().getX()+player.getFigure().getWidth();
+        //player.setCurrentField(player.getCurrentField()+fields);
+        // float distance = field2-player.getFigure().getX()+player.getFigure().getWidth();
+        float distance = 1000f;
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
         animation.setDuration(2000);
         animation.start();
 
 
+
+    }
+    public void movePlayer2(Player player, int fields){
+        //player.setCurrentField(player.getCurrentField()+fields);
+        // float distance = field2-player.getFigure().getX()+player.getFigure().getWidth();
+        float distance = -1000f;
+        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
+        animation.setDuration(2000);
+        animation.start();
+
+
+
     }
 
-   /* public void changePosition(){
+  /* public void changePosition(){
         //Speed
         figure1X +=30;
         figure2X +=30;
@@ -205,44 +203,80 @@ public class start_view extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 player1.addMoney(12345);
-             //   imgview1.setImageResource(fields1[5]);
-               // f1.setNewField1(5);
-                //f2.setNewField2(5);
-                setMap(5);
+                movePlayer2(player1,1);
 
 
             }
 
         });
+
+        Button würfeln = (Button)findViewById(R.id.würfeln);
+        würfeln.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int würfelergebnis = throwDie()+throwDie();
+                Player cPlayer = getCurrentPlayer();
+                cPlayer.moveFields(würfelergebnis, allfields.length);
+                displayField(cPlayer.getCurrentField());
+                setCurrentPlayer(cPlayer);
+                nextPlayer();
+
+            }
+        });
+
 }
+    public int throwDie()
+    {
+        return (int)(Math.random() * 6) + 1;
+    }
+
+    public void nextPlayer() {
+     currentPlayer++;
+     if(currentPlayer > numberofplayers) {
+         currentPlayer = 1;
+     }
+    }
+    public Player getCurrentPlayer() {
+     if(currentPlayer == 1) return player1;
+        if(currentPlayer == 2) return player2;
+        if(currentPlayer == 3) return player3;
+        if(currentPlayer == 4) return player4;
+        return null;
+    }
+    public void setCurrentPlayer(Player player) {
+        if(currentPlayer == 1) player1=player;
+        if(currentPlayer == 2) player2=player;
+        if(currentPlayer == 3) player3=player;
+        if(currentPlayer == 4) player4=player;
+    }
+
 
     public void nextSideofMap() {
-        currentField++;
-        counter++;
+        currentField+=2;
         // Log.d("ds","xx");
-        currentField = currentField % fields1.length;
-        imgview1.setImageResource(fields1[currentField-1]);
-        imgview2.setImageResource(fields2[currentField-1]);
+        currentField = currentField % allfields.length;
+        imgview1.setImageResource(allfields[currentField]);
+        imgview2.setImageResource(allfields[currentField+1]);
     }
 
     public void furtherSideofMap() {
-        counter++;
-        if(currentField > 0){
-            currentField--;
-            currentField = currentField % fields1.length;
-            imgview1.setImageResource(fields1[currentField]);
-            imgview2.setImageResource(fields2[currentField]);
+        currentField-=2;
+        if(currentField >= 0){
+
         } else {
-        imgview1.setImageResource(fields1[fields1.length-1]);
-        imgview2.setImageResource(fields2[fields2.length-1]);
+            currentField=allfields.length+currentField;
         }
+        imgview1.setImageResource(allfields[currentField]);
+        imgview2.setImageResource(allfields[currentField+1]);
     }
 
-    public void setMap(int würfelergebnis) {
-        currentField = currentField + würfelergebnis;
-        currentField = currentField % fields1.length;
-        imgview1.setImageResource(fields1[currentField-1]);
-        imgview2.setImageResource(fields2[currentField-1]);
+    public void displayField(int field) {
+        currentField = field;
+        if ( (currentField & 1) != 0 ) { currentField--;}
+
+        currentField = currentField % allfields.length;
+        imgview1.setImageResource(allfields[currentField]);
+        imgview2.setImageResource(allfields[currentField+1]);
     }
 
 }

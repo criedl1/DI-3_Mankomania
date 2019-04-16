@@ -20,6 +20,11 @@ public class Player extends start_view{
 
     }
 
+    public void moveFields(int fields, int maxfields) {
+        currentField = currentField + fields;
+        currentField = currentField % maxfields;
+    }
+
     public void addMoney(int amount) {
 
         money = Integer.parseInt(currentmoney.getText().toString());
