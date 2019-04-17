@@ -3,10 +3,12 @@ package com.example.mankomania;
 public class FieldClass {
     ColorEnum color;
     int value;
+    float degree;
 
-    public FieldClass(ColorEnum color, int value) {
+    public FieldClass(ColorEnum color, int value, float degree) {
         this.color = color;
         this.value = value;
+        this.degree = degree;
     }
 
     public ColorEnum getColor() {
@@ -15,5 +17,9 @@ public class FieldClass {
 
     public int getValue() {
         return value;
+    }
+
+    public float getDegree(){
+        return this.degree;
     }
 }

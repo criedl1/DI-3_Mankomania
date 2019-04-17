@@ -29,10 +29,14 @@ public class PopClass extends AppCompatDialogFragment {
         DozenActivity.setReturnString(null)
         ;}
 
-        else{
+        else if(NumberActivity.getReturnString() != null){
         alert.setTitle(NumberActivity.getReturnString());
         NumberActivity.setReturnString(null)
         ;}
+
+        else{
+
+        }
 
         theNumberIs = Integer.toString(RouletteClass.getRandomNumber());
         alert.setMessage("Die Zahl lautet: " + theNumberIs);

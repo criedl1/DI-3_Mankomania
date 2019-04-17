@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 public class RotateActivity extends AppCompatActivity {
@@ -24,17 +25,41 @@ public class RotateActivity extends AppCompatActivity {
 
     private void rotateAnimation() {
         rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
-        rotateAnimation.hasEnded();
         imageView.startAnimation(rotateAnimation);
         imageView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    FieldClass field = RouletteClass.getTheField();
+                    float degree = field.getDegree();
 
-            @Override
-            public void run() {
-                openPopUp();
-            }
-        }, 2500);
+                    final RotateAnimation finalRotate = new RotateAnimation(0.0f, 360 + degree*(-1),
+                            RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+                            RotateAnimation.RELATIVE_TO_SELF, 0.5f);
 
-    }
+                    finalRotate.setDuration(1000);
+                    finalRotate.setFillAfter(true);
+                    imageView.startAnimation(finalRotate);
+                    finalRotate.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            openPopUp();
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                });
+                }
+            }, 1999);
+        }
+
+
 
     public void openPopUp() {
        PopClass popClass = new PopClass();
