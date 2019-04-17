@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.Queue;
+import java.util.Random;
 
 public class ServerQueueHandler extends Thread{
     ClientHandler[] clientHandlers;
@@ -15,8 +16,10 @@ public class ServerQueueHandler extends Thread{
         this.queue = queue;
         this.clientHandlers = clientHandlers;
         this.gameData = gameData;
+        this.gameData.setServer(this);
     }
 
+    @Override
     public void run(){
         String in;
         try{
@@ -85,6 +88,7 @@ public class ServerQueueHandler extends Thread{
     }
 
     private void startTurn(int player) {
+        gameData.setTurn(player);
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","StartTurn");
         json.addProperty("Player", player);
@@ -109,6 +113,8 @@ public class ServerQueueHandler extends Thread{
     private void rollDice(JsonObject jsonObject) {
         // TODO Roll the Dice ServerSide
         int player = jsonToInt(jsonObject,"Player");
+        int result = new Random().nextInt(12)+1;
+        gameData.movePlayer(result);
         sendDiceResult(player, 7);
     }
 
