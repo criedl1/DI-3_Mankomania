@@ -1,6 +1,5 @@
 package com.example.mankomania;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.Animation;
@@ -28,15 +27,17 @@ public class RotateActivity extends AppCompatActivity {
         rotateAnimation.hasEnded();
         imageView.startAnimation(rotateAnimation);
         imageView.postDelayed(new Runnable() {
+
             @Override
             public void run() {
-                openPopUpActivity();
+                openPopUp();
             }
         }, 2500);
+
     }
 
-    public void openPopUpActivity() {
-        Intent it = new Intent(this, PopClass.class);
-        startActivity(it);
+    public void openPopUp() {
+       PopClass popClass = new PopClass();
+       popClass.show(getSupportFragmentManager(), "alert");
     }
 }

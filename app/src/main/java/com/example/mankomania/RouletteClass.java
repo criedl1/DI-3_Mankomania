@@ -2,7 +2,7 @@ package com.example.mankomania;
 
 public class RouletteClass {
 
-    static double randomNumber;
+    static int randomNumber;
 
     public FieldClass[] setUpFields() {
         FieldClass fieldClass0 = new FieldClass(ColorEnum.GREEN, 0);
@@ -53,12 +53,12 @@ public class RouletteClass {
         return array;
     }
 
-    public double spinIt(){
-        this.randomNumber = (int) (Math.random() *36) + 0;
+    public int spinIt(){
+        randomNumber = (int) (Math.random() *36) + 0;
         return randomNumber;
     }
 
-    public double getRandomNumber(){
+    public static int getRandomNumber(){
         return randomNumber;
     }
 }

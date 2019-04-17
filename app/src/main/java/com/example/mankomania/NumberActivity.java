@@ -1,5 +1,6 @@
 package com.example.mankomania;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ public class NumberActivity extends AppCompatActivity {
     TextView selectNumber;
     Button go;
     int choosenNumber;
+    static String returnString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +36,17 @@ public class NumberActivity extends AppCompatActivity {
                 //was ist wenn EditText leer?
                 choosenNumber = Integer.valueOf(number.getText().toString());
                 spinWheel(choosenNumber);
+                openRotateActivity();
             }
         });
 
     }
 
-    public String spinWheel(int choosenNumber) {
+    public int spinWheel(int choosenNumber) {
 
         int money = 1000000; //nur zu Testzwecken
 
-        double rouletteNumber = roulette.spinIt();
-        String returnString = null;
+        int rouletteNumber = roulette.spinIt();
 
         if (rouletteNumber == choosenNumber) {
             money = money + 145000;  //--> 150000 - 5000 Einsatz
@@ -54,7 +56,20 @@ public class NumberActivity extends AppCompatActivity {
             money = money - 50000; //Einsatz
             returnString = "Du hast verloren.";
         }
+        return money;
+    }
+
+    public static String getReturnString(){
         return returnString;
     }
+
+    public static void setReturnString(String newReturnString){
+        returnString = newReturnString;
     }
+
+    public void openRotateActivity(){
+        Intent it = new Intent(this, RotateActivity.class);
+        startActivity(it);
+    }
+}
 

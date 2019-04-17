@@ -1,31 +1,48 @@
 package com.example.mankomania;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.util.DisplayMetrics;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-public class PopClass extends Activity {
+public class PopClass extends AppCompatDialogFragment {
 
-    RouletteClass roulette = new RouletteClass();
-    PopupWindow popup= new PopupWindow(this);
-    
+    String theNumberIs;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_popup);
+        if(ColorActivity.getReturnString()!= null){
+        alert.setTitle(ColorActivity.getReturnString());
+        ColorActivity.setReturnString(null);
+        }
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-        getWindow().setLayout((int) (width*0.8), (int) (height*0.6));
-        double number = roulette.getRandomNumber();
-        String numberString = Double.toString(number);
+        else if(DozenActivity.getReturnString()!= null){
+        alert.setTitle(DozenActivity.getReturnString());
+        DozenActivity.setReturnString(null)
+        ;}
 
-       // ((TextView)popup.getContentView().findViewById(R.id.tvPopUp)).setText("Die Zahl lautet" + numberString);
+        else{
+        alert.setTitle(NumberActivity.getReturnString());
+        NumberActivity.setReturnString(null)
+        ;}
+
+        theNumberIs = Integer.toString(RouletteClass.getRandomNumber());
+        alert.setMessage("Die Zahl lautet: " + theNumberIs);
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        return alert.create();
     }
 }

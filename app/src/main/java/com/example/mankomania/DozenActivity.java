@@ -1,5 +1,6 @@
 package com.example.mankomania;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ public class DozenActivity extends AppCompatActivity {
     Button btn13;
     Button btn25;
 
+    static String returnString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class DozenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 spinWheel(1);
+                openRotateActivity();
             }
         });
 
@@ -44,6 +47,7 @@ public class DozenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 spinWheel(2);
+                openRotateActivity();
             }
         });
 
@@ -51,16 +55,16 @@ public class DozenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 spinWheel(3);
+                openRotateActivity();
             }
         });
     }
 
-    public String spinWheel(int choosenDozen){
+    public int spinWheel(int choosenDozen){
 
         int money = 1000000; //nur zu Testzwecken
 
-        String returnString = null;
-        double rouletteNumber = roulette.spinIt();
+        int rouletteNumber = roulette.spinIt();
         int dozen = 0;
 
         for(int i = 0; i < array.length; i++){
@@ -83,6 +87,19 @@ public class DozenActivity extends AppCompatActivity {
             money = money - 20000;
             returnString = "Du hast verloren.";
         }
+        return money;
+    }
+
+    public static String getReturnString(){
         return returnString;
+    }
+
+    public static void setReturnString(String newReturnString){
+        returnString = newReturnString;
+    }
+
+    public void openRotateActivity(){
+        Intent it = new Intent(this, RotateActivity.class);
+        startActivity(it);
     }
 }
