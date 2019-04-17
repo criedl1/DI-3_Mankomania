@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class PopClass extends AppCompatDialogFragment {
 
     String theNumberIs;
+    String color;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -38,8 +39,20 @@ public class PopClass extends AppCompatDialogFragment {
 
         }
 
+        color = RouletteClass.getTheField().getColor().toString();
+
+        if(color.equals("BLACK")){
+            color = "schwarz";
+        }
+        else if(color.equals("RED")){
+            color = "rot";
+        }
+        else{
+            color = "green";
+        }
+
         theNumberIs = Integer.toString(RouletteClass.getRandomNumber());
-        alert.setMessage("Die Zahl lautet: " + theNumberIs);
+        alert.setMessage("Die Zahl lautet: " + theNumberIs + ", die Farbe ist " + color + ".");
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
