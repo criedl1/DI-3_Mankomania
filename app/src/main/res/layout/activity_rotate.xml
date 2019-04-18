@@ -6,29 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".RotateActivity">
 
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="218dp"
+        android:layout_height="317dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="233dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/jetons" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="124dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="9dp"
-        android:layout_marginEnd="124dp"
+        android:layout_marginEnd="7dp"
         android:layout_marginBottom="9dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/roulette" />
+
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="29dp"
+        android:layout_width="0dp"
         android:layout_height="23dp"
+        android:layout_marginEnd="236dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/pointer" />
-
 </android.support.constraint.ConstraintLayout>

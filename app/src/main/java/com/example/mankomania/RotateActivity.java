@@ -20,46 +20,44 @@ public class RotateActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView);
 
         rotateAnimation();
-
     }
 
     private void rotateAnimation() {
         rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
         imageView.startAnimation(rotateAnimation);
-        imageView.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    FieldClass field = RouletteClass.getTheField();
-                    float degree = field.getDegree();
+        rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
 
-                    final RotateAnimation finalRotate = new RotateAnimation(0.0f, 360 + degree*(-1),
-                            RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-                            RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+            }
 
-                    finalRotate.setDuration(1000);
-                    finalRotate.setFillAfter(true);
-                    imageView.startAnimation(finalRotate);
-                    finalRotate.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                FieldClass field = RouletteClass.getTheField();
+                float degree = field.getDegree();
 
-                        }
+                final RotateAnimation finalRotate = new RotateAnimation(0.0f, 360 + degree*(-1),
+                        RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+                        RotateAnimation.RELATIVE_TO_SELF, 0.5f);
 
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            openPopUp();
-                        }
+                finalRotate.setDuration(1000);
+                finalRotate.setFillAfter(true);
+                imageView.startAnimation(finalRotate);
+                imageView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        openPopUp();
+                    }
+                },2000);
+            }
 
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
+            @Override
+            public void onAnimationRepeat(Animation animation) {
 
-                        }
-                });
-                }
-            }, 1999);
+            }
+        });
+
         }
-
-
 
     public void openPopUp() {
        PopClass popClass = new PopClass();
