@@ -24,9 +24,6 @@ public class Client extends Thread {
     private static PrintWriter output;
     private static BufferedReader input;
     private Queue<String> queue;
-
-
-
     private int idx;
 
     public Client(String ipHost){
@@ -62,7 +59,6 @@ public class Client extends Thread {
     public void setIdx(int idx) {
         this.idx = idx;
     }
-
     public int getIdx() {
         return idx;
     }
@@ -80,7 +76,6 @@ public class Client extends Thread {
         };
         thread.start();
     }
-
     public void setPostionOnServer(final int idx,final int pos){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -94,7 +89,6 @@ public class Client extends Thread {
         };
         thread.start();
     }
-
     public void setHypoAktieOnServer(final int idx,final int count){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -108,7 +102,6 @@ public class Client extends Thread {
         };
         thread.start();
     }
-
     public void setStrabagAktieOnServer(final int idx,final int count){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -122,7 +115,6 @@ public class Client extends Thread {
         };
         thread.start();
     }
-
     public void setInfineonAktieOnServer(final int idx, final int count){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -136,7 +128,6 @@ public class Client extends Thread {
         };
         thread.start();
     }
-
     public void setCheaterOnServer(final int idx,final boolean cheater){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -150,7 +141,6 @@ public class Client extends Thread {
         };
         thread.start();
     }
-
     public void setLottoOnServer(final int amount){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -163,7 +153,6 @@ public class Client extends Thread {
         };
         thread.start();
     }
-
     public void setHotelOnServer(final int idx,final int owner){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -177,11 +166,6 @@ public class Client extends Thread {
         };
         thread.start();
     }
-
-    public String getOwnIP(){
-        return gameData.getPlayers()[idx];
-    }
-
     public void rollTheDice(){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -194,7 +178,6 @@ public class Client extends Thread {
         };
         thread.start();
     }
-
     public void spinTheWheel(){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -207,7 +190,6 @@ public class Client extends Thread {
         };
         thread.start();
     }
-
     public void endTurn(){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -220,4 +202,36 @@ public class Client extends Thread {
         };
         thread.start();
     }
+
+    public String getOwnIP(){
+        return gameData.getPlayers()[idx];
+    }
+    public String[] getPlayers() {
+        return gameData.getPlayers();
+    }
+    public int[] getPosition() {
+        return gameData.getPosition();
+    }
+    public int[] getMoney() {
+        return gameData.getMoney();
+    }
+    public int getLotto() {
+        return gameData.getLotto();
+    }
+    public int[] getHotels() {
+        return gameData.getHotels();
+    }
+    public int[] getInfineonAktie() {
+        return gameData.getInfineonAktie();
+    }
+    public int[] getHypoAktie() {
+        return gameData.getHypoAktie();
+    }
+    public int[] getStrabagAktie() {
+        return gameData.getStrabagAktie();
+    }
+    public boolean[] getIsCheater() {
+        return gameData.getIsCheater();
+    }
+
 }
