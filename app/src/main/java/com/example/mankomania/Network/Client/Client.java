@@ -56,6 +56,7 @@ public class Client extends Thread {
         }
     }
 
+    //Index
     public void setIdx(int idx) {
         this.idx = idx;
     }
@@ -63,6 +64,7 @@ public class Client extends Thread {
         return idx;
     }
 
+    //Server Requests
     public void setMoneyOnServer(final int idx, final int money){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -203,6 +205,7 @@ public class Client extends Thread {
         thread.start();
     }
 
+    //GameDate Requests
     public String getOwnIP(){
         return gameData.getPlayers()[idx];
     }
