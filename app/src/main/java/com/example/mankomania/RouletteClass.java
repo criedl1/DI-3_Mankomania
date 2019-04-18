@@ -57,6 +57,7 @@ public class RouletteClass {
     }
 
     public int spinIt(){
+        setUpFields();
         randomNumber = (int) (Math.random() *36) + 0;
         return randomNumber;
     }

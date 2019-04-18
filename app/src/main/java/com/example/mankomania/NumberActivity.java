@@ -33,13 +33,16 @@ public class NumberActivity extends AppCompatActivity {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //was ist wenn EditText leer?
                 choosenNumber = Integer.valueOf(number.getText().toString());
-                spinWheel(choosenNumber);
-                openRotateActivity();
+                if (choosenNumber > 36 || choosenNumber < 0 || number.getText().toString() == null){
+                    openErrorPopUp();
+                }
+                else {
+                    spinWheel(choosenNumber);
+                    openRotateActivity();
+                }
             }
         });
-
     }
 
     public int spinWheel(int choosenNumber) {
@@ -70,6 +73,11 @@ public class NumberActivity extends AppCompatActivity {
     public void openRotateActivity(){
         Intent it = new Intent(this, RotateActivity.class);
         startActivity(it);
+    }
+
+    public void openErrorPopUp() {
+       ErrorClass error = new ErrorClass();
+       error.show(getSupportFragmentManager(), "alert");
     }
 }
 
