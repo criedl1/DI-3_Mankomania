@@ -19,7 +19,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 // Client class
 public class Client extends Thread {
-    public final GameData gameData = new GameData();
+    private final GameData gameData = new GameData();
     private static String ipHost;
     private static PrintWriter output;
     private static BufferedReader input;

@@ -29,9 +29,9 @@ public class Example extends AppCompatActivity {
         // change something
         client.setPostionOnServer(0, 23);
 
-        Thread.sleep(1);
+        Thread.sleep(500);
 
         // Get something
-        et.setText("Position: " + client.gameData.getPosition()[0]);
+        et.setText("Position: " + client.getPosition()[0]);
     }
 }
