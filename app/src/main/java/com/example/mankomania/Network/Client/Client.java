@@ -19,7 +19,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 // Client class
 public class Client extends Thread {
-    public final GameData gameData = new GameData();
+    private final GameData gameData = new GameData();
     private static String ipHost;
     private static PrintWriter output;
     private static BufferedReader input;
@@ -56,95 +56,185 @@ public class Client extends Thread {
         }
     }
 
+    //Index
     public void setIdx(int idx) {
         this.idx = idx;
     }
-
-    public void setMoneyOnServer(int idx, int money){
-        JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","sendMoney");
-        json.addProperty("PLAYER", idx);
-        json.addProperty("Money", money);
-        output.println(json.toString());
+    public int getIdx() {
+        return idx;
     }
 
-    public void setPostionOnServer(int idx, int pos){
-        JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setPosition");
-        json.addProperty("PLAYER", idx);
-        json.addProperty("Position", pos);
-        output.println(json.toString());
+    //Server Requests
+    public void setMoneyOnServer(final int idx, final int money){
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty("OPERATION","sendMoney");
+                json.addProperty("PLAYER", idx);
+                json.addProperty("Money", money);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+    public void setPostionOnServer(final int idx,final int pos){
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty("OPERATION","setPosition");
+                json.addProperty("PLAYER", idx);
+                json.addProperty("Position", pos);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+    public void setHypoAktieOnServer(final int idx,final int count){
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty("OPERATION","setHypoAktie");
+                json.addProperty("PLAYER", idx);
+                json.addProperty("Count", count);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+    public void setStrabagAktieOnServer(final int idx,final int count){
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty("OPERATION","setStrabagAktie");
+                json.addProperty("PLAYER", idx);
+                json.addProperty("Count", count);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+    public void setInfineonAktieOnServer(final int idx, final int count){
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty("OPERATION","setInfineonAktie");
+                json.addProperty("PLAYER", idx);
+                json.addProperty("Count", count);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+    public void setCheaterOnServer(final int idx,final boolean cheater){
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty("OPERATION","setCheater");
+                json.addProperty("PLAYER", idx);
+                json.addProperty("Cheater", cheater);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+    public void setLottoOnServer(final int amount){
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty("OPERATION","setLotto");
+                json.addProperty("Amount", amount);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+    public void setHotelOnServer(final int idx,final int owner){
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty("OPERATION","setHotel");
+                json.addProperty("Hotel", idx);
+                json.addProperty("Owner", owner);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+    public void rollTheDice(){
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty("OPERATION","rollDice");
+                json.addProperty("Player",idx);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+    public void spinTheWheel(){
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty("OPERATION","spinWheel");
+                json.addProperty("Player",idx);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+    public void endTurn(){
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty("OPERATION","endTurn");
+                json.addProperty("Player",idx);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
     }
 
-    public void setHypoAktieOnServer(int idx, int count){
-        JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setHypoAktie");
-        json.addProperty("PLAYER", idx);
-        json.addProperty("Count", count);
-        output.println(json.toString());
-    }
-
-    public void setStrabagAktieOnServer(int idx, int count){
-        JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setStrabagAktie");
-        json.addProperty("PLAYER", idx);
-        json.addProperty("Count", count);
-        output.println(json.toString());
-    }
-
-    public void setInfineonAktieOnServer(int idx, int count){
-        JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setInfineonAktie");
-        json.addProperty("PLAYER", idx);
-        json.addProperty("Count", count);
-        output.println(json.toString());
-    }
-
-    public void setCheaterOnServer(int idx, boolean cheater){
-        JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setCheater");
-        json.addProperty("PLAYER", idx);
-        json.addProperty("Cheater", cheater);
-        output.println(json.toString());
-    }
-
-    public void setLottoOnServer(int amount){
-        JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setLotto");
-        json.addProperty("Amount", amount);
-        output.println(json.toString());
-    }
-
-    public void setHotelOnServer(int idx, int owner){
-        JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setHotel");
-        json.addProperty("Hotel", idx);
-        json.addProperty("Owner", owner);
-        output.println(json.toString());
-    }
-
+    //GameDate Requests
     public String getOwnIP(){
         return gameData.getPlayers()[idx];
     }
-
-    public void rollTheDice(){
-        JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","rollDice");
-        json.addProperty("Player",idx);
-        output.println(json.toString());
+    public String[] getPlayers() {
+        return gameData.getPlayers();
+    }
+    public int[] getPosition() {
+        return gameData.getPosition();
+    }
+    public int[] getMoney() {
+        return gameData.getMoney();
+    }
+    public int getLotto() {
+        return gameData.getLotto();
+    }
+    public int[] getHotels() {
+        return gameData.getHotels();
+    }
+    public int[] getInfineonAktie() {
+        return gameData.getInfineonAktie();
+    }
+    public int[] getHypoAktie() {
+        return gameData.getHypoAktie();
+    }
+    public int[] getStrabagAktie() {
+        return gameData.getStrabagAktie();
+    }
+    public boolean[] getIsCheater() {
+        return gameData.getIsCheater();
     }
 
-    public void spinTheWheel(){
-        JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","spinWheel");
-        json.addProperty("Player",idx);
-        output.println(json.toString());
-    }
-
-    public void endTurn(){
-        JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","endTurn");
-        json.addProperty("Player",idx);
-        output.println(json.toString());
-    }
 }

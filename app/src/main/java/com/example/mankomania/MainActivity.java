@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Get your IPAddress
     private String getIPAddress() {
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         return Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());

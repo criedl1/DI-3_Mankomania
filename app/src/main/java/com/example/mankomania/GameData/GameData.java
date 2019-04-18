@@ -12,21 +12,21 @@ public class GameData {
     private boolean[] isCheater;
 
     public String[] getPlayers() {
-        return Players;
+        return Players.clone();
     }
     public void setPlayers(String[] player) {
         Players = player;
     }
 
     public int[] getPosition() {
-        return Position;
+        return Position.clone();
     }
     public void setPosition(int[] position) {
         Position = position;
     }
 
     public int[] getMoney() {
-        return Money;
+        return Money.clone();
     }
     public void setMoney(int[] money) {
         Money = money;
@@ -40,34 +40,35 @@ public class GameData {
     }
 
     public int[] getHotels() {
-        return hotels;
+        return hotels.clone();
     }
     public void setHotels(int[] hotels) {
         this.hotels = hotels;
     }
 
     public int[] getInfineonAktie() {
-        return infineonAktie;
+        return infineonAktie.clone();
     }
     public void setInfineonAktie(int[] infineonAktie) {
         this.infineonAktie = infineonAktie;
     }
 
     public int[] getHypoAktie() {
-        return hypoAktie;
+        return hypoAktie.clone();
     }
     public void setHypoAktie(int[] hypoAktie) {
         this.hypoAktie = hypoAktie;
     }
+
     public int[] getStrabagAktie() {
-        return strabagAktie;
+        return strabagAktie.clone();
     }
     public void setStrabagAktie(int[] strabagAktie) {
         this.strabagAktie = strabagAktie;
     }
 
     public boolean[] getIsCheater() {
-        return isCheater;
+        return isCheater.clone();
     }
     public void setIsCheater(boolean[] isCheater) {
         this.isCheater = isCheater;
