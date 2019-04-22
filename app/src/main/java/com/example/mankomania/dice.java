@@ -75,13 +75,16 @@ public class dice extends AppCompatActivity implements SensorEventListener{
             rollTheDice();
         }
     }
-    public void rollTheDice(){
+    public void rollTheDice() throws RuntimeException{
+        //servercall draus machen + neuer call show result von server
         mediaPlayer = MediaPlayer.create(this,R.raw.dice);
         mediaPlayer.start();
         int dice1 = rand.nextInt(6)+1;
         int dice2 = rand.nextInt(6)+1;
         bool1=true;
         Toast.makeText(this,"Du hast " + (dice1+dice2) +" gewürfelt",Toast.LENGTH_SHORT).show();
+
+        try{
         switch (dice1) {
             case 1:
                 ivDice1.setImageResource(R.drawable.dice1);
@@ -101,26 +104,37 @@ public class dice extends AppCompatActivity implements SensorEventListener{
             case 6:
                 ivDice1.setImageResource(R.drawable.dice6);
                 break;
+            default:
+                throw new RuntimeException("unreachable");
         }
-        switch (dice2) {
-            case 1:
-                ivDice2.setImageResource(R.drawable.dice1);
-                break;
-            case 2:
-                ivDice2.setImageResource(R.drawable.dice2);
-                break;
-            case 3:
-                ivDice2.setImageResource(R.drawable.dice3);
-                break;
-            case 4:
-                ivDice2.setImageResource(R.drawable.dice4);
-                break;
-            case 5:
-                ivDice2.setImageResource(R.drawable.dice5);
-                break;
-            case 6:
-                ivDice2.setImageResource(R.drawable.dice6);
-                break;
+        }catch (RuntimeException e){
+            System.out.println("unreachable");
+        }
+        try {
+            switch (dice2) {
+                case 1:
+                    ivDice2.setImageResource(R.drawable.dice1);
+                    break;
+                case 2:
+                    ivDice2.setImageResource(R.drawable.dice2);
+                    break;
+                case 3:
+                    ivDice2.setImageResource(R.drawable.dice3);
+                    break;
+                case 4:
+                    ivDice2.setImageResource(R.drawable.dice4);
+                    break;
+                case 5:
+                    ivDice2.setImageResource(R.drawable.dice5);
+                    break;
+                case 6:
+                    ivDice2.setImageResource(R.drawable.dice6);
+                    break;
+                default:
+                    throw new RuntimeException("unreachable");
+            }
+        }catch (RuntimeException e){
+            System.out.println("unreachable");
         }
         ivDice1.animate().scaleX(0.8f).scaleY(0.8f).setDuration(1300);
         ivDice2.animate().scaleX(0.8f).scaleY(0.8f).setDuration(1300);
