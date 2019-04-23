@@ -1,4 +1,4 @@
-package com.example.mankomania;
+package com.example.mankomania.Map;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -14,7 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mankomania.Map.Player;
 import com.example.mankomania.Network.Client.Client;
+import com.example.mankomania.R;
 
 
 public class start_view extends AppCompatActivity {

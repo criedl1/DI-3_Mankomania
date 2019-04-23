@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Example"></activity>
         <activity
-            android:name=".start_view"
+            android:name=".Map.start_view"
             android:screenOrientation="landscape" />
         <activity android:name=".MainActivity">
             <intent-filter>

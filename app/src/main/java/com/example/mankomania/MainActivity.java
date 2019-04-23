@@ -3,8 +3,6 @@ package com.example.mankomania;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.wifi.WifiManager;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.Formatter;
@@ -12,10 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.mankomania.Map.start_view;
 import com.example.mankomania.Network.Client.Client;
-import com.example.mankomania.GameData.GameData;
 import com.example.mankomania.Network.Server.Server;
-import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
     Client client;
@@ -62,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openMap(String ip){
         // TODO open Map here and Start Client in Map
-        Intent intent = new Intent(this,start_view.class);
+        Intent intent = new Intent(this, start_view.class);
         intent.putExtra("IP",ip);
         startActivity(intent);
     }
