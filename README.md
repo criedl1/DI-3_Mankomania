@@ -1,4 +1,4 @@
-# DI-3_Mankomania
+# DI-3_Mankomania ![Travis Badge](https://travis-ci.com/criedl1/DI-3_Mankomania.svg?branch=master)
 
 Als Projekt für die LV Software Engineering II wird das Brettspiel Mankomania als Android-App programmiert.
 
