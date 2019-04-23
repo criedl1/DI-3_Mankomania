@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openMap(String ip){
         // TODO open Map here and Start Client in Map
-        Intent intent = new Intent(this,Example.class);
+        Intent intent = new Intent(this,start_view.class);
         intent.putExtra("IP",ip);
         startActivity(intent);
     }

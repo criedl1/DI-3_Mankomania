@@ -3,6 +3,7 @@ package com.example.mankomania;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.mankomania.Network.Client.Client;
 
 
 public class start_view extends AppCompatActivity {
@@ -24,6 +27,7 @@ public class start_view extends AppCompatActivity {
     private int currentPlayer = 1;
     private int numberofplayers = 2;
     private static TextView money;
+    Client client;
 
     int[] allfields = { R.drawable.field_start, R.drawable.field_aktie1, R.drawable.field_lindwurm,
             R.drawable.field_lottery, R.drawable.field_casino, R.drawable.field_getsomemoney,
@@ -75,6 +79,10 @@ public class start_view extends AppCompatActivity {
         setContentView(R.layout.activity_start_view);
         initButtons();
         money = (TextView)findViewById(R.id.currentmoney);
+        //Get Intent and start client
+        Intent intent = getIntent();
+        client = new Client(intent.getStringExtra("IP"));
+        client.start();
 
 
         figure1 = (ImageView)findViewById(R.id.figure1);
@@ -150,15 +158,6 @@ public class start_view extends AppCompatActivity {
         animation.start();
     }
 
-   /* public void movePlayer2(Player player, int fields){
-        //player.setCurrentField(player.getCurrentField()+fields);
-        // float distance = field2-player.getFigure().getX()+player.getFigure().getWidth();
-        float distance = -1000f;
-        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
-        animation.setDuration(2000);
-        animation.start();
-    }*/
-
 
  private void initButtons() {
      imgview1 = (ImageView) findViewById(R.id.imageViewStart);
@@ -187,8 +186,6 @@ public class start_view extends AppCompatActivity {
         moveTest.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
-        //movePlayerOut(player1,1);
         }
     });
 
@@ -197,7 +194,6 @@ public class start_view extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 player1.addMoney(12345);
-             //   movePlayer2(player1,1);
 
 
             }
@@ -208,14 +204,6 @@ public class start_view extends AppCompatActivity {
         würfeln.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /*int würfelergebnis = throwDie()+throwDie();
-                Player cPlayer = getCurrentPlayer();
-                movePlayerOut(cPlayer);
-                cPlayer.moveFields(würfelergebnis, allfields.length);
-                movePlayerIn(cPlayer);
-                displayField(cPlayer.getCurrentField());
-                setCurrentPlayer(cPlayer);
-                nextPlayer();*/
                step1();
             }
         });
@@ -263,7 +251,6 @@ public class start_view extends AppCompatActivity {
 
     public void nextSideofMap() {
         currentField+=2;
-        // Log.d("ds","xx");
         currentField = currentField % allfields.length;
         updateField();
     }
