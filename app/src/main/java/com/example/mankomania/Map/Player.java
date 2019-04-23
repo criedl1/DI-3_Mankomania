@@ -1,9 +1,9 @@
-package com.example.mankomania;
+package com.example.mankomania.Map;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Player extends start_view{
+public class Player extends start_view {
 
     private ImageView figure;
     private int currentField;
