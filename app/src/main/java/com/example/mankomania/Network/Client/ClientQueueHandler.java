@@ -1,5 +1,9 @@
 package com.example.mankomania.Network.Client;
 
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
 import com.example.mankomania.GameData.GameData;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -11,6 +15,7 @@ public class ClientQueueHandler extends Thread{
     private Queue<String> queue;
     Client client;
     private GameData gameData;
+    private static String TAG = "ClientQueueHandler";
 
     public ClientQueueHandler(Queue<String> queue, Client client, GameData gameData) {
         this.queue = queue;
@@ -18,6 +23,7 @@ public class ClientQueueHandler extends Thread{
         this.gameData = gameData;
     }
 
+    @Override
     public void run(){
         String in;
         try{
@@ -101,6 +107,7 @@ public class ClientQueueHandler extends Thread{
         int player = jsonToInt(jsonObject,"Player");
         int result = jsonToInt(jsonObject,"Result");
 
+        Log.i(TAG,"Result is: "+result+" from player: "+player);
         //TODO Roll the Dices on the UI
     }
 
