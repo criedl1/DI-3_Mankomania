@@ -20,6 +20,7 @@ public class DozenActivity extends AppCompatActivity {
     Button btn25;
 
     static String returnString;
+    static int money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,7 @@ public class DozenActivity extends AppCompatActivity {
         });
     }
 
-    public int spinWheel(int choosenDozen){
-
-        int money = 1000000; //nur zu Testzwecken
+    public void spinWheel(int choosenDozen){
 
         int rouletteNumber = roulette.spinIt();
         int dozen = 0;
@@ -82,14 +81,14 @@ public class DozenActivity extends AppCompatActivity {
         }
 
         if (choosenDozen == dozen){
-            money = money + 80000; //100000 - 20000 Einsatz
-            //ODER muss Kontostand ständig angezeigt werden?
-            returnString = "Du hast gewonnen!";}
+            money = 80000; //100000 - 20000 Einsatz
+
+            returnString = "Du hast " + money + " gewonnen!";}
+
         else {
-            money = money - 20000;
-            returnString = "Du hast verloren.";
+            money = - 20000;
+            returnString = "Du hast " + money + " verloren!";
         }
-        return money;
     }
 
     public static String getReturnString(){
@@ -103,5 +102,9 @@ public class DozenActivity extends AppCompatActivity {
     public void openRotateActivity(){
         Intent it = new Intent(this, RotateActivity.class);
         startActivity(it);
+    }
+
+    public static int getMoney(){
+        return money;
     }
 }

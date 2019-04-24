@@ -14,6 +14,7 @@ public class ColorActivity extends AppCompatActivity {
     RouletteClass roulette = new RouletteClass();
     FieldClass[] array = roulette.setUpFields();
     static String returnString;
+    static int money;
 
     Button red;
     Button black;
@@ -49,26 +50,25 @@ public class ColorActivity extends AppCompatActivity {
         });
     }
 
-    public int checkWin(ColorEnum choosenColor){
+    public void checkWin(ColorEnum choosenColor){
         //calculates if user wins or not
-
-        int money = 1000000; //nur zu Testzwecken
 
         double rouletteNumber = roulette.spinIt();
 
         for(int i = 0; i < array.length; i++){
             if(rouletteNumber == array[i].getValue()){
                 if(array[i].getColor() == choosenColor){
-                    money = money + 30000;  //--> 80000-50000 Einsatz
-                    //ODER muss Kontostand ständig angezeigt werden?
-                    this.returnString = "Du hast gewonnen!";
+                    money = 30000;  //--> 80000-50000 Einsatz
+
+                    this.returnString = "Du hast " + money + " gewonnen!";
                 }
                 else{
-                    money = money - 5000; //Einsatz
-                    this.returnString = "Du hast verloren.";
+                    money = - 5000; //Einsatz
+
+                    this.returnString = "Du hast " + money + " verloren.";
                 }
             }
-        } return money;
+        }
     }
 
     public static String getReturnString(){
@@ -82,5 +82,9 @@ public class ColorActivity extends AppCompatActivity {
     public void openRotateActivity(){
         Intent it = new Intent(this, RotateActivity.class);
         startActivity(it);
+    }
+
+    public static int getMoney(){
+        return money;
     }
 }

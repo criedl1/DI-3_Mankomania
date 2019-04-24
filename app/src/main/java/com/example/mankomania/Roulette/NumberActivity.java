@@ -18,6 +18,7 @@ public class NumberActivity extends AppCompatActivity {
     Button go;
     int choosenNumber;
     static String returnString;
+    static int money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +50,15 @@ public class NumberActivity extends AppCompatActivity {
 
     public int spinWheel(int choosenNumber) {
 
-        int money = 1000000; //nur zu Testzwecken
-
         int rouletteNumber = roulette.spinIt();
 
         if (rouletteNumber == choosenNumber) {
-            money = money + 145000;  //--> 150000 - 5000 Einsatz
-            //ODER muss Kontostand ständig angezeigt werden?
-            returnString = "Du hast gewonnen!";
+            money = 145000;  //--> 150000 - 5000 Einsatz
+
+            returnString = "Du hast " + money + " gewonnen!";
         } else {
-            money = money - 50000; //Einsatz
-            returnString = "Du hast verloren.";
+            money = - 50000; //Einsatz
+            returnString = "Du hast " + money + " verloren!";
         }
         return money;
     }
@@ -80,6 +79,10 @@ public class NumberActivity extends AppCompatActivity {
     public void openErrorPopUp() {
        ErrorClass error = new ErrorClass();
        error.show(getSupportFragmentManager(), "alert");
+    }
+
+    public static int getMoney(){
+        return money;
     }
 }
 

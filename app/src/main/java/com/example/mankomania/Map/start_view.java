@@ -14,9 +14,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mankomania.Map.Player;
 import com.example.mankomania.Network.Client.Client;
 import com.example.mankomania.R;
+import com.example.mankomania.Roulette.MainActivityRoulette;
+import com.example.mankomania.Roulette.RotateActivity;
 
 
 public class start_view extends AppCompatActivity {
@@ -146,7 +147,7 @@ public class start_view extends AppCompatActivity {
 
     }
 
-    public void movePlayerIn(Player player){
+    public void movePlayerIn(final Player player){
         float distance;
         boolean playeronleft= (player.getCurrentField() & 1) == 0;
         if(playeronleft) {
@@ -158,6 +159,16 @@ public class start_view extends AppCompatActivity {
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
         animation.setDuration(5000);
         animation.start();
+        animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                //if (player.getcurrentfield == field_casino){
+                startRoulette();
+                player.setMoney(RotateActivity.getMoney());
+            }
+        });
     }
 
 
@@ -322,5 +333,9 @@ public class start_view extends AppCompatActivity {
             player4.getFigure().setVisibility(View.INVISIBLE);
         }
 
+    }
+    public void startRoulette(){
+        Intent it = new Intent(this, MainActivityRoulette.class);
+        startActivity(it);
     }
 }

@@ -12,6 +12,8 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.mankomania.Map.Player;
+import com.example.mankomania.Map.start_view;
 import com.example.mankomania.R;
 
 public class RotateActivity extends AppCompatActivity {
@@ -19,6 +21,7 @@ public class RotateActivity extends AppCompatActivity {
     Animation rotateAnimation;
     ImageView imageView;
     Button btnBack;
+    static int money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +90,25 @@ public class RotateActivity extends AppCompatActivity {
     public void openPopUp() {
        PopClass popClass = new PopClass();
        popClass.show(getSupportFragmentManager(), "alert");
+
     }
 
     public void goBack(){
-        Intent it = new Intent(this, RotateActivity.class);
+        Intent it = new Intent(this, start_view.class);
         startActivity(it);
+    }
+
+    public static int getMoney(){
+        if(ColorActivity.getMoney() != 0){
+            money = ColorActivity.getMoney();
+        }
+        else if(DozenActivity.getMoney() != 0){
+            money = DozenActivity.getMoney();
+        }
+
+        else{
+            money = NumberActivity.getMoney();
+        }
+        return money;
     }
 }
