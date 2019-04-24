@@ -1,6 +1,6 @@
-package com.example.mankomania;
+package com.example.mankomania.Roulette;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,17 +9,31 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
+
+import com.example.mankomania.R;
 
 public class RotateActivity extends AppCompatActivity {
 
     Animation rotateAnimation;
     ImageView imageView;
+    Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rotate);
+
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setText("Zurück");
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
 
         imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setOnTouchListener(new View.OnTouchListener() {
@@ -73,5 +87,10 @@ public class RotateActivity extends AppCompatActivity {
     public void openPopUp() {
        PopClass popClass = new PopClass();
        popClass.show(getSupportFragmentManager(), "alert");
+    }
+
+    public void goBack(){
+        Intent it = new Intent(this, RotateActivity.class);
+        startActivity(it);
     }
 }

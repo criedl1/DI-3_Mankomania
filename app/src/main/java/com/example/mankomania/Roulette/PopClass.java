@@ -1,15 +1,11 @@
-package com.example.mankomania;
+package com.example.mankomania.Roulette;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
-import android.util.DisplayMetrics;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 
 public class PopClass extends AppCompatDialogFragment {
 
@@ -48,7 +44,7 @@ public class PopClass extends AppCompatDialogFragment {
             color = "rot";
         }
         else{
-            color = "green";
+            color = "grün";
         }
 
         theNumberIs = Integer.toString(RouletteClass.getRandomNumber());
@@ -56,10 +52,11 @@ public class PopClass extends AppCompatDialogFragment {
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
             }
         });
 
         return alert.create();
     }
+
+
 }

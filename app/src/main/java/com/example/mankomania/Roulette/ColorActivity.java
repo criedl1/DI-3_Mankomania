@@ -1,4 +1,4 @@
-package com.example.mankomania;
+package com.example.mankomania.Roulette;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.mankomania.R;
 
 public class ColorActivity extends AppCompatActivity {
 

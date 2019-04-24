@@ -1,4 +1,4 @@
-package com.example.mankomania;
+package com.example.mankomania.Roulette;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

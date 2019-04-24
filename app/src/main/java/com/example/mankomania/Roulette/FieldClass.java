@@ -1,4 +1,4 @@
-package com.example.mankomania;
+package com.example.mankomania.Roulette;
 
 public class FieldClass {
     ColorEnum color;
