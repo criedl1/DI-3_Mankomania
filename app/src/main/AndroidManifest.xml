@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mankomania">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,19 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Roulette.RotateActivity"></activity>
-        <activity android:name=".Roulette.DozenActivity" />
-        <activity android:name=".Roulette.NumberActivity" />
-        <activity android:name=".Roulette.ColorActivity" />
-        <activity android:name=".Roulette.PopClass"
-                  android:theme="@style/AppTheme.CustomTheme"/>
-        <activity android:name=".Roulette.MainActivityRoulette">
+        <activity android:name=".Example"></activity>
+        <activity
+            android:name=".Map.start_view"
+            android:screenOrientation="landscape" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
