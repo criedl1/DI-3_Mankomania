@@ -1,4 +1,4 @@
-package com.example.mankomania;
+package com.example.mankomania.Dice;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.example.mankomania.R;
+
 import java.util.Random;
 
 public class dice extends AppCompatActivity implements SensorEventListener {

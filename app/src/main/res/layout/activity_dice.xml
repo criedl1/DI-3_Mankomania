@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/woodbackground"
     android:orientation="horizontal"
-    tools:context=".dice">
+    tools:context=".Dice.dice">
 
     <ImageView
         android:id="@+id/ivDice2"

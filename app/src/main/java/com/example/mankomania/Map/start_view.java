@@ -1,4 +1,4 @@
-package com.example.mankomania;
+package com.example.mankomania.Map;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -14,7 +14,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+
 import com.example.mankomania.Network.Client.Client;
+import com.example.mankomania.R;
+import com.example.mankomania.Dice.dice;
 
 public class start_view extends AppCompatActivity {
 
@@ -205,7 +209,6 @@ public class start_view extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 result = data.getIntExtra("result", 0);
-                System.out.println(result);
                 step2(result);
             }
         }
