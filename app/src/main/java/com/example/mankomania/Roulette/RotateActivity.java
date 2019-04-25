@@ -1,5 +1,6 @@
 package com.example.mankomania.Roulette;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -98,7 +99,7 @@ public class RotateActivity extends AppCompatActivity {
         startActivity(it);
     }
 
-    public static int getMoney(){
+    public void setMoney(){
         if(ColorActivity.getMoney() != 0){
             money = ColorActivity.getMoney();
         }
@@ -109,6 +110,9 @@ public class RotateActivity extends AppCompatActivity {
         else{
             money = NumberActivity.getMoney();
         }
+    }
+
+    public static int getMoney(){
         return money;
     }
 }

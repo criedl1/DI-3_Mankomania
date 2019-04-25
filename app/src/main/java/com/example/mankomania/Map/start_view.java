@@ -31,6 +31,7 @@ public class start_view extends AppCompatActivity {
     private int numberofplayers = 2;
     private static TextView money;
     Client client;
+    int setMoney;
 
     int[] allfields = { R.drawable.field_start, R.drawable.field_aktie1, R.drawable.field_lindwurm,
             R.drawable.field_lottery, R.drawable.field_casino, R.drawable.field_getsomemoney,
@@ -164,13 +165,25 @@ public class start_view extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
 
-                //if (player.getcurrentfield == field_casino){
-                startRoulette();
-                player.setMoney(RotateActivity.getMoney());
+                switch(player.getCurrentField()){
+                    case 4:     startRoulette();
+                    case 20:    startRoulette();
+                    case 26:    startRoulette();
+                    case 34:    startRoulette();
+                }
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1){
+            if (resultCode == RotateActivity.RESULT_OK){
+                setMoney = data.getIntExtra("result",0);
+                getCurrentPlayer().setMoney(setMoney);
+            }
+        }
+    }
 
  private void initButtons() {
      imgview1 = (ImageView) findViewById(R.id.imageViewStart);
@@ -337,5 +350,39 @@ public class start_view extends AppCompatActivity {
     public void startRoulette(){
         Intent it = new Intent(this, MainActivityRoulette.class);
         startActivity(it);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putInt("Player1 Position", player1.getCurrentField());
+        savedInstanceState.putInt("Player2 Position", player2.getCurrentField());
+        savedInstanceState.putInt("Player3 Position", player3.getCurrentField());
+        savedInstanceState.putInt("Player4 Position", player4.getCurrentField());
+        savedInstanceState.putInt("Player 1 Money", player1.getMoney());
+        savedInstanceState.putInt("Player 2 Money", player2.getMoney());
+        savedInstanceState.putInt("Player 3 Money", player3.getMoney());
+        savedInstanceState.putInt("Player 4 Money", player4.getMoney());
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        /*
+        player1.setCurrentField(savedInstanceState.getInt("Player1 Position"));
+        player2.setCurrentField(savedInstanceState.getInt("Player2 Position"));
+        player3.setCurrentField(savedInstanceState.getInt("Player3 Position"));
+        player4.setCurrentField(savedInstanceState.getInt("Player4 Position"));
+        */
+
+        player1.setMoney(savedInstanceState.getInt("Player 1 Money"));
+        player2.setMoney(savedInstanceState.getInt("Player 2 Money"));
+        player3.setMoney(savedInstanceState.getInt("Player 3 Money"));
+        player4.setMoney(savedInstanceState.getInt("Player 4 Money"));
+
+        getCurrentPlayer().setMoney(RotateActivity.getMoney());
+        money.setText(RotateActivity.getMoney());
     }
 }
