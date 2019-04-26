@@ -1,5 +1,7 @@
 package com.example.mankomania.Network.Client;
 
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -94,6 +96,7 @@ public class ClientQueueHandler extends Thread{
 
     private void startTurn(JsonObject jsonObject) {
        // TODO Start your Turn
+        publishUpdate(jsonObject);
     }
 
     private void spinWheel(JsonObject jsonObject) {
@@ -250,5 +253,12 @@ public class ClientQueueHandler extends Thread{
         int_arr = new int[5];
         Arrays.fill(int_arr,0);
         gameData.setHotels(int_arr);
+    }
+
+    private void publishUpdate(JsonObject jsonObject){
+        Intent intent = new Intent("client.update");
+        intent.putExtra("result", "HEllO");
+        LocalBroadcastManager.getInstance(client.start_view)
+                .sendBroadcast(intent);
     }
 }

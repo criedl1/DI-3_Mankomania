@@ -4,9 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.View;
@@ -14,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mankomania.Network.Client.Client;
 import com.example.mankomania.R;
@@ -84,9 +89,29 @@ public class start_view extends AppCompatActivity {
     private float field2;
     private float field0;
 
+    BroadcastReceiver resultReceiver;
 
-    //Initialize Class
-    //private Handler handler = new Handler();
+    //Broadcast Receiver to get Messages from the Client Thread
+    private BroadcastReceiver createBroadcastReceiver() {
+        return new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                updateResults(intent.getStringExtra("result"));
+            }
+        };
+    }
+    public void updateResults(String results) {
+        Toast.makeText(this,results,Toast.LENGTH_LONG).show();
+    }
+    @Override
+    protected void onDestroy() {
+        if (resultReceiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(
+                    resultReceiver);
+        }
+        super.onDestroy();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,11 +119,17 @@ public class start_view extends AppCompatActivity {
         setContentView(R.layout.activity_start_view);
         initButtons();
 
+        // create Receiver
+        resultReceiver = createBroadcastReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                resultReceiver,
+                new IntentFilter("client.update"));
+
         money = (TextView)findViewById(R.id.currentmoney);
 
         //Get Intent and start client
         Intent intent = getIntent();
-        client = new Client(intent.getStringExtra("IP"));
+        client = new Client(intent.getStringExtra("IP"),this);
         client.start();
 
 
