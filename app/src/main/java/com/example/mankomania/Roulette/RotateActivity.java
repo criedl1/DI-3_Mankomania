@@ -35,7 +35,7 @@ public class RotateActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goBack();
+                finish();
             }
         });
 
@@ -92,11 +92,6 @@ public class RotateActivity extends AppCompatActivity {
        PopClass popClass = new PopClass();
        popClass.show(getSupportFragmentManager(), "alert");
 
-    }
-
-    public void goBack(){
-        Intent it = new Intent(this, start_view.class);
-        startActivity(it);
     }
 
     public void setMoney(){

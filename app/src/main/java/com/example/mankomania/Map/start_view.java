@@ -4,8 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.View;
@@ -47,10 +49,10 @@ public class start_view extends AppCompatActivity {
             R.drawable.field_aktie1, R.drawable.field_casino, R.drawable.field_zoo
     };
 
-    private Player player1;
-    private Player player2;
-    private Player player3;
-    private Player player4;
+      Player player1;
+      Player player2;
+      Player player3;
+      Player player4;
 
 
     //Screen Size
@@ -128,7 +130,7 @@ public class start_view extends AppCompatActivity {
 
 
     }
-    public void movePlayerOut(Player player){
+    public void movePlayerOut(final Player player){
         float distance;
         boolean playeronleft= (player.getCurrentField() & 1) == 0;
         if(playeronleft) {
@@ -145,6 +147,19 @@ public class start_view extends AppCompatActivity {
             }
         });
         animation.start();
+        /*animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                switch(player.getCurrentField()){
+                    case 4:     startRoulette();
+                    case 20:    startRoulette();
+                    case 26:    startRoulette();
+                    case 34:    startRoulette();
+                }
+            }
+        });*/
 
     }
 
@@ -164,7 +179,7 @@ public class start_view extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-
+                startRoulette();
                 switch(player.getCurrentField()){
                     case 4:     startRoulette();
                     case 20:    startRoulette();
@@ -352,37 +367,12 @@ public class start_view extends AppCompatActivity {
         startActivity(it);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
+        public int changeMoney(){
+        int temp = getCurrentPlayer().getMoney();
+        int newMoney = temp + RotateActivity.getMoney();
 
-        savedInstanceState.putInt("Player1 Position", player1.getCurrentField());
-        savedInstanceState.putInt("Player2 Position", player2.getCurrentField());
-        savedInstanceState.putInt("Player3 Position", player3.getCurrentField());
-        savedInstanceState.putInt("Player4 Position", player4.getCurrentField());
-        savedInstanceState.putInt("Player 1 Money", player1.getMoney());
-        savedInstanceState.putInt("Player 2 Money", player2.getMoney());
-        savedInstanceState.putInt("Player 3 Money", player3.getMoney());
-        savedInstanceState.putInt("Player 4 Money", player4.getMoney());
-    }
+        money.setText(Integer.toString(newMoney));
 
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        /*
-        player1.setCurrentField(savedInstanceState.getInt("Player1 Position"));
-        player2.setCurrentField(savedInstanceState.getInt("Player2 Position"));
-        player3.setCurrentField(savedInstanceState.getInt("Player3 Position"));
-        player4.setCurrentField(savedInstanceState.getInt("Player4 Position"));
-        */
-
-        player1.setMoney(savedInstanceState.getInt("Player 1 Money"));
-        player2.setMoney(savedInstanceState.getInt("Player 2 Money"));
-        player3.setMoney(savedInstanceState.getInt("Player 3 Money"));
-        player4.setMoney(savedInstanceState.getInt("Player 4 Money"));
-
-        getCurrentPlayer().setMoney(RotateActivity.getMoney());
-        money.setText(RotateActivity.getMoney());
+        return newMoney;
     }
 }

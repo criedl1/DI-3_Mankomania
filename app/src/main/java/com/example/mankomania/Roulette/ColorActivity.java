@@ -65,7 +65,7 @@ public class ColorActivity extends AppCompatActivity {
                 else{
                     money = - 5000; //Einsatz
 
-                    this.returnString = "Du hast " + money + " verloren.";
+                    this.returnString = "Du hast " + money*(-1) + " verloren.";
                 }
             }
         }
@@ -82,6 +82,7 @@ public class ColorActivity extends AppCompatActivity {
     public void openRotateActivity(){
         Intent it = new Intent(this, RotateActivity.class);
         startActivity(it);
+        finish();
     }
 
     public static int getMoney(){

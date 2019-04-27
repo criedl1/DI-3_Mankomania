@@ -87,7 +87,7 @@ public class DozenActivity extends AppCompatActivity {
 
         else {
             money = - 20000;
-            returnString = "Du hast " + money + " verloren!";
+            returnString = "Du hast " + money*(-1) + " verloren!";
         }
     }
 
@@ -102,6 +102,7 @@ public class DozenActivity extends AppCompatActivity {
     public void openRotateActivity(){
         Intent it = new Intent(this, RotateActivity.class);
         startActivity(it);
+        finish();
     }
 
     public static int getMoney(){

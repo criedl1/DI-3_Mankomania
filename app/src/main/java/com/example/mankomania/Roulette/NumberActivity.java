@@ -58,7 +58,7 @@ public class NumberActivity extends AppCompatActivity {
             returnString = "Du hast " + money + " gewonnen!";
         } else {
             money = - 50000; //Einsatz
-            returnString = "Du hast " + money + " verloren!";
+            returnString = "Du hast " + money*(-1) + " verloren!";
         }
         return money;
     }
@@ -74,6 +74,7 @@ public class NumberActivity extends AppCompatActivity {
     public void openRotateActivity(){
         Intent it = new Intent(this, RotateActivity.class);
         startActivity(it);
+        finish();
     }
 
     public void openErrorPopUp() {

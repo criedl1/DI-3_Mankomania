@@ -69,15 +69,18 @@ public class MainActivityRoulette extends AppCompatActivity {
     public void openColorActivity(){
         Intent it = new Intent(this, ColorActivity.class);
         startActivity(it);
+        finish();
     }
 
     public void openNumberActivity(){
         Intent it = new Intent(this, NumberActivity.class);
         startActivity(it);
+        finish();
     }
 
     public void openDozenActivity(){
         Intent it = new Intent(this, DozenActivity.class);
         startActivity(it);
+        finish();
     }
 }
