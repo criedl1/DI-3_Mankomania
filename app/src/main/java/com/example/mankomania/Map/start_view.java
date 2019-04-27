@@ -4,9 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.View;
@@ -18,10 +22,8 @@ import android.widget.TextView;
 import com.example.mankomania.Network.Client.Client;
 import com.example.mankomania.R;
 import com.example.mankomania.Dice.dice;
-import com.example.mankomania.Map.Player;
-import com.example.mankomania.Network.Client.Client;
-import com.example.mankomania.R;
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 
 public class start_view extends AppCompatActivity {
@@ -84,9 +86,140 @@ public class start_view extends AppCompatActivity {
     private float field2;
     private float field0;
 
+    BroadcastReceiver resultReceiver;
 
-    //Initialize Class
-    //private Handler handler = new Handler();
+    //Broadcast Receiver to get Messages from the Client Thread
+    private BroadcastReceiver createBroadcastReceiver() {
+        return new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                updateResults(intent.getStringExtra("result"));
+            }
+        };
+    }
+    public void updateResults(String results) {
+        handleMessage(results);
+    }
+    private void handleMessage(String message) {
+        JsonParser parser = new JsonParser();
+        JsonObject jsonObject = parser.parse(message).getAsJsonObject();
+
+        switch (jsonToString(jsonObject,"OPERATION")) {
+            case "sendMoney":
+                setMoneyUpdate(jsonObject);
+                break;
+            case "setPosition":
+                setPositionUpdate(jsonObject);
+                break;
+            case "setHypoAktie":
+                setHypoAktieUpdate(jsonObject);
+                break;
+            case "setStrabagAktie":
+                setStrabagAktieUpdate(jsonObject);
+                break;
+            case "setInfineonAktie":
+                setInfineonAktieUpdate(jsonObject);
+                break;
+            case "setCheater":
+                setCheaterUpdate(jsonObject);
+                break;
+            case "setLotto":
+                setLottoUpdate(jsonObject);
+                break;
+            case "setHotel":
+                setHotelUpdate(jsonObject);
+                break;
+            case "rollDice":
+                rollDiceUpdate(jsonObject);
+                break;
+            case "spinWheel":
+                spinWheelUpdate(jsonObject);
+                break;
+            case "StartTurn":
+                startTurnUpdate(jsonObject);
+            default:
+                break;
+        }
+    }
+
+    private void startTurnUpdate(JsonObject jsonObject) {
+        // TODO Start your Turn
+    }
+    private void setMoneyUpdate(JsonObject jsonObject) {
+        int player =jsonToInt(jsonObject,"PLAYER");
+        int money = jsonToInt(jsonObject,"Money");
+
+        // TODO Update UI
+    }
+    private void setPositionUpdate(JsonObject jsonObject) {
+        int player =jsonToInt(jsonObject,"PLAYER");
+        int position = jsonToInt(jsonObject,"Position");
+
+        //TODO Change Player Position on UI
+    }
+    private void setHypoAktieUpdate(JsonObject jsonObject) {
+        int player =jsonToInt(jsonObject,"PLAYER");
+        int count = jsonToInt(jsonObject,"Count");
+
+        //TODO Change Player-Aktie on UI
+    }
+    private void setStrabagAktieUpdate(JsonObject jsonObject) {
+        int player =jsonToInt(jsonObject,"PLAYER");
+        int count = jsonToInt(jsonObject,"Count");
+
+        //TODO Change Player-Aktie on UI
+    }
+    private void setInfineonAktieUpdate(JsonObject jsonObject) {
+        int player =jsonToInt(jsonObject,"PLAYER");
+        int count = jsonToInt(jsonObject,"Count");
+
+        //TODO Change Player-Aktie on UI
+    }
+    private void setCheaterUpdate(JsonObject jsonObject) {
+        int player =jsonToInt(jsonObject,"PLAYER");
+        boolean count = (jsonToInt(jsonObject,"Cheater")==1);
+
+        //TODO Cheater Action
+    }
+    private void setLottoUpdate(JsonObject jsonObject) {
+        int amount = jsonToInt(jsonObject,"Amount");
+
+        //TODO Lotto Actions
+    }
+    private void setHotelUpdate(JsonObject jsonObject) {
+        int hotel =jsonToInt(jsonObject,"Hotel");
+        int owner = jsonToInt(jsonObject,"Owner");
+
+        //TODO Hotel Actions and UI
+    }
+    private void rollDiceUpdate(JsonObject jsonObject) {
+        int player = jsonToInt(jsonObject, "Player");
+        int result = jsonToInt(jsonObject, "Result");
+
+        //TODO Roll the Dices on the UI
+    }
+    private void spinWheelUpdate(JsonObject jsonObject) {
+        int player = jsonToInt(jsonObject, "Player");
+        int result = jsonToInt(jsonObject, "Result");
+
+        //TODO Update UI
+    }
+
+    private String jsonToString(JsonObject jsonObject, String key){
+        return jsonObject.get(key).getAsString();
+    }
+    private int jsonToInt(JsonObject jsonObject, String key){
+        return Integer.parseInt(jsonObject.get(key).getAsString());
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (resultReceiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(
+                    resultReceiver);
+        }
+        super.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,11 +227,17 @@ public class start_view extends AppCompatActivity {
         setContentView(R.layout.activity_start_view);
         initButtons();
 
+        // create Receiver
+        resultReceiver = createBroadcastReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                resultReceiver,
+                new IntentFilter("client.update"));
+
         money = (TextView)findViewById(R.id.currentmoney);
 
         //Get Intent and start client
         Intent intent = getIntent();
-        client = new Client(intent.getStringExtra("IP"));
+        client = new Client(intent.getStringExtra("IP"),this);
         client.start();
 
 

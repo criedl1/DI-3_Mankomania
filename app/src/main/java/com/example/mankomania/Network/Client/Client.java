@@ -1,6 +1,7 @@
 package com.example.mankomania.Network.Client;
 
 import com.example.mankomania.GameData.GameData;
+import com.example.mankomania.Map.start_view;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
@@ -25,9 +26,11 @@ public class Client extends Thread {
     private static BufferedReader input;
     private Queue<String> queue;
     private int idx;
+    public static com.example.mankomania.Map.start_view start_view;
 
-    public Client(String ipHost){
+    public Client(String ipHost, com.example.mankomania.Map.start_view start_view){
         this.ipHost = ipHost;
+        this.start_view = start_view;
     }
 
     public void run() {
