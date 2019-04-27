@@ -2,9 +2,6 @@ package com.example.mankomania.Network.Client;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.mankomania.GameData.GameData;
 import com.google.gson.JsonObject;
@@ -95,23 +92,15 @@ public class ClientQueueHandler extends Thread{
     }
 
     private void startTurn(JsonObject jsonObject) {
-       // TODO Start your Turn
         publishUpdate(jsonObject);
     }
 
     private void spinWheel(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject,"Player");
-        int result = jsonToInt(jsonObject,"Result");
-
-        // TODO Spin the Wheel on the UI
+        publishUpdate(jsonObject);
     }
 
     private void rollDice(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject,"Player");
-        int result = jsonToInt(jsonObject,"Result");
-
-        Log.i(TAG,"Result is: "+result+" from player: "+player);
-        //TODO Roll the Dices on the UI
+        publishUpdate(jsonObject);
     }
 
     private void setHotel(JsonObject jsonObject) {
@@ -122,8 +111,7 @@ public class ClientQueueHandler extends Thread{
         //Change GameData
         arr[hotel] = owner;
         gameData.setHotels(arr);
-
-        //TODO Hotel Actions and UI
+        publishUpdate(jsonObject);
     }
 
     private void setLotto(JsonObject jsonObject) {
@@ -131,8 +119,7 @@ public class ClientQueueHandler extends Thread{
         int amount = jsonToInt(jsonObject,"Amount");
         //Change GameData
         gameData.setLotto(amount);
-
-        //TODO Lotto Actions
+        publishUpdate(jsonObject);
     }
 
     private void setCheater(JsonObject jsonObject) {
@@ -143,8 +130,7 @@ public class ClientQueueHandler extends Thread{
         //Change GameData
         arr[player] = count;
         gameData.setIsCheater(arr);
-
-        //TODO Cheater Action
+        publishUpdate(jsonObject);
     }
 
     private void setInfineonAktie(JsonObject jsonObject) {
@@ -155,8 +141,7 @@ public class ClientQueueHandler extends Thread{
         //Change GameData
         arr[player] = count;
         gameData.setInfineonAktie(arr);
-
-        //TODO Change Player-Aktie on UI
+        publishUpdate(jsonObject);
     }
 
     private void setStrabagAktie(JsonObject jsonObject) {
@@ -167,8 +152,7 @@ public class ClientQueueHandler extends Thread{
         //Change GameData
         arr[player] = count;
         gameData.setStrabagAktie(arr);
-
-        //TODO Change Player-Aktie on UI
+        publishUpdate(jsonObject);
     }
 
     private void setHypoAktie(JsonObject jsonObject) {
@@ -179,8 +163,7 @@ public class ClientQueueHandler extends Thread{
         //Change GameData
         arr[player] = count;
         gameData.setHypoAktie(arr);
-
-        //TODO Change Player-Aktie on UI
+        publishUpdate(jsonObject);
     }
 
     private void setPosition(JsonObject jsonObject) {
@@ -191,8 +174,7 @@ public class ClientQueueHandler extends Thread{
         //Change GameData
         arr[player] = position;
         gameData.setPosition(arr);
-
-        //TODO Change Player Position on UI
+        publishUpdate(jsonObject);
     }
 
     private void setMoney(JsonObject jsonObject) {
@@ -203,8 +185,7 @@ public class ClientQueueHandler extends Thread{
         //Change GameData
         arr[player] = money;
         gameData.setMoney(arr);
-
-        // TODO Update UI
+        publishUpdate(jsonObject);
     }
 
     private void setPlayerId(JsonObject jsonObject) {
@@ -257,7 +238,7 @@ public class ClientQueueHandler extends Thread{
 
     private void publishUpdate(JsonObject jsonObject){
         Intent intent = new Intent("client.update");
-        intent.putExtra("result", "HEllO");
+        intent.putExtra("result", jsonObject.toString());
         LocalBroadcastManager.getInstance(client.start_view)
                 .sendBroadcast(intent);
     }
