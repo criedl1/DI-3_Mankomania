@@ -346,7 +346,7 @@ public class start_view extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 startRoulette();
-                switch(player.getCurrentField()){
+                switch(getCurrentPlayer().getCurrentField()){
                     case 4:     startRoulette();
                     case 20:    startRoulette();
                     case 26:    startRoulette();
@@ -355,17 +355,6 @@ public class start_view extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1){
-            if (resultCode == RotateActivity.RESULT_OK){
-                setMoney = data.getIntExtra("result",0);
-                getCurrentPlayer().setMoney(setMoney);
-            }
-        }
-    }
-
 
     private void initButtons() {
         imgview1 = (ImageView) findViewById(R.id.imageViewStart);
