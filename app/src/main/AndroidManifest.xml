@@ -19,14 +19,19 @@
         <activity
             android:name=".Map.start_view"
             android:screenOrientation="landscape" />
+        <activity android:name=".Roulette.RotateActivity"></activity>
+        <activity android:name=".Roulette.DozenActivity" />
+        <activity android:name=".Roulette.NumberActivity" />
+        <activity android:name=".Roulette.ColorActivity" />
+        <activity android:name=".Roulette.MainActivityRoulette"/>
         <activity android:name=".MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

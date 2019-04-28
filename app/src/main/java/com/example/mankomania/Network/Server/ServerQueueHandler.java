@@ -1,6 +1,7 @@
 package com.example.mankomania.Network.Server;
 
 import com.example.mankomania.GameData.GameData;
+import com.example.mankomania.Roulette.RouletteClass;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -99,7 +100,8 @@ public class ServerQueueHandler extends Thread{
     private void spinWheel(JsonObject jsonObject) {
         // TODO Spin the Wheel ServerSide
         int player = jsonToInt(jsonObject,"Player");
-        sendSpinResult(player,21);
+        sendSpinResult(player, RouletteClass.getRandomNumber()); //how much the player wins/looses would be more interesting?
+
     }
 
     private void sendSpinResult(int idx, int result) {

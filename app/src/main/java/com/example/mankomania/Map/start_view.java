@@ -7,10 +7,17 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import android.content.SharedPreferences;
+import android.graphics.Point;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+
 import android.content.IntentFilter;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.View;
@@ -21,9 +28,14 @@ import android.widget.TextView;
 
 import com.example.mankomania.Network.Client.Client;
 import com.example.mankomania.R;
+
+import com.example.mankomania.Roulette.MainActivityRoulette;
+import com.example.mankomania.Roulette.RotateActivity;
+
 import com.example.mankomania.Dice.dice;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 
 
 public class start_view extends AppCompatActivity {
@@ -39,6 +51,7 @@ public class start_view extends AppCompatActivity {
     private int numberofplayers = 2;
     private static TextView money;
     Client client;
+    int setMoney;
 
     int result;
 
@@ -59,10 +72,10 @@ public class start_view extends AppCompatActivity {
             R.drawable.field_aktie1, R.drawable.field_casino, R.drawable.field_zoo
     };
 
-    private Player player1;
-    private Player player2;
-    private Player player3;
-    private Player player4;
+      Player player1;
+      Player player2;
+      Player player3;
+      Player player4;
 
 
 
@@ -280,7 +293,7 @@ public class start_view extends AppCompatActivity {
 
         updateField();
     }
-    public void movePlayerOut(Player player){
+    public void movePlayerOut(final Player player){
         float distance;
         boolean playeronleft= (player.getCurrentField() & 1) == 0;
         if(playeronleft) {
@@ -298,6 +311,21 @@ public class start_view extends AppCompatActivity {
             }
         });
         animation.start();
+
+        /*animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                switch(player.getCurrentField()){
+                    case 4:     startRoulette();
+                    case 20:    startRoulette();
+                    case 26:    startRoulette();
+                    case 34:    startRoulette();
+                }
+            }
+        });*/
+
     }
 
     public void movePlayerIn(Player player) {
@@ -313,8 +341,30 @@ public class start_view extends AppCompatActivity {
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
         animation.setDuration(5000);
         animation.start();
+        animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                startRoulette();
+                switch(player.getCurrentField()){
+                    case 4:     startRoulette();
+                    case 20:    startRoulette();
+                    case 26:    startRoulette();
+                    case 34:    startRoulette();
+                }
+            }
+        });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1){
+            if (resultCode == RotateActivity.RESULT_OK){
+                setMoney = data.getIntExtra("result",0);
+                getCurrentPlayer().setMoney(setMoney);
+            }
+        }
+    }
 
 
     private void initButtons() {
@@ -491,5 +541,18 @@ public class start_view extends AppCompatActivity {
             player4.getFigure().setVisibility(View.INVISIBLE);
         }
 
+    }
+    public void startRoulette(){
+        Intent it = new Intent(this, MainActivityRoulette.class);
+        startActivity(it);
+    }
+
+        public int changeMoney(){
+        int temp = getCurrentPlayer().getMoney();
+        int newMoney = temp + RotateActivity.getMoney();
+
+        money.setText(Integer.toString(newMoney));
+
+        return newMoney;
     }
 }
