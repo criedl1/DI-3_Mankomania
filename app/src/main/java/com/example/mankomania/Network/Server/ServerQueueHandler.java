@@ -1,5 +1,7 @@
 package com.example.mankomania.Network.Server;
 
+import android.util.Log;
+
 import com.example.mankomania.GameData.GameData;
 import com.example.mankomania.Roulette.RouletteClass;
 import com.google.gson.JsonObject;
@@ -114,10 +116,11 @@ public class ServerQueueHandler extends Thread{
 
     private void rollDice(JsonObject jsonObject) {
         // TODO Roll the Dice ServerSide
+        Log.i("DICEEX","Received dice event");
         int player = jsonToInt(jsonObject,"Player");
         int result = new Random().nextInt(12)+1;
         gameData.movePlayer(result);
-        sendDiceResult(player, 7);
+        sendDiceResult(player, result);
     }
 
     private void sendDiceResult(int idx,int result) {

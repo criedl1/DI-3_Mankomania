@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">Mankomania</string>
+    <string name="color_red">Rot</string>
+    <string name="color_black">Schwarz</string>
+    <string name="choose_roulette_color">Auf welche Farbe möchtest du setzen?</string>
+    <string name="roulette_won">Du hast %1$d gewonnen</string>
+    <string name="roulette_lost">Du hast %1$d verloren</string>
+    <string name="roulette_welcome">Willkommen beim Roulette! Worauf möchtest du setzen?</string>
+    <string name="roulette_set_color">auf Farbe setzen</string>
+    <string name="roulette_set_number">auf Zahl setzen</string>
+    <string name="roulette_set_dozen">auf ein Dutzend setzen</string>
+    <string name="roulette_set_money">Einsatz: %1$d€</string>
+    <string name="roulette_choose_number">Auf welche Zahl möchtest du setzen?</string>
+    <string name="roulette_enter_number">Zahl eingeben</string>
+    <string name="roulette_set">Setzen!</string>
+    <string name="roulette_choose_dozen">Auf welches Dutzend möchtest du setzen?</string>
+    <string name="roulette_first_dozen">1 &#8211; 12</string>
+    <string name="roulette_second_dozen">13 &#8211; 24</string>
+    <string name="roulette_third_dozen">25 &#8211; 36</string>
+    <string name="roulette_back">Zurück</string>
+    <string name="roulette_black">schwarz</string>
+    <string name="roulette_red">red</string>
+    <string name="roulette_green">grün</string>
+    <string name="roulette_result">Die Zahl lautet %1$s, die Farbe ist %2$s.</string>
+    <string name="roulette_invalid_number">Ungültige Zahl!</string>
+    <string name="roulette_enter_number_between">Bitte gib eine Zahl zwischen 0 und 36 ein!</string>
+    <string name="roulette_ok">OK</string>
+    <string name="display_ip">Display IP</string>
+    <string name="to_game">zum Spielfeld</string>
+    <string name="movetest">moveTest</string>
+    <string name="setmoney">setmoney</string>
+    <string name="connect_to_lobby">Connect to Lobby</string>
+    <string name="create_lobby">Create Lobby</string>
 </resources>

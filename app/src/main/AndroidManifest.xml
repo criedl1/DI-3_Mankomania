@@ -13,11 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Dice.dice"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".Example"></activity>
         <activity
-            android:name=".Map.start_view"
+            android:name=".Map.MapView"
             android:screenOrientation="landscape" />
         <activity android:name=".Roulette.RotateActivity"></activity>
         <activity android:name=".Roulette.DozenActivity" />

@@ -2,6 +2,7 @@ package com.example.mankomania.Dice;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.media.MediaPlayer;
@@ -9,51 +10,73 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.hardware.SensorEventListener;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.mankomania.Map.MapView;
 import com.example.mankomania.R;
 
 import java.util.Random;
 
-public class dice extends AppCompatActivity implements SensorEventListener {
+import static android.content.Context.SENSOR_SERVICE;
 
-    private Sensor mySensor;
-    private SensorManager mySensormanager;
+public class Dice extends Fragment implements SensorEventListener {
+
     private Button btnClose;
-    private Random rand;
     private boolean bool1;
     private ImageView ivDice1, ivDice2;
     MediaPlayer mediaPlayer;
-    private int dice1, dice2;
+    int result;
+    int[][][] diceResults = {
+            {{1,1}},
+            {{1,2},{2,1}},
+            {{1,3},{3,1},{2,2}},
+            {{1,4},{4,1},{2,3},{3,2}},
+            {{1,5},{5,1},{2,4},{4,2}, {3,3}},
+            {{1,6},{6,1}, {5,2}, {2,5}, {3,4}, {4,3}},
+            {{2,6}, {6,2}, {3,5}, {5,3}, {4,4}},
+            {{3,6}, {6,3}, {4,5}, {5,4}},
+            {{4,6}, {6,4}, {5,5}},
+            {{5,6}, {6,5}},
+            {{6,6}}};
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dice);
         //hides the titlebar
         //getSupportActionBar().hide();
         //sets the app to Fullscreen
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        this.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // Create Sensormanager
-        mySensormanager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        SensorManager mySensormanager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
         // Accelerometersensor
-        mySensor = mySensormanager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        Sensor mySensor = mySensormanager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         //register Sensorlistener
         mySensormanager.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
+        // assign Button
+        // initialize Random and bool
+        bool1 = false;
+
+        return inflater.inflate(R.layout.activity_dice, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ivDice1 = getActivity().findViewById(R.id.ivDice1);
+        ivDice2 = getActivity().findViewById(R.id.ivDice2);
+        btnClose = getActivity().findViewById(R.id.btnClose);
         // assign ImageViews
-        ivDice1 = findViewById(R.id.ivDice1);
-        ivDice2 = findViewById(R.id.ivDice2);
         ivDice1.animate().scaleX(0).scaleY(0);
         ivDice2.animate().scaleX(0).scaleY(0);
-        // assign Button
-        btnClose = findViewById(R.id.btnClose);
-        // initialize Random and bool
-        rand = new Random();
-        bool1 = false;
     }
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
@@ -62,21 +85,29 @@ public class dice extends AppCompatActivity implements SensorEventListener {
         float z = sensorEvent.values[2];
         // sum of sensors
         float acceleration = (x + y + z);
-        // if sum > 70 --> roll the dice
-        if (acceleration > 70 && !bool1) {
-            rollTheDice();
+        // if sum > 70 --> roll the Dice
+        if (acceleration > 60 && !bool1) {
+            //rollTheDice();
+            bool1 = true;
+            ((MapView)getActivity()).sendRollDice();
         }
     }
-    public void rollTheDice() throws RuntimeException {
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+        //not in use
+    }
+
+    public void showResult(int result) {
+        this.result = result;
         //servercall draus machen + neuer call show result von server
-        mediaPlayer = MediaPlayer.create(this, R.raw.dice);
+        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.dice);
         mediaPlayer.start();
-        dice1 = rand.nextInt(6) + 1;
-        dice2 = rand.nextInt(6) + 1;
-        bool1 = true;
-        //Toast.makeText(this, "Du hast " + (dice1 + dice2) + " gewürfelt", Toast.LENGTH_SHORT).show();
+        int[][] diceResult = diceResults[result-2];
+        int[] ddiceResult = diceResult[new Random().nextInt(diceResult.length-1)];
+        Toast.makeText(getActivity(), "Du hast " + result+ " gewürfelt", Toast.LENGTH_SHORT).show();
         try {
-            switch (dice1) {
+            switch (ddiceResult[0]) {
                 case 1:
                     ivDice1.setImageResource(R.drawable.dice1);
                     break;
@@ -102,7 +133,7 @@ public class dice extends AppCompatActivity implements SensorEventListener {
             System.out.println("unreachable");
         }
         try {
-            switch (dice2) {
+            switch (ddiceResult[1]) {
                 case 1:
                     ivDice2.setImageResource(R.drawable.dice1);
                     break;
@@ -130,16 +161,6 @@ public class dice extends AppCompatActivity implements SensorEventListener {
         ivDice1.animate().scaleX(0.8f).scaleY(0.8f).setDuration(1300);
         ivDice2.animate().scaleX(0.8f).scaleY(0.8f).setDuration(1300);
         btnClose.setVisibility(View.VISIBLE);
+    }
 
-    }
-    public void sendResult(View view) {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("result",dice1+dice2);
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
-    }
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-        //not in use
-    }
 }

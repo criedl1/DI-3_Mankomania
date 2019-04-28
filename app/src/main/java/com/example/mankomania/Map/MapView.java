@@ -8,14 +8,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 
 import android.content.IntentFilter;
-import android.graphics.Point;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 
 import android.support.v7.app.AppCompatActivity;
@@ -25,37 +22,32 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.mankomania.Dice.Dice;
 import com.example.mankomania.Network.Client.Client;
 import com.example.mankomania.R;
 
 import com.example.mankomania.Roulette.MainActivityRoulette;
 import com.example.mankomania.Roulette.RotateActivity;
 
-import com.example.mankomania.Dice.dice;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
 
-public class start_view extends AppCompatActivity {
+public class MapView extends AppCompatActivity {
 
-    private static Button next;
-    private static Button back;
     private static ImageView imgview1;
     private static ImageView imgview2;
 
     private int currentField = 0;
 
     private int currentPlayer = 1;
-    private int numberofplayers = 2;
     private static TextView money;
     Client client;
-    int setMoney;
 
     int result;
-
- 
 
 
     int[] allfields = { R.drawable.field_start, R.drawable.field_aktie1, R.drawable.field_lindwurm,
@@ -81,19 +73,10 @@ public class start_view extends AppCompatActivity {
 
     //Screen Size
     private int screenWidth;
-    private int screenHeight;
 
     //Images
-    private ImageView figure1;
-    private ImageView figure2;
-    private ImageView figure3;
-    private ImageView figure4;
+    private ImageView[] figures = new ImageView[4];
 
-    //Position
-    private float figure1X;
-    private float figure2X;
-    private float figure3X;
-    private float figure4X;
 
     private float field1;
     private float field2;
@@ -106,13 +89,11 @@ public class start_view extends AppCompatActivity {
         return new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                updateResults(intent.getStringExtra("result"));
+                handleMessage(intent.getStringExtra("result"));
             }
         };
     }
-    public void updateResults(String results) {
-        handleMessage(results);
-    }
+
     private void handleMessage(String message) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
@@ -150,14 +131,27 @@ public class start_view extends AppCompatActivity {
                 break;
             case "StartTurn":
                 startTurnUpdate(jsonObject);
+                break;
+            case "SET_PLAYER_COUNT":
+                initPlayerCount(jsonObject);
+                break;
             default:
                 break;
         }
     }
 
-    private void startTurnUpdate(JsonObject jsonObject) {
-        // TODO Start your Turn
+    private void initPlayerCount(JsonObject jsonObject) {
+        int count =jsonToInt(jsonObject,"COUNT");
+        for(int i = 0; i < count; i++){
+            figures[i].setVisibility(View.VISIBLE);
+        }
     }
+
+    private void startTurnUpdate(JsonObject jsonObject) {
+        findViewById(R.id.wuerfeln).setVisibility(View.VISIBLE);
+        Toast.makeText(this,"Its your Turn now!", Toast.LENGTH_LONG).show();
+    }
+
     private void setMoneyUpdate(JsonObject jsonObject) {
         int player =jsonToInt(jsonObject,"PLAYER");
         int money = jsonToInt(jsonObject,"Money");
@@ -208,8 +202,14 @@ public class start_view extends AppCompatActivity {
     private void rollDiceUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, "Player");
         int result = jsonToInt(jsonObject, "Result");
-
-        //TODO Roll the Dices on the UI
+        // Toast.makeText(this,"Result of dice is: "+result, Toast.LENGTH_LONG).show();
+        Dice fragment = ((Dice)getSupportFragmentManager().findFragmentById(R.id.diceContainer));
+        this.result = result;
+        if(fragment != null){
+            fragment.showResult(result);
+        }else{
+            Toast.makeText(this,"Player "+ player+" diced "+ result, Toast.LENGTH_LONG).show();
+        }
     }
     private void spinWheelUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, "Player");
@@ -237,7 +237,7 @@ public class start_view extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_view);
+        setContentView(R.layout.activity_map_view);
         initButtons();
 
         // create Receiver
@@ -246,19 +246,17 @@ public class start_view extends AppCompatActivity {
                 resultReceiver,
                 new IntentFilter("client.update"));
 
-        money = (TextView)findViewById(R.id.currentmoney);
+        money = findViewById(R.id.currentmoney);
 
         //Get Intent and start client
         Intent intent = getIntent();
         client = new Client(intent.getStringExtra("IP"),this);
         client.start();
 
-
-
-        figure1 = (ImageView)findViewById(R.id.figure1);
-        figure2 = (ImageView)findViewById(R.id.figure2);
-        figure3 = (ImageView)findViewById(R.id.figure3);
-        figure4 = (ImageView)findViewById(R.id.figure4);
+        figures[0] = findViewById(R.id.figure1);
+        figures[1] = findViewById(R.id.figure2);
+        figures[2] = findViewById(R.id.figure3);
+        figures[3] = findViewById(R.id.figure4);
 
 
         //Position on fields for figures
@@ -272,24 +270,23 @@ public class start_view extends AppCompatActivity {
         Point size = new Point();
         display.getSize(size);
         screenWidth = size.x;
-        screenHeight = size.y;
 
         //Start Position of figures
-        figure1.setX(field1);
-        figure1.setY(60);
-        figure2.setX(field1);
-        figure2.setY(300);
-        figure3.setX(field1);
-        figure3.setY(510);
-        figure4.setX(field1);
-        figure4.setY(710);
+        figures[0].setX(field1);
+        figures[0].setY(60);
+        figures[1].setX(field1);
+        figures[1].setY(300);
+        figures[2].setX(field1);
+        figures[2].setY(510);
+        figures[3].setX(field1);
+        figures[3].setY(710);
 
         //new Player
 
-        player1 = new Player(figure1,money);
-        player2 = new Player(figure2,money);
-        player3 = new Player(figure3,money);
-        player4 = new Player(figure4,money);
+        player1 = new Player(figures[0],money);
+        player2 = new Player(figures[1],money);
+        player3 = new Player(figures[2],money);
+        player4 = new Player(figures[3],money);
 
         updateField();
     }
@@ -306,8 +303,7 @@ public class start_view extends AppCompatActivity {
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-
-                //step2(result);
+                step2();
             }
         });
         animation.start();
@@ -316,7 +312,6 @@ public class start_view extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-
                 switch(player.getCurrentField()){
                     case 4:     startRoulette();
                     case 20:    startRoulette();
@@ -335,7 +330,6 @@ public class start_view extends AppCompatActivity {
             distance = field1 - field0;
         } else {
             distance = field2 - field0;
-
         }
         player.getFigure().setX(field0);
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
@@ -357,35 +351,16 @@ public class start_view extends AppCompatActivity {
     }
 
     private void initButtons() {
-        imgview1 = (ImageView) findViewById(R.id.imageViewStart);
-        imgview2 = (ImageView) findViewById(R.id.imageView2);
-        next = (Button) findViewById(R.id.next1);
-        back = (Button) findViewById(R.id.back1);
+        imgview1 =  findViewById(R.id.imageViewStart);
+        imgview2 =  findViewById(R.id.imageView2);
 
-        next.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        nextSideofMap();
-                    }
-                }
-        );
-        back.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        furtherSideofMap();
-                    }
-                }
-        );
-
-        Button moveTest = (Button) findViewById(R.id.moveTest);
+        Button moveTest =  findViewById(R.id.moveTest);
         moveTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             }
         });
-        Button setMoney = (Button) findViewById(R.id.setmoney);
+        Button setMoney =  findViewById(R.id.setmoney);
         setMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -393,28 +368,26 @@ public class start_view extends AppCompatActivity {
             }
 
         });
-        Button würfeln = (Button) findViewById(R.id.würfeln); // button fürs würfeln
-        würfeln.setOnClickListener(new View.OnClickListener() {
+        Button wuerfeln =  findViewById(R.id.wuerfeln); // button fürs würfeln
+        wuerfeln.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                step1();
                 diceIntent();
             }
         });
     }
     public void diceIntent() {
-        Intent intent = new Intent(this, dice.class);
-        startActivityForResult(intent, 1);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        Dice fragment = new Dice();
+        transaction.add(R.id.diceContainer,fragment);
+        transaction.commit();
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                result = data.getIntExtra("result", 0);
-                step2(result);
-            }
-        }
+
     }
 
     public void step1() {
@@ -424,11 +397,10 @@ public class start_view extends AppCompatActivity {
     }
 
 
-    public void step2(int result) {
-        int würfelergebnis = result;
+    public void step2() {
 
         Player cPlayer = getCurrentPlayer();
-        cPlayer.moveFields(würfelergebnis, allfields.length);
+        cPlayer.moveFields(this.result, allfields.length);
         movePlayerIn(cPlayer);
         displayField(cPlayer.getCurrentField());
         setCurrentPlayer(cPlayer);
@@ -437,6 +409,7 @@ public class start_view extends AppCompatActivity {
 
     public void nextPlayer() {
         currentPlayer++;
+        int numberofplayers = 2;
         if (currentPlayer > numberofplayers) {
             currentPlayer = 1;
         }
@@ -454,12 +427,12 @@ public class start_view extends AppCompatActivity {
         if (currentPlayer == 3) player3 = player;
         if (currentPlayer == 4) player4 = player;
     }
-    public void nextSideofMap() {
+    public void nextSideofMap(View view) {
         currentField += 2;
         currentField = currentField % allfields.length;
         updateField();
     }
-    public void furtherSideofMap() {
+    public void furtherSideofMap(View view) {
         currentField -= 2;
         if (currentField >= 0) {
 
@@ -543,5 +516,14 @@ public class start_view extends AppCompatActivity {
         money.setText(Integer.toString(newMoney));
 
         return newMoney;
+    }
+
+    public void sendRollDice() {
+        client.rollTheDice();
+    }
+
+    public void closeDiceFragment(View view) {
+        getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.diceContainer)).commit();
+        step1();
     }
 }

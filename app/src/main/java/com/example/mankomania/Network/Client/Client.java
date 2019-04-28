@@ -1,11 +1,10 @@
 package com.example.mankomania.Network.Client;
 
-import com.example.mankomania.GameData.GameData;
-import com.example.mankomania.Map.start_view;
-import com.google.gson.JsonObject;
+import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.example.mankomania.GameData.GameData;
+import com.example.mankomania.Map.MapView;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,7 +14,6 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Queue;
-import java.util.Scanner;
 import java.util.concurrent.LinkedBlockingQueue;
 
 // Client class
@@ -26,11 +24,11 @@ public class Client extends Thread {
     private static BufferedReader input;
     private Queue<String> queue;
     private int idx;
-    public static com.example.mankomania.Map.start_view start_view;
+    static MapView MapView;
 
-    public Client(String ipHost, com.example.mankomania.Map.start_view start_view){
-        this.ipHost = ipHost;
-        this.start_view = start_view;
+    public Client(String ipHost, MapView MapView){
+        Client.ipHost = ipHost;
+        Client.MapView = MapView;
     }
 
     public void run() {
@@ -173,6 +171,7 @@ public class Client extends Thread {
     }
     public void rollTheDice(){
         // new Thread because Network cant be on the UI Thread (temp Fix)
+        Log.i("DICEEX","Clientside");
         Thread thread = new Thread(){
             public void run(){
                 JsonObject json = new JsonObject();

@@ -1,25 +1,25 @@
 package com.example.mankomania.Roulette;
 
-public class FieldClass {
-    ColorEnum color;
-    int value;
-    float degree;
+class FieldClass {
+    private ColorEnum color;
+    private int value;
+    private float degree;
 
-    public FieldClass(ColorEnum color, int value, float degree) {
+    FieldClass(ColorEnum color, int value, float degree) {
         this.color = color;
         this.value = value;
         this.degree = degree;
     }
 
-    public ColorEnum getColor() {
+    ColorEnum getColor() {
         return color;
     }
 
-    public int getValue() {
+    int getValue() {
         return value;
     }
 
-    public float getDegree(){
+    float getDegree(){
         return this.degree;
     }
 }

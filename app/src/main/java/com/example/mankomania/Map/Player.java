@@ -1,9 +1,10 @@
 package com.example.mankomania.Map;
 
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Player extends start_view {
+public class Player extends MapView {
 
     private ImageView figure;
     private int currentField;
@@ -12,7 +13,7 @@ public class Player extends start_view {
     private TextView currentmoney;
 
     public Player(ImageView figure, TextView currentmoney) {
-         currentField = 0;
+        currentField = 0;
         //money = 1005;
         this.figure = figure;
         this. currentmoney = currentmoney;
@@ -21,8 +22,8 @@ public class Player extends start_view {
     }
 
     public void moveFields(int fields, int maxfields) {
-        currentField = currentField + fields;
-        currentField = currentField % maxfields;
+        Log.i("MOVE", "Von Feld "+currentField+" zu "+(currentField + fields)% maxfields);
+        currentField = (currentField + fields)% maxfields;
     }
 
     public void addMoney(int amount) {

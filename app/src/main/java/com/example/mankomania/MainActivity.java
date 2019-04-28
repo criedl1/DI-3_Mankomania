@@ -10,26 +10,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.mankomania.Map.start_view;
+import com.example.mankomania.Map.MapView;
 import com.example.mankomania.Network.Client.Client;
 import com.example.mankomania.Network.Server.Server;
 
 public class MainActivity extends AppCompatActivity {
-    Client client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // Make to run your application only in portrait mode
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); // Make to run your application only in LANDSCAPE mode
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // Make to run your application only in portrait mode
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); // Make to run your application only in LANDSCAPE mode
         setContentView(R.layout.activity_main);
     }
 
-    public void btn_Create_Lobby_OnClick(View v) throws Exception {
-        EditText et = (EditText) findViewById(R.id.textinput);
-        Button btn_create = (Button) findViewById(R.id.btnCreateLobby);
-        Button btn_connect = (Button) findViewById(R.id.btnConnectToLobby);
+    public void btn_Create_Lobby_OnClick(View v) {
+        EditText et =  findViewById(R.id.textinput);
+        Button btn_create =  findViewById(R.id.btnCreateLobby);
+        Button btn_connect =  findViewById(R.id.btnConnectToLobby);
 
         // Disable Buttons
         btn_create.setEnabled(false);
@@ -39,16 +38,16 @@ public class MainActivity extends AppCompatActivity {
         et.setText(getIPAddress());
 
         // Start Server
-        Server server = new Server(1,1000000);
+        Server server = new Server(2, 1000000);
         server.start();
 
         openMap(et.getText().toString());
     }
 
-    public void btn_Connect_To_Lobby_OnClick(View v)throws Exception{
-        EditText et = (EditText) findViewById(R.id.textinput);
-        Button btn_create = (Button) findViewById(R.id.btnCreateLobby);
-        Button btn_connect = (Button) findViewById(R.id.btnConnectToLobby);
+    public void btn_Connect_To_Lobby_OnClick(View v)  {
+        EditText et =  findViewById(R.id.textinput);
+        Button btn_create =  findViewById(R.id.btnCreateLobby);
+        Button btn_connect =  findViewById(R.id.btnConnectToLobby);
 
         // Disable Buttons
         btn_create.setEnabled(false);
@@ -57,10 +56,9 @@ public class MainActivity extends AppCompatActivity {
         openMap(et.getText().toString());
     }
 
-    public void openMap(String ip){
-        // TODO open Map here and Start Client in Map
-        Intent intent = new Intent(this, start_view.class);
-        intent.putExtra("IP",ip);
+    public void openMap(String ip) {
+        Intent intent = new Intent(this, MapView.class);
+        intent.putExtra("IP", ip);
         startActivity(intent);
     }
 

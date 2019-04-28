@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/woodbackground"
     android:orientation="horizontal"
-    tools:context=".Dice.dice">
+    tools:context=".Dice.Dice">
 
     <ImageView
         android:id="@+id/ivDice2"
@@ -27,8 +27,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:onClick="sendResult"
-        android:text="zum Spielfeld"
+        android:onClick="closeDiceFragment"
+        android:text="@string/to_game"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

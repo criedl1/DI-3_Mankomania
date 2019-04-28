@@ -34,15 +34,14 @@ public class MainActivityRoulette extends AppCompatActivity {
         tv3 = findViewById(R.id.textView3);
 
 
-        welcome.setText("Willkommen beim Roulette! Worauf möchtest du setzen?");
-        color.setText("auf Farbe setzen");
-        number.setText("auf Zahl setzen");
-        dozen.setText("auf ein Dutzend setzen");
+        welcome.setText(getString(R.string.roulette_welcome));
+        color.setText(getString(R.string.roulette_set_color));
+        number.setText(getString(R.string.roulette_set_number));
+        dozen.setText(getString(R.string.roulette_set_dozen));
 
-        tv1.setText("Einsatz: 5.000€");
-        tv2.setText("Einsatz: 50.000€");
-        tv3.setText("Einsatz: 20.000€");
-
+        tv1.setText(getString(R.string.roulette_set_money,5000));
+        tv2.setText(getString(R.string.roulette_set_money,50000));
+        tv3.setText(getString(R.string.roulette_set_money,20000));
 
         color.setOnClickListener(new View.OnClickListener() {
             @Override

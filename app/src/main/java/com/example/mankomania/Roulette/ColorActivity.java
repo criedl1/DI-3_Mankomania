@@ -29,9 +29,9 @@ public class ColorActivity extends AppCompatActivity {
         black = findViewById(R.id.btnBlack);
         selectColor = findViewById(R.id.tvSelectColor);
 
-        red.setText("Rot");
-        black.setText("Schwarz");
-        selectColor.setText("Auf welche Farbe möchtest du setzen?");
+        red.setText(getString(R.string.color_red));
+        black.setText(getString(R.string.color_black));
+        selectColor.setText(getString(R.string.choose_roulette_color));
 
         red.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,17 +55,14 @@ public class ColorActivity extends AppCompatActivity {
 
         double rouletteNumber = roulette.spinIt();
 
-        for(int i = 0; i < array.length; i++){
-            if(rouletteNumber == array[i].getValue()){
-                if(array[i].getColor() == choosenColor){
+        for (FieldClass anArray : array) {
+            if (rouletteNumber == anArray.getValue()) {
+                if (anArray.getColor() == choosenColor) {
                     money = 30000;  //--> 80000-50000 Einsatz
-
-                    this.returnString = "Du hast " + money + " gewonnen!";
-                }
-                else{
-                    money = - 5000; //Einsatz
-
-                    this.returnString = "Du hast " + money*(-1) + " verloren.";
+                    returnString = getString(R.string.roulette_won, money);
+                } else {
+                    money = -5000; //Einsatz
+                    returnString = getString(R.string.roulette_lost, money * -1);
                 }
             }
         }

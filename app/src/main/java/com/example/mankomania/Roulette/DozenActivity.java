@@ -33,10 +33,10 @@ public class DozenActivity extends AppCompatActivity {
         btn13 = findViewById(R.id.btn13_24);
         btn25 = findViewById(R.id.btn25_36);
 
-        selectDozen.setText("Worauf möchtest du setzen?");
-        btn1.setText("1 - 12");
-        btn13.setText("13 - 24");
-        btn25.setText("25 - 36");
+        selectDozen.setText(getString(R.string.roulette_choose_dozen));
+        btn1.setText(getString(R.string.roulette_first_dozen));
+        btn13.setText(getString(R.string.roulette_second_dozen));
+        btn25.setText(getString(R.string.roulette_third_dozen));
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override

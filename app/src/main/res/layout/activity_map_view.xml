@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Map.start_view">
+    tools:context=".Map.MapView">
 
     <ImageView
         android:id="@+id/background"
@@ -75,7 +75,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="7dp"
             android:layout_marginEnd="7dp"
-            android:text="moveTest"
+            android:text="@string/movetest"
             app:layout_constraintBottom_toTopOf="@+id/setmoney"
             app:layout_constraintEnd_toStartOf="@+id/imageViewStart"
             app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +111,7 @@
             app:layout_constraintBottom_toTopOf="@+id/imageView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.542"
-            app:layout_constraintStart_toEndOf="@+id/würfeln"
+            app:layout_constraintStart_toEndOf="@+id/wuerfeln"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
@@ -121,14 +121,14 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="6dp"
             android:layout_marginBottom="63dp"
-            android:text="setmoney"
+            android:text="@string/setmoney"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageViewStart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/moveTest" />
 
         <Button
-            android:id="@+id/würfeln"
+            android:id="@+id/wuerfeln"
             android:layout_width="88dp"
             android:layout_height="88dp"
             android:layout_marginStart="16dp"

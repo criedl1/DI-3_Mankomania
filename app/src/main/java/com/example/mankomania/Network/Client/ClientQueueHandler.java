@@ -12,11 +12,11 @@ import java.util.Queue;
 
 public class ClientQueueHandler extends Thread{
     private Queue<String> queue;
-    Client client;
+    private Client client;
     private GameData gameData;
     private static String TAG = "ClientQueueHandler";
 
-    public ClientQueueHandler(Queue<String> queue, Client client, GameData gameData) {
+    ClientQueueHandler(Queue<String> queue, Client client, GameData gameData) {
         this.queue = queue;
         this.client = client;
         this.gameData = gameData;
@@ -49,7 +49,7 @@ public class ClientQueueHandler extends Thread{
                 break;
             // Starts the GameData
             case "SET_PLAYER_COUNT":
-                generateGameData(jsonToInt(jsonObject,"COUNT"));
+                generateGameData(jsonObject);
                 break;
             case "sendPlayer":
                 setPlayerId(jsonObject);
@@ -206,7 +206,8 @@ public class ClientQueueHandler extends Thread{
         return Integer.parseInt(jsonObject.get(key).getAsString());
     }
 
-    private void generateGameData(int playerCount){
+    private void generateGameData(JsonObject jsonObject){
+        int playerCount = jsonToInt(jsonObject,"COUNT");
         int[] int_arr = new int[playerCount];
         boolean[] bool_arr = new boolean[playerCount];
         String[] str_arr = new String[playerCount];
@@ -234,12 +235,13 @@ public class ClientQueueHandler extends Thread{
         int_arr = new int[5];
         Arrays.fill(int_arr,0);
         gameData.setHotels(int_arr);
+        publishUpdate(jsonObject);
     }
 
     private void publishUpdate(JsonObject jsonObject){
         Intent intent = new Intent("client.update");
         intent.putExtra("result", jsonObject.toString());
-        LocalBroadcastManager.getInstance(client.start_view)
+        LocalBroadcastManager.getInstance(Client.MapView)
                 .sendBroadcast(intent);
     }
 }

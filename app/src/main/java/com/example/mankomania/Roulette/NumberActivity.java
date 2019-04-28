@@ -29,15 +29,15 @@ public class NumberActivity extends AppCompatActivity {
         selectNumber = findViewById(R.id.tvSelectNumber);
         go = findViewById(R.id.btnGo);
 
-        selectNumber.setText("Auf welche Zahl möchtest du setzen?");
-        number.setHint("Zahl eingeben");
-        go.setText("Setzen!");
+        selectNumber.setText(getString(R.string.roulette_choose_number));
+        number.setHint(getString(R.string.roulette_enter_number));
+        go.setText(getString(R.string.roulette_set));
 
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choosenNumber = Integer.valueOf(number.getText().toString());
-                if (choosenNumber > 36 || choosenNumber < 0 || number.getText().toString() == null){
+                if (choosenNumber > 36 || choosenNumber < 0 || number.getText().toString().isEmpty()){
                     openErrorPopUp();
                 }
                 else {
@@ -55,10 +55,10 @@ public class NumberActivity extends AppCompatActivity {
         if (rouletteNumber == choosenNumber) {
             money = 145000;  //--> 150000 - 5000 Einsatz
 
-            returnString = "Du hast " + money + " gewonnen!";
+            returnString = getString(R.string.roulette_won, money);
         } else {
             money = - 50000; //Einsatz
-            returnString = "Du hast " + money*(-1) + " verloren!";
+            returnString = getString(R.string.roulette_won, money*-1);
         }
         return money;
     }

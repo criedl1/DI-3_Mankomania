@@ -1,7 +1,5 @@
 package com.example.mankomania.Roulette;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,8 +11,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.mankomania.Map.Player;
-import com.example.mankomania.Map.start_view;
 import com.example.mankomania.R;
 
 public class RotateActivity extends AppCompatActivity {
@@ -30,7 +26,7 @@ public class RotateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rotate);
 
         btnBack = findViewById(R.id.btnBack);
-        btnBack.setText("Zurück");
+        btnBack.setText(getString(R.string.roulette_back));
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
