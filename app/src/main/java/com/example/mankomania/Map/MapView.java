@@ -3,19 +3,16 @@ package com.example.mankomania.Map;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
+import android.content.IntentFilter;
 import android.graphics.Point;
 import android.os.Bundle;
-
-import android.content.IntentFilter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
-
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -27,13 +24,13 @@ import android.widget.Toast;
 import com.example.mankomania.Dice.Dice;
 import com.example.mankomania.Network.Client.Client;
 import com.example.mankomania.R;
-
 import com.example.mankomania.Roulette.MainActivityRoulette;
 import com.example.mankomania.Roulette.RotateActivity;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MapView extends AppCompatActivity {
@@ -44,7 +41,6 @@ public class MapView extends AppCompatActivity {
     private int currentField = 0;
 
     private int currentPlayer = 1;
-    private static TextView money;
     Client client;
 
     int result;
@@ -64,10 +60,7 @@ public class MapView extends AppCompatActivity {
             R.drawable.field_aktie1, R.drawable.field_casino, R.drawable.field_zoo
     };
 
-      Player player1;
-      Player player2;
-      Player player3;
-      Player player4;
+      List<Player> players;
 
 
 
@@ -77,12 +70,72 @@ public class MapView extends AppCompatActivity {
     //Images
     private ImageView[] figures = new ImageView[4];
 
+    private TextView[] moneyFields = new TextView[4];
+
 
     private float field1;
     private float field2;
     private float field0;
 
     BroadcastReceiver resultReceiver;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_map_view);
+        initButtons();
+
+        // create Receiver
+        resultReceiver = createBroadcastReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                resultReceiver,
+                new IntentFilter("client.update"));
+
+
+        //Get Intent and start client
+        Intent intent = getIntent();
+        client = new Client(intent.getStringExtra("IP"),this);
+        Log.i("INIT", "Start Client with IP "+intent.getStringExtra("IP"));
+        client.start();
+
+        figures[0] = findViewById(R.id.figure1);
+        figures[1] = findViewById(R.id.figure2);
+        figures[2] = findViewById(R.id.figure3);
+        figures[3] = findViewById(R.id.figure4);
+
+        moneyFields[0] = findViewById(R.id.currentmoney);
+        moneyFields[1] = findViewById(R.id.currentmoney2);
+        moneyFields[2] = findViewById(R.id.currentmoney3);
+        moneyFields[3] = findViewById(R.id.currentmoney4);
+
+
+        //Position on fields for figures
+        field1 = 300;
+        field2 = 1000;
+        field0 = -50;
+
+        //Get screen size
+        WindowManager wm = getWindowManager();
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        screenWidth = size.x;
+
+        //Start Position of figures
+        figures[0].setX(field1);
+        figures[0].setY(60);
+        figures[1].setX(field1);
+        figures[1].setY(300);
+        figures[2].setX(field1);
+        figures[2].setY(510);
+        figures[3].setX(field1);
+        figures[3].setY(710);
+
+        //new Player
+        players = new ArrayList<>();
+        updateField();
+    }
 
     //Broadcast Receiver to get Messages from the Client Thread
     private BroadcastReceiver createBroadcastReceiver() {
@@ -135,16 +188,33 @@ public class MapView extends AppCompatActivity {
             case "SET_PLAYER_COUNT":
                 initPlayerCount(jsonObject);
                 break;
+            case "ROULETTERESULT":
+                players.get(currentPlayer-1).setMoney(players.get(currentPlayer-1).getMoney()+jsonToInt(jsonObject,"result"));
+                client.setMoneyOnServer(currentPlayer-1,players.get(currentPlayer-1).getMoney());
+                hideDice();
             default:
                 break;
         }
     }
 
+    private void hideDice() {
+        findViewById(R.id.wuerfeln).setVisibility(View.INVISIBLE);
+    }
+
     private void initPlayerCount(JsonObject jsonObject) {
         int count =jsonToInt(jsonObject,"COUNT");
+        Log.i("INIT", "Initialise "+ count+" players");
         for(int i = 0; i < count; i++){
             figures[i].setVisibility(View.VISIBLE);
+            players.add(new Player(figures[i],moneyFields[i]));
         }
+        closeWaitFragment();
+    }
+
+
+    private void closeWaitFragment() {
+        Log.i("INIT","Closing wait Fragment");
+        findViewById(R.id.waitContainer).setVisibility(View.INVISIBLE);
     }
 
     private void startTurnUpdate(JsonObject jsonObject) {
@@ -155,7 +225,7 @@ public class MapView extends AppCompatActivity {
     private void setMoneyUpdate(JsonObject jsonObject) {
         int player =jsonToInt(jsonObject,"PLAYER");
         int money = jsonToInt(jsonObject,"Money");
-
+        players.get(player).setMoney(money);
         // TODO Update UI
     }
     private void setPositionUpdate(JsonObject jsonObject) {
@@ -208,7 +278,9 @@ public class MapView extends AppCompatActivity {
         if(fragment != null){
             fragment.showResult(result);
         }else{
-            Toast.makeText(this,"Player "+ player+" diced "+ result, Toast.LENGTH_LONG).show();
+            players.get(player).setCurrentField(players.get(player).getCurrentField()+result);
+            players.get(player).getFigure().setVisibility(View.INVISIBLE);
+            Toast.makeText(this,"Player "+ (player+1)+" diced "+ result, Toast.LENGTH_LONG).show();
         }
     }
     private void spinWheelUpdate(JsonObject jsonObject) {
@@ -221,6 +293,7 @@ public class MapView extends AppCompatActivity {
     private String jsonToString(JsonObject jsonObject, String key){
         return jsonObject.get(key).getAsString();
     }
+
     private int jsonToInt(JsonObject jsonObject, String key){
         return Integer.parseInt(jsonObject.get(key).getAsString());
     }
@@ -234,62 +307,6 @@ public class MapView extends AppCompatActivity {
         super.onDestroy();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_view);
-        initButtons();
-
-        // create Receiver
-        resultReceiver = createBroadcastReceiver();
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                resultReceiver,
-                new IntentFilter("client.update"));
-
-        money = findViewById(R.id.currentmoney);
-
-        //Get Intent and start client
-        Intent intent = getIntent();
-        client = new Client(intent.getStringExtra("IP"),this);
-        client.start();
-
-        figures[0] = findViewById(R.id.figure1);
-        figures[1] = findViewById(R.id.figure2);
-        figures[2] = findViewById(R.id.figure3);
-        figures[3] = findViewById(R.id.figure4);
-
-
-        //Position on fields for figures
-        field1 = 300;
-        field2 = 1000;
-        field0 = -50;
-
-        //Get screen size
-        WindowManager wm = getWindowManager();
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        screenWidth = size.x;
-
-        //Start Position of figures
-        figures[0].setX(field1);
-        figures[0].setY(60);
-        figures[1].setX(field1);
-        figures[1].setY(300);
-        figures[2].setX(field1);
-        figures[2].setY(510);
-        figures[3].setX(field1);
-        figures[3].setY(710);
-
-        //new Player
-
-        player1 = new Player(figures[0],money);
-        player2 = new Player(figures[1],money);
-        player3 = new Player(figures[2],money);
-        player4 = new Player(figures[3],money);
-
-        updateField();
-    }
     public void movePlayerOut(final Player player){
         float distance;
         boolean playeronleft= (player.getCurrentField() & 1) == 0;
@@ -364,19 +381,19 @@ public class MapView extends AppCompatActivity {
         setMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                player1.addMoney(12345);
+                players.get(0).addMoney(12345);
             }
 
         });
-        Button wuerfeln =  findViewById(R.id.wuerfeln); // button fürs würfeln
+        ImageView wuerfeln =  findViewById(R.id.wuerfeln); // button fürs würfeln
         wuerfeln.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                diceIntent();
+                showDiceFragment();
             }
         });
     }
-    public void diceIntent() {
+    public void showDiceFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         Dice fragment = new Dice();
@@ -404,7 +421,6 @@ public class MapView extends AppCompatActivity {
         movePlayerIn(cPlayer);
         displayField(cPlayer.getCurrentField());
         setCurrentPlayer(cPlayer);
-        nextPlayer();
     }
 
     public void nextPlayer() {
@@ -414,33 +430,27 @@ public class MapView extends AppCompatActivity {
             currentPlayer = 1;
         }
     }
+
     public Player getCurrentPlayer() {
-        if (currentPlayer == 1) return player1;
-        if (currentPlayer == 2) return player2;
-        if (currentPlayer == 3) return player3;
-        if (currentPlayer == 4) return player4;
-        return null;
+        return players.get(currentPlayer-1);
     }
+
     public void setCurrentPlayer(Player player) {
-        if (currentPlayer == 1) player1 = player;
-        if (currentPlayer == 2) player2 = player;
-        if (currentPlayer == 3) player3 = player;
-        if (currentPlayer == 4) player4 = player;
+        players.set(currentPlayer-1,player);
     }
+
     public void nextSideofMap(View view) {
         currentField += 2;
         currentField = currentField % allfields.length;
         updateField();
     }
+
     public void furtherSideofMap(View view) {
         currentField -= 2;
-        if (currentField >= 0) {
-
-        } else {
+        if (currentField < 0) {
             currentField = allfields.length + currentField;
         }
         updateField();
-
     }
 
     public void displayField(int field) {
@@ -449,8 +459,6 @@ public class MapView extends AppCompatActivity {
         if ((currentField & 1) != 0) {
             currentField--;
         }
-
-
         currentField = currentField % allfields.length;
         updateField();
     }
@@ -461,61 +469,32 @@ public class MapView extends AppCompatActivity {
         imgview1.setImageResource(allfields[currentField]);
         imgview2.setImageResource(allfields[currentField+1]);
     }
-    public void updatePlayers() {
-        if(player1.getCurrentField() == currentField) {
-            player1.getFigure().setX(field1);
-            player1.getFigure().setVisibility(View.VISIBLE);
-        }else if(player1.getCurrentField() == currentField+1) {
-            player1.getFigure().setX(field2);
-            player1.getFigure().setVisibility(View.VISIBLE);
-        }
-        else {
-            player1.getFigure().setVisibility(View.INVISIBLE);
-        }
-        if(player2.getCurrentField() == currentField) {
-            player2.getFigure().setX(field1);
-            player2.getFigure().setVisibility(View.VISIBLE);
-        }else if(player2.getCurrentField() == currentField+1) {
-            player2.getFigure().setX(field2);
-            player2.getFigure().setVisibility(View.VISIBLE);
-        }
-        else {
-            player2.getFigure().setVisibility(View.INVISIBLE);
-        }
-        if(player3.getCurrentField() == currentField) {
-            player3.getFigure().setX(field1);
-            player3.getFigure().setVisibility(View.VISIBLE);
-        }else if(player3.getCurrentField() == currentField+1) {
-            player3.getFigure().setX(field2);
-            player3.getFigure().setVisibility(View.VISIBLE);
-        }
-        else {
-            player3.getFigure().setVisibility(View.INVISIBLE);
-        }
-        if(player4.getCurrentField() == currentField) {
-            player4.getFigure().setX(field1);
-            player4.getFigure().setVisibility(View.VISIBLE);
-        }else if(player4.getCurrentField() == currentField+1) {
-            player4.getFigure().setX(field2);
-            player4.getFigure().setVisibility(View.VISIBLE);
-        }
-        else {
-            player4.getFigure().setVisibility(View.INVISIBLE);
-        }
 
+    public void updatePlayers() {
+        for (Player player : players) {
+            if(player.getCurrentField() == currentField) {
+                player.getFigure().setX(field1);
+                player.getFigure().setVisibility(View.VISIBLE);
+            }else if(player.getCurrentField() == currentField+1) {
+                player.getFigure().setX(field2);
+                player.getFigure().setVisibility(View.VISIBLE);
+            }else {
+                player.getFigure().setVisibility(View.INVISIBLE);
+            }
+        }
     }
+
     public void startRoulette(){
         Intent it = new Intent(this, MainActivityRoulette.class);
         startActivity(it);
     }
 
-        public int changeMoney(){
+    public int changeMoney(){
         int temp = getCurrentPlayer().getMoney();
-        int newMoney = temp + RotateActivity.getMoney();
 
-        money.setText(Integer.toString(newMoney));
+        //money.setText(Integer.toString(newMoney));
 
-        return newMoney;
+        return temp + RotateActivity.getMoney();
     }
 
     public void sendRollDice() {

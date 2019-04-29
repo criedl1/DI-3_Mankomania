@@ -11,11 +11,11 @@ import java.util.Queue;
 import java.util.Random;
 
 public class ServerQueueHandler extends Thread{
-    ClientHandler[] clientHandlers;
+    private ClientHandler[] clientHandlers;
     private Queue<String> queue;
     private GameData gameData;
 
-    public ServerQueueHandler(ClientHandler[] clientHandlers, Queue queue, GameData gameData){
+    ServerQueueHandler(ClientHandler[] clientHandlers, Queue<String> queue, GameData gameData){
         this.queue = queue;
         this.clientHandlers = clientHandlers;
         this.gameData = gameData;
@@ -116,10 +116,10 @@ public class ServerQueueHandler extends Thread{
 
     private void rollDice(JsonObject jsonObject) {
         // TODO Roll the Dice ServerSide
-        Log.i("DICEEX","Received dice event");
         int player = jsonToInt(jsonObject,"Player");
         int result = new Random().nextInt(12)+1;
-        gameData.movePlayer(result);
+        Log.i("DICEEX","Received dice event and diced "+result);
+        // gameData.movePlayer(result);
         sendDiceResult(player, result);
     }
 
@@ -222,16 +222,18 @@ public class ServerQueueHandler extends Thread{
         gameData.setMoney(arr);
         //sendData
         sendMoney(player,money);
+        startTurn((player+1)%gameData.getPlayerCount());
+
     }
 
-    public void sendAllClients(String message) {
+    private void sendAllClients(String message) {
         //send Command to all Clients
         for (ClientHandler client : clientHandlers) {
             client.send(message);
         }
     }
 
-    public void sendPlayer(int idx, String str){
+    void sendPlayer(int idx, String str){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","sendPlayer");
         json.addProperty("PLAYER", idx);
@@ -255,7 +257,7 @@ public class ServerQueueHandler extends Thread{
         sendAllClients(json.toString());
     }
 
-    public void sendHypoAktie(int idx, int count){
+    private void sendHypoAktie(int idx, int count){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","setHypoAktie");
         json.addProperty("PLAYER", idx);
@@ -263,7 +265,7 @@ public class ServerQueueHandler extends Thread{
         sendAllClients(json.toString());
     }
 
-    public void sendStrabagAktie(int idx, int count){
+    private void sendStrabagAktie(int idx, int count){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","setStrabagAktie");
         json.addProperty("PLAYER", idx);
@@ -271,7 +273,7 @@ public class ServerQueueHandler extends Thread{
         sendAllClients(json.toString());
     }
 
-    public void sendInfineonAktie(int idx, int count){
+    private void sendInfineonAktie(int idx, int count){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","setInfineonAktie");
         json.addProperty("PLAYER", idx);
@@ -279,7 +281,7 @@ public class ServerQueueHandler extends Thread{
         sendAllClients(json.toString());
     }
 
-    public void sendCheater(int idx, boolean cheater){
+    private void sendCheater(int idx, boolean cheater){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","setCheater");
         json.addProperty("PLAYER", idx);
@@ -294,7 +296,7 @@ public class ServerQueueHandler extends Thread{
         sendAllClients(json.toString());
     }
 
-    public void sendHotel(int idx, int owner){
+    private void sendHotel(int idx, int owner){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","setHotel");
         json.addProperty("Hotel", idx);

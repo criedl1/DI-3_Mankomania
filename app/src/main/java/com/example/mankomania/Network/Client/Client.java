@@ -21,10 +21,8 @@ public class Client extends Thread {
     private final GameData gameData = new GameData();
     private static String ipHost;
     private static PrintWriter output;
-    private static BufferedReader input;
-    private Queue<String> queue;
     private int idx;
-    static MapView MapView;
+    public static MapView MapView;
 
     public Client(String ipHost, MapView MapView){
         Client.ipHost = ipHost;
@@ -33,7 +31,7 @@ public class Client extends Thread {
 
     public void run() {
         try {
-            queue = new LinkedBlockingQueue<>();
+            Queue<String> queue = new LinkedBlockingQueue<>();
 
             // getting localhost ip
             InetAddress ip = InetAddress.getByName(ipHost);
@@ -43,10 +41,10 @@ public class Client extends Thread {
 
             // obtaining INPUT and out
             output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             // start ClientListener for incoming Messages
-            ClientListener clientListener = new ClientListener(input,queue);
+            ClientListener clientListener = new ClientListener(input, queue);
             clientListener.start();
 
             // start CLienQueueHandler
@@ -58,7 +56,7 @@ public class Client extends Thread {
     }
 
     //Index
-    public void setIdx(int idx) {
+    void setIdx(int idx) {
         this.idx = idx;
     }
     public int getIdx() {
@@ -182,6 +180,26 @@ public class Client extends Thread {
         };
         thread.start();
     }
+
+
+    public void sendRouletteResult(JsonObject jsonObject) {
+            Log.i("DICEX", jsonObject.toString());
+            int moneyChange = jsonToInt(jsonObject,"ROULETTERESULT");
+        Thread thread = new Thread(){
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty("OPERATION","rollDice");
+                json.addProperty("Player",idx);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+
+    private int jsonToInt(JsonObject jsonObject, String key){
+        return Integer.parseInt(jsonObject.get(key).getAsString());
+    }
+
     public void spinTheWheel(){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){

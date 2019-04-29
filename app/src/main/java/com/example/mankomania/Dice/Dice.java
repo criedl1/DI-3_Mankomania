@@ -1,16 +1,12 @@
 package com.example.mankomania.Dice;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.media.MediaPlayer;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorManager;
 import android.hardware.SensorEventListener;
-import android.util.Log;
+import android.hardware.SensorManager;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +100,7 @@ public class Dice extends Fragment implements SensorEventListener {
         mediaPlayer = MediaPlayer.create(getActivity(), R.raw.dice);
         mediaPlayer.start();
         int[][] diceResult = diceResults[result-2];
-        int[] ddiceResult = diceResult[new Random().nextInt(diceResult.length-1)];
+        int[] ddiceResult = diceResult[new Random().nextInt(diceResult.length)];
         Toast.makeText(getActivity(), "Du hast " + result+ " gewürfelt", Toast.LENGTH_SHORT).show();
         try {
             switch (ddiceResult[0]) {

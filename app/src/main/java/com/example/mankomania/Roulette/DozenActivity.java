@@ -1,13 +1,16 @@
 package com.example.mankomania.Roulette;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.mankomania.Network.Client.Client;
 import com.example.mankomania.R;
+import com.google.gson.JsonObject;
 
 public class DozenActivity extends AppCompatActivity {
 
@@ -68,15 +71,15 @@ public class DozenActivity extends AppCompatActivity {
         int rouletteNumber = roulette.spinIt();
         int dozen = 0;
 
-        for(int i = 0; i < array.length; i++){
-            if(array[i].getValue() == rouletteNumber){
-                if(array[i].getValue() <= 12){
+        for (FieldClass fieldClass : array) {
+            if (fieldClass.getValue() == rouletteNumber) {
+                if (fieldClass.getValue() <= 12) {
                     dozen = 1;
-                }
-                else if (array[i].getValue() <= 24 && array[i].getValue() > 12){
+                } else if (fieldClass.getValue() <= 24 && fieldClass.getValue() > 12) {
                     dozen = 2;
+                } else {
+                    dozen = 3;
                 }
-                else {dozen = 3;}
             }
         }
 
@@ -89,6 +92,7 @@ public class DozenActivity extends AppCompatActivity {
             money = - 20000;
             returnString = "Du hast " + money*(-1) + " verloren!";
         }
+        this.sendMoneyChange(money);
     }
 
     public static String getReturnString(){
@@ -103,6 +107,16 @@ public class DozenActivity extends AppCompatActivity {
         Intent it = new Intent(this, RotateActivity.class);
         startActivity(it);
         finish();
+    }
+
+    private void sendMoneyChange(int rouletteResult){
+        JsonObject object = new JsonObject();
+        object.addProperty("result", rouletteResult);
+        object.addProperty("OPERATION", "ROULETTERESULT");
+        Intent intent = new Intent("client.update");
+        intent.putExtra("result", object.toString());
+        LocalBroadcastManager.getInstance(Client.MapView)
+                .sendBroadcast(intent);
     }
 
     public static int getMoney(){

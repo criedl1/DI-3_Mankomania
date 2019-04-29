@@ -58,6 +58,16 @@ public class GameData {
         }
     }
 
+    public int getPlayerCount(){
+        int count = 0;
+        for (String player : this.Players) {
+            if(player != null){
+                count++;
+            }
+        }
+        return count;
+    }
+
     public int getLotto() {
         return Lotto;
     }

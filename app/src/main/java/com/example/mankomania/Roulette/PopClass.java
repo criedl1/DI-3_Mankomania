@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialogFragment;
 
 import com.example.mankomania.R;
@@ -13,6 +14,7 @@ public class PopClass extends AppCompatDialogFragment {
     String theNumberIs;
     String color;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
@@ -52,6 +54,8 @@ public class PopClass extends AppCompatDialogFragment {
 
         return alert.create();
     }
+
+
 
 
 }

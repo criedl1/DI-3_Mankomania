@@ -1,8 +1,8 @@
 package com.example.mankomania.Roulette;
 
+import android.os.Bundle;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -106,4 +106,6 @@ public class RotateActivity extends AppCompatActivity {
     public static int getMoney(){
         return money;
     }
+
+
 }
