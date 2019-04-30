@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 public class Player {
 
+    private int index;
     private ImageView figure;
     private int currentField;
     private int money;
@@ -22,7 +23,7 @@ public class Player {
     }
 
     void moveFields(int fields, int maxfields) {
-        Log.i("MOVE", "Von Feld "+currentField+" zu "+(currentField + fields)% maxfields);
+        Log.i("MOVE", "Player "+index+" von Feld "+currentField+" zu "+(currentField + fields)% maxfields);
         currentField = (currentField + fields)% maxfields;
     }
 
@@ -44,7 +45,6 @@ public class Player {
         return figure;
     }
 
-
     int getCurrentField() {
         return currentField;
     }
@@ -62,5 +62,8 @@ public class Player {
         currentmoney.setText(Integer.toString(money));
     }
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
 }
 

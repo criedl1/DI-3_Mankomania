@@ -40,7 +40,8 @@ public class Dice extends Fragment implements SensorEventListener {
             {{3,6}, {6,3}, {4,5}, {5,4}},
             {{4,6}, {6,4}, {5,5}},
             {{5,6}, {6,5}},
-            {{6,6}}};
+            {{6,6}}
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +75,7 @@ public class Dice extends Fragment implements SensorEventListener {
         ivDice1.animate().scaleX(0).scaleY(0);
         ivDice2.animate().scaleX(0).scaleY(0);
     }
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float x = sensorEvent.values[0];
@@ -82,7 +84,7 @@ public class Dice extends Fragment implements SensorEventListener {
         // sum of sensors
         float acceleration = (x + y + z);
         // if sum > 70 --> roll the Dice
-        if (acceleration > 60 && !bool1) {
+        if (acceleration > 20 && !bool1) {
             //rollTheDice();
             bool1 = true;
             ((MapView)getActivity()).sendRollDice();

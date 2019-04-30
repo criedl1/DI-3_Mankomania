@@ -13,7 +13,7 @@ public class GameData {
     private int[] hypoAktie;
     private int[] strabagAktie;
     private boolean[] isCheater;
-    private int hasTurn;
+    private int hasTurn = 0;
     private Map map;
     private ServerQueueHandler server;
 
