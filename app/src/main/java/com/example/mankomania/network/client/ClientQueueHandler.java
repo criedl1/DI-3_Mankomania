@@ -1,4 +1,4 @@
-package com.example.mankomania.Network.Client;
+package com.example.mankomania.network.client;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
@@ -11,7 +11,7 @@ import com.google.gson.JsonParser;
 import java.util.Arrays;
 import java.util.Queue;
 
-import com.example.mankomania.Network.NetworkConstants;
+import com.example.mankomania.network.NetworkConstants;
 
 public class ClientQueueHandler extends Thread{
     private Queue<String> queue;
@@ -212,33 +212,33 @@ public class ClientQueueHandler extends Thread{
 
     private void generateGameData(JsonObject jsonObject){
         int playerCount = jsonToInt(jsonObject,"COUNT");
-        int[] int_arr = new int[playerCount];
-        boolean[] bool_arr = new boolean[playerCount];
-        String[] str_arr = new String[playerCount];
+        int[] intArr = new int[playerCount];
+        boolean[] boolArr = new boolean[playerCount];
+        String[] strArr = new String[playerCount];
 
         // Set Player[] (fills in ConnectPlayers)
-        Arrays.fill(str_arr,"");
-        gameData.setPlayers(str_arr);
+        Arrays.fill(strArr,"");
+        gameData.setPlayers(strArr);
 
         // Set Arrays with 0
-        Arrays.fill(int_arr,0);
-        gameData.setMoney(int_arr);
-        gameData.setPosition(int_arr);
-        gameData.setHypoAktie(int_arr);
-        gameData.setStrabagAktie(int_arr);
-        gameData.setInfineonAktie(int_arr);
+        Arrays.fill(intArr,0);
+        gameData.setMoney(intArr);
+        gameData.setPosition(intArr);
+        gameData.setHypoAktie(intArr);
+        gameData.setStrabagAktie(intArr);
+        gameData.setInfineonAktie(intArr);
 
         // Set Array with false
-        Arrays.fill(bool_arr,false);
-        gameData.setIsCheater(bool_arr);
+        Arrays.fill(boolArr,false);
+        gameData.setIsCheater(boolArr);
 
         // Set Lotto to 0
         gameData.setLotto(0);
 
         // Set all Hotel to 0
-        int_arr = new int[5];
-        Arrays.fill(int_arr,0);
-        gameData.setHotels(int_arr);
+        intArr = new int[5];
+        Arrays.fill(intArr,0);
+        gameData.setHotels(intArr);
         publishUpdate(jsonObject);
     }
 

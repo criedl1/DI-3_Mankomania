@@ -1,4 +1,4 @@
-package com.example.mankomania.Network;
+package com.example.mankomania.network;
 
 public class NetworkConstants {
     public static final String SET_ID = "SET_ID";

@@ -1,4 +1,4 @@
-package com.example.mankomania.Network.Client;
+package com.example.mankomania.network.client;
 
 import java.io.BufferedReader;
 import java.util.Queue;
@@ -12,6 +12,7 @@ public class ClientListener extends Thread {
         this.queue = queue;
     }
 
+    @Override
     public void run(){
         try{
             while (true){

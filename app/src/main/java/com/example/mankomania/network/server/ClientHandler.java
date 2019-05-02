@@ -1,4 +1,4 @@
-package com.example.mankomania.Network.Server;
+package com.example.mankomania.network.server;
 
 import com.google.gson.JsonObject;
 
@@ -9,18 +9,18 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Queue;
-import com.example.mankomania.Network.NetworkConstants;
+import com.example.mankomania.network.NetworkConstants;
 
 class ClientHandler extends Thread {
-    private final PrintWriter OUTPUT;
-    private final BufferedReader INPUT;
+    private final PrintWriter output;
+    private final BufferedReader input;
     private Queue<String[]> queue;
     private int id;
     private int playerCount;
 
     ClientHandler(Socket socket, Queue queue, int id, int playerCount) throws Exception{
-        this.OUTPUT = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-        this.INPUT = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+        this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.queue = queue;
         this.id = id;
         this.playerCount = playerCount;
@@ -30,7 +30,7 @@ class ClientHandler extends Thread {
     public void run() {
         try {
             // start ServerListener for incoming Messages
-            ServerListener serverListener = new ServerListener(INPUT,queue);
+            ServerListener serverListener = new ServerListener(input,queue);
             serverListener.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,6 +60,6 @@ class ClientHandler extends Thread {
     }
 
     void send(String string){
-        OUTPUT.println(string);
+        output.println(string);
     }
 }

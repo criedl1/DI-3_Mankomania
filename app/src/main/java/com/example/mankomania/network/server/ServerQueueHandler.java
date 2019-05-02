@@ -1,4 +1,4 @@
-package com.example.mankomania.Network.Server;
+package com.example.mankomania.network.server;
 
 import android.util.Log;
 
@@ -9,7 +9,7 @@ import com.google.gson.JsonParser;
 
 import java.util.Queue;
 import java.util.Random;
-import com.example.mankomania.Network.NetworkConstants;
+import com.example.mankomania.network.NetworkConstants;
 
 public class ServerQueueHandler extends Thread{
     private ClientHandler[] clientHandlers;

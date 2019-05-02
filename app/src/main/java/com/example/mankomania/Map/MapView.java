@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mankomania.Dice.Dice;
-import com.example.mankomania.Network.Client.Client;
+import com.example.mankomania.network.client.Client;
 import com.example.mankomania.R;
 import com.example.mankomania.Roulette.MainActivityRoulette;
 import com.example.mankomania.Roulette.RotateActivity;
@@ -31,7 +31,7 @@ import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.example.mankomania.Network.NetworkConstants;
+import com.example.mankomania.network.NetworkConstants;
 
 
 public class MapView extends AppCompatActivity {

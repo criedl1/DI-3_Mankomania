@@ -1,7 +1,7 @@
 package com.example.mankomania.gameData;
 
 import com.example.mankomania.Map.Map;
-import com.example.mankomania.Network.Server.ServerQueueHandler;
+import com.example.mankomania.network.server.ServerQueueHandler;
 
 public class GameData {
     private String[] players;
