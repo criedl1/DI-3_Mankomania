@@ -192,6 +192,7 @@ public class MapView extends AppCompatActivity {
                 initPlayerCount(jsonObject);
                 break;
             case "ROULETTERESULT":
+                //TODO Should be in SPIN_WHEEL
                 printPositions("ROULETTE");
                 players.get(myPlayer).setMoney(players.get(myPlayer).getMoney()+jsonToInt(jsonObject,"result"));
                 Log.i("MONEY", "Set Money of Player "+(myPlayer)+" to "+players.get(myPlayer).getMoney());

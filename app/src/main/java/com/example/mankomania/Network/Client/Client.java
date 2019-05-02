@@ -31,6 +31,7 @@ public class Client extends Thread {
     }
 
     public void run() {
+        Socket socket = null;
         try {
             Queue<String> queue = new LinkedBlockingQueue<>();
 
@@ -38,7 +39,7 @@ public class Client extends Thread {
             InetAddress ip = InetAddress.getByName(ipHost);
 
             // establish the connection with server port 5056
-            Socket socket = new Socket(ip, 5056);
+            socket = new Socket(ip, 5056);
 
             // obtaining INPUT and out
             output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
@@ -49,10 +50,16 @@ public class Client extends Thread {
             clientListener.start();
 
             // start CLienQueueHandler
-            ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue,this, gameData);
+            ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue, this, gameData);
             clientQueueHandler.start();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception err) {
+            if (socket != null && !socket.isClosed()) {
+                try {
+                    socket.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
         }
     }
 

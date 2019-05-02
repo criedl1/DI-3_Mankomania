@@ -26,9 +26,10 @@ public class Server extends Thread {
     }
 
     public void run() {
+        ServerSocket serverSocket = null;
         try {
             // server is listening on port 5056
-            ServerSocket serverSocket = new ServerSocket(5056);
+            serverSocket = new ServerSocket(5056);
 
             // set arrays for sockets and Handlers
             sockets = new Socket[PLAYERCOUNT];
@@ -52,8 +53,14 @@ public class Server extends Thread {
             // Start listening
             serverQueueHandler.start();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception err) {
+            if (serverSocket != null && !serverSocket.isClosed()) {
+                try {
+                    serverSocket.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
         }
     }
 
