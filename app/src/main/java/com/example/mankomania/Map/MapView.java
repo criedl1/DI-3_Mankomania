@@ -251,43 +251,43 @@ public class MapView extends AppCompatActivity {
     }
 
     private void setPositionUpdate(JsonObject jsonObject) {
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int position = jsonToInt(jsonObject,"Position");
+        //int player =jsonToInt(jsonObject,"PLAYER");
+        //int position = jsonToInt(jsonObject,"Position");
 
         //TODO Change Player Position on UI
     }
     private void setHypoAktieUpdate(JsonObject jsonObject) {
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int count = jsonToInt(jsonObject,"Count");
+        //int player =jsonToInt(jsonObject,"PLAYER");
+        //int count = jsonToInt(jsonObject,"Count");
 
         //TODO Change Player-Aktie on UI
     }
     private void setStrabagAktieUpdate(JsonObject jsonObject) {
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int count = jsonToInt(jsonObject,"Count");
+        //int player =jsonToInt(jsonObject,"PLAYER");
+        //int count = jsonToInt(jsonObject,"Count");
 
         //TODO Change Player-Aktie on UI
     }
     private void setInfineonAktieUpdate(JsonObject jsonObject) {
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int count = jsonToInt(jsonObject,"Count");
+        //int player =jsonToInt(jsonObject,"PLAYER");
+        //int count = jsonToInt(jsonObject,"Count");
 
         //TODO Change Player-Aktie on UI
     }
     private void setCheaterUpdate(JsonObject jsonObject) {
-        int player =jsonToInt(jsonObject,"PLAYER");
-        boolean count = (jsonToInt(jsonObject,"Cheater")==1);
+        //int player =jsonToInt(jsonObject,"PLAYER");
+        //boolean count = (jsonToInt(jsonObject,"Cheater")==1);
 
         //TODO Cheater Action
     }
     private void setLottoUpdate(JsonObject jsonObject) {
-        int amount = jsonToInt(jsonObject,"Amount");
+        //int amount = jsonToInt(jsonObject,"Amount");
 
         //TODO Lotto Actions
     }
     private void setHotelUpdate(JsonObject jsonObject) {
-        int hotel =jsonToInt(jsonObject,"Hotel");
-        int owner = jsonToInt(jsonObject,"Owner");
+        //int hotel =jsonToInt(jsonObject,"Hotel");
+        //int owner = jsonToInt(jsonObject,"Owner");
 
         //TODO Hotel Actions and UI
     }
@@ -306,8 +306,8 @@ public class MapView extends AppCompatActivity {
         }
     }
     private void spinWheelUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, "Player");
-        int result = jsonToInt(jsonObject, "Result");
+        //int player = jsonToInt(jsonObject, "Player");
+        //int result = jsonToInt(jsonObject, "Result");
 
         //TODO Update UI
     }

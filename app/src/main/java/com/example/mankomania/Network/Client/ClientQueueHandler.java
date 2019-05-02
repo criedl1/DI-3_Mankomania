@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.example.mankomania.GameData.GameData;
+import com.example.mankomania.gameData.GameData;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
