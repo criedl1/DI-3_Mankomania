@@ -15,6 +15,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
+import com.example.mankomania.Network.NetworkConstants;
 
 // Client class
 public class Client extends Thread {
@@ -69,7 +70,7 @@ public class Client extends Thread {
         Thread thread = new Thread(){
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION","sendMoney");
+                json.addProperty("OPERATION",NetworkConstants.SEND_MONEY);
                 json.addProperty("PLAYER", idx);
                 json.addProperty("Money", money);
                 output.println(json.toString());
@@ -82,7 +83,7 @@ public class Client extends Thread {
         Thread thread = new Thread(){
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION","setPosition");
+                json.addProperty("OPERATION",NetworkConstants.SET_POSITION);
                 json.addProperty("PLAYER", idx);
                 json.addProperty("Position", pos);
                 output.println(json.toString());
@@ -95,7 +96,7 @@ public class Client extends Thread {
         Thread thread = new Thread(){
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION","setHypoAktie");
+                json.addProperty("OPERATION",NetworkConstants.SET_HYPO_AKTIE);
                 json.addProperty("PLAYER", idx);
                 json.addProperty("Count", count);
                 output.println(json.toString());
@@ -108,7 +109,7 @@ public class Client extends Thread {
         Thread thread = new Thread(){
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION","setStrabagAktie");
+                json.addProperty("OPERATION",NetworkConstants.SET_STRABAG_AKTIE);
                 json.addProperty("PLAYER", idx);
                 json.addProperty("Count", count);
                 output.println(json.toString());
@@ -121,7 +122,7 @@ public class Client extends Thread {
         Thread thread = new Thread(){
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION","setInfineonAktie");
+                json.addProperty("OPERATION",NetworkConstants.SET_INFINEON_AKTIE);
                 json.addProperty("PLAYER", idx);
                 json.addProperty("Count", count);
                 output.println(json.toString());
@@ -134,7 +135,7 @@ public class Client extends Thread {
         Thread thread = new Thread(){
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION","setCheater");
+                json.addProperty("OPERATION",NetworkConstants.SET_CHEATER);
                 json.addProperty("PLAYER", idx);
                 json.addProperty("Cheater", cheater);
                 output.println(json.toString());
@@ -147,7 +148,7 @@ public class Client extends Thread {
         Thread thread = new Thread(){
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION","setLotto");
+                json.addProperty("OPERATION",NetworkConstants.SET_LOTTO);
                 json.addProperty("Amount", amount);
                 output.println(json.toString());
             }
@@ -159,7 +160,7 @@ public class Client extends Thread {
         Thread thread = new Thread(){
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION","setHotel");
+                json.addProperty("OPERATION",NetworkConstants.SET_HOTEL);
                 json.addProperty("Hotel", idx);
                 json.addProperty("Owner", owner);
                 output.println(json.toString());
@@ -173,22 +174,7 @@ public class Client extends Thread {
         Thread thread = new Thread(){
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION","rollDice");
-                json.addProperty("Player",idx);
-                output.println(json.toString());
-            }
-        };
-        thread.start();
-    }
-
-
-    public void sendRouletteResult(JsonObject jsonObject) {
-            Log.i("DICEX", jsonObject.toString());
-            int moneyChange = jsonToInt(jsonObject,"ROULETTERESULT");
-        Thread thread = new Thread(){
-            public void run(){
-                JsonObject json = new JsonObject();
-                json.addProperty("OPERATION","rollDice");
+                json.addProperty("OPERATION",NetworkConstants.ROLL_DICE);
                 json.addProperty("Player",idx);
                 output.println(json.toString());
             }
@@ -200,12 +186,12 @@ public class Client extends Thread {
         return Integer.parseInt(jsonObject.get(key).getAsString());
     }
 
-    public void spinTheWheel(){
+    public void playRoulette(){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION","spinWheel");
+                json.addProperty("OPERATION",NetworkConstants.SPIN_WHEEL);
                 json.addProperty("Player",idx);
                 output.println(json.toString());
             }
@@ -217,7 +203,7 @@ public class Client extends Thread {
         Thread thread = new Thread(){
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION","endTurn");
+                json.addProperty("OPERATION",NetworkConstants.END_TURN);
                 json.addProperty("Player",idx);
                 output.println(json.toString());
             }

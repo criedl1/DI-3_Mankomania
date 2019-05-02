@@ -9,6 +9,7 @@ import com.google.gson.JsonParser;
 
 import java.util.Queue;
 import java.util.Random;
+import com.example.mankomania.Network.NetworkConstants;
 
 public class ServerQueueHandler extends Thread{
     private ClientHandler[] clientHandlers;
@@ -43,37 +44,37 @@ public class ServerQueueHandler extends Thread{
         JsonObject jsonObject = parser.parse(in).getAsJsonObject();
 
         switch (jsonToString(jsonObject,"OPERATION")) {
-            case "sendMoney":
+            case NetworkConstants.SEND_MONEY:
                 setMoney(jsonObject);
                 break;
-            case "setPosition":
+            case NetworkConstants.SET_POSITION:
                 setPosition(jsonObject);
                 break;
-            case "setHypoAktie":
+            case NetworkConstants.SET_HYPO_AKTIE:
                 setHypoAktie(jsonObject);
                 break;
-            case "setStrabagAktie":
+            case NetworkConstants.SET_STRABAG_AKTIE:
                 setStrabagAktie(jsonObject);
                 break;
-            case "setInfineonAktie":
+            case NetworkConstants.SET_INFINEON_AKTIE:
                 setInfineonAktie(jsonObject);
                 break;
-            case "setCheater":
+            case NetworkConstants.SET_CHEATER:
                 setCheater(jsonObject);
                 break;
-            case "setLotto":
+            case NetworkConstants.SET_LOTTO:
                 setLotto(jsonObject);
                 break;
-            case "setHotel":
+            case NetworkConstants.SET_HOTEL:
                 setHotel(jsonObject);
                 break;
-            case "rollDice":
+            case NetworkConstants.ROLL_DICE:
                 rollDice(jsonObject);
                 break;
-            case "spinWheel":
+            case NetworkConstants.SPIN_WHEEL:
                 spinWheel(jsonObject);
                 break;
-            case "endTurn":
+            case NetworkConstants.END_TURN:
                 endTurn(jsonObject);
                 break;
             default:
@@ -93,7 +94,7 @@ public class ServerQueueHandler extends Thread{
     private void startTurn(int player) {
         gameData.setTurn(player);
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","StartTurn");
+        json.addProperty("OPERATION",NetworkConstants.START_TURN);
         json.addProperty("Player", player);
         //Send only one Player
         clientHandlers[player].send(json.toString());
@@ -102,13 +103,14 @@ public class ServerQueueHandler extends Thread{
     private void spinWheel(JsonObject jsonObject) {
         // TODO Spin the Wheel ServerSide
         int player = jsonToInt(jsonObject,"Player");
-        sendSpinResult(player, RouletteClass.getRandomNumber()); //how much the player wins/looses would be more interesting?
-
+        sendSpinResult(player, RouletteClass.getRandomNumber());
+        //how much the player wins/looses would be more interesting?
+        //Answer: its easier for the Network this way, the diff cen bge calculated in the upper layer
     }
 
     private void sendSpinResult(int idx, int result) {
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","spinWheel");
+        json.addProperty("OPERATION",NetworkConstants.SPIN_WHEEL);
         json.addProperty("Result", result);
         json.addProperty("Player", idx);
         sendAllClients(json.toString());
@@ -126,7 +128,7 @@ public class ServerQueueHandler extends Thread{
 
     private void sendDiceResult(int idx,int result) {
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","rollDice");
+        json.addProperty("OPERATION",NetworkConstants.ROLL_DICE);
         json.addProperty("Result", result);
         json.addProperty("Player", idx);
         sendAllClients(json.toString());
@@ -238,7 +240,7 @@ public class ServerQueueHandler extends Thread{
 
     void sendPlayer(int idx, String str){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","sendPlayer");
+        json.addProperty("OPERATION",NetworkConstants.SEND_PLAYER);
         json.addProperty("PLAYER", idx);
         json.addProperty("IP", str);
         sendAllClients(json.toString());
@@ -246,7 +248,7 @@ public class ServerQueueHandler extends Thread{
 
     public void sendMoney(int idx, int money){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","sendMoney");
+        json.addProperty("OPERATION",NetworkConstants.SEND_MONEY);
         json.addProperty("PLAYER", idx);
         json.addProperty("Money", money);
         sendAllClients(json.toString());
@@ -254,7 +256,7 @@ public class ServerQueueHandler extends Thread{
 
     public void sendPosition(int idx, int pos){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setPosition");
+        json.addProperty("OPERATION",NetworkConstants.SET_POSITION);
         json.addProperty("PLAYER", idx);
         json.addProperty("Position", pos);
         sendAllClients(json.toString());
@@ -262,7 +264,7 @@ public class ServerQueueHandler extends Thread{
 
     private void sendHypoAktie(int idx, int count){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setHypoAktie");
+        json.addProperty("OPERATION",NetworkConstants.SET_HYPO_AKTIE);
         json.addProperty("PLAYER", idx);
         json.addProperty("Count", count);
         sendAllClients(json.toString());
@@ -270,7 +272,7 @@ public class ServerQueueHandler extends Thread{
 
     private void sendStrabagAktie(int idx, int count){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setStrabagAktie");
+        json.addProperty("OPERATION",NetworkConstants.SET_STRABAG_AKTIE);
         json.addProperty("PLAYER", idx);
         json.addProperty("Count", count);
         sendAllClients(json.toString());
@@ -278,7 +280,7 @@ public class ServerQueueHandler extends Thread{
 
     private void sendInfineonAktie(int idx, int count){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setInfineonAktie");
+        json.addProperty("OPERATION",NetworkConstants.SET_INFINEON_AKTIE);
         json.addProperty("PLAYER", idx);
         json.addProperty("Count", count);
         sendAllClients(json.toString());
@@ -286,7 +288,7 @@ public class ServerQueueHandler extends Thread{
 
     private void sendCheater(int idx, boolean cheater){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setCheater");
+        json.addProperty("OPERATION",NetworkConstants.SET_CHEATER);
         json.addProperty("PLAYER", idx);
         json.addProperty("Cheater", cheater);
         sendAllClients(json.toString());
@@ -294,14 +296,14 @@ public class ServerQueueHandler extends Thread{
 
     public void sendLotto(int amount){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setLotto");
+        json.addProperty("OPERATION",NetworkConstants.SET_LOTTO);
         json.addProperty("Amount", amount);
         sendAllClients(json.toString());
     }
 
     private void sendHotel(int idx, int owner){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION","setHotel");
+        json.addProperty("OPERATION",NetworkConstants.SET_HOTEL);
         json.addProperty("Hotel", idx);
         json.addProperty("Owner", owner);
         sendAllClients(json.toString());

@@ -11,6 +11,8 @@ import com.google.gson.JsonParser;
 import java.util.Arrays;
 import java.util.Queue;
 
+import com.example.mankomania.Network.NetworkConstants;
+
 public class ClientQueueHandler extends Thread{
     private Queue<String> queue;
     private Client client;
@@ -45,48 +47,48 @@ public class ClientQueueHandler extends Thread{
         Log.i("CLIENT", jsonObject.toString());
         switch (jsonToString(jsonObject,"OPERATION")) {
             // set ID of the Client
-            case "SET_ID":
+            case NetworkConstants.SET_ID:
                 client.setIdx(jsonToInt(jsonObject,"ID"));
                 publishUpdate(jsonObject);
                 break;
             // Starts the GameData
-            case "SET_PLAYER_COUNT":
+            case NetworkConstants.SET_PLAYER_COUNT:
                 generateGameData(jsonObject);
                 break;
-            case "sendPlayer":
+            case NetworkConstants.SEND_PLAYER:
                 setPlayerId(jsonObject);
                 break;
-            case "sendMoney":
+            case NetworkConstants.SEND_MONEY:
                 setMoney(jsonObject);
                 break;
-            case "setPosition":
+            case NetworkConstants.SET_POSITION:
                 setPosition(jsonObject);
                 break;
-            case "setHypoAktie":
+            case NetworkConstants.SET_HYPO_AKTIE:
                 setHypoAktie(jsonObject);
                 break;
-            case "setStrabagAktie":
+            case NetworkConstants.SET_STRABAG_AKTIE:
                 setStrabagAktie(jsonObject);
                 break;
-            case "setInfineonAktie":
+            case NetworkConstants.SET_INFINEON_AKTIE:
                 setInfineonAktie(jsonObject);
                 break;
-            case "setCheater":
+            case NetworkConstants.SET_CHEATER:
                 setCheater(jsonObject);
                 break;
-            case "setLotto":
+            case NetworkConstants.SET_LOTTO:
                 setLotto(jsonObject);
                 break;
-            case "setHotel":
+            case NetworkConstants.SET_HOTEL:
                 setHotel(jsonObject);
                 break;
-            case "rollDice":
+            case NetworkConstants.ROLL_DICE:
                 rollDice(jsonObject);
                 break;
-            case "spinWheel":
+            case NetworkConstants.SPIN_WHEEL:
                 spinWheel(jsonObject);
                 break;
-            case "StartTurn":
+            case NetworkConstants.START_TURN:
                 startTurn(jsonObject);
             default:
                 break;

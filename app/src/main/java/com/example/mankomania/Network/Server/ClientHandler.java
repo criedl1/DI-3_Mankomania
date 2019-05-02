@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Queue;
+import com.example.mankomania.Network.NetworkConstants;
 
 class ClientHandler extends Thread {
     private final PrintWriter OUTPUT;
@@ -38,7 +39,7 @@ class ClientHandler extends Thread {
 
     void giveTurn() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("OPERATION","StartTurn");
+        jsonObject.addProperty("OPERATION",NetworkConstants.START_TURN);
         jsonObject.addProperty("Player", id);
         //Send only one Player
         send(jsonObject.toString());
@@ -46,14 +47,14 @@ class ClientHandler extends Thread {
 
     void sendID() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("OPERATION", "SET_ID");
+        jsonObject.addProperty("OPERATION", NetworkConstants.SET_ID);
         jsonObject.addProperty("ID",id);
         send(jsonObject.toString());
     }
 
     void sendPlayerCount() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("OPERATION", "SET_PLAYER_COUNT");
+        jsonObject.addProperty("OPERATION", NetworkConstants.SET_PLAYER_COUNT);
         jsonObject.addProperty("COUNT",playerCount);
         send(jsonObject.toString());
     }

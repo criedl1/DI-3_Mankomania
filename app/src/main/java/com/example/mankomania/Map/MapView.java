@@ -31,6 +31,7 @@ import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.mankomania.Network.NetworkConstants;
 
 
 public class MapView extends AppCompatActivity {
@@ -153,41 +154,41 @@ public class MapView extends AppCompatActivity {
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
 
         switch (jsonToString(jsonObject,"OPERATION")) {
-            case "sendMoney":
+            case NetworkConstants.SEND_MONEY:
                 printPositions("sendMoney");
                 setMoneyUpdate(jsonObject);
                 break;
-            case "setPosition":
+            case NetworkConstants.SET_POSITION:
                 setPositionUpdate(jsonObject);
                 break;
-            case "setHypoAktie":
+            case NetworkConstants.SET_HYPO_AKTIE:
                 setHypoAktieUpdate(jsonObject);
                 break;
-            case "setStrabagAktie":
+            case NetworkConstants.SET_STRABAG_AKTIE:
                 setStrabagAktieUpdate(jsonObject);
                 break;
-            case "setInfineonAktie":
+            case NetworkConstants.SET_INFINEON_AKTIE:
                 setInfineonAktieUpdate(jsonObject);
                 break;
-            case "setCheater":
+            case NetworkConstants.SET_CHEATER:
                 setCheaterUpdate(jsonObject);
                 break;
-            case "setLotto":
+            case NetworkConstants.SET_LOTTO:
                 setLottoUpdate(jsonObject);
                 break;
-            case "setHotel":
+            case NetworkConstants.SET_HOTEL:
                 setHotelUpdate(jsonObject);
                 break;
-            case "rollDice":
+            case NetworkConstants.ROLL_DICE:
                 rollDiceUpdate(jsonObject);
                 break;
-            case "spinWheel":
+            case NetworkConstants.SPIN_WHEEL:
                 spinWheelUpdate(jsonObject);
                 break;
-            case "StartTurn":
+            case NetworkConstants.START_TURN:
                 startTurnUpdate(jsonObject);
                 break;
-            case "SET_PLAYER_COUNT":
+            case NetworkConstants.SET_PLAYER_COUNT:
                 initPlayerCount(jsonObject);
                 break;
             case "ROULETTERESULT":
@@ -197,7 +198,7 @@ public class MapView extends AppCompatActivity {
                 client.setMoneyOnServer(myPlayer,players.get(myPlayer).getMoney());
                 hideDice();
                 break;
-            case "SET_ID":
+            case NetworkConstants.SET_ID:
                 Log.i("INIT", "SET_ID: "+jsonObject.toString());
                 this.myPlayer = jsonToInt(jsonObject, "ID");
                 Log.i("INIT","Set my Player to: "+myPlayer);
