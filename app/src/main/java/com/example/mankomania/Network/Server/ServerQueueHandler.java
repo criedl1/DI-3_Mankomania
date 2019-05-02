@@ -1,22 +1,28 @@
 package com.example.mankomania.Network.Server;
 
+import android.util.Log;
+
 import com.example.mankomania.GameData.GameData;
+import com.example.mankomania.Roulette.RouletteClass;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.Queue;
+import java.util.Random;
 
 public class ServerQueueHandler extends Thread{
-    ClientHandler[] clientHandlers;
+    private ClientHandler[] clientHandlers;
     private Queue<String> queue;
     private GameData gameData;
 
-    public ServerQueueHandler(ClientHandler[] clientHandlers, Queue queue, GameData gameData){
+    ServerQueueHandler(ClientHandler[] clientHandlers, Queue<String> queue, GameData gameData){
         this.queue = queue;
         this.clientHandlers = clientHandlers;
         this.gameData = gameData;
+        this.gameData.setServer(this);
     }
 
+    @Override
     public void run(){
         String in;
         try{
@@ -85,6 +91,7 @@ public class ServerQueueHandler extends Thread{
     }
 
     private void startTurn(int player) {
+        gameData.setTurn(player);
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","StartTurn");
         json.addProperty("Player", player);
@@ -95,7 +102,8 @@ public class ServerQueueHandler extends Thread{
     private void spinWheel(JsonObject jsonObject) {
         // TODO Spin the Wheel ServerSide
         int player = jsonToInt(jsonObject,"Player");
-        sendSpinResult(player,21);
+        sendSpinResult(player, RouletteClass.getRandomNumber()); //how much the player wins/looses would be more interesting?
+
     }
 
     private void sendSpinResult(int idx, int result) {
@@ -109,7 +117,11 @@ public class ServerQueueHandler extends Thread{
     private void rollDice(JsonObject jsonObject) {
         // TODO Roll the Dice ServerSide
         int player = jsonToInt(jsonObject,"Player");
-        sendDiceResult(player, 7);
+        int result = new Random().nextInt(11)+2;
+        Log.i("DICEEX","Received dice event and diced "+result);
+        // gameData.movePlayer(result);
+
+        sendDiceResult(player, result);
     }
 
     private void sendDiceResult(int idx,int result) {
@@ -209,18 +221,22 @@ public class ServerQueueHandler extends Thread{
         //Change GameData
         arr[player] = money;
         gameData.setMoney(arr);
+
         //sendData
         sendMoney(player,money);
+        gameData.setTurn((gameData.getHasTurn()+1)%gameData.getPlayerCount());
+        startTurn(gameData.getHasTurn());
+
     }
 
-    public void sendAllClients(String message) {
+    private void sendAllClients(String message) {
         //send Command to all Clients
         for (ClientHandler client : clientHandlers) {
             client.send(message);
         }
     }
 
-    public void sendPlayer(int idx, String str){
+    void sendPlayer(int idx, String str){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","sendPlayer");
         json.addProperty("PLAYER", idx);
@@ -244,7 +260,7 @@ public class ServerQueueHandler extends Thread{
         sendAllClients(json.toString());
     }
 
-    public void sendHypoAktie(int idx, int count){
+    private void sendHypoAktie(int idx, int count){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","setHypoAktie");
         json.addProperty("PLAYER", idx);
@@ -252,7 +268,7 @@ public class ServerQueueHandler extends Thread{
         sendAllClients(json.toString());
     }
 
-    public void sendStrabagAktie(int idx, int count){
+    private void sendStrabagAktie(int idx, int count){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","setStrabagAktie");
         json.addProperty("PLAYER", idx);
@@ -260,7 +276,7 @@ public class ServerQueueHandler extends Thread{
         sendAllClients(json.toString());
     }
 
-    public void sendInfineonAktie(int idx, int count){
+    private void sendInfineonAktie(int idx, int count){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","setInfineonAktie");
         json.addProperty("PLAYER", idx);
@@ -268,7 +284,7 @@ public class ServerQueueHandler extends Thread{
         sendAllClients(json.toString());
     }
 
-    public void sendCheater(int idx, boolean cheater){
+    private void sendCheater(int idx, boolean cheater){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","setCheater");
         json.addProperty("PLAYER", idx);
@@ -283,7 +299,7 @@ public class ServerQueueHandler extends Thread{
         sendAllClients(json.toString());
     }
 
-    public void sendHotel(int idx, int owner){
+    private void sendHotel(int idx, int owner){
         JsonObject json = new JsonObject();
         json.addProperty("OPERATION","setHotel");
         json.addProperty("Hotel", idx);

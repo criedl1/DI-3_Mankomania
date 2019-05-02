@@ -1,5 +1,8 @@
 package com.example.mankomania.GameData;
 
+import com.example.mankomania.Map.Map;
+import com.example.mankomania.Network.Server.ServerQueueHandler;
+
 public class GameData {
     private String[] Players;
     private int[] Position;
@@ -10,6 +13,13 @@ public class GameData {
     private int[] hypoAktie;
     private int[] strabagAktie;
     private boolean[] isCheater;
+    private int hasTurn = 0;
+    private Map map;
+    private ServerQueueHandler server;
+
+    public GameData() {
+        this.map = new Map();
+    }
 
     public String[] getPlayers() {
         return Players.clone();
@@ -25,6 +35,14 @@ public class GameData {
         Position = position;
     }
 
+    //sets Position of specific player and sends changes to all clients
+    public void setPosition(int player, int position){
+        this.getPosition()[player] = position;
+        this.server.sendPosition(player,position);
+        // do the action (here because if he gets moved further we have a new position)
+        this.map.getField(position).doAction(this);
+    }
+
     public int[] getMoney() {
         return Money.clone();
     }
@@ -32,11 +50,34 @@ public class GameData {
         Money = money;
     }
 
+    //sets money of a player and sends change to all clients
+    public void setMoney(int player, int money){
+        this.getMoney()[player] = money;
+        if(this.server != null) {
+            this.server.sendMoney(player, money);
+        }
+    }
+
+    public int getPlayerCount(){
+        int count = 0;
+        for (String player : this.Players) {
+            if(player != null){
+                count++;
+            }
+        }
+        return count;
+    }
+
     public int getLotto() {
         return Lotto;
     }
+
+    //sets Lotto money and sends changes to all Clients
     public void setLotto(int lotto) {
         Lotto = lotto;
+        if(this.server != null){
+            this.server.sendLotto(lotto);
+        }
     }
 
     public int[] getHotels() {
@@ -72,5 +113,28 @@ public class GameData {
     }
     public void setIsCheater(boolean[] isCheater) {
         this.isCheater = isCheater;
+    }
+
+    public void setTurn(int player) {
+        this.hasTurn = player;
+    }
+
+    public int getHasTurn() {
+        return hasTurn;
+    }
+
+    //moves Player x fields further (trigering all actions on the way) and on the last field
+    public void movePlayer(int result) {
+        int currentPosition = this.getPosition()[this.hasTurn];
+        for(int i = 0; i < result; i++){
+            currentPosition = (currentPosition+1)%this.map.getMapSize();
+            this.map.getField(currentPosition).goOver(this);
+        }
+        currentPosition = (currentPosition+1)%this.map.getMapSize();
+        this.setPosition(this.getHasTurn(),currentPosition);
+    }
+
+    public void setServer(ServerQueueHandler serverQueueHandler) {
+        this.server = serverQueueHandler;
     }
 }

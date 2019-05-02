@@ -1,5 +1,7 @@
 package com.example.mankomania.Network.Server;
 
+import android.util.Log;
+
 import com.example.mankomania.GameData.GameData;
 
 import java.net.ServerSocket;
@@ -18,6 +20,7 @@ public class Server extends Thread {
     private final int STARTMONEY;
 
     public Server(int playerCount, int startMoney) {
+        Log.i("INIT", "Server started with PlayerCount "+ playerCount);
         this.PLAYERCOUNT = playerCount;
         this.STARTMONEY = startMoney;
     }
