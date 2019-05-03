@@ -25,7 +25,7 @@ import static android.content.Context.SENSOR_SERVICE;
 public class Dice extends Fragment implements SensorEventListener {
 
     private Button btnClose;
-    private boolean bool1;
+    private boolean diceRolled;
     private ImageView ivDice1, ivDice2;
     MediaPlayer mediaPlayer;
     int result;
@@ -60,7 +60,7 @@ public class Dice extends Fragment implements SensorEventListener {
         mySensormanager.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
         // assign Button
         // initialize Random and bool
-        bool1 = false;
+        diceRolled = false;
 
         return inflater.inflate(R.layout.activity_dice, container, false);
     }
@@ -68,12 +68,7 @@ public class Dice extends Fragment implements SensorEventListener {
     @Override
     public void onStart() {
         super.onStart();
-        ivDice1 = getActivity().findViewById(R.id.ivDice1);
-        ivDice2 = getActivity().findViewById(R.id.ivDice2);
-        btnClose = getActivity().findViewById(R.id.btnClose);
-        // assign ImageViews
-        ivDice1.animate().scaleX(0).scaleY(0);
-        ivDice2.animate().scaleX(0).scaleY(0);
+
     }
 
     @Override
@@ -84,9 +79,9 @@ public class Dice extends Fragment implements SensorEventListener {
         // sum of sensors
         float acceleration = (x + y + z);
         // if sum > 70 --> roll the Dice
-        if (acceleration > 20 && !bool1) {
+        if (acceleration > 20 && !diceRolled) {
             //rollTheDice();
-            bool1 = true;
+            diceRolled = true;
             ((MapView)getActivity()).sendRollDice();
         }
     }
@@ -101,6 +96,9 @@ public class Dice extends Fragment implements SensorEventListener {
         //servercall draus machen + neuer call show result von server
         mediaPlayer = MediaPlayer.create(getActivity(), R.raw.dice);
         mediaPlayer.start();
+        ivDice1 = getActivity().findViewById(R.id.ivDice1);
+        ivDice2 = getActivity().findViewById(R.id.ivDice2);
+        btnClose = getActivity().findViewById(R.id.btnClose);
         int[][] diceResult = diceResults[result-2];
         int[] ddiceResult = diceResult[new Random().nextInt(diceResult.length)];
         Toast.makeText(getActivity(), "Du hast " + result+ " gewürfelt", Toast.LENGTH_SHORT).show();
