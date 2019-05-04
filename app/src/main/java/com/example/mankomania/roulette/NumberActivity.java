@@ -112,12 +112,11 @@ public class NumberActivity extends AppCompatActivity {
        error.show(getSupportFragmentManager(), "alert");
     }
 
-    //TODO: Can this two be private now?
-    protected void setMoney(int money){
+    private void setMoney(int money){
         this.money = money;
     }
 
-    protected int getMoney(){
+    private int getMoney(){
         return money;
     }
 

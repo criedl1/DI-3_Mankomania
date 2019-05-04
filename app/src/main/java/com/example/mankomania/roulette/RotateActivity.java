@@ -1,5 +1,6 @@
 package com.example.mankomania.roulette;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MotionEventCompat;
@@ -23,10 +24,11 @@ public class RotateActivity extends AppCompatActivity {
     private float degree;
 
     //TODO: Finding a way to give these variables to PopClass without static
-    private static String returnString;
-    private static ColorEnum color;
-    private static int randomNumber;
+    private String returnString;
+    private ColorEnum color;
+    private int randomNumber;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,15 +54,15 @@ public class RotateActivity extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View v, MotionEvent event) { //since this is an override method, i am not able
+                                                                //to make the return type void.
                 int touch = MotionEventCompat.getActionMasked(event);
 
-                if(touch == MotionEvent.ACTION_MOVE){
-                        rotateAnimation();
-                    }
-                    return true; //since this is an override method, i am not able to make return type void.
+                if (touch == MotionEvent.ACTION_MOVE) {
+                    rotateAnimation();
                 }
+                return true;
+            }
         });
     }
 
@@ -94,37 +96,38 @@ public class RotateActivity extends AppCompatActivity {
         });
     }
 
-        private Runnable createRunnable() {
+    private Runnable createRunnable() {
 
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    openPopUp();
-                }
-            };
-            return runnable;
-        }
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                openPopUp();
+            }
+        };
+        return runnable;
+    }
 
     private void openPopUp() {
-       PopClass popClass = new PopClass();
-       popClass.show(getSupportFragmentManager(), "alert");
+        PopClass popClass = new PopClass();
+        popClass.show(getSupportFragmentManager(), "alert");
 
+            Bundle extras = new Bundle();
+            extras.putString("returnString", returnString);
+            extras.putInt("randomNumber", randomNumber);
+            extras.putSerializable("color", color);
+            popClass.setArguments(extras);
     }
 
-    //TODO: Ändern, wenn Server das Zeug nicht übernimmt
-    public int getMoney(){
-        return money;
-    }
-
-    protected static String getReturnString(){
+    protected String getReturnString() {
         return returnString;
     }
 
-    protected static ColorEnum getColor(){
+    protected ColorEnum getColor() {
         return color;
     }
 
-    public static int getRandomNumber() {
+    public int getRandomNumber() {
         return randomNumber;
     }
+
 }

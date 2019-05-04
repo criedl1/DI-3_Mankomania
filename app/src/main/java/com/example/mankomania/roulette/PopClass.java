@@ -11,8 +11,10 @@ import com.example.mankomania.R;
 
 public class PopClass extends AppCompatDialogFragment {
 
-    private String theNumberIs;
+    private int randomNumber;
+    private String theNumberIsString;
     private String colorString;
+    private String returnString;
 
     @NonNull
     @Override
@@ -20,9 +22,14 @@ public class PopClass extends AppCompatDialogFragment {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
             //TODO: Figure out if and how this is working without static
-            alert.setTitle(RotateActivity.getReturnString());
-            colorString = RotateActivity.getColor().toString();
 
+        colorString = getArguments().getSerializable("color").toString();
+        randomNumber = getArguments().getInt("randomNumber"); //toString is not possible here
+        theNumberIsString = Integer.toString(randomNumber);
+        returnString = getArguments().getString("returnString");
+
+
+        alert.setTitle(getReturnString());
         if(colorString == "BLACK"){
                 colorString = getString(R.string.roulette_black);}
         else if(colorString == "RED"){
@@ -30,8 +37,7 @@ public class PopClass extends AppCompatDialogFragment {
         else{colorString = getString(R.string.roulette_green);
         }
 
-        theNumberIs = Integer.toString(RotateActivity.getRandomNumber());
-                alert.setMessage(getString(R.string.roulette_result, theNumberIs, colorString));
+                alert.setMessage(getString(R.string.roulette_result, getTheNumberIsString(), getColorString()));
         alert.setPositiveButton(getString(R.string.roulette_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -43,6 +49,17 @@ public class PopClass extends AppCompatDialogFragment {
     }
 
 
+    public String getTheNumberIsString() {
+        return theNumberIsString;
+    }
+
+    public String getColorString() {
+        return colorString;
+    }
+
+    public String getReturnString() {
+        return returnString;
+    }
 
 
 }
