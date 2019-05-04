@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class RouletteClass {
 
-    private static int randomNumber;
-    private static FieldClass[] fieldClassArray = new FieldClass[36];
+    private int randomNumber;
+    private FieldClass[] fieldClassArray = new FieldClass[36];
 
     protected FieldClass[] setUpFields() {
         FieldClass fieldClass0 = new FieldClass(ColorEnum.GREEN, 0, 0f);
@@ -63,11 +63,11 @@ public class RouletteClass {
 
         Random random = new Random();
 
-        int randomNumber = random.nextInt(36);
+        randomNumber = random.nextInt(36);
         return randomNumber;
     }
 
-    protected static FieldClass getTheField() {
+    protected FieldClass getTheField() {
         FieldClass field = null;
         for (int i = 0; i < fieldClassArray.length; i++) {
             if (fieldClassArray[i].getValue() == getRandomNumber()) {
@@ -76,7 +76,8 @@ public class RouletteClass {
         } return field;
     }
 
-    public static int getRandomNumber(){
+    public int getRandomNumber(){
         return randomNumber;
     }
+
 }

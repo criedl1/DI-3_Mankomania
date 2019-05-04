@@ -3,6 +3,9 @@ package com.example.mankomania.Network.Server;
 import android.util.Log;
 
 import com.example.mankomania.GameData.GameData;
+import com.example.mankomania.roulette.ColorActivity;
+import com.example.mankomania.roulette.DozenActivity;
+import com.example.mankomania.roulette.NumberActivity;
 import com.example.mankomania.roulette.RouletteClass;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -101,9 +104,17 @@ public class ServerQueueHandler extends Thread{
 
     private void spinWheel(JsonObject jsonObject) {
         // TODO Spin the Wheel ServerSide
-        int player = jsonToInt(jsonObject,"Player");
-        sendSpinResult(player, RouletteClass.getRandomNumber()); //how much the player wins/looses would be more interesting?
 
+        int player = jsonToInt(jsonObject,"Player");
+
+        //TODO: I have changed this
+        if(ColorActivity.getMoneyAmount() != 0){
+            sendSpinResult(player, ColorActivity.getMoneyAmount());
+        }
+        else if (NumberActivity.getMoneyAmount() != 0){
+            sendSpinResult(player, NumberActivity.getMoneyAmount());
+        }
+        else{sendSpinResult(player, DozenActivity.getMoneyAmount());}
     }
 
     private void sendSpinResult(int idx, int result) {

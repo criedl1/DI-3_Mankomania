@@ -19,37 +19,27 @@ public class PopClass extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
-        if (ColorActivity.getReturnString() != null) {
-            alert.setTitle(ColorActivity.getReturnString());
-            ColorActivity.setReturnString(null);
-        } else if (DozenActivity.getReturnString() != null) {
-            alert.setTitle(DozenActivity.getReturnString());
-            DozenActivity.setReturnString(null);
-        } else if (NumberActivity.getReturnString() != null) {
-            alert.setTitle(NumberActivity.getReturnString());
-            NumberActivity.setReturnString(null);
+            //TODO: Figure out if and how this is working without static
+            alert.setTitle(RotateActivity.getReturnString());
+
+            //TODO: ColorActivity muss die Farbe mitgeben!
+            color = RotateActivity.getColor();
+
+        if(color == "BLACK"){
+                color = getString(R.string.roulette_black);}
+        else if(color == "RED"){
+                color = getString(R.string.roulette_red);}
+        else{ color = getString(R.string.roulette_green);
         }
 
-        color = RouletteClass.getTheField().getColor().toString();
-
-        switch (color) {
-            case "BLACK":
-                color = getString(R.string.roulette_black);
-                break;
-            case "RED":
-                color = getString(R.string.roulette_red);
-                break;
-            default:
-                color = getString(R.string.roulette_green);
-                break;
-        }
-
-        theNumberIs = Integer.toString(RouletteClass.getRandomNumber());
-        alert.setMessage(getString(R.string.roulette_result, theNumberIs, color));
+        //TODO: Figure out if and how this is working without static
+        //TODO: newMoney liefert vorerst den falschen Wert!!!!
+        theNumberIs = Integer.toString(RotateActivity.getRandomNumber());
+                alert.setMessage(getString(R.string.roulette_result, theNumberIs, color));
         alert.setPositiveButton(getString(R.string.roulette_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //by letting this empty, the pop-up closes
+                //by letting this empty, the pop-up closes when button is pressed.
             }
         });
 

@@ -15,12 +15,15 @@ public class ColorActivity extends AppCompatActivity {
 
     private RouletteClass roulette = new RouletteClass();
     private FieldClass[] array = roulette.setUpFields();
-    private static String returnString;
-    private static int money;
+    private String returnString;
+    private int money;
 
     private Button red;
     private Button black;
     private TextView selectColor;
+
+    //for Network
+    private static int moneyAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,26 +64,40 @@ public class ColorActivity extends AppCompatActivity {
             if (rouletteNumber == anArray.getValue()) {
                 if (anArray.getColor() == choosenColor) {
                     setMoney(30000); //--> 80000-50000 Einsatz
-                    returnString = getString(R.string.roulette_won, money);
+                    setReturnString(getString(R.string.roulette_won, getMoney()));
+                    moneyAmount = getMoney();
+
                 } else {
-                    money = -5000; //Einsatz
-                    returnString = getString(R.string.roulette_lost, money * -1);
+                    setMoney(-5000); //Einsatz
+                    setReturnString(getString(R.string.roulette_lost, getMoney() * -1));
+                    moneyAmount = getMoney();
                 }
-                sendMoneyChange(money);
+                sendMoneyChange(getMoney());
             }
         }
     }
 
-    protected static String getReturnString() {
-        return returnString;
+    private int getRandomNumberFromRouletteClass(){
+        return roulette.getRandomNumber();
     }
 
-    protected static void setReturnString(String newReturnString) {
-        returnString = newReturnString;
+    private float getDegreeFromRouletteClass(){
+        return roulette.getTheField().getDegree();
+    }
+
+    private String getColorFromRouletteClass(){
+        return roulette.getTheField().getColor().toString();
     }
 
     private void openRotateActivity() {
+        Bundle extras = new Bundle();
         Intent it = new Intent(this, RotateActivity.class);
+        extras.putString("returnString", getReturnString());
+        extras.putInt("money", getMoney());
+        extras.putInt("randomNumber", getRandomNumberFromRouletteClass());
+        extras.putString("color", getColorFromRouletteClass());
+        extras.putFloat("degree", getDegreeFromRouletteClass());
+        it.putExtras(extras);
         startActivity(it);
         finish();
     }
@@ -95,12 +112,25 @@ public class ColorActivity extends AppCompatActivity {
                 .sendBroadcast(intent);
     }
 
-    protected static int getMoney() {
+    protected int getMoney() {
         return money;
     }
 
-    protected static void setMoney(int newMoney) {
+    protected void setMoney(int newMoney) {
         money = newMoney;
     }
 
+    public String getReturnString() {
+        return returnString;
+    }
+
+    protected void setReturnString(String returnString){
+        this.returnString = returnString;
+    }
+
+    public static int getMoneyAmount(){
+        //did this, because i want to work with non-static variables in my classes
+
+        return moneyAmount;
+    }
 }

@@ -20,8 +20,11 @@ public class NumberActivity extends AppCompatActivity {
     private TextView selectNumber;
     private Button go;
     private int choosenNumber;
-    private static String returnString;
-    private static int money;
+    private String returnString;
+    private int money;
+
+    //For Network:
+    public static int moneyAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,27 +59,40 @@ public class NumberActivity extends AppCompatActivity {
         int rouletteNumber = roulette.spinIt();
 
         if (rouletteNumber == choosenNumber) {
-            money = 145000;  //--> 150000 - 5000 Einsatz
+            setMoney(145000);  //--> 150000 - 5000 Einsatz
+            moneyAmount = money;
 
-            returnString = getString(R.string.roulette_won, money);
+            returnString = getString(R.string.roulette_won, getMoney());
         } else {
-            money = - 50000; //Einsatz
-            returnString = getString(R.string.roulette_lost, money*-1);
+            setMoney(- 50000); //Einsatz
+            moneyAmount = getMoney();
+            returnString = getString(R.string.roulette_lost, getMoney()*-1);
         }
         this.sendMoneyChange(money);
         return money;
     }
 
-    protected static String getReturnString(){
-        return returnString;
+    private int getRandomNumberFromRouletteClass(){
+        return roulette.getRandomNumber();
     }
 
-    protected static void setReturnString(String newReturnString){
-        returnString = newReturnString;
+    private String getColorFromRouletteClass(){
+        return roulette.getTheField().getColor().toString();
+    }
+
+    private float getDegreeFromRouletteClass(){
+        return roulette.getTheField().getDegree();
     }
 
     private void openRotateActivity(){
+        Bundle extras = new Bundle();
         Intent it = new Intent(this, RotateActivity.class);
+        extras.putString("returnString", getReturnString());
+        extras.putInt("money", getMoney());
+        extras.putInt("randomNumber", getRandomNumberFromRouletteClass());
+        extras.putString("color", getColorFromRouletteClass());
+        extras.putFloat("degree", getDegreeFromRouletteClass());
+        it.putExtras(extras);
         startActivity(it);
         finish();
     }
@@ -96,8 +112,25 @@ public class NumberActivity extends AppCompatActivity {
        error.show(getSupportFragmentManager(), "alert");
     }
 
-    protected static int getMoney(){
+    //TODO: Can this two be private now?
+    protected void setMoney(int money){
+        this.money = money;
+    }
+
+    protected int getMoney(){
         return money;
     }
+
+    public String getReturnString() {
+        return returnString;
+    }
+
+    public static int getMoneyAmount(){
+        //did this, because i want to work with non-static variables in my classes
+
+        return moneyAmount;
+    }
+
+
 }
 

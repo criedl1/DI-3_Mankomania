@@ -1,5 +1,6 @@
 package com.example.mankomania.roulette;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,12 +19,26 @@ public class RotateActivity extends AppCompatActivity {
     private Animation rotateAnimation;
     private ImageView imageView;
     private Button btnBack;
-    private static int money;
+    private int money;
+    private float degree;
+
+    //TODO: Finding a way to give these variables to PopClass without static
+    private static String returnString;
+    private static String color;
+    private static int randomNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rotate);
+
+        Intent it = getIntent();
+        Bundle extras = it.getExtras();
+        money = extras.getInt("money");
+        returnString = extras.getString("returnString");
+        color = extras.getString("color");
+        randomNumber = extras.getInt("randomNumber");
+        degree = extras.getFloat("degree");
 
         btnBack = findViewById(R.id.btnBack);
         btnBack.setText(getString(R.string.roulette_back));
@@ -67,9 +82,6 @@ public class RotateActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                FieldClass field = RouletteClass.getTheField();
-                float degree = field.getDegree();
-
                 final RotateAnimation finalRotate = new RotateAnimation(0.0f, 360 + degree * (-1),
                         RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                         RotateAnimation.RELATIVE_TO_SELF, 0.5f);
@@ -99,9 +111,20 @@ public class RotateActivity extends AppCompatActivity {
 
     }
 
-    public static int getMoney(){
+    //TODO: Ändern, wenn Server das Zeug nicht übernimmt
+    public int getMoney(){
         return money;
     }
 
+    protected static String getReturnString(){
+        return returnString;
+    }
 
+    protected static String getColor(){
+        return color;
+    }
+
+    public static int getRandomNumber() {
+        return randomNumber;
+    }
 }

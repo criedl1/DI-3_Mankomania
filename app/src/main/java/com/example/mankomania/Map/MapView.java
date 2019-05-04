@@ -498,14 +498,6 @@ public class MapView extends AppCompatActivity {
         startActivity(it);
     }
 
-    public int changeMoney(){
-        int temp = getCurrentPlayer().getMoney();
-
-        //money.setText(Integer.toString(newMoney));
-
-        return temp + RotateActivity.getMoney();
-    }
-
     public void sendRollDice() {
         client.rollTheDice();
     }

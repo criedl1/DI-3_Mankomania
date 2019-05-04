@@ -22,8 +22,11 @@ public class DozenActivity extends AppCompatActivity {
     private Button btn13;
     private Button btn25;
 
-    private static String returnString;
-    private static int money;
+    private String returnString;
+    private int money;
+
+    //for network
+    public static int moneyAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,29 +87,40 @@ public class DozenActivity extends AppCompatActivity {
         }
 
         if (choosenDozen == dozen){
-            money = 80000; //100000 - 20000 Einsatz
-
-            returnString = "Du hast " + money + " gewonnen!";}
-
+            setMoney(80000); //100000 - 20000 Einsatz
+            setReturnString(getString(R.string.roulette_won, getMoney()));
+            moneyAmount = getMoney();}
         else {
-            money = - 20000;
-            returnString = "Du hast " + money*(-1) + " verloren!";
+            setMoney(- 20000);
+            setReturnString(getString(R.string.roulette_lost, getMoney() * -1));
+            moneyAmount = getMoney();
         }
-        this.sendMoneyChange(money);
-    }
-
-    protected static String getReturnString(){
-        return returnString;
-    }
-
-    protected static void setReturnString(String newReturnString){
-        returnString = newReturnString;
+        this.sendMoneyChange(getMoney());
     }
 
     private void openRotateActivity(){
+        Bundle extras = new Bundle();
         Intent it = new Intent(this, RotateActivity.class);
+        extras.putString("returnString", returnString);
+        extras.putInt("money", getMoney());
+        extras.putInt("randomNumber", getRandomNumberFromRouletteClass());
+        extras.putString("color", getColorFromRouletteClass());
+        extras.putFloat("degree", getDegreeFromRouletteClass());
+        it.putExtras(extras);
         startActivity(it);
         finish();
+    }
+
+    private int getRandomNumberFromRouletteClass(){
+        return roulette.getRandomNumber();
+    }
+
+    private float getDegreeFromRouletteClass(){
+        return roulette.getTheField().getDegree();
+    }
+
+    private String getColorFromRouletteClass(){
+        return roulette.getTheField().getColor().toString();
     }
 
     private void sendMoneyChange(int rouletteResult){
@@ -119,7 +133,20 @@ public class DozenActivity extends AppCompatActivity {
                 .sendBroadcast(intent);
     }
 
-    protected static int getMoney(){
+    protected int getMoney(){
         return money;
+    }
+
+    protected void setReturnString(String returnString){
+        this.returnString = returnString;
+    }
+
+    private void setMoney(int money){
+        this.money = money;
+    }
+
+    public static int getMoneyAmount(){
+        //did this, because i want to work with non-static variables in my classes
+        return moneyAmount;
     }
 }
