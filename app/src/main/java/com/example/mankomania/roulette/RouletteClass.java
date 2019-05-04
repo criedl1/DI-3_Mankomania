@@ -1,6 +1,6 @@
 package com.example.mankomania.roulette;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class RouletteClass {
 
@@ -61,7 +61,7 @@ public class RouletteClass {
     protected int spinIt(){
         setUpFields();
 
-        Random random = new Random();
+        SecureRandom random = new SecureRandom();
 
         randomNumber = random.nextInt(36);
         return randomNumber;

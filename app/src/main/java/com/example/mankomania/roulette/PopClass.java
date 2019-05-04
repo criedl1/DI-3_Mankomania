@@ -21,9 +21,7 @@ public class PopClass extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
-            //TODO: Figure out if and how this is working without static
-
-        colorString = getArguments().getSerializable("color").toString();
+        colorString = getArguments().getString("color");
         randomNumber = getArguments().getInt("randomNumber"); //toString is not possible here
         theNumberIsString = Integer.toString(randomNumber);
         returnString = getArguments().getString("returnString");

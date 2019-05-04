@@ -20,10 +20,8 @@ public class RotateActivity extends AppCompatActivity {
     private Animation rotateAnimation;
     private ImageView imageView;
     private Button btnBack;
-    private int money;
     private float degree;
 
-    //TODO: Finding a way to give these variables to PopClass without static
     private String returnString;
     private ColorEnum color;
     private int randomNumber;
@@ -36,7 +34,6 @@ public class RotateActivity extends AppCompatActivity {
 
         Intent it = getIntent();
         Bundle extras = it.getExtras();
-        money = extras.getInt("money");
         returnString = extras.getString("returnString");
         color = (ColorEnum) extras.get("color");
         randomNumber = extras.getInt("randomNumber");
@@ -113,21 +110,13 @@ public class RotateActivity extends AppCompatActivity {
 
             Bundle extras = new Bundle();
             extras.putString("returnString", returnString);
-            extras.putInt("randomNumber", randomNumber);
-            extras.putSerializable("color", color);
+            extras.putInt("randomNumber", randomNumber); //toString() is not possible here
+            extras.putString("color", color.toString());
             popClass.setArguments(extras);
-    }
-
-    protected String getReturnString() {
-        return returnString;
     }
 
     protected ColorEnum getColor() {
         return color;
-    }
-
-    public int getRandomNumber() {
-        return randomNumber;
     }
 
 }
