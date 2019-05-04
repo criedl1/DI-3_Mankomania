@@ -24,8 +24,8 @@ import android.widget.Toast;
 import com.example.mankomania.Dice.Dice;
 import com.example.mankomania.Network.Client.Client;
 import com.example.mankomania.R;
-import com.example.mankomania.Roulette.MainActivityRoulette;
-import com.example.mankomania.Roulette.RotateActivity;
+import com.example.mankomania.roulette.MainActivityRoulette;
+import com.example.mankomania.roulette.RotateActivity;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 

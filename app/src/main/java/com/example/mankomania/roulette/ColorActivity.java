@@ -1,4 +1,4 @@
-package com.example.mankomania.Roulette;
+package com.example.mankomania.roulette;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.mankomania.Network.Client.Client;
 import com.example.mankomania.R;
 import com.google.gson.JsonObject;
@@ -53,7 +52,7 @@ public class ColorActivity extends AppCompatActivity {
         });
     }
 
-    private void checkWin(ColorEnum choosenColor){
+    private void checkWin(ColorEnum choosenColor) {
         //calculates if user wins or not
 
         double rouletteNumber = roulette.spinIt();
@@ -61,7 +60,7 @@ public class ColorActivity extends AppCompatActivity {
         for (FieldClass anArray : array) {
             if (rouletteNumber == anArray.getValue()) {
                 if (anArray.getColor() == choosenColor) {
-                    money = 30000;  //--> 80000-50000 Einsatz
+                    setMoney(30000); //--> 80000-50000 Einsatz
                     returnString = getString(R.string.roulette_won, money);
                 } else {
                     money = -5000; //Einsatz
@@ -72,21 +71,21 @@ public class ColorActivity extends AppCompatActivity {
         }
     }
 
-    protected static String getReturnString(){
+    protected static String getReturnString() {
         return returnString;
     }
 
-    protected static void setReturnString(String newReturnString){
+    protected static void setReturnString(String newReturnString) {
         returnString = newReturnString;
     }
 
-    private void openRotateActivity(){
+    private void openRotateActivity() {
         Intent it = new Intent(this, RotateActivity.class);
         startActivity(it);
         finish();
     }
 
-    private void sendMoneyChange(int rouletteResult){
+    private void sendMoneyChange(int rouletteResult) {
         JsonObject object = new JsonObject();
         object.addProperty("result", rouletteResult);
         object.addProperty("OPERATION", "ROULETTERESULT");
@@ -96,7 +95,12 @@ public class ColorActivity extends AppCompatActivity {
                 .sendBroadcast(intent);
     }
 
-    protected static int getMoney(){
+    protected static int getMoney() {
         return money;
     }
+
+    protected static void setMoney(int newMoney) {
+        money = newMoney;
+    }
+
 }

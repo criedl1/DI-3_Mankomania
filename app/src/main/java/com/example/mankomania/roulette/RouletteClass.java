@@ -1,11 +1,11 @@
-package com.example.mankomania.Roulette;
+package com.example.mankomania.roulette;
 
-import java.util.List;
+import java.util.Random;
 
 public class RouletteClass {
 
     private static int randomNumber;
-    private static FieldClass array[] = new FieldClass[36];
+    private static FieldClass[] fieldClassArray = new FieldClass[36];
 
     protected FieldClass[] setUpFields() {
         FieldClass fieldClass0 = new FieldClass(ColorEnum.GREEN, 0, 0f);
@@ -53,22 +53,25 @@ public class RouletteClass {
                 fieldClass9, fieldClass22, fieldClass18, fieldClass29, fieldClass7, fieldClass28, fieldClass12, fieldClass35, fieldClass3,
                 fieldClass26};
 
-        this.array = array;
+        this.fieldClassArray = array;
 
         return array;
     }
 
     protected int spinIt(){
         setUpFields();
-        randomNumber = (int) (Math.random() *36) + 0;
+
+        Random random = new Random();
+
+        int randomNumber = random.nextInt(36);
         return randomNumber;
     }
 
     protected static FieldClass getTheField() {
         FieldClass field = null;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i].getValue() == getRandomNumber()) {
-                field = array[i];
+        for (int i = 0; i < fieldClassArray.length; i++) {
+            if (fieldClassArray[i].getValue() == getRandomNumber()) {
+                field = fieldClassArray[i];
             }
         } return field;
     }

@@ -18,11 +18,11 @@
         <activity
             android:name=".Map.MapView"
             android:screenOrientation="landscape" />
-        <activity android:name=".Roulette.RotateActivity" android:screenOrientation="landscape" />
-        <activity android:name=".Roulette.DozenActivity" android:screenOrientation="landscape"/>
-        <activity android:name=".Roulette.NumberActivity" android:screenOrientation="landscape"/>
-        <activity android:name=".Roulette.ColorActivity" android:screenOrientation="landscape"/>
-        <activity android:name=".Roulette.MainActivityRoulette" android:screenOrientation="landscape"/>
+        <activity android:name=".roulette.RotateActivity" android:screenOrientation="landscape" />
+        <activity android:name=".roulette.DozenActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".roulette.NumberActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".roulette.ColorActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".roulette.MainActivityRoulette" android:screenOrientation="landscape"/>
         <activity android:name=".MainActivity" android:screenOrientation="landscape">
 
             <intent-filter>

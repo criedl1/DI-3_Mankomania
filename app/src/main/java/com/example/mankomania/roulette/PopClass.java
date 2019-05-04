@@ -1,4 +1,4 @@
-package com.example.mankomania.Roulette;
+package com.example.mankomania.roulette;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -49,6 +49,7 @@ public class PopClass extends AppCompatDialogFragment {
         alert.setPositiveButton(getString(R.string.roulette_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                //by letting this empty, the pop-up closes
             }
         });
 

@@ -1,4 +1,4 @@
-package com.example.mankomania.Roulette;
+package com.example.mankomania.roulette;
 
 import android.os.Bundle;
 import android.support.v4.view.MotionEventCompat;
@@ -55,31 +55,42 @@ public class RotateActivity extends AppCompatActivity {
         rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
-            public void onAnimationStart(Animation animation) {}
+            public void onAnimationStart(Animation animation) {
+                //no need for this, but have to override it because AnimationListener is an interface
+
+            }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {}
+            public void onAnimationRepeat(Animation animation) {
+                //no need for this, but have to override it because AnimationListener is an interface
+            }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 FieldClass field = RouletteClass.getTheField();
                 float degree = field.getDegree();
 
-                final RotateAnimation finalRotate = new RotateAnimation(0.0f, 360 + degree*(-1),
+                final RotateAnimation finalRotate = new RotateAnimation(0.0f, 360 + degree * (-1),
                         RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                         RotateAnimation.RELATIVE_TO_SELF, 0.5f);
 
                 finalRotate.setDuration(1000);
                 finalRotate.setFillAfter(true);
                 imageView.startAnimation(finalRotate);
-                imageView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        openPopUp();
-                    }
-                },2000);
+                imageView.postDelayed(createRunnable(), 2000);
             }
         });
+    }
+
+        private Runnable createRunnable() {
+
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    openPopUp();
+                }
+            };
+            return runnable;
         }
 
     private void openPopUp() {
