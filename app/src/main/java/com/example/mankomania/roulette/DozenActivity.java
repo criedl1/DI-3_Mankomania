@@ -17,11 +17,6 @@ public class DozenActivity extends AppCompatActivity {
     private RouletteClass roulette = new RouletteClass();
     private FieldClass[] array = roulette.setUpFields();
 
-    private TextView selectDozen;
-    private Button btn1;
-    private Button btn13;
-    private Button btn25;
-
     private String returnString;
     private int money;
 
@@ -33,11 +28,11 @@ public class DozenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dozen);
 
-        selectDozen = findViewById(R.id.tvSelectDozen);
+        TextView selectDozen = findViewById(R.id.tvSelectDozen);
 
-        btn1 = findViewById(R.id.btn1_12);
-        btn13 = findViewById(R.id.btn13_24);
-        btn25 = findViewById(R.id.btn25_36);
+        Button btn1 = findViewById(R.id.btn1_12);
+        Button btn13 = findViewById(R.id.btn13_24);
+        Button btn25 = findViewById(R.id.btn25_36);
 
         selectDozen.setText(getString(R.string.roulette_choose_dozen));
         btn1.setText(getString(R.string.roulette_first_dozen));

@@ -10,28 +10,19 @@ import android.widget.TextView;
 import com.example.mankomania.R;
 
 public class MainActivityRoulette extends AppCompatActivity {
-
-
-    private TextView welcome;
-    private TextView tv1;
-    private TextView tv2;
-    private TextView tv3;
-    private Button color;
-    private Button number;
-    private Button dozen;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainroulette);
 
-        welcome = findViewById(R.id.tvWillkommen);
-        color = findViewById(R.id.btnFarbe);
-        number = findViewById(R.id.btnZahl);
-        dozen = findViewById(R.id.btnDutzend);
-        tv1 = findViewById(R.id.textView1);
-        tv2 = findViewById(R.id.textView2);
-        tv3 = findViewById(R.id.textView3);
+        TextView welcome = findViewById(R.id.tvWillkommen);
+        Button color = findViewById(R.id.btnFarbe);
+        Button number = findViewById(R.id.btnZahl);
+        Button dozen = findViewById(R.id.btnDutzend);
+        TextView tv1 = findViewById(R.id.textView1);
+        TextView tv2 = findViewById(R.id.textView2);
+        TextView tv3 = findViewById(R.id.textView3);
 
 
         welcome.setText(getString(R.string.roulette_welcome));

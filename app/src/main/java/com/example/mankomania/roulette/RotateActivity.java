@@ -17,9 +17,7 @@ import com.example.mankomania.R;
 
 public class RotateActivity extends AppCompatActivity {
 
-    private Animation rotateAnimation;
     private ImageView imageView;
-    private Button btnBack;
     private float degree;
 
     private String returnString;
@@ -39,7 +37,7 @@ public class RotateActivity extends AppCompatActivity {
         randomNumber = extras.getInt("randomNumber");
         degree = extras.getFloat("degree");
 
-        btnBack = findViewById(R.id.btnBack);
+        Button btnBack = findViewById(R.id.btnBack);
         btnBack.setText(getString(R.string.roulette_back));
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +62,7 @@ public class RotateActivity extends AppCompatActivity {
     }
 
     private void rotateAnimation() {
-        rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        Animation rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
         imageView.startAnimation(rotateAnimation);
         rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
 

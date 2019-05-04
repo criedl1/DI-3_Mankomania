@@ -11,7 +11,6 @@ import com.example.mankomania.R;
 
 public class PopClass extends AppCompatDialogFragment {
 
-    private int randomNumber;
     private String theNumberIsString;
     private String colorString;
     private String returnString;
@@ -22,15 +21,15 @@ public class PopClass extends AppCompatDialogFragment {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
         colorString = getArguments().getString("color");
-        randomNumber = getArguments().getInt("randomNumber"); //toString is not possible here
+        int randomNumber = getArguments().getInt("randomNumber"); //toString is not possible here
         theNumberIsString = Integer.toString(randomNumber);
         returnString = getArguments().getString("returnString");
 
 
         alert.setTitle(getReturnString());
-        if(colorString == "BLACK"){
+        if(colorString.equals("BLACK")){
                 colorString = getString(R.string.roulette_black);}
-        else if(colorString == "RED"){
+        else if(colorString.equals("RED")){
                 colorString = getString(R.string.roulette_red);}
         else{colorString = getString(R.string.roulette_green);
         }

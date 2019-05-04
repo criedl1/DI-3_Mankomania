@@ -6,7 +6,6 @@ import com.example.mankomania.GameData.GameData;
 import com.example.mankomania.roulette.ColorActivity;
 import com.example.mankomania.roulette.DozenActivity;
 import com.example.mankomania.roulette.NumberActivity;
-import com.example.mankomania.roulette.RouletteClass;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 

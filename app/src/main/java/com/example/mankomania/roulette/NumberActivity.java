@@ -17,8 +17,6 @@ public class NumberActivity extends AppCompatActivity {
 
     private RouletteClass roulette = new RouletteClass();
     private EditText number;
-    private TextView selectNumber;
-    private Button go;
     private int choosenNumber;
     private String returnString;
     private int money;
@@ -32,8 +30,8 @@ public class NumberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_number);
 
         number = findViewById(R.id.etInsertNumber);
-        selectNumber = findViewById(R.id.tvSelectNumber);
-        go = findViewById(R.id.btnGo);
+        TextView selectNumber = findViewById(R.id.tvSelectNumber);
+        Button go = findViewById(R.id.btnGo);
 
         selectNumber.setText(getString(R.string.roulette_choose_number));
         number.setHint(getString(R.string.roulette_enter_number));

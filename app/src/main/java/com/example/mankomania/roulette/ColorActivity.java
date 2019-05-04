@@ -18,10 +18,6 @@ public class ColorActivity extends AppCompatActivity {
     private String returnString;
     private int money;
 
-    private Button red;
-    private Button black;
-    private TextView selectColor;
-
     //for Network
     private static int moneyAmount;
 
@@ -30,9 +26,9 @@ public class ColorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color);
 
-        red = findViewById(R.id.btnRed);
-        black = findViewById(R.id.btnBlack);
-        selectColor = findViewById(R.id.tvSelectColor);
+        Button red = findViewById(R.id.btnRed);
+        Button black = findViewById(R.id.btnBlack);
+        TextView selectColor = findViewById(R.id.tvSelectColor);
 
         red.setText(getString(R.string.color_red));
         black.setText(getString(R.string.color_black));
