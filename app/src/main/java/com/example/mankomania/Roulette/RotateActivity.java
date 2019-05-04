@@ -41,12 +41,10 @@ public class RotateActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 int touch = MotionEventCompat.getActionMasked(event);
 
-                switch (touch){
-                    case (MotionEvent.ACTION_MOVE):
+                if(touch == MotionEvent.ACTION_MOVE){
                         rotateAnimation();
-                        return true;
                     }
-                    return true;
+                    return true; //since this is an override method, i am not able to make return type void.
                 }
         });
     }
@@ -89,20 +87,6 @@ public class RotateActivity extends AppCompatActivity {
        popClass.show(getSupportFragmentManager(), "alert");
 
     }
-
-    /*
-    protected void setMoney(){
-        if(ColorActivity.getMoney() != 0){
-            money = ColorActivity.getMoney();
-        }
-        else if(DozenActivity.getMoney() != 0){
-            money = DozenActivity.getMoney();
-        }
-
-        else{
-            money = NumberActivity.getMoney();
-        }
-    }*/
 
     public static int getMoney(){
         return money;

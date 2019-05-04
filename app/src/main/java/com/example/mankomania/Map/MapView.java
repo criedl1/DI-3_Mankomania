@@ -344,20 +344,6 @@ public class MapView extends AppCompatActivity {
             }
         });
         animation.start();
-
-        /*animation.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                switch(player.getCurrentField()){
-                    case 4:     startRoulette();
-                    case 20:    startRoulette();
-                    case 26:    startRoulette();
-                    case 34:    startRoulette();
-                }
-            }
-        });*/
-
     }
 
     public void movePlayerIn(final Player player) {
@@ -375,9 +361,12 @@ public class MapView extends AppCompatActivity {
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-
                 super.onAnimationEnd(animation);
                 startRoulette();
+                /*if(getCurrentPlayer().getCurrentField() == 4 || getCurrentPlayer().getCurrentField() == 20 ||
+                        getCurrentPlayer().getCurrentField() == 26 || getCurrentPlayer().getCurrentField() == 34){
+                    startRoulette();
+                }*/
             }
         });
     }

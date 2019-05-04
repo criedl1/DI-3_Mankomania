@@ -1,5 +1,7 @@
 package com.example.mankomania.Roulette;
 
+import java.util.List;
+
 public class RouletteClass {
 
     private static int randomNumber;
