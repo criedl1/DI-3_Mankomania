@@ -24,7 +24,7 @@ public class RotateActivity extends AppCompatActivity {
 
     //TODO: Finding a way to give these variables to PopClass without static
     private static String returnString;
-    private static String color;
+    private static ColorEnum color;
     private static int randomNumber;
 
     @Override
@@ -36,7 +36,7 @@ public class RotateActivity extends AppCompatActivity {
         Bundle extras = it.getExtras();
         money = extras.getInt("money");
         returnString = extras.getString("returnString");
-        color = extras.getString("color");
+        color = (ColorEnum) extras.get("color");
         randomNumber = extras.getInt("randomNumber");
         degree = extras.getFloat("degree");
 
@@ -120,7 +120,7 @@ public class RotateActivity extends AppCompatActivity {
         return returnString;
     }
 
-    protected static String getColor(){
+    protected static ColorEnum getColor(){
         return color;
     }
 

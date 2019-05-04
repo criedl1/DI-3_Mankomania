@@ -76,8 +76,8 @@ public class NumberActivity extends AppCompatActivity {
         return roulette.getRandomNumber();
     }
 
-    private String getColorFromRouletteClass(){
-        return roulette.getTheField().getColor().toString();
+    private ColorEnum getColorFromRouletteClass(){
+        return roulette.getTheField().getColor();
     }
 
     private float getDegreeFromRouletteClass(){
@@ -90,7 +90,7 @@ public class NumberActivity extends AppCompatActivity {
         extras.putString("returnString", getReturnString());
         extras.putInt("money", getMoney());
         extras.putInt("randomNumber", getRandomNumberFromRouletteClass());
-        extras.putString("color", getColorFromRouletteClass());
+        extras.putSerializable("color", getColorFromRouletteClass());
         extras.putFloat("degree", getDegreeFromRouletteClass());
         it.putExtras(extras);
         startActivity(it);

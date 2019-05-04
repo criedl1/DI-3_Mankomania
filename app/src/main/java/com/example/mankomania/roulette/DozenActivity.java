@@ -104,7 +104,7 @@ public class DozenActivity extends AppCompatActivity {
         extras.putString("returnString", returnString);
         extras.putInt("money", getMoney());
         extras.putInt("randomNumber", getRandomNumberFromRouletteClass());
-        extras.putString("color", getColorFromRouletteClass());
+        extras.putSerializable("color", getColorFromRouletteClass());
         extras.putFloat("degree", getDegreeFromRouletteClass());
         it.putExtras(extras);
         startActivity(it);
@@ -119,9 +119,8 @@ public class DozenActivity extends AppCompatActivity {
         return roulette.getTheField().getDegree();
     }
 
-    private String getColorFromRouletteClass(){
-        return roulette.getTheField().getColor().toString();
-    }
+    private ColorEnum getColorFromRouletteClass(){
+        return roulette.getTheField().getColor();}
 
     private void sendMoneyChange(int rouletteResult){
         JsonObject object = new JsonObject();

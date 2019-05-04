@@ -12,7 +12,7 @@ import com.example.mankomania.R;
 public class PopClass extends AppCompatDialogFragment {
 
     private String theNumberIs;
-    private String color;
+    private String colorString;
 
     @NonNull
     @Override
@@ -21,21 +21,17 @@ public class PopClass extends AppCompatDialogFragment {
 
             //TODO: Figure out if and how this is working without static
             alert.setTitle(RotateActivity.getReturnString());
+            colorString = RotateActivity.getColor().toString();
 
-            //TODO: ColorActivity muss die Farbe mitgeben!
-            color = RotateActivity.getColor();
-
-        if(color == "BLACK"){
-                color = getString(R.string.roulette_black);}
-        else if(color == "RED"){
-                color = getString(R.string.roulette_red);}
-        else{ color = getString(R.string.roulette_green);
+        if(colorString == "BLACK"){
+                colorString = getString(R.string.roulette_black);}
+        else if(colorString == "RED"){
+                colorString = getString(R.string.roulette_red);}
+        else{colorString = getString(R.string.roulette_green);
         }
 
-        //TODO: Figure out if and how this is working without static
-        //TODO: newMoney liefert vorerst den falschen Wert!!!!
         theNumberIs = Integer.toString(RotateActivity.getRandomNumber());
-                alert.setMessage(getString(R.string.roulette_result, theNumberIs, color));
+                alert.setMessage(getString(R.string.roulette_result, theNumberIs, colorString));
         alert.setPositiveButton(getString(R.string.roulette_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -85,8 +85,8 @@ public class ColorActivity extends AppCompatActivity {
         return roulette.getTheField().getDegree();
     }
 
-    private String getColorFromRouletteClass(){
-        return roulette.getTheField().getColor().toString();
+    private ColorEnum getColorFromRouletteClass(){
+        return roulette.getTheField().getColor();
     }
 
     private void openRotateActivity() {
@@ -95,7 +95,7 @@ public class ColorActivity extends AppCompatActivity {
         extras.putString("returnString", getReturnString());
         extras.putInt("money", getMoney());
         extras.putInt("randomNumber", getRandomNumberFromRouletteClass());
-        extras.putString("color", getColorFromRouletteClass());
+        extras.putSerializable("color", getColorFromRouletteClass());
         extras.putFloat("degree", getDegreeFromRouletteClass());
         it.putExtras(extras);
         startActivity(it);
@@ -130,7 +130,6 @@ public class ColorActivity extends AppCompatActivity {
 
     public static int getMoneyAmount(){
         //did this, because i want to work with non-static variables in my classes
-
         return moneyAmount;
     }
 }
