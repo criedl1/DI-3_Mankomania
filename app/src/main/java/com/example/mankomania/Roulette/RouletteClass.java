@@ -2,10 +2,10 @@ package com.example.mankomania.Roulette;
 
 public class RouletteClass {
 
-    static int randomNumber;
-    static FieldClass array[] = new FieldClass[36];
+    private static int randomNumber;
+    private static FieldClass array[] = new FieldClass[36];
 
-    public FieldClass[] setUpFields() {
+    protected FieldClass[] setUpFields() {
         FieldClass fieldClass0 = new FieldClass(ColorEnum.GREEN, 0, 0f);
         FieldClass fieldClass32 = new FieldClass(ColorEnum.RED, 32, 9.73f);
         FieldClass fieldClass15 = new FieldClass(ColorEnum.BLACK, 15, 19.46f);
@@ -56,13 +56,13 @@ public class RouletteClass {
         return array;
     }
 
-    public int spinIt(){
+    protected int spinIt(){
         setUpFields();
         randomNumber = (int) (Math.random() *36) + 0;
         return randomNumber;
     }
 
-    public static FieldClass getTheField() {
+    protected static FieldClass getTheField() {
         FieldClass field = null;
         for (int i = 0; i < array.length; i++) {
             if (array[i].getValue() == getRandomNumber()) {

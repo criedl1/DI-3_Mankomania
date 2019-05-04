@@ -12,13 +12,13 @@ import com.example.mankomania.R;
 public class MainActivityRoulette extends AppCompatActivity {
 
 
-    TextView welcome;
-    TextView tv1;
-    TextView tv2;
-    TextView tv3;
-    Button color;
-    Button number;
-    Button dozen;
+    private TextView welcome;
+    private TextView tv1;
+    private TextView tv2;
+    private TextView tv3;
+    private Button color;
+    private Button number;
+    private Button dozen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,19 +65,19 @@ public class MainActivityRoulette extends AppCompatActivity {
         });
     }
 
-    public void openColorActivity(){
+    private void openColorActivity(){
         Intent it = new Intent(this, ColorActivity.class);
         startActivity(it);
         finish();
     }
 
-    public void openNumberActivity(){
+    private void openNumberActivity(){
         Intent it = new Intent(this, NumberActivity.class);
         startActivity(it);
         finish();
     }
 
-    public void openDozenActivity(){
+    private void openDozenActivity(){
         Intent it = new Intent(this, DozenActivity.class);
         startActivity(it);
         finish();

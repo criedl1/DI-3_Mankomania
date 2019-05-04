@@ -15,10 +15,10 @@ import com.example.mankomania.R;
 
 public class RotateActivity extends AppCompatActivity {
 
-    Animation rotateAnimation;
-    ImageView imageView;
-    Button btnBack;
-    static int money;
+    private Animation rotateAnimation;
+    private ImageView imageView;
+    private Button btnBack;
+    private static int money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,13 +84,14 @@ public class RotateActivity extends AppCompatActivity {
         });
         }
 
-    public void openPopUp() {
+    private void openPopUp() {
        PopClass popClass = new PopClass();
        popClass.show(getSupportFragmentManager(), "alert");
 
     }
 
-    public void setMoney(){
+    /*
+    protected void setMoney(){
         if(ColorActivity.getMoney() != 0){
             money = ColorActivity.getMoney();
         }
@@ -101,7 +102,7 @@ public class RotateActivity extends AppCompatActivity {
         else{
             money = NumberActivity.getMoney();
         }
-    }
+    }*/
 
     public static int getMoney(){
         return money;

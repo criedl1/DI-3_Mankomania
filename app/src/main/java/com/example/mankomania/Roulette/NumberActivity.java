@@ -15,13 +15,13 @@ import com.google.gson.JsonObject;
 
 public class NumberActivity extends AppCompatActivity {
 
-    RouletteClass roulette = new RouletteClass();
-    EditText number;
-    TextView selectNumber;
-    Button go;
-    int choosenNumber;
-    static String returnString;
-    static int money;
+    private RouletteClass roulette = new RouletteClass();
+    private EditText number;
+    private TextView selectNumber;
+    private Button go;
+    private int choosenNumber;
+    private static String returnString;
+    private static int money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class NumberActivity extends AppCompatActivity {
         });
     }
 
-    public int spinWheel(int choosenNumber) {
+    private int spinWheel(int choosenNumber) {
 
         int rouletteNumber = roulette.spinIt();
 
@@ -67,15 +67,15 @@ public class NumberActivity extends AppCompatActivity {
         return money;
     }
 
-    public static String getReturnString(){
+    protected static String getReturnString(){
         return returnString;
     }
 
-    public static void setReturnString(String newReturnString){
+    protected static void setReturnString(String newReturnString){
         returnString = newReturnString;
     }
 
-    public void openRotateActivity(){
+    private void openRotateActivity(){
         Intent it = new Intent(this, RotateActivity.class);
         startActivity(it);
         finish();
@@ -91,12 +91,12 @@ public class NumberActivity extends AppCompatActivity {
                 .sendBroadcast(intent);
     }
 
-    public void openErrorPopUp() {
+    private void openErrorPopUp() {
        ErrorClass error = new ErrorClass();
        error.show(getSupportFragmentManager(), "alert");
     }
 
-    public static int getMoney(){
+    protected static int getMoney(){
         return money;
     }
 }

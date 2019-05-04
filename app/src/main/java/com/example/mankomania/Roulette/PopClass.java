@@ -11,8 +11,8 @@ import com.example.mankomania.R;
 
 public class PopClass extends AppCompatDialogFragment {
 
-    String theNumberIs;
-    String color;
+    private String theNumberIs;
+    private String color;
 
     @NonNull
     @Override

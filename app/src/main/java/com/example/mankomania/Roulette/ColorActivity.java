@@ -14,14 +14,14 @@ import com.google.gson.JsonObject;
 
 public class ColorActivity extends AppCompatActivity {
 
-    RouletteClass roulette = new RouletteClass();
-    FieldClass[] array = roulette.setUpFields();
-    static String returnString;
-    static int money;
+    private RouletteClass roulette = new RouletteClass();
+    private FieldClass[] array = roulette.setUpFields();
+    private static String returnString;
+    private static int money;
 
-    Button red;
-    Button black;
-    TextView selectColor;
+    private Button red;
+    private Button black;
+    private TextView selectColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class ColorActivity extends AppCompatActivity {
         });
     }
 
-    public void checkWin(ColorEnum choosenColor){
+    private void checkWin(ColorEnum choosenColor){
         //calculates if user wins or not
 
         double rouletteNumber = roulette.spinIt();
@@ -72,15 +72,15 @@ public class ColorActivity extends AppCompatActivity {
         }
     }
 
-    public static String getReturnString(){
+    protected static String getReturnString(){
         return returnString;
     }
 
-    public static void setReturnString(String newReturnString){
+    protected static void setReturnString(String newReturnString){
         returnString = newReturnString;
     }
 
-    public void openRotateActivity(){
+    private void openRotateActivity(){
         Intent it = new Intent(this, RotateActivity.class);
         startActivity(it);
         finish();
@@ -96,7 +96,7 @@ public class ColorActivity extends AppCompatActivity {
                 .sendBroadcast(intent);
     }
 
-    public static int getMoney(){
+    protected static int getMoney(){
         return money;
     }
 }

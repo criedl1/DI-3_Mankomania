@@ -14,16 +14,16 @@ import com.google.gson.JsonObject;
 
 public class DozenActivity extends AppCompatActivity {
 
-    RouletteClass roulette = new RouletteClass();
-    FieldClass[] array = roulette.setUpFields();
+    private RouletteClass roulette = new RouletteClass();
+    private FieldClass[] array = roulette.setUpFields();
 
-    TextView selectDozen;
-    Button btn1;
-    Button btn13;
-    Button btn25;
+    private TextView selectDozen;
+    private Button btn1;
+    private Button btn13;
+    private Button btn25;
 
-    static String returnString;
-    static int money;
+    private static String returnString;
+    private static int money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class DozenActivity extends AppCompatActivity {
         });
     }
 
-    public void spinWheel(int choosenDozen){
+    private void spinWheel(int choosenDozen){
 
         int rouletteNumber = roulette.spinIt();
         int dozen = 0;
@@ -95,15 +95,15 @@ public class DozenActivity extends AppCompatActivity {
         this.sendMoneyChange(money);
     }
 
-    public static String getReturnString(){
+    protected static String getReturnString(){
         return returnString;
     }
 
-    public static void setReturnString(String newReturnString){
+    protected static void setReturnString(String newReturnString){
         returnString = newReturnString;
     }
 
-    public void openRotateActivity(){
+    private void openRotateActivity(){
         Intent it = new Intent(this, RotateActivity.class);
         startActivity(it);
         finish();
@@ -119,7 +119,7 @@ public class DozenActivity extends AppCompatActivity {
                 .sendBroadcast(intent);
     }
 
-    public static int getMoney(){
+    protected static int getMoney(){
         return money;
     }
 }
