@@ -328,7 +328,6 @@ public class MapView extends AppCompatActivity {
 
     public void movePlayerOut(final Player player){
         float distance;
-        boolean playeronleft= (player.getCurrentField() & 1) == 0;
             distance = screenWidth;
 
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
@@ -481,9 +480,6 @@ public class MapView extends AppCompatActivity {
 
     public int changeMoney(){
         int temp = getCurrentPlayer().getMoney();
-
-        //money.setText(Integer.toString(newMoney));
-
         return temp + RotateActivity.getMoney();
     }
 

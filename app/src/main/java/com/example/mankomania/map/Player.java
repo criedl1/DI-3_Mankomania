@@ -16,7 +16,7 @@ public class Player {
         currentField = 0;
         this.figure = figure;
         this. currentmoney = currentmoney;
-        currentmoney.setText(Integer.toString(1000000));
+        this.currentmoney.setText(1000000l + "");
     }
 
     void moveFields(int fields, int maxfields) {
