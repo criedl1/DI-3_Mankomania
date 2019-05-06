@@ -313,16 +313,16 @@ public class MapView extends AppCompatActivity {
     }
     private void rollDiceUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
-        // Toast.makeText(this,"result of dice is: "+result, Toast.LENGTH_LONG).show();
+        int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
+
         Dice fragment = ((Dice)getSupportFragmentManager().findFragmentById(R.id.diceContainer));
-        this.result = result;
+        this.result = outcome;
         if(fragment != null){
-            fragment.showResult(result);
+            fragment.showResult(outcome);
         }else{
-            players.get(player).moveFields(result,allfields.length);
+            players.get(player).moveFields(outcome,allfields.length);
             players.get(player).getFigure().setVisibility(View.INVISIBLE);
-            Toast.makeText(this,"Player "+ (player+1)+" diced "+ result, Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Player "+ (player+1)+" diced "+ outcome, Toast.LENGTH_LONG).show();
         }
     }
     private void spinWheelUpdate(JsonObject jsonObject) {

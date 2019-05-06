@@ -71,12 +71,12 @@ public class Server extends Thread {
     private void generateGameData(){
         int[] intArr = new int[playercount];
         int[] intArr2 = new int[playercount];
-        boolean[] bool_arr = new boolean[playercount];
-        String[] str_arr = new String[playercount];
+        boolean[] boolArr = new boolean[playercount];
+        String[] strArr = new String[playercount];
 
         // Set Player[] (fills in ConnectPlayers)
-        Arrays.fill(str_arr,"");
-        gameData.setPlayers(str_arr);
+        Arrays.fill(strArr,"");
+        gameData.setPlayers(strArr);
 
         // Set Arrays with StartMoney
         Arrays.fill(intArr2, startmoney);
@@ -90,8 +90,8 @@ public class Server extends Thread {
         gameData.setInfineonAktie(intArr);
 
         // Set Array with false
-        Arrays.fill(bool_arr,false);
-        gameData.setIsCheater(bool_arr);
+        Arrays.fill(boolArr,false);
+        gameData.setIsCheater(boolArr);
 
         // Set Lotto to 0
         gameData.setLotto(0);
