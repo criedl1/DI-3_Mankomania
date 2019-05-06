@@ -1,9 +1,9 @@
-package com.example.mankomania.Map;
+package com.example.mankomania.map;
 
-import com.example.mankomania.Map.Fields.Field;
-import com.example.mankomania.Map.Fields.LossField;
-import com.example.mankomania.Map.Fields.LottoField;
-import com.example.mankomania.Map.Fields.SendField;
+import com.example.mankomania.map.Fields.Field;
+import com.example.mankomania.map.Fields.LossField;
+import com.example.mankomania.map.Fields.LottoField;
+import com.example.mankomania.map.Fields.SendField;
 
 import java.util.ArrayList;
 

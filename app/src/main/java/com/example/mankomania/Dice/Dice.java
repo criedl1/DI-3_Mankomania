@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.mankomania.Map.MapView;
+import com.example.mankomania.map.MapView;
 import com.example.mankomania.R;
 
 import java.util.Random;
