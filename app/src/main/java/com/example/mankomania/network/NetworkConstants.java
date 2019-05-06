@@ -1,6 +1,8 @@
 package com.example.mankomania.network;
 
 public class NetworkConstants {
+    private NetworkConstants(){}
+
     //Operations
     public static final String SET_ID = "SET_ID";
     public static final String SET_PLAYER_COUNT = "SET_PLAYER_COUNT";

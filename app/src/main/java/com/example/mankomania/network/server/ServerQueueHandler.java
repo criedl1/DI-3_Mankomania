@@ -2,7 +2,7 @@ package com.example.mankomania.network.server;
 
 import android.util.Log;
 
-import com.example.mankomania.gameData.GameData;
+import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.Roulette.RouletteClass;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

@@ -2,7 +2,7 @@ package com.example.mankomania.network.server;
 
 import android.util.Log;
 
-import com.example.mankomania.gameData.GameData;
+import com.example.mankomania.gamedata.GameData;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -55,11 +55,20 @@ public class Server extends Thread {
             serverQueueHandler.start();
 
         } catch (Exception err) {
+            Log.e("CLIENT", ""+ err);
             if (serverSocket != null && !serverSocket.isClosed()) {
                 try {
                     serverSocket.close();
                 } catch (Exception e) {
-                    e.printStackTrace(System.err);
+                    Log.e("CLIENT", ""+ e);
+                }
+            }
+        } finally {
+            if (serverSocket != null && !serverSocket.isClosed()) {
+                try {
+                    serverSocket.close();
+                } catch (Exception e) {
+                    Log.e("CLIENT", ""+ e);
                 }
             }
         }

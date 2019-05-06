@@ -1,6 +1,6 @@
 package com.example.mankomania.map.Fields;
 
-import com.example.mankomania.gameData.GameData;
+import com.example.mankomania.gamedata.GameData;
 
 public class SendField implements Field {
     private int from;

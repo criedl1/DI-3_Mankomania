@@ -2,7 +2,7 @@ package com.example.mankomania.network.client;
 
 import android.util.Log;
 
-import com.example.mankomania.gameData.GameData;
+import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.map.MapView;
 import com.google.gson.JsonObject;
 
@@ -54,14 +54,23 @@ public class Client extends Thread {
             ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue, this, gameData);
             clientQueueHandler.start();
         } catch (Exception err) {
+            Log.e("CLIENT", ""+ err);
             if (socket != null && !socket.isClosed()) {
                 try {
                     socket.close();
                 } catch (Exception e) {
-                    e.printStackTrace(System.err);
+                    Log.e("CLIENT", ""+ e);
                 }
             }
             output.close();
+        } finally {
+            if (socket != null && !socket.isClosed()) {
+                try {
+                    socket.close();
+                } catch (Exception e) {
+                    Log.e("CLIENT", ""+ e);
+                }
+            }
         }
     }
 
