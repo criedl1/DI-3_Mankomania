@@ -327,10 +327,10 @@ public class MapView extends AppCompatActivity {
     }
     private void spinWheelUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
+        int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
 
         //example
-        Toast.makeText(this,"Roulette  "+player+result,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Roulette  "+player+outcome,Toast.LENGTH_LONG).show();
 
         //TODO Update UI for Roulette
     }

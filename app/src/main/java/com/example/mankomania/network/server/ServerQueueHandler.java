@@ -35,7 +35,7 @@ public class ServerQueueHandler extends Thread{
                 }
             }
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e("SERVER_QUEUE_HANDLER",""+e);
         }
     }
 

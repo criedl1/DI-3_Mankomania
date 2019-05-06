@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.mankomania.gamedata.GameData;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
@@ -68,8 +69,8 @@ public class Server extends Thread {
     }
 
     private void generateGameData(){
-        int[] int_arr = new int[playercount];
-        int[] int_arr2 = new int[playercount];
+        int[] intArr = new int[playercount];
+        int[] intArr2 = new int[playercount];
         boolean[] bool_arr = new boolean[playercount];
         String[] str_arr = new String[playercount];
 
@@ -78,15 +79,15 @@ public class Server extends Thread {
         gameData.setPlayers(str_arr);
 
         // Set Arrays with StartMoney
-        Arrays.fill(int_arr2, startmoney);
-        gameData.setMoney(int_arr2);
+        Arrays.fill(intArr2, startmoney);
+        gameData.setMoney(intArr2);
 
         // Set Arrays with 0
-        Arrays.fill(int_arr,0);
-        gameData.setPosition(int_arr);
-        gameData.setHypoAktie(int_arr);
-        gameData.setStrabagAktie(int_arr);
-        gameData.setInfineonAktie(int_arr);
+        Arrays.fill(intArr,0);
+        gameData.setPosition(intArr);
+        gameData.setHypoAktie(intArr);
+        gameData.setStrabagAktie(intArr);
+        gameData.setInfineonAktie(intArr);
 
         // Set Array with false
         Arrays.fill(bool_arr,false);
@@ -96,12 +97,12 @@ public class Server extends Thread {
         gameData.setLotto(0);
 
         // Set all Hotel to 0
-        int_arr = new int[5];
-        Arrays.fill(int_arr,0);
-        gameData.setHotels(int_arr);
+        intArr = new int[5];
+        Arrays.fill(intArr,0);
+        gameData.setHotels(intArr);
     }
 
-    private void connectPlayers(ServerSocket serverSocket) throws Exception {
+    private void connectPlayers(ServerSocket serverSocket) throws IOException {
         int playerCount = 0;
         String[] arr;
 

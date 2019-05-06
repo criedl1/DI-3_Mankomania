@@ -1,9 +1,12 @@
 package com.example.mankomania.network.server;
 
+import android.util.Log;
+
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -18,7 +21,7 @@ class ClientHandler extends Thread {
     private int id;
     private int playerCount;
 
-    ClientHandler(Socket socket, Queue queue, int id, int playerCount) throws Exception{
+    ClientHandler(Socket socket, Queue queue, int id, int playerCount) throws IOException {
         this.output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
         this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.queue = queue;
@@ -33,7 +36,7 @@ class ClientHandler extends Thread {
             ServerListener serverListener = new ServerListener(input,queue);
             serverListener.start();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("CLIENT_HANDLER",""+e);
         }
     }
 
