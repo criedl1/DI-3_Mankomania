@@ -21,7 +21,7 @@ import com.example.mankomania.network.NetworkConstants;
 public class Client extends Thread {
     private final GameData gameData = new GameData();
     private static String ipHost;
-    private static PrintWriter output;
+    private PrintWriter output;
     private int idx;
     public static MapView MapView;
 

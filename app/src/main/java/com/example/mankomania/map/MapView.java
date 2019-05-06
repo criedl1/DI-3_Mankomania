@@ -250,43 +250,64 @@ public class MapView extends AppCompatActivity {
     }
 
     private void setPositionUpdate(JsonObject jsonObject) {
-        //int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        //int position = jsonToInt(jsonObject,NetworkConstants.POSITION);
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int position = jsonToInt(jsonObject,NetworkConstants.POSITION);
+
+        //example
+        Toast.makeText(this,"Pos "+player+position,Toast.LENGTH_LONG).show();
 
         //TODO Change Player Position on UI
     }
     private void setHypoAktieUpdate(JsonObject jsonObject) {
-        //int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        //int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+
+        //example
+        Toast.makeText(this,"Hypo "+player+count,Toast.LENGTH_LONG).show();
 
         //TODO Change Player-Aktie on UI
     }
     private void setStrabagAktieUpdate(JsonObject jsonObject) {
-        //int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        //int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+
+        //example
+        Toast.makeText(this,"Strabag "+player+count,Toast.LENGTH_LONG).show();
 
         //TODO Change Player-Aktie on UI
     }
     private void setInfineonAktieUpdate(JsonObject jsonObject) {
-        //int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        //int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+
+        //example
+        Toast.makeText(this,"Infineon "+player+count,Toast.LENGTH_LONG).show();
 
         //TODO Change Player-Aktie on UI
     }
     private void setCheaterUpdate(JsonObject jsonObject) {
-        //int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        //boolean count = (jsonToInt(jsonObject,NetworkConstants.CHEATER)==1);
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        boolean count = (jsonToInt(jsonObject,NetworkConstants.CHEATER)==1);
+
+        //example
+        Toast.makeText(this,"Cheater "+player+count,Toast.LENGTH_LONG).show();
 
         //TODO Cheater Action
     }
     private void setLottoUpdate(JsonObject jsonObject) {
-        //int amount = jsonToInt(jsonObject,NetworkConstants.AMOUNT);
+        int amount = jsonToInt(jsonObject,NetworkConstants.AMOUNT);
+
+        //example
+        Toast.makeText(this,"Lotto "+amount,Toast.LENGTH_LONG).show();
 
         //TODO Lotto Actions
     }
     private void setHotelUpdate(JsonObject jsonObject) {
-        //int hotel =jsonToInt(jsonObject,NetworkConstants.HOTEL);
-        //int owner = jsonToInt(jsonObject,NetworkConstants.OWNER);
+        int hotel =jsonToInt(jsonObject,NetworkConstants.HOTEL);
+        int owner = jsonToInt(jsonObject,NetworkConstants.OWNER);
+
+        //example
+        Toast.makeText(this,"Hotel "+hotel+owner,Toast.LENGTH_LONG).show();
 
         //TODO Hotel Actions and UI
     }
@@ -305,8 +326,11 @@ public class MapView extends AppCompatActivity {
         }
     }
     private void spinWheelUpdate(JsonObject jsonObject) {
-        //int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        //int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
+
+        //example
+        Toast.makeText(this,"Roulette  "+player+result,Toast.LENGTH_LONG).show();
 
         //TODO Update UI for Roulette
     }
