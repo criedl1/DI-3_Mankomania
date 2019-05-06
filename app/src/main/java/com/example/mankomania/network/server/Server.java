@@ -27,11 +27,11 @@ public class Server extends Thread {
 
     @Override
     public void run() {
-        ServerSocket serverSocket = null;
-        try {
-            // server is listening on port 5056
-            serverSocket = new ServerSocket(5056);
-
+        try (
+                // server is listening on port 5056
+                ServerSocket serverSocket = new ServerSocket(5056)
+                )
+        {
             // set arrays for sockets and Handlers
             sockets = new Socket[playercount];
             clientHandlers = new ClientHandler[playercount];
@@ -55,22 +55,7 @@ public class Server extends Thread {
             serverQueueHandler.start();
 
         } catch (Exception err) {
-            Log.e("CLIENT", ""+ err);
-            if (serverSocket != null && !serverSocket.isClosed()) {
-                try {
-                    serverSocket.close();
-                } catch (Exception e) {
-                    Log.e("CLIENT", ""+ e);
-                }
-            }
-        } finally {
-            if (serverSocket != null && !serverSocket.isClosed()) {
-                try {
-                    serverSocket.close();
-                } catch (Exception e) {
-                    Log.e("CLIENT", ""+ e);
-                }
-            }
+            Log.e("CLIENT", "" + err);
         }
     }
 
