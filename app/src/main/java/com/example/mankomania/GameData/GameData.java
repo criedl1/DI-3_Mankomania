@@ -1,6 +1,6 @@
 package com.example.mankomania.GameData;
 
-import com.example.mankomania.Map.Map;
+import com.example.mankomania.map.Map;
 import com.example.mankomania.Network.Server.ServerQueueHandler;
 
 public class GameData {

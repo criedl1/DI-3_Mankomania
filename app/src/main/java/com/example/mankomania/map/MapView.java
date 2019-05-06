@@ -1,4 +1,4 @@
-package com.example.mankomania.Map;
+package com.example.mankomania.map;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -330,11 +329,8 @@ public class MapView extends AppCompatActivity {
     public void movePlayerOut(final Player player){
         float distance;
         boolean playeronleft= (player.getCurrentField() & 1) == 0;
-        if(playeronleft) {
             distance = screenWidth;
-        } else {
-            distance = screenWidth;
-        }
+
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
         animation.setDuration(5000);
         animation.addListener(new AnimatorListenerAdapter() {
@@ -362,7 +358,6 @@ public class MapView extends AppCompatActivity {
 
     public void movePlayerIn(final Player player) {
         float distance;
-        boolean playeronleft = (player.getCurrentField() & 1) == 0;
             distance = field1 - field0;
 
         player.getFigure().setX(field0);
@@ -419,14 +414,6 @@ public class MapView extends AppCompatActivity {
         movePlayerIn(cPlayer);
         displayField(cPlayer.getCurrentField());
         setCurrentPlayer(cPlayer);
-    }
-
-    public void nextPlayer() {
-        currentPlayer++;
-        int numberofplayers = 2;
-        if (currentPlayer > numberofplayers) {
-            currentPlayer = 1;
-        }
     }
 
     public Player getCurrentPlayer() {

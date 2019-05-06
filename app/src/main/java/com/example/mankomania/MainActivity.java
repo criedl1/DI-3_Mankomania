@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.mankomania.Map.MapView;
+import com.example.mankomania.map.MapView;
 import com.example.mankomania.Network.Server.Server;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {

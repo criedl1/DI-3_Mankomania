@@ -1,4 +1,4 @@
-package com.example.mankomania.Map.Fields;
+package com.example.mankomania.map.Fields;
 
 import com.example.mankomania.GameData.GameData;
 

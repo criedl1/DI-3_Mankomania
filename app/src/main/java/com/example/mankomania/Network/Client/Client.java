@@ -3,7 +3,7 @@ package com.example.mankomania.Network.Client;
 import android.util.Log;
 
 import com.example.mankomania.GameData.GameData;
-import com.example.mankomania.Map.MapView;
+import com.example.mankomania.map.MapView;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;

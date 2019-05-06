@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Map.MapView"
+            android:name=".map.MapView"
             android:screenOrientation="landscape" />
         <activity android:name=".Roulette.RotateActivity" android:screenOrientation="landscape" />
         <activity android:name=".Roulette.DozenActivity" android:screenOrientation="landscape"/>
