@@ -2,7 +2,7 @@ package com.example.mankomania.network.client;
 
 import android.util.Log;
 
-import com.example.mankomania.gameData.GameData;
+import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.map.MapView;
 import com.google.gson.JsonObject;
 
@@ -21,7 +21,7 @@ import com.example.mankomania.network.NetworkConstants;
 public class Client extends Thread {
     private final GameData gameData = new GameData();
     private static String ipHost;
-    private static PrintWriter output;
+    private PrintWriter output;
     private int idx;
     public static MapView MapView;
 
@@ -32,19 +32,17 @@ public class Client extends Thread {
 
     @Override
     public void run() {
-        Socket socket = null;
-        try {
+        try (
+                // establish the connection with server port 5056
+                Socket socket = new Socket(InetAddress.getByName(ipHost), 5056);
+                // obtaining INPUT and out
+                PrintWriter output1 = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()))
+                )
+        {
             Queue<String> queue = new LinkedBlockingQueue<>();
 
-            // getting localhost ip
-            InetAddress ip = InetAddress.getByName(ipHost);
-
-            // establish the connection with server port 5056
-            socket = new Socket(ip, 5056);
-
-            // obtaining INPUT and out
-            output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-            BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            output= output1;
 
             // start ClientListener for incoming Messages
             ClientListener clientListener = new ClientListener(input, queue);
@@ -54,14 +52,7 @@ public class Client extends Thread {
             ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue, this, gameData);
             clientQueueHandler.start();
         } catch (Exception err) {
-            if (socket != null && !socket.isClosed()) {
-                try {
-                    socket.close();
-                } catch (Exception e) {
-                    e.printStackTrace(System.err);
-                }
-            }
-            output.close();
+            Log.e("CLIENT", ""+ err);
         }
     }
 

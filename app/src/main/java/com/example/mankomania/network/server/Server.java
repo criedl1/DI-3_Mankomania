@@ -2,7 +2,7 @@ package com.example.mankomania.network.server;
 
 import android.util.Log;
 
-import com.example.mankomania.gameData.GameData;
+import com.example.mankomania.gamedata.GameData;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -27,11 +27,11 @@ public class Server extends Thread {
 
     @Override
     public void run() {
-        ServerSocket serverSocket = null;
-        try {
-            // server is listening on port 5056
-            serverSocket = new ServerSocket(5056);
-
+        try (
+                // server is listening on port 5056
+                ServerSocket serverSocket = new ServerSocket(5056)
+                )
+        {
             // set arrays for sockets and Handlers
             sockets = new Socket[playercount];
             clientHandlers = new ClientHandler[playercount];
@@ -55,13 +55,7 @@ public class Server extends Thread {
             serverQueueHandler.start();
 
         } catch (Exception err) {
-            if (serverSocket != null && !serverSocket.isClosed()) {
-                try {
-                    serverSocket.close();
-                } catch (Exception e) {
-                    e.printStackTrace(System.err);
-                }
-            }
+            Log.e("CLIENT", "" + err);
         }
     }
 

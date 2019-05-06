@@ -1,4 +1,4 @@
-package com.example.mankomania.gameData;
+package com.example.mankomania.gamedata;
 
 import com.example.mankomania.network.server.ServerQueueHandler;
 import com.example.mankomania.map.Map;
