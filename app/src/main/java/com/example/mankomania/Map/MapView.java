@@ -78,6 +78,7 @@ public class MapView extends AppCompatActivity {
     private float field0;
 
     BroadcastReceiver resultReceiver;
+    private int myPlayer;
 
 
     @Override
@@ -153,6 +154,7 @@ public class MapView extends AppCompatActivity {
 
         switch (jsonToString(jsonObject,"OPERATION")) {
             case "sendMoney":
+                printPositions("sendMoney");
                 setMoneyUpdate(jsonObject);
                 break;
             case "setPosition":
@@ -189,9 +191,18 @@ public class MapView extends AppCompatActivity {
                 initPlayerCount(jsonObject);
                 break;
             case "ROULETTERESULT":
-                players.get(currentPlayer-1).setMoney(players.get(currentPlayer-1).getMoney()+jsonToInt(jsonObject,"result"));
-                client.setMoneyOnServer(currentPlayer-1,players.get(currentPlayer-1).getMoney());
+                printPositions("ROULETTE");
+                players.get(myPlayer).setMoney(players.get(myPlayer).getMoney()+jsonToInt(jsonObject,"result"));
+                Log.i("MONEY", "Set Money of Player "+(myPlayer)+" to "+players.get(myPlayer).getMoney());
+                client.setMoneyOnServer(myPlayer,players.get(myPlayer).getMoney());
                 hideDice();
+                break;
+            case "SET_ID":
+                Log.i("INIT", "SET_ID: "+jsonObject.toString());
+                this.myPlayer = jsonToInt(jsonObject, "ID");
+                Log.i("INIT","Set my Player to: "+myPlayer);
+                players.get(myPlayer).setIndex(myPlayer);
+                break;
             default:
                 break;
         }
@@ -225,9 +236,18 @@ public class MapView extends AppCompatActivity {
     private void setMoneyUpdate(JsonObject jsonObject) {
         int player =jsonToInt(jsonObject,"PLAYER");
         int money = jsonToInt(jsonObject,"Money");
+        printPositions("setMoneyUpdateBefore");
         players.get(player).setMoney(money);
-        // TODO Update UI
+        printPositions("setMoneyUpdateAfter");
     }
+
+    private void printPositions(String tag) {
+        int index = 0;
+        for (Player player : this.players) {
+            Log.i("POSITION","Player "+index+": "+player.getCurrentField()+" ("+tag+")");
+        }
+    }
+
     private void setPositionUpdate(JsonObject jsonObject) {
         int player =jsonToInt(jsonObject,"PLAYER");
         int position = jsonToInt(jsonObject,"Position");
@@ -278,7 +298,7 @@ public class MapView extends AppCompatActivity {
         if(fragment != null){
             fragment.showResult(result);
         }else{
-            players.get(player).setCurrentField(players.get(player).getCurrentField()+result);
+            players.get(player).moveFields(result,allfields.length);
             players.get(player).getFigure().setVisibility(View.INVISIBLE);
             Toast.makeText(this,"Player "+ (player+1)+" diced "+ result, Toast.LENGTH_LONG).show();
         }
@@ -340,7 +360,7 @@ public class MapView extends AppCompatActivity {
 
     }
 
-    public void movePlayerIn(Player player) {
+    public void movePlayerIn(final Player player) {
         float distance;
         boolean playeronleft = (player.getCurrentField() & 1) == 0;
             distance = field1 - field0;
@@ -352,14 +372,9 @@ public class MapView extends AppCompatActivity {
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+
                 super.onAnimationEnd(animation);
                 startRoulette();
-                switch(getCurrentPlayer().getCurrentField()){
-                    case 4:     startRoulette();
-                    case 20:    startRoulette();
-                    case 26:    startRoulette();
-                    case 34:    startRoulette();
-                }
             }
         });
     }
@@ -415,7 +430,8 @@ public class MapView extends AppCompatActivity {
     }
 
     public Player getCurrentPlayer() {
-        return players.get(currentPlayer-1);
+       //  return players.get(currentPlayer-1);
+        return players.get(myPlayer);
     }
 
     public void setCurrentPlayer(Player player) {
@@ -454,7 +470,10 @@ public class MapView extends AppCompatActivity {
     }
 
     public void updatePlayers() {
+        int index = 0;
+        Log.i("DICEX","Update for currentField: "+currentField+"&"+(currentField+1));
         for (Player player : players) {
+            Log.i("DICEX","Player: "+(index++)+" Position: "+player.getCurrentField());
             if(player.getCurrentField() == currentField) {
                 player.getFigure().setX(field1);
                 player.getFigure().setVisibility(View.VISIBLE);
@@ -468,6 +487,7 @@ public class MapView extends AppCompatActivity {
     }
 
     public void startRoulette(){
+        printPositions("before Roulette");
         Intent it = new Intent(this, MainActivityRoulette.class);
         startActivity(it);
     }

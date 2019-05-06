@@ -117,9 +117,10 @@ public class ServerQueueHandler extends Thread{
     private void rollDice(JsonObject jsonObject) {
         // TODO Roll the Dice ServerSide
         int player = jsonToInt(jsonObject,"Player");
-        int result = new Random().nextInt(12)+1;
+        int result = new Random().nextInt(11)+2;
         Log.i("DICEEX","Received dice event and diced "+result);
         // gameData.movePlayer(result);
+
         sendDiceResult(player, result);
     }
 
@@ -220,9 +221,11 @@ public class ServerQueueHandler extends Thread{
         //Change GameData
         arr[player] = money;
         gameData.setMoney(arr);
+
         //sendData
         sendMoney(player,money);
-        startTurn((player+1)%gameData.getPlayerCount());
+        gameData.setTurn((gameData.getHasTurn()+1)%gameData.getPlayerCount());
+        startTurn(gameData.getHasTurn());
 
     }
 

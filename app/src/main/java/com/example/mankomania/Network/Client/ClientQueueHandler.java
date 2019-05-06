@@ -2,6 +2,7 @@ package com.example.mankomania.Network.Client;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.example.mankomania.GameData.GameData;
 import com.google.gson.JsonObject;
@@ -41,11 +42,12 @@ public class ClientQueueHandler extends Thread{
     private void handleMessage(String message) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
-
+        Log.i("CLIENT", jsonObject.toString());
         switch (jsonToString(jsonObject,"OPERATION")) {
             // set ID of the Client
             case "SET_ID":
                 client.setIdx(jsonToInt(jsonObject,"ID"));
+                publishUpdate(jsonObject);
                 break;
             // Starts the GameData
             case "SET_PLAYER_COUNT":
