@@ -37,7 +37,7 @@ public class ClientQueueHandler extends Thread{
                 }
             }
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e("CLIENT_QUEUE_HANDLER",""+e);
         }
     }
 
@@ -90,6 +90,7 @@ public class ClientQueueHandler extends Thread{
                 break;
             case NetworkConstants.START_TURN:
                 startTurn(jsonObject);
+                break;
             default:
                 break;
         }
