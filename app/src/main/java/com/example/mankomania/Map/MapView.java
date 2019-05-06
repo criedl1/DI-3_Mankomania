@@ -153,7 +153,7 @@ public class MapView extends AppCompatActivity {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
 
-        switch (jsonToString(jsonObject,"OPERATION")) {
+        switch (jsonToString(jsonObject,NetworkConstants.OPERATION)) {
             case NetworkConstants.SEND_MONEY:
                 printPositions("sendMoney");
                 setMoneyUpdate(jsonObject);
@@ -215,7 +215,7 @@ public class MapView extends AppCompatActivity {
     }
 
     private void initPlayerCount(JsonObject jsonObject) {
-        int count =jsonToInt(jsonObject,"COUNT");
+        int count =jsonToInt(jsonObject,NetworkConstants.COUNT);
         Log.i("INIT", "Initialise "+ count+" players");
         for(int i = 0; i < count; i++){
             figures[i].setVisibility(View.VISIBLE);
@@ -236,8 +236,8 @@ public class MapView extends AppCompatActivity {
     }
 
     private void setMoneyUpdate(JsonObject jsonObject) {
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int money = jsonToInt(jsonObject,"Money");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int money = jsonToInt(jsonObject,NetworkConstants.MONEY);
         printPositions("setMoneyUpdateBefore");
         players.get(player).setMoney(money);
         printPositions("setMoneyUpdateAfter");
@@ -251,50 +251,50 @@ public class MapView extends AppCompatActivity {
     }
 
     private void setPositionUpdate(JsonObject jsonObject) {
-        //int player =jsonToInt(jsonObject,"PLAYER");
-        //int position = jsonToInt(jsonObject,"Position");
+        //int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        //int position = jsonToInt(jsonObject,NetworkConstants.POSITION);
 
         //TODO Change Player Position on UI
     }
     private void setHypoAktieUpdate(JsonObject jsonObject) {
-        //int player =jsonToInt(jsonObject,"PLAYER");
-        //int count = jsonToInt(jsonObject,"Count");
+        //int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        //int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
 
         //TODO Change Player-Aktie on UI
     }
     private void setStrabagAktieUpdate(JsonObject jsonObject) {
-        //int player =jsonToInt(jsonObject,"PLAYER");
-        //int count = jsonToInt(jsonObject,"Count");
+        //int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        //int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
 
         //TODO Change Player-Aktie on UI
     }
     private void setInfineonAktieUpdate(JsonObject jsonObject) {
-        //int player =jsonToInt(jsonObject,"PLAYER");
-        //int count = jsonToInt(jsonObject,"Count");
+        //int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        //int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
 
         //TODO Change Player-Aktie on UI
     }
     private void setCheaterUpdate(JsonObject jsonObject) {
-        //int player =jsonToInt(jsonObject,"PLAYER");
-        //boolean count = (jsonToInt(jsonObject,"Cheater")==1);
+        //int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        //boolean count = (jsonToInt(jsonObject,NetworkConstants.CHEATER)==1);
 
         //TODO Cheater Action
     }
     private void setLottoUpdate(JsonObject jsonObject) {
-        //int amount = jsonToInt(jsonObject,"Amount");
+        //int amount = jsonToInt(jsonObject,NetworkConstants.AMOUNT);
 
         //TODO Lotto Actions
     }
     private void setHotelUpdate(JsonObject jsonObject) {
-        //int hotel =jsonToInt(jsonObject,"Hotel");
-        //int owner = jsonToInt(jsonObject,"Owner");
+        //int hotel =jsonToInt(jsonObject,NetworkConstants.HOTEL);
+        //int owner = jsonToInt(jsonObject,NetworkConstants.OWNER);
 
         //TODO Hotel Actions and UI
     }
     private void rollDiceUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, "Player");
-        int result = jsonToInt(jsonObject, "Result");
-        // Toast.makeText(this,"Result of dice is: "+result, Toast.LENGTH_LONG).show();
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
+        // Toast.makeText(this,"result of dice is: "+result, Toast.LENGTH_LONG).show();
         Dice fragment = ((Dice)getSupportFragmentManager().findFragmentById(R.id.diceContainer));
         this.result = result;
         if(fragment != null){
@@ -306,10 +306,10 @@ public class MapView extends AppCompatActivity {
         }
     }
     private void spinWheelUpdate(JsonObject jsonObject) {
-        //int player = jsonToInt(jsonObject, "Player");
-        //int result = jsonToInt(jsonObject, "Result");
+        //int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        //int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
 
-        //TODO Update UI
+        //TODO Update UI for Roulette
     }
 
     private String jsonToString(JsonObject jsonObject, String key){

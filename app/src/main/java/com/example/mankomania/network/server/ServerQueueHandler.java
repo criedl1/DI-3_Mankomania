@@ -43,7 +43,7 @@ public class ServerQueueHandler extends Thread{
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(in).getAsJsonObject();
 
-        switch (jsonToString(jsonObject,"OPERATION")) {
+        switch (jsonToString(jsonObject,NetworkConstants.OPERATION)) {
             case NetworkConstants.SEND_MONEY:
                 setMoney(jsonObject);
                 break;
@@ -83,7 +83,7 @@ public class ServerQueueHandler extends Thread{
     }
 
     private void endTurn(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject,"Player");
+        int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
 
         player++;
         player = player%gameData.getPlayers().length;
@@ -94,31 +94,31 @@ public class ServerQueueHandler extends Thread{
     private void startTurn(int player) {
         gameData.setTurn(player);
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION",NetworkConstants.START_TURN);
-        json.addProperty("Player", player);
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.START_TURN);
+        json.addProperty(NetworkConstants.PLAYER, player);
         //Send only one Player
         clientHandlers[player].send(json.toString());
     }
 
     private void spinWheel(JsonObject jsonObject) {
         // TODO Spin the Wheel ServerSide
-        int player = jsonToInt(jsonObject,"Player");
+        int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
         sendSpinResult(player, RouletteClass.getRandomNumber());
         //how much the player wins/looses would be more interesting?
-        //Answer: its easier for the Network this way, the diff cen bge calculated in the upper layer
+        //Answer: its easier for the Network this way, the diff can/should be calculated in the upper layer
     }
 
     private void sendSpinResult(int idx, int result) {
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION",NetworkConstants.SPIN_WHEEL);
-        json.addProperty("Result", result);
-        json.addProperty("Player", idx);
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SPIN_WHEEL);
+        json.addProperty(NetworkConstants.RESULT, result);
+        json.addProperty(NetworkConstants.PLAYER, idx);
         sendAllClients(json.toString());
     }
 
     private void rollDice(JsonObject jsonObject) {
         // TODO Roll the Dice ServerSide
-        int player = jsonToInt(jsonObject,"Player");
+        int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
         int result = new Random().nextInt(11)+2;
         Log.i("DICEEX","Received dice event and diced "+result);
         // gameData.movePlayer(result);
@@ -128,17 +128,17 @@ public class ServerQueueHandler extends Thread{
 
     private void sendDiceResult(int idx,int result) {
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION",NetworkConstants.ROLL_DICE);
-        json.addProperty("Result", result);
-        json.addProperty("Player", idx);
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.ROLL_DICE);
+        json.addProperty(NetworkConstants.RESULT, result);
+        json.addProperty(NetworkConstants.PLAYER, idx);
         sendAllClients(json.toString());
     }
 
     private void setHotel(JsonObject jsonObject) {
         int[] arr = gameData.getHotels();
         //Get Values
-        int hotel =jsonToInt(jsonObject,"Hotel");
-        int owner = jsonToInt(jsonObject,"Owner");
+        int hotel =jsonToInt(jsonObject,NetworkConstants.HOTEL);
+        int owner = jsonToInt(jsonObject,NetworkConstants.OWNER);
         //Change GameData
         arr[hotel] = owner;
         gameData.setHotels(arr);
@@ -148,7 +148,7 @@ public class ServerQueueHandler extends Thread{
 
     private void setLotto(JsonObject jsonObject) {
         //Get Values
-        int amount = jsonToInt(jsonObject,"Amount");
+        int amount = jsonToInt(jsonObject,NetworkConstants.AMOUNT);
         //Change GameData
         gameData.setLotto(amount);
         //sendData
@@ -158,8 +158,8 @@ public class ServerQueueHandler extends Thread{
     private void setCheater(JsonObject jsonObject) {
         boolean[] arr = gameData.getIsCheater();
         //Get Values
-        int player =jsonToInt(jsonObject,"PLAYER");
-        boolean count = (jsonToInt(jsonObject,"Cheater")==1);
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        boolean count = (jsonToInt(jsonObject,NetworkConstants.CHEATER)==1);
         //Change GameData
         arr[player] = count;
         gameData.setIsCheater(arr);
@@ -170,8 +170,8 @@ public class ServerQueueHandler extends Thread{
     private void setInfineonAktie(JsonObject jsonObject) {
         int[] arr = gameData.getInfineonAktie();
         //Get Values
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int count = jsonToInt(jsonObject,"Count");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
         //Change GameData
         arr[player] = count;
         gameData.setInfineonAktie(arr);
@@ -182,8 +182,8 @@ public class ServerQueueHandler extends Thread{
     private void setStrabagAktie(JsonObject jsonObject) {
         int[] arr = gameData.getStrabagAktie();
         //Get Values
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int count = jsonToInt(jsonObject,"Count");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
         //Change GameData
         arr[player] = count;
         gameData.setStrabagAktie(arr);
@@ -194,8 +194,8 @@ public class ServerQueueHandler extends Thread{
     private void setHypoAktie(JsonObject jsonObject) {
         int[] arr = gameData.getHypoAktie();
         //Get Values
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int count = jsonToInt(jsonObject,"Count");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
         //Change GameData
         arr[player] = count;
         gameData.setHypoAktie(arr);
@@ -206,8 +206,8 @@ public class ServerQueueHandler extends Thread{
     private void setPosition(JsonObject jsonObject) {
         int[] arr = gameData.getPosition();
         //Get Values
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int position = jsonToInt(jsonObject,"Position");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int position = jsonToInt(jsonObject,NetworkConstants.POSITION);
         //Change GameData
         arr[player] = position;
         gameData.setPosition(arr);
@@ -218,8 +218,8 @@ public class ServerQueueHandler extends Thread{
     private void setMoney(JsonObject jsonObject) {
         int[] arr = gameData.getMoney();
         //Get Values
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int money = jsonToInt(jsonObject,"Money");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int money = jsonToInt(jsonObject,NetworkConstants.MONEY);
         //Change GameData
         arr[player] = money;
         gameData.setMoney(arr);
@@ -240,72 +240,72 @@ public class ServerQueueHandler extends Thread{
 
     void sendPlayer(int idx, String str){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION",NetworkConstants.SEND_PLAYER);
-        json.addProperty("PLAYER", idx);
-        json.addProperty("IP", str);
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SEND_PLAYER);
+        json.addProperty(NetworkConstants.PLAYER, idx);
+        json.addProperty(NetworkConstants.IP, str);
         sendAllClients(json.toString());
     }
 
     public void sendMoney(int idx, int money){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION",NetworkConstants.SEND_MONEY);
-        json.addProperty("PLAYER", idx);
-        json.addProperty("Money", money);
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SEND_MONEY);
+        json.addProperty(NetworkConstants.PLAYER, idx);
+        json.addProperty(NetworkConstants.MONEY, money);
         sendAllClients(json.toString());
     }
 
     public void sendPosition(int idx, int pos){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION",NetworkConstants.SET_POSITION);
-        json.addProperty("PLAYER", idx);
-        json.addProperty("Position", pos);
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_POSITION);
+        json.addProperty(NetworkConstants.PLAYER, idx);
+        json.addProperty(NetworkConstants.POSITION, pos);
         sendAllClients(json.toString());
     }
 
     private void sendHypoAktie(int idx, int count){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION",NetworkConstants.SET_HYPO_AKTIE);
-        json.addProperty("PLAYER", idx);
-        json.addProperty("Count", count);
+        json.addProperty(NetworkConstants.POSITION,NetworkConstants.SET_HYPO_AKTIE);
+        json.addProperty(NetworkConstants.PLAYER, idx);
+        json.addProperty(NetworkConstants.COUNT, count);
         sendAllClients(json.toString());
     }
 
     private void sendStrabagAktie(int idx, int count){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION",NetworkConstants.SET_STRABAG_AKTIE);
-        json.addProperty("PLAYER", idx);
-        json.addProperty("Count", count);
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_STRABAG_AKTIE);
+        json.addProperty(NetworkConstants.PLAYER, idx);
+        json.addProperty(NetworkConstants.COUNT, count);
         sendAllClients(json.toString());
     }
 
     private void sendInfineonAktie(int idx, int count){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION",NetworkConstants.SET_INFINEON_AKTIE);
-        json.addProperty("PLAYER", idx);
-        json.addProperty("Count", count);
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_INFINEON_AKTIE);
+        json.addProperty(NetworkConstants.PLAYER, idx);
+        json.addProperty(NetworkConstants.COUNT, count);
         sendAllClients(json.toString());
     }
 
     private void sendCheater(int idx, boolean cheater){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION",NetworkConstants.SET_CHEATER);
-        json.addProperty("PLAYER", idx);
-        json.addProperty("Cheater", cheater);
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_CHEATER);
+        json.addProperty(NetworkConstants.PLAYER, idx);
+        json.addProperty(NetworkConstants.CHEATER, cheater);
         sendAllClients(json.toString());
     }
 
     public void sendLotto(int amount){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION",NetworkConstants.SET_LOTTO);
-        json.addProperty("Amount", amount);
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_LOTTO);
+        json.addProperty(NetworkConstants.AMOUNT, amount);
         sendAllClients(json.toString());
     }
 
     private void sendHotel(int idx, int owner){
         JsonObject json = new JsonObject();
-        json.addProperty("OPERATION",NetworkConstants.SET_HOTEL);
-        json.addProperty("Hotel", idx);
-        json.addProperty("Owner", owner);
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_HOTEL);
+        json.addProperty(NetworkConstants.HOTEL, idx);
+        json.addProperty(NetworkConstants.OWNER, owner);
         sendAllClients(json.toString());
     }
 

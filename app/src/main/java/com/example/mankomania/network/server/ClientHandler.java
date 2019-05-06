@@ -39,23 +39,23 @@ class ClientHandler extends Thread {
 
     void giveTurn() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("OPERATION",NetworkConstants.START_TURN);
-        jsonObject.addProperty("Player", id);
+        jsonObject.addProperty(NetworkConstants.OPERATION,NetworkConstants.START_TURN);
+        jsonObject.addProperty(NetworkConstants.PLAYER, id);
         //Send only one Player
         send(jsonObject.toString());
     }
 
     void sendID() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("OPERATION", NetworkConstants.SET_ID);
-        jsonObject.addProperty("ID",id);
+        jsonObject.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_ID);
+        jsonObject.addProperty(NetworkConstants.ID,id);
         send(jsonObject.toString());
     }
 
     void sendPlayerCount() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("OPERATION", NetworkConstants.SET_PLAYER_COUNT);
-        jsonObject.addProperty("COUNT",playerCount);
+        jsonObject.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_PLAYER_COUNT);
+        jsonObject.addProperty(NetworkConstants.COUNT,playerCount);
         send(jsonObject.toString());
     }
 

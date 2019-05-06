@@ -94,9 +94,9 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.SET_POSITION);
-                json.addProperty("PLAYER", idx);
-                json.addProperty("Position", pos);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_POSITION);
+                json.addProperty(NetworkConstants.PLAYER, idx);
+                json.addProperty(NetworkConstants.POSITION, pos);
                 output.println(json.toString());
             }
         };
@@ -108,9 +108,9 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.SET_HYPO_AKTIE);
-                json.addProperty("PLAYER", idx);
-                json.addProperty("Count", count);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_HYPO_AKTIE);
+                json.addProperty(NetworkConstants.PLAYER, idx);
+                json.addProperty(NetworkConstants.COUNT, count);
                 output.println(json.toString());
             }
         };
@@ -122,9 +122,9 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.SET_STRABAG_AKTIE);
-                json.addProperty("PLAYER", idx);
-                json.addProperty("Count", count);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_STRABAG_AKTIE);
+                json.addProperty(NetworkConstants.PLAYER, idx);
+                json.addProperty(NetworkConstants.COUNT, count);
                 output.println(json.toString());
             }
         };
@@ -136,9 +136,9 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.SET_INFINEON_AKTIE);
-                json.addProperty("PLAYER", idx);
-                json.addProperty("Count", count);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_INFINEON_AKTIE);
+                json.addProperty(NetworkConstants.PLAYER, idx);
+                json.addProperty(NetworkConstants.COUNT, count);
                 output.println(json.toString());
             }
         };
@@ -150,9 +150,9 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.SET_CHEATER);
-                json.addProperty("PLAYER", idx);
-                json.addProperty("Cheater", cheater);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_CHEATER);
+                json.addProperty(NetworkConstants.PLAYER, idx);
+                json.addProperty(NetworkConstants.CHEATER, cheater);
                 output.println(json.toString());
             }
         };
@@ -164,8 +164,8 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.SET_LOTTO);
-                json.addProperty("Amount", amount);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_LOTTO);
+                json.addProperty(NetworkConstants.AMOUNT, amount);
                 output.println(json.toString());
             }
         };
@@ -177,9 +177,9 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.SET_HOTEL);
-                json.addProperty("Hotel", idx);
-                json.addProperty("Owner", owner);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_HOTEL);
+                json.addProperty(NetworkConstants.HOTEL, idx);
+                json.addProperty(NetworkConstants.OWNER, owner);
                 output.println(json.toString());
             }
         };
@@ -192,8 +192,8 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.ROLL_DICE);
-                json.addProperty("Player",idx);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.ROLL_DICE);
+                json.addProperty(NetworkConstants.PLAYER,idx);
                 output.println(json.toString());
             }
         };
@@ -210,8 +210,8 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.SPIN_WHEEL);
-                json.addProperty("Player",idx);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SPIN_WHEEL);
+                json.addProperty(NetworkConstants.PLAYER,idx);
                 output.println(json.toString());
             }
         };
@@ -223,8 +223,8 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.END_TURN);
-                json.addProperty("Player",idx);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.END_TURN);
+                json.addProperty(NetworkConstants.PLAYER,idx);
                 output.println(json.toString());
             }
         };
