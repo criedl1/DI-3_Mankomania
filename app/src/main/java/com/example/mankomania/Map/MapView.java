@@ -35,8 +35,8 @@ import java.util.List;
 
 public class MapView extends AppCompatActivity {
 
-    private static ImageView imgview1;
-    private static ImageView imgview2;
+    private ImageView imgview1;
+    private ImageView imgview2;
 
     private int currentField = 0;
 
@@ -87,7 +87,7 @@ public class MapView extends AppCompatActivity {
         initButtons();
 
         // create Receiver
-        resultReceiver = createBroadcastReceiver();
+               resultReceiver = createBroadcastReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 resultReceiver,
                 new IntentFilter("client.update"));
@@ -343,11 +343,8 @@ public class MapView extends AppCompatActivity {
     public void movePlayerIn(Player player) {
         float distance;
         boolean playeronleft = (player.getCurrentField() & 1) == 0;
-        if (playeronleft) {
             distance = field1 - field0;
-        } else {
-            distance = field2 - field0;
-        }
+
         player.getFigure().setX(field0);
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
         animation.setDuration(5000);
@@ -371,20 +368,6 @@ public class MapView extends AppCompatActivity {
         imgview1 =  findViewById(R.id.imageViewStart);
         imgview2 =  findViewById(R.id.imageView2);
 
-        Button moveTest =  findViewById(R.id.moveTest);
-        moveTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-        Button setMoney =  findViewById(R.id.setmoney);
-        setMoney.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                players.get(0).addMoney(12345);
-            }
-
-        });
         ImageView wuerfeln =  findViewById(R.id.wuerfeln); // button fürs würfeln
         wuerfeln.setOnClickListener(new View.OnClickListener() {
             @Override

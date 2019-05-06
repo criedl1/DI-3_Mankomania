@@ -14,10 +14,10 @@ public class Player {
 
     Player(ImageView figure, TextView currentmoney) {
         currentField = 0;
-        //money = 1005;
         this.figure = figure;
         this. currentmoney = currentmoney;
-        currentmoney.setText(Integer.toString(1000000));
+       // currentmoney.setText(Integer.toString(1000000));
+
 
     }
 
@@ -26,7 +26,7 @@ public class Player {
         currentField = (currentField + fields)% maxfields;
     }
 
-    void addMoney(int amount) {
+  /*  void addMoney(int amount) {
 
         money = Integer.parseInt(currentmoney.getText().toString());
         updatemoney = money + amount;
@@ -38,7 +38,7 @@ public class Player {
         money = Integer.parseInt(currentmoney.getText().toString());
         updatemoney = money - amount;
         currentmoney.setText(Integer.toString(updatemoney));
-    }
+    }*/
 
     ImageView getFigure() {
         return figure;
