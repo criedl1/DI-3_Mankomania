@@ -1,8 +1,8 @@
-package com.example.mankomania.Network.Server;
+package com.example.mankomania.network.server;
 
 import android.util.Log;
 
-import com.example.mankomania.GameData.GameData;
+import com.example.mankomania.gameData.GameData;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,25 +14,27 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Server extends Thread {
     private static GameData gameData = new GameData();
     private static Queue<String> queue = new LinkedBlockingQueue<>();
-    private static Socket[] sockets;
-    private static ClientHandler[] clientHandlers;
-    private final int PLAYERCOUNT;
-    private final int STARTMONEY;
+    private Socket[] sockets;
+    private ClientHandler[] clientHandlers;
+    private final int playercount;
+    private final int startmoney;
 
     public Server(int playerCount, int startMoney) {
         Log.i("INIT", "Server started with PlayerCount "+ playerCount);
-        this.PLAYERCOUNT = playerCount;
-        this.STARTMONEY = startMoney;
+        this.playercount = playerCount;
+        this.startmoney = startMoney;
     }
 
+    @Override
     public void run() {
+        ServerSocket serverSocket = null;
         try {
             // server is listening on port 5056
-            ServerSocket serverSocket = new ServerSocket(5056);
+            serverSocket = new ServerSocket(5056);
 
             // set arrays for sockets and Handlers
-            sockets = new Socket[PLAYERCOUNT];
-            clientHandlers = new ClientHandler[PLAYERCOUNT];
+            sockets = new Socket[playercount];
+            clientHandlers = new ClientHandler[playercount];
 
             //generate GameData
             generateGameData();
@@ -52,31 +54,37 @@ public class Server extends Thread {
             // Start listening
             serverQueueHandler.start();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception err) {
+            if (serverSocket != null && !serverSocket.isClosed()) {
+                try {
+                    serverSocket.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
         }
     }
 
     private void sendGameData(ServerQueueHandler serverQueueHandler){
 
-        for (int i=0; i<PLAYERCOUNT;i++) {
+        for (int i = 0; i< playercount; i++) {
             serverQueueHandler.sendPlayer(i,gameData.getPlayers()[i]);
             serverQueueHandler.sendMoney(i,gameData.getMoney()[i]);
         }
     }
 
     private void generateGameData(){
-        int[] int_arr = new int[PLAYERCOUNT];
-        int[] int_arr2 = new int[PLAYERCOUNT];
-        boolean[] bool_arr = new boolean[PLAYERCOUNT];
-        String[] str_arr = new String[PLAYERCOUNT];
+        int[] int_arr = new int[playercount];
+        int[] int_arr2 = new int[playercount];
+        boolean[] bool_arr = new boolean[playercount];
+        String[] str_arr = new String[playercount];
 
         // Set Player[] (fills in ConnectPlayers)
         Arrays.fill(str_arr,"");
         gameData.setPlayers(str_arr);
 
         // Set Arrays with StartMoney
-        Arrays.fill(int_arr2,STARTMONEY);
+        Arrays.fill(int_arr2, startmoney);
         gameData.setMoney(int_arr2);
 
         // Set Arrays with 0
@@ -113,7 +121,7 @@ public class Server extends Thread {
             gameData.setPlayers(arr);
 
             // create a new ClientHandler object and start it
-            clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue,playerCount,PLAYERCOUNT);
+            clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue,playerCount, playercount);
             clientHandlers[playerCount].start();
             clientHandlers[playerCount].sendPlayerCount();
             clientHandlers[playerCount].sendID();

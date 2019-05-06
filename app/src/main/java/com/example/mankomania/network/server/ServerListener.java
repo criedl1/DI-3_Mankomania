@@ -1,4 +1,4 @@
-package com.example.mankomania.Network.Server;
+package com.example.mankomania.network.server;
 
 import java.io.BufferedReader;
 import java.util.Queue;
@@ -12,6 +12,7 @@ public class ServerListener extends Thread {
         this.queue = queue;
     }
 
+    @Override
     public void run(){
         try{
             // reading Messages and adding them to the queue

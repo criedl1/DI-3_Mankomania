@@ -1,6 +1,6 @@
 package com.example.mankomania.map.Fields;
 
-import com.example.mankomania.GameData.GameData;
+import com.example.mankomania.gameData.GameData;
 
 public class LottoField implements Field {
     private int goOverLoss;
