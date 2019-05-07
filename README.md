@@ -1,4 +1,8 @@
-# DI-3_Mankomania ![Travis Badge](https://travis-ci.com/criedl1/DI-3_Mankomania.svg?branch=master)
+# DI-3_Mankomania 
+![Travis Badge](https://travis-ci.com/criedl1/DI-3_Mankomania.svg?branch=master)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=DI-3_Mankomania&metric=code_smells)](https://sonarcloud.io/dashboard?id=DI-3_Mankomania)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=DI-3_Mankomania&metric=bugs)](https://sonarcloud.io/dashboard?id=DI-3_Mankomania)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=DI-3_Mankomania&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=DI-3_Mankomania)
 
 Als Projekt für die LV Software Engineering II wird das Brettspiel Mankomania als Android-App programmiert.
 

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".map.MapView">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="96dp"
+        android:contentDescription="@string/background_of_game" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/mainview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/wuerfeln"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/image_of_dice"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/wuerfel" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="635dp"
+            android:layout_height="340dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toStartOf="@+id/next1"
+            app:layout_constraintStart_toEndOf="@+id/back1"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageViewStart"
+                android:layout_width="210dp"
+                android:layout_height="280dp"
+                android:layout_margin="10dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@mipmap/ic_launcher_foreground_start"
+                android:contentDescription="@string/left_player_field" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="210dp"
+                android:layout_height="281dp"
+                android:layout_margin="10dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@mipmap/ic_launcher_foreground"
+                android:contentDescription="@string/right_player_field" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/figure1"
+                android:layout_width="74dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                app:srcCompat="@mipmap/ic_figure1_round"
+                tools:layout_editor_absoluteX="236dp"
+                tools:layout_editor_absoluteY="229dp"
+                tools:visibility="invisible"
+                android:contentDescription="@string/figure_of_player_1" />
+
+            <ImageView
+                android:id="@+id/figure2"
+                android:layout_width="74dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                app:srcCompat="@mipmap/ic_figure2_round"
+                tools:layout_editor_absoluteX="120dp"
+                tools:layout_editor_absoluteY="90dp"
+                tools:visibility="invisible"
+                android:contentDescription="@string/figure_of_player_2" />
+
+            <ImageView
+                android:id="@+id/figure3"
+                android:layout_width="74dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                app:srcCompat="@mipmap/ic_figure3_round"
+                tools:layout_editor_absoluteX="204dp"
+                tools:layout_editor_absoluteY="97dp"
+                tools:visibility="invisible"
+                android:contentDescription="@string/figure_of_player_3" />
+
+            <ImageView
+                android:id="@+id/figure4"
+                android:layout_width="74dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                app:srcCompat="@mipmap/ic_figure4_round"
+                tools:layout_editor_absoluteX="136dp"
+                tools:layout_editor_absoluteY="229dp"
+                tools:visibility="invisible"
+                android:contentDescription="@string/figure_of_player_4" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/currentmoney"
+                android:layout_width="0dp"
+                android:layout_height="27dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_red_dark"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+            <TextView
+                android:id="@+id/currentmoney2"
+                android:layout_width="0dp"
+                android:layout_height="27dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_red_dark"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+            <TextView
+                android:id="@+id/currentmoney3"
+                android:layout_width="0dp"
+                android:layout_height="27dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_red_dark"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+            <TextView
+                android:id="@+id/currentmoney4"
+                android:layout_width="0dp"
+                android:layout_height="27dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_red_dark"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+        </LinearLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="10dp">
+
+        </android.support.constraint.ConstraintLayout>
+
+        <Button
+            android:id="@+id/next1"
+            android:layout_width="50dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@mipmap/ic_further_round"
+            android:onClick="nextSideofMap"
+            android:paddingLeft="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/moveTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/movetest"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/setmoney"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/back1"
+            android:layout_width="50dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@mipmap/ic_back_round"
+            android:onClick="furtherSideofMap"
+            android:paddingRight="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/setmoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/setmoney"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/waitContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/waitFragment"
+            android:name="com.example.mankomania.lobby.LobbyFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/diceContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="invisible">
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>
