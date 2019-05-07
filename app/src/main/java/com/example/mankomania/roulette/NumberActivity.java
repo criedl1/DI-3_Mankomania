@@ -1,4 +1,4 @@
-package com.example.mankomania.Roulette;
+package com.example.mankomania.roulette;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,13 +15,14 @@ import com.google.gson.JsonObject;
 
 public class NumberActivity extends AppCompatActivity {
 
-    RouletteClass roulette = new RouletteClass();
-    EditText number;
-    TextView selectNumber;
-    Button go;
-    int choosenNumber;
-    static String returnString;
-    static int money;
+    private RouletteClass roulette = new RouletteClass();
+    private EditText number;
+    private int choosenNumber;
+    private String returnString;
+    private int money;
+
+    //For Network:
+    public static int moneyAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,8 @@ public class NumberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_number);
 
         number = findViewById(R.id.etInsertNumber);
-        selectNumber = findViewById(R.id.tvSelectNumber);
-        go = findViewById(R.id.btnGo);
+        TextView selectNumber = findViewById(R.id.tvSelectNumber);
+        Button go = findViewById(R.id.btnGo);
 
         selectNumber.setText(getString(R.string.roulette_choose_number));
         number.setHint(getString(R.string.roulette_enter_number));
@@ -51,32 +52,45 @@ public class NumberActivity extends AppCompatActivity {
         });
     }
 
-    public int spinWheel(int choosenNumber) {
+    private int spinWheel(int choosenNumber) {
 
         int rouletteNumber = roulette.spinIt();
 
         if (rouletteNumber == choosenNumber) {
-            money = 145000;  //--> 150000 - 5000 Einsatz
+            setMoney(145000);  //--> 150000 - 5000 Einsatz
+            moneyAmount = money;
 
-            returnString = getString(R.string.roulette_won, money);
+            returnString = getString(R.string.roulette_won, getMoney());
         } else {
-            money = - 50000; //Einsatz
-            returnString = getString(R.string.roulette_lost, money*-1);
+            setMoney(- 50000); //Einsatz
+            moneyAmount = getMoney();
+            returnString = getString(R.string.roulette_lost, getMoney()*-1);
         }
         this.sendMoneyChange(money);
         return money;
     }
 
-    public static String getReturnString(){
-        return returnString;
+    private int getRandomNumberFromRouletteClass(){
+        return roulette.getRandomNumber();
     }
 
-    public static void setReturnString(String newReturnString){
-        returnString = newReturnString;
+    private ColorEnum getColorFromRouletteClass(){
+        return roulette.getTheField().getColor();
     }
 
-    public void openRotateActivity(){
+    private float getDegreeFromRouletteClass(){
+        return roulette.getTheField().getDegree();
+    }
+
+    private void openRotateActivity(){
+        Bundle extras = new Bundle();
         Intent it = new Intent(this, RotateActivity.class);
+        extras.putString("returnString", getReturnString());
+        extras.putInt("money", getMoney());
+        extras.putInt("randomNumber", getRandomNumberFromRouletteClass());
+        extras.putSerializable("color", getColorFromRouletteClass());
+        extras.putFloat("degree", getDegreeFromRouletteClass());
+        it.putExtras(extras);
         startActivity(it);
         finish();
     }
@@ -91,13 +105,29 @@ public class NumberActivity extends AppCompatActivity {
                 .sendBroadcast(intent);
     }
 
-    public void openErrorPopUp() {
+    private void openErrorPopUp() {
        ErrorClass error = new ErrorClass();
        error.show(getSupportFragmentManager(), "alert");
     }
 
-    public static int getMoney(){
+    private void setMoney(int money){
+        this.money = money;
+    }
+
+    private int getMoney(){
         return money;
     }
+
+    public String getReturnString() {
+        return returnString;
+    }
+
+    public static int getMoneyAmount(){
+        //did this, because i want to work with non-static variables in my classes
+
+        return moneyAmount;
+    }
+
+
 }
 

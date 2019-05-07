@@ -1,11 +1,13 @@
-package com.example.mankomania.Roulette;
+package com.example.mankomania.roulette;
+
+import java.security.SecureRandom;
 
 public class RouletteClass {
 
-    static int randomNumber;
-    static FieldClass array[] = new FieldClass[36];
+    private int randomNumber;
+    private FieldClass[] fieldClassArray = new FieldClass[36];
 
-    public FieldClass[] setUpFields() {
+    protected FieldClass[] setUpFields() {
         FieldClass fieldClass0 = new FieldClass(ColorEnum.GREEN, 0, 0f);
         FieldClass fieldClass32 = new FieldClass(ColorEnum.RED, 32, 9.73f);
         FieldClass fieldClass15 = new FieldClass(ColorEnum.BLACK, 15, 19.46f);
@@ -51,27 +53,31 @@ public class RouletteClass {
                 fieldClass9, fieldClass22, fieldClass18, fieldClass29, fieldClass7, fieldClass28, fieldClass12, fieldClass35, fieldClass3,
                 fieldClass26};
 
-        this.array = array;
+        this.fieldClassArray = array;
 
         return array;
     }
 
-    public int spinIt(){
+    protected int spinIt(){
         setUpFields();
-        randomNumber = (int) (Math.random() *36) + 0;
+
+        SecureRandom random = new SecureRandom();
+
+        randomNumber = random.nextInt(36);
         return randomNumber;
     }
 
-    public static FieldClass getTheField() {
+    protected FieldClass getTheField() {
         FieldClass field = null;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i].getValue() == getRandomNumber()) {
-                field = array[i];
+        for (int i = 0; i < fieldClassArray.length; i++) {
+            if (fieldClassArray[i].getValue() == getRandomNumber()) {
+                field = fieldClassArray[i];
             }
         } return field;
     }
 
-    public static int getRandomNumber(){
+    public int getRandomNumber(){
         return randomNumber;
     }
+
 }

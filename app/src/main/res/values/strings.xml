@@ -19,7 +19,7 @@
     <string name="roulette_third_dozen">25 &#8211; 36</string>
     <string name="roulette_back">Zurück</string>
     <string name="roulette_black">schwarz</string>
-    <string name="roulette_red">red</string>
+    <string name="roulette_red">rot</string>
     <string name="roulette_green">grün</string>
     <string name="roulette_result">Die Zahl lautet %1$s, die Farbe ist %2$s.</string>
     <string name="roulette_invalid_number">Ungültige Zahl!</string>
