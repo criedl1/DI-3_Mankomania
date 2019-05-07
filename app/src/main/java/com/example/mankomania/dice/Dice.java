@@ -1,4 +1,4 @@
-package com.example.mankomania.Dice;
+package com.example.mankomania.dice;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -7,6 +7,7 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class Dice extends Fragment implements SensorEventListener {
     private boolean diceRolled;
     MediaPlayer mediaPlayer;
     int result;
+    Random random;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +45,7 @@ public class Dice extends Fragment implements SensorEventListener {
         // assign Button
         // initialize Random and bool
         diceRolled = false;
-
+        random = new Random();
         return inflater.inflate(R.layout.activity_dice, container, false);
     }
 
@@ -56,7 +58,6 @@ public class Dice extends Fragment implements SensorEventListener {
         float acceleration = (x + y + z);
         // if sum > 70 --> roll the Dice
         if (acceleration > 20 && !diceRolled) {
-            //rollTheDice();
             diceRolled = true;
             ((MapView) getActivity()).sendRollDice();
         }
@@ -77,12 +78,11 @@ public class Dice extends Fragment implements SensorEventListener {
         Button btnClose = getActivity().findViewById(R.id.btnClose);
 
         int[] ddiceResult = new int[2];
-        Random r = new Random();
         if (result >= 7) {
-            ddiceResult[0] = (result - 6 + r.nextInt(Math.abs(result - 12) + 1));
+            ddiceResult[0] = (result - 6 + random.nextInt(Math.abs(result - 12) + 1));
             ddiceResult[1] = result - ddiceResult[0];
         } else {
-            ddiceResult[0] = r.nextInt(result - 1) + 1;
+            ddiceResult[0] = random.nextInt(result - 1) + 1;
             ddiceResult[1] = result - ddiceResult[0];
         }
         Toast.makeText(getActivity(), "Du hast " + result + " gewürfelt", Toast.LENGTH_SHORT).show();
@@ -107,10 +107,10 @@ public class Dice extends Fragment implements SensorEventListener {
                     ivDice1.setImageResource(R.drawable.dice6);
                     break;
                 default:
-                    throw new RuntimeException("unreachable");
+                    throw new IllegalStateException();
             }
         } catch (RuntimeException e) {
-            System.out.println("unreachable");
+            Log.e("DICE","Dice Result was generated wrong");
         }
         try {
             switch (ddiceResult[1]) {
@@ -133,10 +133,10 @@ public class Dice extends Fragment implements SensorEventListener {
                     ivDice2.setImageResource(R.drawable.dice6);
                     break;
                 default:
-                    throw new RuntimeException("unreachable");
+                    throw new IllegalStateException();
             }
         } catch (RuntimeException e) {
-            System.out.println("unreachable");
+            Log.e("DICE","Dice Result was generated wrong");
         }
         ivDice1.animate().scaleX(0.8f).scaleY(0.8f).setDuration(1300);
         ivDice2.animate().scaleX(0.8f).scaleY(0.8f).setDuration(1300);

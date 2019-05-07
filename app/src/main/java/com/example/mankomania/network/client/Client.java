@@ -23,11 +23,14 @@ public class Client extends Thread {
     private static String ipHost;
     private PrintWriter output;
     private int idx;
-    public static MapView MapView;
+    public static MapView mapView;
 
-    public Client(String ipHost, MapView MapView){
+    public Client(){
+    }
+
+    public void init(String ipHost, MapView mapView){
         Client.ipHost = ipHost;
-        Client.MapView = MapView;
+        Client.mapView = mapView;
     }
 
     @Override
@@ -189,10 +192,6 @@ public class Client extends Thread {
             }
         };
         thread.start();
-    }
-
-    private int jsonToInt(JsonObject jsonObject, String key){
-        return Integer.parseInt(jsonObject.get(key).getAsString());
     }
 
     public void playRoulette(){

@@ -20,13 +20,12 @@ import com.example.mankomania.map.MapView;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private int selectedPlayerCount = 1;
-    private String IP;
+    private String ip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // Make to run your application only in portrait mode
         setContentView(R.layout.activity_main);
 
         Spinner spinner = findViewById(R.id.playerCount);
@@ -38,18 +37,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void btn_Create_Lobby_OnClick(View v) {
-        EditText et =  findViewById(R.id.textinput);
-        Button btn_create =  findViewById(R.id.btnCreateLobby);
-        Button btn_connect =  findViewById(R.id.btnConnectToLobby);
+        Button btnCreate =  findViewById(R.id.btnCreateLobby);
+        Button btnConnect =  findViewById(R.id.btnConnectToLobby);
 
         // Disable Buttons
-        btn_create.setEnabled(false);
-        btn_connect.setEnabled(false);
+        btnCreate.setEnabled(false);
+        btnConnect.setEnabled(false);
 
-        this.IP = getIPAddress();
+        this.ip = getIPAddress();
 
-        // Set IP Address
-        Toast.makeText(this, getString(R.string.display_server_ip, IP), Toast.LENGTH_LONG).show();
+        // Set ip Address
+        Toast.makeText(this, getString(R.string.display_server_ip, ip), Toast.LENGTH_LONG).show();
 
         // Start Server
         Server server = new Server(selectedPlayerCount, 1000000);
@@ -61,21 +59,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void btn_Connect_To_Lobby_OnClick(View v)  {
         Log.i("INIT", "Clicked");
         EditText et =  findViewById(R.id.textinput);
-        Button btn_create =  findViewById(R.id.btnCreateLobby);
-        Button btn_connect =  findViewById(R.id.btnConnectToLobby);
+        Button btnCreate =  findViewById(R.id.btnCreateLobby);
+        Button btnConnect =  findViewById(R.id.btnConnectToLobby);
 
         // Disable Buttons
-        btn_create.setEnabled(false);
-        btn_connect.setEnabled(false);
+        btnCreate.setEnabled(false);
+        btnConnect.setEnabled(false);
 
-        this.IP = et.getText().toString();
+        this.ip = et.getText().toString();
         openMap();
     }
 
     public void openMap() {
-        Log.i("INIT", "Open Map with "+IP);
+        Log.i("INIT", "Open Map with "+ ip);
         Intent intent = new Intent(this, MapView.class);
-        intent.putExtra("IP", IP);
+        intent.putExtra("ip", ip);
         startActivity(intent);
     }
 
@@ -94,6 +92,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        //is not possible at this time
     }
 }

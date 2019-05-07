@@ -1,4 +1,4 @@
-package com.example.mankomania.Lobby;
+package com.example.mankomania.lobby;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,12 +10,6 @@ import android.view.ViewGroup;
 import com.example.mankomania.R;
 
 public class LobbyFragment extends Fragment {
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

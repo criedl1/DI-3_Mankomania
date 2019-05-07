@@ -16,5 +16,6 @@ public class LossField implements Field {
 
     @Override
     public void goOver(GameData gameData) {
+        // is not needed on LossField
     }
 }

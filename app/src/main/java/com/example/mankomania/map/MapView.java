@@ -20,17 +20,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mankomania.Dice.Dice;
-import com.example.mankomania.network.client.Client;
 import com.example.mankomania.R;
 import com.example.mankomania.Roulette.MainActivityRoulette;
-import com.example.mankomania.Roulette.RotateActivity;
+import com.example.mankomania.dice.Dice;
+import com.example.mankomania.network.NetworkConstants;
+import com.example.mankomania.network.client.Client;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.example.mankomania.network.NetworkConstants;
 
 
 public class MapView extends AppCompatActivity {
@@ -96,7 +95,8 @@ public class MapView extends AppCompatActivity {
 
         //Get Intent and start client
         Intent intent = getIntent();
-        client = new Client(intent.getStringExtra("IP"),this);
+        client = new Client();
+        client.init(intent.getStringExtra("IP"),this);
         Log.i("INIT", "Start Client with IP "+intent.getStringExtra("IP"));
         client.start();
 
@@ -185,7 +185,7 @@ public class MapView extends AppCompatActivity {
                 spinWheelUpdate(jsonObject);
                 break;
             case NetworkConstants.START_TURN:
-                startTurnUpdate(jsonObject);
+                startTurnUpdate();
                 break;
             case NetworkConstants.SET_PLAYER_COUNT:
                 initPlayerCount(jsonObject);
@@ -229,7 +229,7 @@ public class MapView extends AppCompatActivity {
         findViewById(R.id.waitContainer).setVisibility(View.INVISIBLE);
     }
 
-    private void startTurnUpdate(JsonObject jsonObject) {
+    private void startTurnUpdate() {
         findViewById(R.id.wuerfeln).setVisibility(View.VISIBLE);
         Toast.makeText(this,"Its your Turn now!", Toast.LENGTH_LONG).show();
     }
@@ -325,6 +325,7 @@ public class MapView extends AppCompatActivity {
             Toast.makeText(this,"Player "+ (player+1)+" diced "+ outcome, Toast.LENGTH_LONG).show();
         }
     }
+
     private void spinWheelUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
@@ -365,19 +366,6 @@ public class MapView extends AppCompatActivity {
             }
         });
         animation.start();
-
-        /*animation.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                switch(player.getCurrentField()){
-                    case 4:     startRoulette();
-                    case 20:    startRoulette();
-                    case 26:    startRoulette();
-                    case 34:    startRoulette();
-                }
-            }
-        });*/
 
     }
 
@@ -420,11 +408,6 @@ public class MapView extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-    }
-
     public void step1() {
         Player cPlayer = getCurrentPlayer();
         displayField(cPlayer.getCurrentField());
@@ -442,7 +425,6 @@ public class MapView extends AppCompatActivity {
     }
 
     public Player getCurrentPlayer() {
-       //  return players.get(currentPlayer-1);
         return players.get(myPlayer);
     }
 
@@ -504,10 +486,6 @@ public class MapView extends AppCompatActivity {
         startActivity(it);
     }
 
-    public int changeMoney(){
-        int temp = getCurrentPlayer().getMoney();
-        return temp + RotateActivity.getMoney();
-    }
 
     public void sendRollDice() {
         client.rollTheDice();

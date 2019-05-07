@@ -4,6 +4,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class Player {
 
     private int index;
@@ -16,7 +18,7 @@ public class Player {
         currentField = 0;
         this.figure = figure;
         this. currentmoney = currentmoney;
-        this.currentmoney.setText(1000000l + "");
+        this.currentmoney.setText(String.format(Locale.GERMAN,"%d",10000000));
     }
 
     void moveFields(int fields, int maxfields) {

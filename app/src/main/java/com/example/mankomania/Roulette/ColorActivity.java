@@ -92,7 +92,7 @@ public class ColorActivity extends AppCompatActivity {
         object.addProperty("OPERATION", "ROULETTERESULT");
         Intent intent = new Intent("client.update");
         intent.putExtra("result", object.toString());
-        LocalBroadcastManager.getInstance(Client.MapView)
+        LocalBroadcastManager.getInstance(Client.mapView)
                 .sendBroadcast(intent);
     }
 

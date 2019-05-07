@@ -17,7 +17,6 @@ public class ClientQueueHandler extends Thread{
     private Queue<String> queue;
     private Client client;
     private GameData gameData;
-    private static String TAG = "ClientQueueHandler";
 
     ClientQueueHandler(Queue<String> queue, Client client, GameData gameData) {
         this.queue = queue;
@@ -246,7 +245,7 @@ public class ClientQueueHandler extends Thread{
     private void publishUpdate(JsonObject jsonObject){
         Intent intent = new Intent("client.update");
         intent.putExtra("result", jsonObject.toString());
-        LocalBroadcastManager.getInstance(Client.MapView)
+        LocalBroadcastManager.getInstance(Client.mapView)
                 .sendBroadcast(intent);
     }
 }

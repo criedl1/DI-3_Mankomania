@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#00BE0101"
     android:backgroundTint="#00AF0000"
-    tools:context=".Lobby.LobbyFragment">
+    tools:context=".lobby.LobbyFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.constraint.ConstraintLayout

@@ -267,7 +267,7 @@
 
         <fragment
             android:id="@+id/waitFragment"
-            android:name="com.example.mankomania.Lobby.LobbyFragment"
+            android:name="com.example.mankomania.lobby.LobbyFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

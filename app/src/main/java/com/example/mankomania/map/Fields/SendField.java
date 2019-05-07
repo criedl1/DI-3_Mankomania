@@ -20,5 +20,6 @@ public class SendField implements Field {
 
     @Override
     public void goOver(GameData gameData) {
+        // is not needed on SendField
     }
 }
