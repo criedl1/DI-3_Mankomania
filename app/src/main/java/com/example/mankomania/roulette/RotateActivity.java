@@ -50,7 +50,7 @@ public class RotateActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) { //since this is an override method, i am not able
-                                                                //to make the return type void.
+                //to make the return type void.
                 int touch = MotionEventCompat.getActionMasked(event);
 
                 if (touch == MotionEvent.ACTION_MOVE) {
@@ -106,11 +106,11 @@ public class RotateActivity extends AppCompatActivity {
         PopClass popClass = new PopClass();
         popClass.show(getSupportFragmentManager(), "alert");
 
-            Bundle extras = new Bundle();
-            extras.putString("returnString", returnString);
-            extras.putInt("randomNumber", randomNumber); //toString() is not possible here
-            extras.putString("color", color.toString());
-            popClass.setArguments(extras);
+        Bundle extras = new Bundle();
+        extras.putString("returnString", returnString);
+        extras.putInt("randomNumber", randomNumber); //toString() is not possible here
+        extras.putString("color", color.toString());
+        popClass.setArguments(extras);
     }
 
     protected ColorEnum getColor() {

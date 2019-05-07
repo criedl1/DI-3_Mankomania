@@ -106,8 +106,8 @@ public class NumberActivity extends AppCompatActivity {
     }
 
     private void openErrorPopUp() {
-       ErrorClass error = new ErrorClass();
-       error.show(getSupportFragmentManager(), "alert");
+        ErrorClass error = new ErrorClass();
+        error.show(getSupportFragmentManager(), "alert");
     }
 
     private void setMoney(int money){
@@ -130,4 +130,3 @@ public class NumberActivity extends AppCompatActivity {
 
 
 }
-

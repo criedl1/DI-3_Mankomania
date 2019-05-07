@@ -47,15 +47,15 @@ public class RouletteClass {
         FieldClass fieldClass26 = new FieldClass(ColorEnum.BLACK, 26, 350.28f);
 
 
-        FieldClass[] array = {fieldClass0, fieldClass32, fieldClass15, fieldClass19, fieldClass4, fieldClass21, fieldClass2, fieldClass25, fieldClass17,
+        FieldClass[] tempArray = {fieldClass0, fieldClass32, fieldClass15, fieldClass19, fieldClass4, fieldClass21, fieldClass2, fieldClass25, fieldClass17,
                 fieldClass34, fieldClass6, fieldClass27, fieldClass13, fieldClass36, fieldClass11, fieldClass30, fieldClass8, fieldClass23,
                 fieldClass10, fieldClass5, fieldClass24, fieldClass16, fieldClass33, fieldClass1, fieldClass20, fieldClass14, fieldClass31,
                 fieldClass9, fieldClass22, fieldClass18, fieldClass29, fieldClass7, fieldClass28, fieldClass12, fieldClass35, fieldClass3,
                 fieldClass26};
 
-        this.fieldClassArray = array;
+        this.fieldClassArray = tempArray;
 
-        return array;
+        return tempArray;
     }
 
     protected int spinIt(){

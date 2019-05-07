@@ -3,7 +3,9 @@ package com.example.mankomania.network.server;
 import android.util.Log;
 
 import com.example.mankomania.gamedata.GameData;
-import com.example.mankomania.Roulette.RouletteClass;
+import com.example.mankomania.roulette.ColorActivity;
+import com.example.mankomania.roulette.DozenActivity;
+import com.example.mankomania.roulette.NumberActivity;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -103,10 +105,16 @@ public class ServerQueueHandler extends Thread{
     private void spinWheel(JsonObject jsonObject) {
         // TODO Spin the Wheel ServerSide
         int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        sendSpinResult(player, RouletteClass.getRandomNumber());
+        if(ColorActivity.getMoneyAmount() != 0){
+            sendSpinResult(player, ColorActivity.getMoneyAmount());
+        }
+        else if (NumberActivity.getMoneyAmount() != 0){
+            sendSpinResult(player, NumberActivity.getMoneyAmount());
+        }
+        else{sendSpinResult(player, DozenActivity.getMoneyAmount());}
+    }
         //how much the player wins/looses would be more interesting?
         //Answer: its easier for the Network this way, the diff can/should be calculated in the upper layer
-    }
 
     private void sendSpinResult(int idx, int result) {
         JsonObject json = new JsonObject();

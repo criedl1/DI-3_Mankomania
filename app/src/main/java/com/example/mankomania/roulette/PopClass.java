@@ -28,13 +28,13 @@ public class PopClass extends AppCompatDialogFragment {
 
         alert.setTitle(getReturnString());
         if(colorString.equals("BLACK")){
-                colorString = getString(R.string.roulette_black);}
+            colorString = getString(R.string.roulette_black);}
         else if(colorString.equals("RED")){
-                colorString = getString(R.string.roulette_red);}
+            colorString = getString(R.string.roulette_red);}
         else{colorString = getString(R.string.roulette_green);
         }
 
-                alert.setMessage(getString(R.string.roulette_result, getTheNumberIsString(), getColorString()));
+        alert.setMessage(getString(R.string.roulette_result, getTheNumberIsString(), getColorString()));
         alert.setPositiveButton(getString(R.string.roulette_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
