@@ -1,6 +1,6 @@
-package com.example.mankomania.Map.Fields;
+package com.example.mankomania.map.Fields;
 
-import com.example.mankomania.GameData.GameData;
+import com.example.mankomania.gamedata.GameData;
 
 public class SendField implements Field {
     private int from;
@@ -20,5 +20,6 @@ public class SendField implements Field {
 
     @Override
     public void goOver(GameData gameData) {
+        // is not needed on SendField
     }
 }

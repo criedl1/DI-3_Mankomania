@@ -1,4 +1,6 @@
-package com.example.mankomania.Network.Client;
+package com.example.mankomania.network.client;
+
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.util.Queue;
@@ -12,6 +14,7 @@ public class ClientListener extends Thread {
         this.queue = queue;
     }
 
+    @Override
     public void run(){
         try{
             while (true){
@@ -19,7 +22,7 @@ public class ClientListener extends Thread {
                 queue.offer(in.readLine());
             }
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e("CLIENT_LISTENER",""+e);
         }
     }
 }

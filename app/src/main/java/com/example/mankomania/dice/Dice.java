@@ -1,4 +1,4 @@
-package com.example.mankomania.Dice;
+package com.example.mankomania.dice;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -7,6 +7,7 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.mankomania.Map.MapView;
+import com.example.mankomania.map.MapView;
 import com.example.mankomania.R;
 
 import java.util.Random;
@@ -23,32 +24,15 @@ import java.util.Random;
 import static android.content.Context.SENSOR_SERVICE;
 
 public class Dice extends Fragment implements SensorEventListener {
-
-    private Button btnClose;
-    private boolean bool1;
-    private ImageView ivDice1, ivDice2;
+    private boolean diceRolled;
     MediaPlayer mediaPlayer;
     int result;
-    int[][][] diceResults = {
-            {{1,1}},
-            {{1,2},{2,1}},
-            {{1,3},{3,1},{2,2}},
-            {{1,4},{4,1},{2,3},{3,2}},
-            {{1,5},{5,1},{2,4},{4,2}, {3,3}},
-            {{1,6},{6,1}, {5,2}, {2,5}, {3,4}, {4,3}},
-            {{2,6}, {6,2}, {3,5}, {5,3}, {4,4}},
-            {{3,6}, {6,3}, {4,5}, {5,4}},
-            {{4,6}, {6,4}, {5,5}},
-            {{5,6}, {6,5}},
-            {{6,6}}
-    };
+    Random random;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //hides the titlebar
-        //getSupportActionBar().hide();
         //sets the app to Fullscreen
         this.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -60,20 +44,9 @@ public class Dice extends Fragment implements SensorEventListener {
         mySensormanager.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
         // assign Button
         // initialize Random and bool
-        bool1 = false;
-
+        diceRolled = false;
+        random = new Random();
         return inflater.inflate(R.layout.activity_dice, container, false);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        ivDice1 = getActivity().findViewById(R.id.ivDice1);
-        ivDice2 = getActivity().findViewById(R.id.ivDice2);
-        btnClose = getActivity().findViewById(R.id.btnClose);
-        // assign ImageViews
-        ivDice1.animate().scaleX(0).scaleY(0);
-        ivDice2.animate().scaleX(0).scaleY(0);
     }
 
     @Override
@@ -84,10 +57,9 @@ public class Dice extends Fragment implements SensorEventListener {
         // sum of sensors
         float acceleration = (x + y + z);
         // if sum > 70 --> roll the Dice
-        if (acceleration > 20 && !bool1) {
-            //rollTheDice();
-            bool1 = true;
-            ((MapView)getActivity()).sendRollDice();
+        if (acceleration > 20 && !diceRolled) {
+            diceRolled = true;
+            ((MapView) getActivity()).sendRollDice();
         }
     }
 
@@ -101,9 +73,19 @@ public class Dice extends Fragment implements SensorEventListener {
         //servercall draus machen + neuer call show result von server
         mediaPlayer = MediaPlayer.create(getActivity(), R.raw.dice);
         mediaPlayer.start();
-        int[][] diceResult = diceResults[result-2];
-        int[] ddiceResult = diceResult[new Random().nextInt(diceResult.length)];
-        Toast.makeText(getActivity(), "Du hast " + result+ " gewürfelt", Toast.LENGTH_SHORT).show();
+        ImageView ivDice1 = getActivity().findViewById(R.id.ivDice1);
+        ImageView ivDice2 = getActivity().findViewById(R.id.ivDice2);
+        Button btnClose = getActivity().findViewById(R.id.btnClose);
+
+        int[] ddiceResult = new int[2];
+        if (result >= 7) {
+            ddiceResult[0] = (result - 6 + random.nextInt(Math.abs(result - 12) + 1));
+            ddiceResult[1] = result - ddiceResult[0];
+        } else {
+            ddiceResult[0] = random.nextInt(result - 1) + 1;
+            ddiceResult[1] = result - ddiceResult[0];
+        }
+        Toast.makeText(getActivity(), "Du hast " + result + " gewürfelt", Toast.LENGTH_SHORT).show();
         try {
             switch (ddiceResult[0]) {
                 case 1:
@@ -125,10 +107,10 @@ public class Dice extends Fragment implements SensorEventListener {
                     ivDice1.setImageResource(R.drawable.dice6);
                     break;
                 default:
-                    throw new RuntimeException("unreachable");
+                    throw new IllegalStateException();
             }
         } catch (RuntimeException e) {
-            System.out.println("unreachable");
+            Log.e("DICE","Dice Result was generated wrong");
         }
         try {
             switch (ddiceResult[1]) {
@@ -151,14 +133,13 @@ public class Dice extends Fragment implements SensorEventListener {
                     ivDice2.setImageResource(R.drawable.dice6);
                     break;
                 default:
-                    throw new RuntimeException("unreachable");
+                    throw new IllegalStateException();
             }
         } catch (RuntimeException e) {
-            System.out.println("unreachable");
+            Log.e("DICE","Dice Result was generated wrong");
         }
         ivDice1.animate().scaleX(0.8f).scaleY(0.8f).setDuration(1300);
         ivDice2.animate().scaleX(0.8f).scaleY(0.8f).setDuration(1300);
         btnClose.setVisibility(View.VISIBLE);
     }
-
 }

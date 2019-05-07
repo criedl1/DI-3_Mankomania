@@ -1,13 +1,13 @@
-package com.example.mankomania.GameData;
+package com.example.mankomania.gamedata;
 
-import com.example.mankomania.Map.Map;
-import com.example.mankomania.Network.Server.ServerQueueHandler;
+import com.example.mankomania.network.server.ServerQueueHandler;
+import com.example.mankomania.map.Map;
 
 public class GameData {
-    private String[] Players;
-    private int[] Position;
-    private int[] Money;
-    private int Lotto;
+    private String[] players;
+    private int[] position;
+    private int[] money;
+    private int lotto;
     private int[] hotels;
     private int[] infineonAktie;
     private int[] hypoAktie;
@@ -22,20 +22,20 @@ public class GameData {
     }
 
     public String[] getPlayers() {
-        return Players.clone();
+        return players.clone();
     }
     public void setPlayers(String[] player) {
-        Players = player;
+        players = player;
     }
 
     public int[] getPosition() {
-        return Position.clone();
+        return position.clone();
     }
     public void setPosition(int[] position) {
-        Position = position;
+        this.position = position;
     }
 
-    //sets Position of specific player and sends changes to all clients
+    //sets position of specific player and sends changes to all clients
     public void setPosition(int player, int position){
         this.getPosition()[player] = position;
         this.server.sendPosition(player,position);
@@ -44,10 +44,10 @@ public class GameData {
     }
 
     public int[] getMoney() {
-        return Money.clone();
+        return money.clone();
     }
     public void setMoney(int[] money) {
-        Money = money;
+        this.money = money;
     }
 
     //sets money of a player and sends change to all clients
@@ -60,7 +60,7 @@ public class GameData {
 
     public int getPlayerCount(){
         int count = 0;
-        for (String player : this.Players) {
+        for (String player : this.players) {
             if(player != null){
                 count++;
             }
@@ -69,12 +69,12 @@ public class GameData {
     }
 
     public int getLotto() {
-        return Lotto;
+        return lotto;
     }
 
-    //sets Lotto money and sends changes to all Clients
+    //sets lotto money and sends changes to all Clients
     public void setLotto(int lotto) {
-        Lotto = lotto;
+        this.lotto = lotto;
         if(this.server != null){
             this.server.sendLotto(lotto);
         }

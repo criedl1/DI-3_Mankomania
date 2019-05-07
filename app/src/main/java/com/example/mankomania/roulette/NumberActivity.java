@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.mankomania.Network.Client.Client;
+import com.example.mankomania.network.client.Client;
 import com.example.mankomania.R;
 import com.google.gson.JsonObject;
 
@@ -101,7 +101,7 @@ public class NumberActivity extends AppCompatActivity {
         object.addProperty("OPERATION", "ROULETTERESULT");
         Intent intent = new Intent("client.update");
         intent.putExtra("result", object.toString());
-        LocalBroadcastManager.getInstance(Client.MapView)
+        LocalBroadcastManager.getInstance(Client.mapView)
                 .sendBroadcast(intent);
     }
 

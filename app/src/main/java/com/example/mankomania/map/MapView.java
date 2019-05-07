@@ -1,4 +1,4 @@
-package com.example.mankomania.Map;
+package com.example.mankomania.map;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -16,15 +16,15 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mankomania.Dice.Dice;
-import com.example.mankomania.Network.Client.Client;
 import com.example.mankomania.R;
-import com.example.mankomania.roulette.MainActivityRoulette;
+import com.example.mankomania.Roulette.MainActivityRoulette;
+import com.example.mankomania.dice.Dice;
+import com.example.mankomania.network.NetworkConstants;
+import com.example.mankomania.network.client.Client;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -34,8 +34,8 @@ import java.util.List;
 
 public class MapView extends AppCompatActivity {
 
-    private static ImageView imgview1;
-    private static ImageView imgview2;
+    private ImageView imgview1;
+    private ImageView imgview2;
 
     private int currentField = 0;
 
@@ -87,7 +87,7 @@ public class MapView extends AppCompatActivity {
         initButtons();
 
         // create Receiver
-        resultReceiver = createBroadcastReceiver();
+               resultReceiver = createBroadcastReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 resultReceiver,
                 new IntentFilter("client.update"));
@@ -95,7 +95,8 @@ public class MapView extends AppCompatActivity {
 
         //Get Intent and start client
         Intent intent = getIntent();
-        client = new Client(intent.getStringExtra("IP"),this);
+        client = new Client();
+        client.init(intent.getStringExtra("IP"),this);
         Log.i("INIT", "Start Client with IP "+intent.getStringExtra("IP"));
         client.start();
 
@@ -151,52 +152,53 @@ public class MapView extends AppCompatActivity {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
 
-        switch (jsonToString(jsonObject,"OPERATION")) {
-            case "sendMoney":
+        switch (jsonToString(jsonObject,NetworkConstants.OPERATION)) {
+            case NetworkConstants.SEND_MONEY:
                 printPositions("sendMoney");
                 setMoneyUpdate(jsonObject);
                 break;
-            case "setPosition":
+            case NetworkConstants.SET_POSITION:
                 setPositionUpdate(jsonObject);
                 break;
-            case "setHypoAktie":
+            case NetworkConstants.SET_HYPO_AKTIE:
                 setHypoAktieUpdate(jsonObject);
                 break;
-            case "setStrabagAktie":
+            case NetworkConstants.SET_STRABAG_AKTIE:
                 setStrabagAktieUpdate(jsonObject);
                 break;
-            case "setInfineonAktie":
+            case NetworkConstants.SET_INFINEON_AKTIE:
                 setInfineonAktieUpdate(jsonObject);
                 break;
-            case "setCheater":
+            case NetworkConstants.SET_CHEATER:
                 setCheaterUpdate(jsonObject);
                 break;
-            case "setLotto":
+            case NetworkConstants.SET_LOTTO:
                 setLottoUpdate(jsonObject);
                 break;
-            case "setHotel":
+            case NetworkConstants.SET_HOTEL:
                 setHotelUpdate(jsonObject);
                 break;
-            case "rollDice":
+            case NetworkConstants.ROLL_DICE:
                 rollDiceUpdate(jsonObject);
                 break;
-            case "spinWheel":
+            case NetworkConstants.SPIN_WHEEL:
                 spinWheelUpdate(jsonObject);
                 break;
-            case "StartTurn":
-                startTurnUpdate(jsonObject);
+            case NetworkConstants.START_TURN:
+                startTurnUpdate();
                 break;
-            case "SET_PLAYER_COUNT":
+            case NetworkConstants.SET_PLAYER_COUNT:
                 initPlayerCount(jsonObject);
                 break;
             case "ROULETTERESULT":
+                //TODO Should be in SPIN_WHEEL
                 printPositions("ROULETTE");
                 players.get(myPlayer).setMoney(players.get(myPlayer).getMoney()+jsonToInt(jsonObject,"result"));
                 Log.i("MONEY", "Set Money of Player "+(myPlayer)+" to "+players.get(myPlayer).getMoney());
                 client.setMoneyOnServer(myPlayer,players.get(myPlayer).getMoney());
                 hideDice();
                 break;
-            case "SET_ID":
+            case NetworkConstants.SET_ID:
                 Log.i("INIT", "SET_ID: "+jsonObject.toString());
                 this.myPlayer = jsonToInt(jsonObject, "ID");
                 Log.i("INIT","Set my Player to: "+myPlayer);
@@ -212,7 +214,7 @@ public class MapView extends AppCompatActivity {
     }
 
     private void initPlayerCount(JsonObject jsonObject) {
-        int count =jsonToInt(jsonObject,"COUNT");
+        int count =jsonToInt(jsonObject,NetworkConstants.COUNT);
         Log.i("INIT", "Initialise "+ count+" players");
         for(int i = 0; i < count; i++){
             figures[i].setVisibility(View.VISIBLE);
@@ -227,14 +229,14 @@ public class MapView extends AppCompatActivity {
         findViewById(R.id.waitContainer).setVisibility(View.INVISIBLE);
     }
 
-    private void startTurnUpdate(JsonObject jsonObject) {
+    private void startTurnUpdate() {
         findViewById(R.id.wuerfeln).setVisibility(View.VISIBLE);
         Toast.makeText(this,"Its your Turn now!", Toast.LENGTH_LONG).show();
     }
 
     private void setMoneyUpdate(JsonObject jsonObject) {
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int money = jsonToInt(jsonObject,"Money");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int money = jsonToInt(jsonObject,NetworkConstants.MONEY);
         printPositions("setMoneyUpdateBefore");
         players.get(player).setMoney(money);
         printPositions("setMoneyUpdateAfter");
@@ -248,65 +250,90 @@ public class MapView extends AppCompatActivity {
     }
 
     private void setPositionUpdate(JsonObject jsonObject) {
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int position = jsonToInt(jsonObject,"Position");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int position = jsonToInt(jsonObject,NetworkConstants.POSITION);
+
+        //example
+        Toast.makeText(this,"Pos "+player+position,Toast.LENGTH_LONG).show();
 
         //TODO Change Player Position on UI
     }
     private void setHypoAktieUpdate(JsonObject jsonObject) {
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int count = jsonToInt(jsonObject,"Count");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+
+        //example
+        Toast.makeText(this,"Hypo "+player+count,Toast.LENGTH_LONG).show();
 
         //TODO Change Player-Aktie on UI
     }
     private void setStrabagAktieUpdate(JsonObject jsonObject) {
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int count = jsonToInt(jsonObject,"Count");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+
+        //example
+        Toast.makeText(this,"Strabag "+player+count,Toast.LENGTH_LONG).show();
 
         //TODO Change Player-Aktie on UI
     }
     private void setInfineonAktieUpdate(JsonObject jsonObject) {
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int count = jsonToInt(jsonObject,"Count");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+
+        //example
+        Toast.makeText(this,"Infineon "+player+count,Toast.LENGTH_LONG).show();
 
         //TODO Change Player-Aktie on UI
     }
     private void setCheaterUpdate(JsonObject jsonObject) {
-        int player =jsonToInt(jsonObject,"PLAYER");
-        boolean count = (jsonToInt(jsonObject,"Cheater")==1);
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        boolean count = (jsonToInt(jsonObject,NetworkConstants.CHEATER)==1);
+
+        //example
+        Toast.makeText(this,"Cheater "+player+count,Toast.LENGTH_LONG).show();
 
         //TODO Cheater Action
     }
     private void setLottoUpdate(JsonObject jsonObject) {
-        int amount = jsonToInt(jsonObject,"Amount");
+        int amount = jsonToInt(jsonObject,NetworkConstants.AMOUNT);
+
+        //example
+        Toast.makeText(this,"Lotto "+amount,Toast.LENGTH_LONG).show();
 
         //TODO Lotto Actions
     }
     private void setHotelUpdate(JsonObject jsonObject) {
-        int hotel =jsonToInt(jsonObject,"Hotel");
-        int owner = jsonToInt(jsonObject,"Owner");
+        int hotel =jsonToInt(jsonObject,NetworkConstants.HOTEL);
+        int owner = jsonToInt(jsonObject,NetworkConstants.OWNER);
+
+        //example
+        Toast.makeText(this,"Hotel "+hotel+owner,Toast.LENGTH_LONG).show();
 
         //TODO Hotel Actions and UI
     }
     private void rollDiceUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, "Player");
-        int result = jsonToInt(jsonObject, "Result");
-        // Toast.makeText(this,"Result of dice is: "+result, Toast.LENGTH_LONG).show();
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
+
         Dice fragment = ((Dice)getSupportFragmentManager().findFragmentById(R.id.diceContainer));
-        this.result = result;
+        this.result = outcome;
         if(fragment != null){
-            fragment.showResult(result);
+            fragment.showResult(outcome);
         }else{
-            players.get(player).moveFields(result,allfields.length);
+            players.get(player).moveFields(outcome,allfields.length);
             players.get(player).getFigure().setVisibility(View.INVISIBLE);
-            Toast.makeText(this,"Player "+ (player+1)+" diced "+ result, Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Player "+ (player+1)+" diced "+ outcome, Toast.LENGTH_LONG).show();
         }
     }
-    private void spinWheelUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, "Player");
-        int result = jsonToInt(jsonObject, "Result");
 
-        //TODO Update UI
+    private void spinWheelUpdate(JsonObject jsonObject) {
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
+
+        //example
+        Toast.makeText(this,"Roulette  "+player+outcome,Toast.LENGTH_LONG).show();
+
+        //TODO Update UI for Roulette
     }
 
     private String jsonToString(JsonObject jsonObject, String key){
@@ -328,12 +355,8 @@ public class MapView extends AppCompatActivity {
 
     public void movePlayerOut(final Player player){
         float distance;
-        boolean playeronleft= (player.getCurrentField() & 1) == 0;
-        if(playeronleft) {
             distance = screenWidth;
-        } else {
-            distance = screenWidth;
-        }
+
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
         animation.setDuration(5000);
         animation.addListener(new AnimatorListenerAdapter() {
@@ -343,16 +366,13 @@ public class MapView extends AppCompatActivity {
             }
         });
         animation.start();
+
     }
 
     public void movePlayerIn(final Player player) {
         float distance;
-        boolean playeronleft = (player.getCurrentField() & 1) == 0;
-        if (playeronleft) {
             distance = field1 - field0;
-        } else {
-            distance = field2 - field0;
-        }
+
         player.getFigure().setX(field0);
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
         animation.setDuration(5000);
@@ -360,12 +380,9 @@ public class MapView extends AppCompatActivity {
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+
                 super.onAnimationEnd(animation);
                 startRoulette();
-                /*if(getCurrentPlayer().getCurrentField() == 4 || getCurrentPlayer().getCurrentField() == 20 ||
-                        getCurrentPlayer().getCurrentField() == 26 || getCurrentPlayer().getCurrentField() == 34){
-                    startRoulette();
-                }*/
             }
         });
     }
@@ -374,20 +391,6 @@ public class MapView extends AppCompatActivity {
         imgview1 =  findViewById(R.id.imageViewStart);
         imgview2 =  findViewById(R.id.imageView2);
 
-        Button moveTest =  findViewById(R.id.moveTest);
-        moveTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-        Button setMoney =  findViewById(R.id.setmoney);
-        setMoney.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                players.get(0).addMoney(12345);
-            }
-
-        });
         ImageView wuerfeln =  findViewById(R.id.wuerfeln); // button fürs würfeln
         wuerfeln.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -402,11 +405,6 @@ public class MapView extends AppCompatActivity {
         Dice fragment = new Dice();
         transaction.add(R.id.diceContainer,fragment);
         transaction.commit();
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     }
 
@@ -426,16 +424,7 @@ public class MapView extends AppCompatActivity {
         setCurrentPlayer(cPlayer);
     }
 
-    public void nextPlayer() {
-        currentPlayer++;
-        int numberofplayers = 2;
-        if (currentPlayer > numberofplayers) {
-            currentPlayer = 1;
-        }
-    }
-
     public Player getCurrentPlayer() {
-       //  return players.get(currentPlayer-1);
         return players.get(myPlayer);
     }
 
@@ -496,6 +485,7 @@ public class MapView extends AppCompatActivity {
         Intent it = new Intent(this, MainActivityRoulette.class);
         startActivity(it);
     }
+
 
     public void sendRollDice() {
         client.rollTheDice();

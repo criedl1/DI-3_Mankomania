@@ -1,4 +1,6 @@
-package com.example.mankomania.Network.Server;
+package com.example.mankomania.network.server;
+
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.util.Queue;
@@ -12,6 +14,7 @@ public class ServerListener extends Thread {
         this.queue = queue;
     }
 
+    @Override
     public void run(){
         try{
             // reading Messages and adding them to the queue
@@ -19,7 +22,7 @@ public class ServerListener extends Thread {
                 queue.offer(in.readLine());
             }
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e("SERVER_LISTENER",""+e);
         }
     }
 }

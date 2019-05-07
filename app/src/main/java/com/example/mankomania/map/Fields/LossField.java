@@ -1,6 +1,6 @@
-package com.example.mankomania.Map.Fields;
+package com.example.mankomania.map.Fields;
 
-import com.example.mankomania.GameData.GameData;
+import com.example.mankomania.gamedata.GameData;
 
 public class LossField implements Field {
     private int amount;
@@ -16,5 +16,6 @@ public class LossField implements Field {
 
     @Override
     public void goOver(GameData gameData) {
+        // is not needed on LossField
     }
 }

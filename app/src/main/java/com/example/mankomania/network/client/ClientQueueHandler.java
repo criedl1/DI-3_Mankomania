@@ -1,21 +1,22 @@
-package com.example.mankomania.Network.Client;
+package com.example.mankomania.network.client;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.example.mankomania.GameData.GameData;
+import com.example.mankomania.gamedata.GameData;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.Arrays;
 import java.util.Queue;
 
+import com.example.mankomania.network.NetworkConstants;
+
 public class ClientQueueHandler extends Thread{
     private Queue<String> queue;
     private Client client;
     private GameData gameData;
-    private static String TAG = "ClientQueueHandler";
 
     ClientQueueHandler(Queue<String> queue, Client client, GameData gameData) {
         this.queue = queue;
@@ -35,7 +36,7 @@ public class ClientQueueHandler extends Thread{
                 }
             }
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e("CLIENT_QUEUE_HANDLER",""+e);
         }
     }
 
@@ -43,51 +44,52 @@ public class ClientQueueHandler extends Thread{
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
         Log.i("CLIENT", jsonObject.toString());
-        switch (jsonToString(jsonObject,"OPERATION")) {
+        switch (jsonToString(jsonObject,NetworkConstants.OPERATION)) {
             // set ID of the Client
-            case "SET_ID":
-                client.setIdx(jsonToInt(jsonObject,"ID"));
+            case NetworkConstants.SET_ID:
+                client.setIdx(jsonToInt(jsonObject,NetworkConstants.ID));
                 publishUpdate(jsonObject);
                 break;
             // Starts the GameData
-            case "SET_PLAYER_COUNT":
+            case NetworkConstants.SET_PLAYER_COUNT:
                 generateGameData(jsonObject);
                 break;
-            case "sendPlayer":
+            case NetworkConstants.SEND_PLAYER:
                 setPlayerId(jsonObject);
                 break;
-            case "sendMoney":
+            case NetworkConstants.SEND_MONEY:
                 setMoney(jsonObject);
                 break;
-            case "setPosition":
+            case NetworkConstants.SET_POSITION:
                 setPosition(jsonObject);
                 break;
-            case "setHypoAktie":
+            case NetworkConstants.SET_HYPO_AKTIE:
                 setHypoAktie(jsonObject);
                 break;
-            case "setStrabagAktie":
+            case NetworkConstants.SET_STRABAG_AKTIE:
                 setStrabagAktie(jsonObject);
                 break;
-            case "setInfineonAktie":
+            case NetworkConstants.SET_INFINEON_AKTIE:
                 setInfineonAktie(jsonObject);
                 break;
-            case "setCheater":
+            case NetworkConstants.SET_CHEATER:
                 setCheater(jsonObject);
                 break;
-            case "setLotto":
+            case NetworkConstants.SET_LOTTO:
                 setLotto(jsonObject);
                 break;
-            case "setHotel":
+            case NetworkConstants.SET_HOTEL:
                 setHotel(jsonObject);
                 break;
-            case "rollDice":
+            case NetworkConstants.ROLL_DICE:
                 rollDice(jsonObject);
                 break;
-            case "spinWheel":
+            case NetworkConstants.SPIN_WHEEL:
                 spinWheel(jsonObject);
                 break;
-            case "StartTurn":
+            case NetworkConstants.START_TURN:
                 startTurn(jsonObject);
+                break;
             default:
                 break;
         }
@@ -108,8 +110,8 @@ public class ClientQueueHandler extends Thread{
     private void setHotel(JsonObject jsonObject) {
         int[] arr = gameData.getHotels();
         //Get Values
-        int hotel =jsonToInt(jsonObject,"Hotel");
-        int owner = jsonToInt(jsonObject,"Owner");
+        int hotel =jsonToInt(jsonObject,NetworkConstants.HOTEL);
+        int owner = jsonToInt(jsonObject,NetworkConstants.OWNER);
         //Change GameData
         arr[hotel] = owner;
         gameData.setHotels(arr);
@@ -118,7 +120,7 @@ public class ClientQueueHandler extends Thread{
 
     private void setLotto(JsonObject jsonObject) {
         //Get Values
-        int amount = jsonToInt(jsonObject,"Amount");
+        int amount = jsonToInt(jsonObject,NetworkConstants.AMOUNT);
         //Change GameData
         gameData.setLotto(amount);
         publishUpdate(jsonObject);
@@ -127,8 +129,8 @@ public class ClientQueueHandler extends Thread{
     private void setCheater(JsonObject jsonObject) {
         boolean[] arr = gameData.getIsCheater();
         //Get Values
-        int player =jsonToInt(jsonObject,"PLAYER");
-        boolean count = (jsonToInt(jsonObject,"Cheater")==1);
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        boolean count = (jsonToInt(jsonObject,NetworkConstants.CHEATER)==1);
         //Change GameData
         arr[player] = count;
         gameData.setIsCheater(arr);
@@ -138,8 +140,8 @@ public class ClientQueueHandler extends Thread{
     private void setInfineonAktie(JsonObject jsonObject) {
         int[] arr = gameData.getInfineonAktie();
         //Get Values
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int count = jsonToInt(jsonObject,"Count");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
         //Change GameData
         arr[player] = count;
         gameData.setInfineonAktie(arr);
@@ -149,8 +151,8 @@ public class ClientQueueHandler extends Thread{
     private void setStrabagAktie(JsonObject jsonObject) {
         int[] arr = gameData.getStrabagAktie();
         //Get Values
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int count = jsonToInt(jsonObject,"Count");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
         //Change GameData
         arr[player] = count;
         gameData.setStrabagAktie(arr);
@@ -160,8 +162,8 @@ public class ClientQueueHandler extends Thread{
     private void setHypoAktie(JsonObject jsonObject) {
         int[] arr = gameData.getHypoAktie();
         //Get Values
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int count = jsonToInt(jsonObject,"Count");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
         //Change GameData
         arr[player] = count;
         gameData.setHypoAktie(arr);
@@ -171,8 +173,8 @@ public class ClientQueueHandler extends Thread{
     private void setPosition(JsonObject jsonObject) {
         int[] arr = gameData.getPosition();
         //Get Values
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int position = jsonToInt(jsonObject,"Position");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int position = jsonToInt(jsonObject, NetworkConstants.POSITION);
         //Change GameData
         arr[player] = position;
         gameData.setPosition(arr);
@@ -182,8 +184,8 @@ public class ClientQueueHandler extends Thread{
     private void setMoney(JsonObject jsonObject) {
         int[] arr = gameData.getMoney();
         //Get Values
-        int player =jsonToInt(jsonObject,"PLAYER");
-        int money = jsonToInt(jsonObject,"Money");
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int money = jsonToInt(jsonObject,NetworkConstants.MONEY);
         //Change GameData
         arr[player] = money;
         gameData.setMoney(arr);
@@ -193,8 +195,8 @@ public class ClientQueueHandler extends Thread{
     private void setPlayerId(JsonObject jsonObject) {
         String[] arr = gameData.getPlayers();
         //Get Values
-        int player = jsonToInt(jsonObject, "PLAYER");
-        String ip = jsonToString(jsonObject, "IP");
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        String ip = jsonToString(jsonObject, NetworkConstants.IP);
         //Change GameData
         arr[player] = ip;
         gameData.setPlayers(arr);
@@ -209,41 +211,41 @@ public class ClientQueueHandler extends Thread{
     }
 
     private void generateGameData(JsonObject jsonObject){
-        int playerCount = jsonToInt(jsonObject,"COUNT");
-        int[] int_arr = new int[playerCount];
-        boolean[] bool_arr = new boolean[playerCount];
-        String[] str_arr = new String[playerCount];
+        int playerCount = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        int[] intArr = new int[playerCount];
+        boolean[] boolArr = new boolean[playerCount];
+        String[] strArr = new String[playerCount];
 
         // Set Player[] (fills in ConnectPlayers)
-        Arrays.fill(str_arr,"");
-        gameData.setPlayers(str_arr);
+        Arrays.fill(strArr,"");
+        gameData.setPlayers(strArr);
 
         // Set Arrays with 0
-        Arrays.fill(int_arr,0);
-        gameData.setMoney(int_arr);
-        gameData.setPosition(int_arr);
-        gameData.setHypoAktie(int_arr);
-        gameData.setStrabagAktie(int_arr);
-        gameData.setInfineonAktie(int_arr);
+        Arrays.fill(intArr,0);
+        gameData.setMoney(intArr);
+        gameData.setPosition(intArr);
+        gameData.setHypoAktie(intArr);
+        gameData.setStrabagAktie(intArr);
+        gameData.setInfineonAktie(intArr);
 
         // Set Array with false
-        Arrays.fill(bool_arr,false);
-        gameData.setIsCheater(bool_arr);
+        Arrays.fill(boolArr,false);
+        gameData.setIsCheater(boolArr);
 
         // Set Lotto to 0
         gameData.setLotto(0);
 
         // Set all Hotel to 0
-        int_arr = new int[5];
-        Arrays.fill(int_arr,0);
-        gameData.setHotels(int_arr);
+        intArr = new int[5];
+        Arrays.fill(intArr,0);
+        gameData.setHotels(intArr);
         publishUpdate(jsonObject);
     }
 
     private void publishUpdate(JsonObject jsonObject){
         Intent intent = new Intent("client.update");
         intent.putExtra("result", jsonObject.toString());
-        LocalBroadcastManager.getInstance(Client.MapView)
+        LocalBroadcastManager.getInstance(Client.mapView)
                 .sendBroadcast(intent);
     }
 }
