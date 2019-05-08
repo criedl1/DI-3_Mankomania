@@ -28,11 +28,11 @@ public class Server extends Thread {
 
     @Override
     public void run() {
-        try (
-                // server is listening on port 5056
-                ServerSocket serverSocket = new ServerSocket(5056)
-                )
+        try
         {
+            // server is listening on port 5056
+            ServerSocket serverSocket = new ServerSocket(5056);
+
             // set arrays for sockets and Handlers
             sockets = new Socket[playercount];
             clientHandlers = new ClientHandler[playercount];

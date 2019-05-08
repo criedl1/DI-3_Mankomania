@@ -35,14 +35,15 @@ public class Client extends Thread {
 
     @Override
     public void run() {
-        try (
-                // establish the connection with server port 5056
-                Socket socket = new Socket(InetAddress.getByName(ipHost), 5056);
-                // obtaining INPUT and out
-                PrintWriter output1 = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()))
-                )
+        try
         {
+            // establish the connection with server port 5056
+            Socket socket = new Socket(InetAddress.getByName(ipHost), 5056);
+            // obtaining INPUT and out
+            PrintWriter output1 = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+            BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+
             Queue<String> queue = new LinkedBlockingQueue<>();
 
             output= output1;
