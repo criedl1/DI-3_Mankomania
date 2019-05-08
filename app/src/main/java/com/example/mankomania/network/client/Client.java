@@ -40,13 +40,11 @@ public class Client extends Thread {
             // establish the connection with server port 5056
             Socket socket = new Socket(InetAddress.getByName(ipHost), 5056);
             // obtaining INPUT and out
-            PrintWriter output1 = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+            output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 
             Queue<String> queue = new LinkedBlockingQueue<>();
-
-            output= output1;
 
             // start ClientListener for incoming Messages
             ClientListener clientListener = new ClientListener(input, queue);
