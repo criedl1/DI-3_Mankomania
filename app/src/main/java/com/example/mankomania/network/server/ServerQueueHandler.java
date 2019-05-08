@@ -128,11 +128,8 @@ public class ServerQueueHandler extends Thread{
     }
 
     private void rollDice(JsonObject jsonObject) {
-        // TODO Roll the Dice ServerSide
         int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
         int result = new Random().nextInt(11)+2;
-        Log.i("DICEEX","Received dice event and diced "+result);
-        // gameData.movePlayer(result);
         gameData.setPosition(player, (gameData.getPosition()[player]+result)% GameController.allfields.length);
         sendPosition(player,gameData.getPosition()[player]);
         sendDiceResult(player, result);

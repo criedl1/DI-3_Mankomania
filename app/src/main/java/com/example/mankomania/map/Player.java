@@ -1,6 +1,5 @@
 package com.example.mankomania.map;
 
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,7 +45,6 @@ public class Player {
     }
 
     private void updateMoneyField(){
-        Log.i("JONTEST","Updated Money Field with "+this.money);
         this.currentmoney.setText(String.format(Locale.GERMAN,"%d",this.money));
     }
 
@@ -66,6 +64,8 @@ public class Player {
             case INFINEON:
                 this.aktien[2] = count;
                 break;
+            default:
+                throw new IllegalStateException("Aktie does not exist");
         }
     }
 

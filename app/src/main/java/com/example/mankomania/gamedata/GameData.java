@@ -1,6 +1,7 @@
 package com.example.mankomania.gamedata;
 
 import com.example.mankomania.network.server.ServerQueueHandler;
+
 public class GameData {
     private String[] players;
     private int[] position;
@@ -13,10 +14,6 @@ public class GameData {
     private boolean[] isCheater;
     private int hasTurn = 0;
     private ServerQueueHandler server;
-
-    public GameData() {
-
-    }
 
     public String[] getPlayers() {
         return players.clone();
@@ -34,9 +31,7 @@ public class GameData {
 
     //sets position of specific player and sends changes to all clients
     public void setPosition(int player, int position){
-        this.getPosition()[player] = position;
-        this.server.sendPosition(player,position);
-        // do the action (here because if he gets moved further we have a new position)
+        this.position[player] = position;
     }
 
     public int[] getMoney() {

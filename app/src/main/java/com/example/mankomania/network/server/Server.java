@@ -115,7 +115,7 @@ public class Server extends Thread {
             arr =gameData.getPlayers();
             arr[playerCount] = sockets[playerCount].getInetAddress().getHostAddress();
             gameData.setPlayers(arr);
-            Log.i("JONTEST","Connected Player "+sockets[playerCount].getInetAddress().toString()+"("+playerCount+")");
+            Log.i("JONTEST","Connected Player "+sockets[playerCount].getInetAddress().toString()+" ("+playerCount+")");
             // create a new ClientHandler object and start it
             clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue,playerCount, playercount);
             clientHandlers[playerCount].start();

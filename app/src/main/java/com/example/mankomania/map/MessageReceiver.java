@@ -1,7 +1,5 @@
 package com.example.mankomania.map;
 
-import android.util.Log;
-
 import com.example.mankomania.network.NetworkConstants;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -18,7 +16,7 @@ class MessageReceiver {
     void handleMessage(String message) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
-        Log.i("JONTEST",message);
+
         switch (jsonToString(jsonObject, NetworkConstants.OPERATION)) {
             case NetworkConstants.SEND_MONEY:
                 setMoneyUpdate(jsonObject);
@@ -61,10 +59,12 @@ class MessageReceiver {
                 break;
             case NetworkConstants.SEND_PLAYER:
                 setPlayer(jsonObject);
+                break;
             case "ROULETTERESULT":
                 setRouletteResult(jsonObject);
-            default:
                 break;
+            default:
+                throw new IllegalStateException("Network Object should not be here: "+message);
         }
     }
 
@@ -92,7 +92,7 @@ class MessageReceiver {
 
     private void setCheaterUpdate(JsonObject jsonObject) {
         int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        //
+        //TODO: why is this count here ?
         boolean count = (jsonToInt(jsonObject,NetworkConstants.CHEATER)==1);
 
         gameController.setCheater(player);

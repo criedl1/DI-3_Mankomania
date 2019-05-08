@@ -81,7 +81,6 @@ public class GameController {
     }
 
     public void setMoney(int player, int money) {
-        Log.i("JONTEST","Received Money Event "+ money);
         this.players.get(player).setMoney(money);
     }
 

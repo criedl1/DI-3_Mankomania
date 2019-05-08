@@ -42,7 +42,6 @@ public class ClientQueueHandler extends Thread{
     private void handleMessage(String message) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
-        Log.i("CLIENTQH", jsonObject.toString());
         switch (jsonToString(jsonObject,NetworkConstants.OPERATION)) {
             // set ID of the Client
             case NetworkConstants.SET_ID:

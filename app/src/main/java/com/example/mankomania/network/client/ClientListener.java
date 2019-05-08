@@ -20,9 +20,7 @@ public class ClientListener extends Thread {
             while (true){
                 // reading Messages and adding them to the queue
                 String msg = in.readLine();
-                Log.i("JONTEST", "Listener: "+msg);
                 queue.offer(msg);
-
             }
         }catch (Exception e){
             Log.e("CLIENT_LISTENER",""+e);

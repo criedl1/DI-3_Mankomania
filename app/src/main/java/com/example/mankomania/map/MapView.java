@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -111,7 +110,6 @@ public class MapView extends AppCompatActivity {
         return new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.i("JONTEST","MapVIew: "+intent.getStringExtra("result"));
                 gameController.handleMessage(intent.getStringExtra("result"));
             }
         };
@@ -119,7 +117,6 @@ public class MapView extends AppCompatActivity {
 
 
     private void closeWaitFragment() {
-        Log.i("INITJS","Closing wait Fragment");
         findViewById(R.id.waitContainer).setVisibility(View.INVISIBLE);
     }
 
@@ -235,9 +232,7 @@ public class MapView extends AppCompatActivity {
     }
 
     public void updatePlayers() {
-        // Log.i("DICEX","Update for currentField: "+currentField+"&"+(currentField+1));
         for (Player player : gameController.players) {
-            // Log.i("DICEX","Player: "+(index++)+" Position: "+player.getCurrentField());
             if(player.getCurrentField() == currentField) {
                 player.getFigure().setX(field1);
                 player.getFigure().setVisibility(View.VISIBLE);

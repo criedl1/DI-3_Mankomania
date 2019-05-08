@@ -62,9 +62,6 @@ public class Client extends Thread {
     void setIdx(int idx) {
         this.idx = idx;
     }
-    public int getIdx() {
-        return idx;
-    }
 
     //Server Requests
     public void setMoneyOnServer(final int idx, final int money){
@@ -180,7 +177,6 @@ public class Client extends Thread {
     }
     public void rollTheDice(){
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        // Log.i("DICEEX","Clientside");
         Thread thread = new Thread(){
             @Override
             public void run(){
