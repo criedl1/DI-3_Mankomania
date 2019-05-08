@@ -94,13 +94,13 @@ public class ServerQueueHandler extends Thread{
         startTurn(player);
     }
 
-    private void startTurn(int player) {
+    void startTurn(int player) {
         gameData.setTurn(player);
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION,NetworkConstants.START_TURN);
         json.addProperty(NetworkConstants.PLAYER, player);
         //Send only one Player
-        clientHandlers[player].send(json.toString());
+        sendAllClients(json.toString());
     }
 
     private void spinWheel(JsonObject jsonObject) {

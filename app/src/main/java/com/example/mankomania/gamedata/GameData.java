@@ -1,8 +1,6 @@
 package com.example.mankomania.gamedata;
 
 import com.example.mankomania.network.server.ServerQueueHandler;
-import com.example.mankomania.map.Map;
-
 public class GameData {
     private String[] players;
     private int[] position;
@@ -14,11 +12,10 @@ public class GameData {
     private int[] strabagAktie;
     private boolean[] isCheater;
     private int hasTurn = 0;
-    private Map map;
     private ServerQueueHandler server;
 
     public GameData() {
-        this.map = new Map();
+
     }
 
     public String[] getPlayers() {
@@ -40,7 +37,6 @@ public class GameData {
         this.getPosition()[player] = position;
         this.server.sendPosition(player,position);
         // do the action (here because if he gets moved further we have a new position)
-        this.map.getField(position).doAction(this);
     }
 
     public int[] getMoney() {
@@ -121,17 +117,6 @@ public class GameData {
 
     public int getHasTurn() {
         return hasTurn;
-    }
-
-    //moves Player x fields further (trigering all actions on the way) and on the last field
-    public void movePlayer(int result) {
-        int currentPosition = this.getPosition()[this.hasTurn];
-        for(int i = 0; i < result; i++){
-            currentPosition = (currentPosition+1)%this.map.getMapSize();
-            this.map.getField(currentPosition).goOver(this);
-        }
-        currentPosition = (currentPosition+1)%this.map.getMapSize();
-        this.setPosition(this.getHasTurn(),currentPosition);
     }
 
     public void setServer(ServerQueueHandler serverQueueHandler) {

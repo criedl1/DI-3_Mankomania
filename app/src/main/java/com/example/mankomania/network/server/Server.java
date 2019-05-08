@@ -49,11 +49,12 @@ public class Server extends Thread {
             // Send GameData to all
             sendGameData(serverQueueHandler);
 
-            // Start with Player 0
-            clientHandlers[0].giveTurn();
 
             // Start listening
             serverQueueHandler.start();
+
+            // Start with Player 0
+            serverQueueHandler.startTurn(0);
 
         } catch (Exception err) {
             Log.e("CLIENT", "" + err);
