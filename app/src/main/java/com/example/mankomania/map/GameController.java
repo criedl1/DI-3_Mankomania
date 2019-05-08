@@ -45,7 +45,7 @@ public class GameController {
         Log.i("JONTEST", "Start Client with IP "+ip);
     }
 
-    public void startClient(){
+    void startClient(){
         client.start();
     }
 

@@ -7,9 +7,9 @@ import java.util.Queue;
 
 public class ServerListener extends Thread {
     private BufferedReader in;
-    private Queue<String> queue;
+    private Queue queue;
 
-    public ServerListener(BufferedReader in, Queue queue){
+    ServerListener(BufferedReader in, Queue queue){
         this.in = in;
         this.queue = queue;
     }
@@ -19,10 +19,14 @@ public class ServerListener extends Thread {
         try{
             // reading Messages and adding them to the queue
             while(true){
-                queue.offer(in.readLine());
-                Thread.sleep(100);
+                String msg = in.readLine();
+                if(msg != null){
+                    //TODO: Timon msg = null, why ?
+                    queue.offer(msg);
+                }
             }
         }catch (Exception e){
+            e.printStackTrace();
             Log.e("SERVER_LISTENER",""+e);
         }
     }

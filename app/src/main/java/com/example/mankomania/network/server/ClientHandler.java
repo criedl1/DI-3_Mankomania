@@ -27,6 +27,7 @@ class ClientHandler extends Thread {
         this.queue = queue;
         this.id = id;
         this.playerCount = playerCount;
+
     }
 
     @Override
