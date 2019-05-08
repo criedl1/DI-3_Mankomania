@@ -21,18 +21,18 @@ public class Server extends Thread {
     private final int startmoney;
 
     public Server(int playerCount, int startMoney) {
-        Log.i("INIT", "Server started with PlayerCount "+ playerCount);
+        Log.i("INITJS", "Server started with PlayerCount "+ playerCount);
         this.playercount = playerCount;
         this.startmoney = startMoney;
     }
 
     @Override
     public void run() {
-        try (
-                // server is listening on port 5056
-                ServerSocket serverSocket = new ServerSocket(5056)
-                )
+        try
         {
+            // server is listening on port 5056
+            ServerSocket serverSocket = new ServerSocket(5056);
+
             // set arrays for sockets and Handlers
             sockets = new Socket[playercount];
             clientHandlers = new ClientHandler[playercount];
@@ -50,10 +50,11 @@ public class Server extends Thread {
             sendGameData(serverQueueHandler);
 
             // Start with Player 0
-            clientHandlers[0].giveTurn();
+            serverQueueHandler.startTurn(0);
 
             // Start listening
             serverQueueHandler.start();
+
 
         } catch (Exception err) {
             Log.e("CLIENT", "" + err);
@@ -102,7 +103,7 @@ public class Server extends Thread {
         gameData.setHotels(intArr);
     }
 
-    private void connectPlayers(ServerSocket serverSocket) throws IOException {
+    private void connectPlayers(ServerSocket serverSocket) throws IOException, InterruptedException {
         int playerCount = 0;
         String[] arr;
 
@@ -114,7 +115,7 @@ public class Server extends Thread {
             arr =gameData.getPlayers();
             arr[playerCount] = sockets[playerCount].getInetAddress().getHostAddress();
             gameData.setPlayers(arr);
-
+            Log.i("JONTEST","Connected Player "+sockets[playerCount].getInetAddress().toString()+" ("+playerCount+")");
             // create a new ClientHandler object and start it
             clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue,playerCount, playercount);
             clientHandlers[playerCount].start();

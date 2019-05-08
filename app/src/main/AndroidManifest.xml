@@ -8,19 +8,21 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".map.MapView"
             android:screenOrientation="landscape" />
-        <activity android:name=".Roulette.RotateActivity" android:screenOrientation="landscape" />
-        <activity android:name=".Roulette.DozenActivity" android:screenOrientation="landscape"/>
-        <activity android:name=".Roulette.NumberActivity" android:screenOrientation="landscape"/>
-        <activity android:name=".Roulette.ColorActivity" android:screenOrientation="landscape"/>
-        <activity android:name=".Roulette.MainActivityRoulette" android:screenOrientation="landscape"/>
+        <activity android:name=".roulette.RotateActivity" android:screenOrientation="landscape" />
+        <activity android:name=".roulette.DozenActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".roulette.NumberActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".roulette.ColorActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".roulette.MainActivityRoulette" android:screenOrientation="landscape"/>
         <activity android:name=".MainActivity" android:screenOrientation="landscape">
 
             <intent-filter>
