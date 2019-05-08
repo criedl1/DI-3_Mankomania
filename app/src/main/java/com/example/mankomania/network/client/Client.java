@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.map.MapView;
+import com.example.mankomania.network.NetworkConstants;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
@@ -15,7 +16,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
-import com.example.mankomania.network.NetworkConstants;
 
 // Client class
 public class Client extends Thread {
@@ -181,7 +181,7 @@ public class Client extends Thread {
     }
     public void rollTheDice(){
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        Log.i("DICEEX","Clientside");
+        // Log.i("DICEEX","Clientside");
         Thread thread = new Thread(){
             @Override
             public void run(){

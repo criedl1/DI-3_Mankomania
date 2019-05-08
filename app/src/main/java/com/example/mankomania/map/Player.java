@@ -11,13 +11,13 @@ public class Player {
 
     private ImageView figure;
     private int currentField;
-    private int money;
+    private int money = 0;
     private TextView currentmoney;
     private int[] aktien = new int[3];
+    private String ip;
 
     Player() {
         currentField = 0;
-        this.money = 1000000;
         Arrays.fill(aktien,0);
     }
 
@@ -25,11 +25,6 @@ public class Player {
         this.figure = figure;
         this.currentmoney = currentmoney;
         this.updateMoneyField();
-    }
-
-    void moveFields(int fields, int maxfields) {
-        // Log.i("MOVE", "Player "+index+" von Feld "+currentField+" zu "+(currentField + fields)% maxfields);
-        currentField = (currentField + fields)% maxfields;
     }
 
     ImageView getFigure() {
@@ -50,7 +45,8 @@ public class Player {
         this.updateMoneyField();
     }
 
-    public void updateMoneyField(){
+    private void updateMoneyField(){
+        Log.i("JONTEST","Updated Money Field with "+this.money);
         this.currentmoney.setText(String.format(Locale.GERMAN,"%d",this.money));
     }
 
@@ -71,6 +67,10 @@ public class Player {
                 this.aktien[2] = count;
                 break;
         }
+    }
+
+    void setIP(String ip) {
+        this.ip = ip;
     }
 }
 

@@ -1,5 +1,7 @@
 package com.example.mankomania.map;
 
+import android.util.Log;
+
 import com.example.mankomania.network.NetworkConstants;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -16,7 +18,7 @@ class MessageReceiver {
     void handleMessage(String message) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
-
+        Log.i("JONTEST",message);
         switch (jsonToString(jsonObject, NetworkConstants.OPERATION)) {
             case NetworkConstants.SEND_MONEY:
                 setMoneyUpdate(jsonObject);
@@ -57,9 +59,25 @@ class MessageReceiver {
             case NetworkConstants.SET_ID:
                 setMyPlayerID(jsonObject);
                 break;
+            case NetworkConstants.SEND_PLAYER:
+                setPlayer(jsonObject);
+            case "ROULETTERESULT":
+                setRouletteResult(jsonObject);
             default:
                 break;
         }
+    }
+
+    private void setPlayer(JsonObject jsonObject) {
+
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        String ip = jsonToString(jsonObject, NetworkConstants.IP);
+        gameController.setPlayerIP(player,ip);
+    }
+
+    private void setRouletteResult(JsonObject jsonObject) {
+        int moneyChange = jsonToInt(jsonObject,"result");
+        gameController.setRouletteResult(moneyChange);
     }
 
     private void initPlayerCount(JsonObject jsonObject) {
@@ -74,6 +92,7 @@ class MessageReceiver {
 
     private void setCheaterUpdate(JsonObject jsonObject) {
         int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        //
         boolean count = (jsonToInt(jsonObject,NetworkConstants.CHEATER)==1);
 
         gameController.setCheater(player);
@@ -139,11 +158,9 @@ class MessageReceiver {
     }
 
     private void setMyPlayerID(JsonObject jsonObject) {
-        //Get Values
-        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        String ip = jsonToString(jsonObject, NetworkConstants.IP);
+        int id = jsonToInt(jsonObject, NetworkConstants.ID);
 
-        gameController.setMyPlayerID(player, ip);
+        gameController.setMyPlayerID(id);
     }
 
     private String jsonToString(JsonObject jsonObject, String key){

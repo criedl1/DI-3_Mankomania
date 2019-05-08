@@ -14,7 +14,7 @@ public class GameController {
     List<Player> players;
 
 
-    int[] allfields = { R.drawable.field_start, R.drawable.field_aktie1, R.drawable.field_lindwurm,
+    public static int[] allfields = { R.drawable.field_start, R.drawable.field_aktie1, R.drawable.field_lindwurm,
             R.drawable.field_lottery, R.drawable.field_casino, R.drawable.field_getsomemoney,
             R.drawable.field_alterplatz, R.drawable.field_aktie2, R.drawable.field_horserace,
             R.drawable.field_stadium, R.drawable.field_casino, R.drawable.field_alterplatz,
@@ -36,14 +36,17 @@ public class GameController {
     private int hasTurn;
 
     GameController( String ip, MapView mapView){
-        client = new Client();
-        client.init(ip, mapView);
-        Log.i("INIT", "Start Client with IP "+ip);
-        client.start();
         this.mapView = mapView;
         players = new ArrayList<>();
 
         this.initReceiver();
+        client = new Client();
+        client.init(ip, mapView);
+        Log.i("JONTEST", "Start Client with IP "+ip);
+    }
+
+    public void startClient(){
+        client.start();
     }
 
     private void initReceiver() {
@@ -72,18 +75,19 @@ public class GameController {
         client.rollTheDice();
     }
 
-    void setMyPlayerID(int player, String ip) {
+    void setMyPlayerID(int player) {
         this.myID = player;
 
     }
 
     public void setMoney(int player, int money) {
+        Log.i("JONTEST","Received Money Event "+ money);
         this.players.get(player).setMoney(money);
     }
 
     void setPosition(int player, int position) {
         this.players.get(player).setPosition(position);
-        this.mapView.updatePlayers();
+        this.mapView.step1();
     }
 
     void setHypoAktie(int player, int count) {
@@ -119,7 +123,16 @@ public class GameController {
     }
 
     void setTurn(int player) {
+        boolean wasMyTurn = false;
+        if(isMyTurn() && player != myID){
+            wasMyTurn = true;
+        }
         this.hasTurn = player;
+        if(isMyTurn()){
+            mapView.startMyTurn();
+        }else if(wasMyTurn){
+            mapView.endMyTurn();
+        }
     }
 
     void initPlayer(int playerCount) {
@@ -129,7 +142,17 @@ public class GameController {
         mapView.initPlayerFields();
     }
 
-    public Player currentPlayer() {
+    Player currentPlayer() {
         return this.players.get(hasTurn);
+    }
+
+    void setRouletteResult(int moneyChange) {
+        client.setMoneyOnServer(this.myID,this.currentPlayer().getMoney()+moneyChange);
+        // TODO: end Turn with a Button ?
+        client.endTurn();
+    }
+
+    void setPlayerIP(int player, String ip) {
+        this.players.get(player).setIP(ip);
     }
 }

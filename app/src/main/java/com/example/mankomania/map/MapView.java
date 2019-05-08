@@ -22,14 +22,7 @@ import android.widget.Toast;
 
 import com.example.mankomania.R;
 import com.example.mankomania.dice.Dice;
-import com.example.mankomania.network.NetworkConstants;
-import com.example.mankomania.network.client.Client;
 import com.example.mankomania.roulette.MainActivityRoulette;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MapView extends AppCompatActivity {
@@ -64,16 +57,10 @@ public class MapView extends AppCompatActivity {
         setContentView(R.layout.activity_map_view);
         initButtons();
 
-        // create Receiver
-               resultReceiver = createBroadcastReceiver();
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                resultReceiver,
-                new IntentFilter("client.update"));
 
 
         //Get Intent and start client
         Intent intent = getIntent();
-        this.gameController = new GameController(intent.getStringExtra("IP"),this);
 
         figures[0] = findViewById(R.id.figure1);
         figures[1] = findViewById(R.id.figure2);
@@ -108,8 +95,15 @@ public class MapView extends AppCompatActivity {
         figures[3].setX(field1);
         figures[3].setY(710);
 
-        //new Player
-        updateField();
+        // create Receiver
+        resultReceiver = createBroadcastReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                resultReceiver,
+                new IntentFilter("client.update"));
+
+        this.gameController = new GameController(intent.getStringExtra("IP"),this);
+
+        this.gameController.startClient();
     }
 
     //Broadcast Receiver to get Messages from the Client Thread
@@ -117,6 +111,7 @@ public class MapView extends AppCompatActivity {
         return new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                Log.i("JONTEST","MapVIew: "+intent.getStringExtra("result"));
                 gameController.handleMessage(intent.getStringExtra("result"));
             }
         };
@@ -124,7 +119,7 @@ public class MapView extends AppCompatActivity {
 
 
     private void closeWaitFragment() {
-        Log.i("INIT","Closing wait Fragment");
+        Log.i("INITJS","Closing wait Fragment");
         findViewById(R.id.waitContainer).setVisibility(View.INVISIBLE);
     }
 
@@ -208,18 +203,16 @@ public class MapView extends AppCompatActivity {
         displayField(cPlayer.getCurrentField());
     }
 
-
-
     public void nextSideofMap(View view) {
         currentField += 2;
-        currentField = currentField % gameController.allfields.length;
+        currentField = currentField % GameController.allfields.length;
         updateField();
     }
 
     public void furtherSideofMap(View view) {
         currentField -= 2;
         if (currentField < 0) {
-            currentField = gameController.allfields.length + currentField;
+            currentField = GameController.allfields.length + currentField;
         }
         updateField();
     }
@@ -230,19 +223,18 @@ public class MapView extends AppCompatActivity {
         if ((currentField & 1) != 0) {
             currentField--;
         }
-        currentField = currentField % gameController.allfields.length;
+        currentField = currentField % GameController.allfields.length;
         updateField();
     }
 
 
     public void updateField() {
         updatePlayers();
-        imgview1.setImageResource(gameController.allfields[currentField]);
-        imgview2.setImageResource(gameController.allfields[currentField+1]);
+        imgview1.setImageResource(GameController.allfields[currentField]);
+        imgview2.setImageResource(GameController.allfields[currentField+1]);
     }
 
     public void updatePlayers() {
-        int index = 0;
         // Log.i("DICEX","Update for currentField: "+currentField+"&"+(currentField+1));
         for (Player player : gameController.players) {
             // Log.i("DICEX","Player: "+(index++)+" Position: "+player.getCurrentField());
@@ -270,7 +262,6 @@ public class MapView extends AppCompatActivity {
 
     public void closeDiceFragment(View view) {
         getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.diceContainer)).commit();
-        step1();
     }
 
     public void showMyDiceResult(int outcome) {
@@ -291,6 +282,17 @@ public class MapView extends AppCompatActivity {
         for (int i = 0; i < this.gameController.players.size(); i++) {
             gameController.players.get(i).initFields(figures[i],moneyFields[i]);
         }
+        updatePlayers();
         closeWaitFragment();
+    }
+
+    public void startMyTurn() {
+        ImageView wuerfeln =  findViewById(R.id.wuerfeln); // button fürs würfeln
+        wuerfeln.setVisibility(View.VISIBLE);
+    }
+
+    public void endMyTurn() {
+        ImageView wuerfeln =  findViewById(R.id.wuerfeln); // button fürs würfeln
+        wuerfeln.setVisibility(View.INVISIBLE);
     }
 }

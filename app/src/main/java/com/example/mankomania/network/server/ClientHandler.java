@@ -2,6 +2,7 @@ package com.example.mankomania.network.server;
 
 import android.util.Log;
 
+import com.example.mankomania.network.NetworkConstants;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
@@ -12,12 +13,11 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Queue;
-import com.example.mankomania.network.NetworkConstants;
 
 class ClientHandler extends Thread {
     private final PrintWriter output;
     private final BufferedReader input;
-    private Queue<String[]> queue;
+    private Queue queue;
     private int id;
     private int playerCount;
 
@@ -40,14 +40,6 @@ class ClientHandler extends Thread {
         }
     }
 
-    void giveTurn() {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(NetworkConstants.OPERATION,NetworkConstants.START_TURN);
-        jsonObject.addProperty(NetworkConstants.PLAYER, id);
-        //Send only one Player
-        send(jsonObject.toString());
-    }
-
     void sendID() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_ID);
@@ -63,6 +55,7 @@ class ClientHandler extends Thread {
     }
 
     void send(String string){
+        Log.i("S->C",string);
         output.println(string);
     }
 }

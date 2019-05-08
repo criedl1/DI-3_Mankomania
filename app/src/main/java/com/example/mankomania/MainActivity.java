@@ -14,8 +14,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.mankomania.network.server.Server;
 import com.example.mankomania.map.MapView;
+import com.example.mankomania.network.server.Server;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void btn_Connect_To_Lobby_OnClick(View v)  {
-        Log.i("INIT", "Clicked");
+        Log.i("INITJS", "Clicked");
         EditText et =  findViewById(R.id.textinput);
         Button btnCreate =  findViewById(R.id.btnCreateLobby);
         Button btnConnect =  findViewById(R.id.btnConnectToLobby);
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void openMap() {
         Log.i("INIT", "Open Map with "+ ip);
         Intent intent = new Intent(this, MapView.class);
-        intent.putExtra("ip", ip);
+        intent.putExtra("IP", ip);
         startActivity(intent);
     }
 

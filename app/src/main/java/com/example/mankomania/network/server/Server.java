@@ -21,7 +21,7 @@ public class Server extends Thread {
     private final int startmoney;
 
     public Server(int playerCount, int startMoney) {
-        Log.i("INIT", "Server started with PlayerCount "+ playerCount);
+        Log.i("INITJS", "Server started with PlayerCount "+ playerCount);
         this.playercount = playerCount;
         this.startmoney = startMoney;
     }
@@ -103,7 +103,7 @@ public class Server extends Thread {
         gameData.setHotels(intArr);
     }
 
-    private void connectPlayers(ServerSocket serverSocket) throws IOException {
+    private void connectPlayers(ServerSocket serverSocket) throws IOException, InterruptedException {
         int playerCount = 0;
         String[] arr;
 
@@ -115,7 +115,7 @@ public class Server extends Thread {
             arr =gameData.getPlayers();
             arr[playerCount] = sockets[playerCount].getInetAddress().getHostAddress();
             gameData.setPlayers(arr);
-
+            Log.i("JONTEST","Connected Player "+sockets[playerCount].getInetAddress().toString()+"("+playerCount+")");
             // create a new ClientHandler object and start it
             clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue,playerCount, playercount);
             clientHandlers[playerCount].start();

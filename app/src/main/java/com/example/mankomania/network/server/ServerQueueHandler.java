@@ -3,7 +3,8 @@ package com.example.mankomania.network.server;
 import android.util.Log;
 
 import com.example.mankomania.gamedata.GameData;
-
+import com.example.mankomania.map.GameController;
+import com.example.mankomania.network.NetworkConstants;
 import com.example.mankomania.roulette.ColorActivity;
 import com.example.mankomania.roulette.DozenActivity;
 import com.example.mankomania.roulette.NumberActivity;
@@ -12,7 +13,6 @@ import com.google.gson.JsonParser;
 
 import java.util.Queue;
 import java.util.Random;
-import com.example.mankomania.network.NetworkConstants;
 
 public class ServerQueueHandler extends Thread{
     private ClientHandler[] clientHandlers;
@@ -46,6 +46,7 @@ public class ServerQueueHandler extends Thread{
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(in).getAsJsonObject();
 
+        Log.i("C->S",in);
         switch (jsonToString(jsonObject,NetworkConstants.OPERATION)) {
             case NetworkConstants.SEND_MONEY:
                 setMoney(jsonObject);
@@ -132,7 +133,8 @@ public class ServerQueueHandler extends Thread{
         int result = new Random().nextInt(11)+2;
         Log.i("DICEEX","Received dice event and diced "+result);
         // gameData.movePlayer(result);
-
+        gameData.setPosition(player, (gameData.getPosition()[player]+result)% GameController.allfields.length);
+        sendPosition(player,gameData.getPosition()[player]);
         sendDiceResult(player, result);
     }
 

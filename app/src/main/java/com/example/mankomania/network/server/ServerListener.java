@@ -20,6 +20,7 @@ public class ServerListener extends Thread {
             // reading Messages and adding them to the queue
             while(true){
                 queue.offer(in.readLine());
+                Thread.sleep(100);
             }
         }catch (Exception e){
             Log.e("SERVER_LISTENER",""+e);
