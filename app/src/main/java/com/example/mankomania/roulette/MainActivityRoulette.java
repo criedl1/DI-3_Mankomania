@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.example.mankomania.R;
 
 public class MainActivityRoulette extends AppCompatActivity {
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -127,11 +127,11 @@ public class DozenActivity extends AppCompatActivity {
                 .sendBroadcast(intent);
     }
 
-    protected int getMoney(){
+    private int getMoney(){
         return money;
     }
 
-    protected void setReturnString(String returnString){
+    private void setReturnString(String returnString){
         this.returnString = returnString;
     }
 
