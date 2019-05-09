@@ -118,7 +118,7 @@ public class NumberActivity extends AppCompatActivity {
         return money;
     }
 
-    public String getReturnString() {
+    private String getReturnString() {
         return returnString;
     }
 

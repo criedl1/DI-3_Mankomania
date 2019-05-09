@@ -46,15 +46,15 @@ public class PopClass extends AppCompatDialogFragment {
     }
 
 
-    public String getTheNumberIsString() {
+    private String getTheNumberIsString() {
         return theNumberIsString;
     }
 
-    public String getColorString() {
+    private String getColorString() {
         return colorString;
     }
 
-    public String getReturnString() {
+    private String getReturnString() {
         return returnString;
     }
 

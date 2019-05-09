@@ -109,24 +109,24 @@ public class ColorActivity extends AppCompatActivity {
                 .sendBroadcast(intent);
     }
 
-    protected int getMoney() {
+    private int getMoney() {
         return money;
     }
 
-    protected void setMoney(int newMoney) {
+    private void setMoney(int newMoney) {
         money = newMoney;
     }
 
-    public String getReturnString() {
+    private String getReturnString() {
         return returnString;
     }
 
-    protected void setReturnString(String returnString){
+    private void setReturnString(String returnString){
         this.returnString = returnString;
     }
 
     public static int getMoneyAmount(){
-        //did this, because i want to work with non-static variables in my classes
+        //temporary solution
         return moneyAmount;
     }
 }

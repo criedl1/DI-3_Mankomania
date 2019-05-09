@@ -76,7 +76,7 @@ public class RouletteClass {
         } return field;
     }
 
-    public int getRandomNumber(){
+    protected int getRandomNumber(){
         return randomNumber;
     }
 
