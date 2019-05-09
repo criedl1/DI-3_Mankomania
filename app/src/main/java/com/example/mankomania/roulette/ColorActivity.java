@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.example.mankomania.network.client.Client;
 import com.example.mankomania.R;
 import com.google.gson.JsonObject;

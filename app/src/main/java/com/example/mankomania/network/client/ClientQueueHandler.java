@@ -5,13 +5,12 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.example.mankomania.gamedata.GameData;
+import com.example.mankomania.network.NetworkConstants;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.Arrays;
 import java.util.Queue;
-
-import com.example.mankomania.network.NetworkConstants;
 
 public class ClientQueueHandler extends Thread{
     private Queue<String> queue;
@@ -43,7 +42,6 @@ public class ClientQueueHandler extends Thread{
     private void handleMessage(String message) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
-        Log.i("CLIENT", jsonObject.toString());
         switch (jsonToString(jsonObject,NetworkConstants.OPERATION)) {
             // set ID of the Client
             case NetworkConstants.SET_ID:
@@ -200,6 +198,7 @@ public class ClientQueueHandler extends Thread{
         //Change GameData
         arr[player] = ip;
         gameData.setPlayers(arr);
+        publishUpdate(jsonObject);
     }
 
     private String jsonToString(JsonObject jsonObject, String key){

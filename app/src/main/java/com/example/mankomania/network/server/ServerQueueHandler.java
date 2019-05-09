@@ -3,6 +3,8 @@ package com.example.mankomania.network.server;
 import android.util.Log;
 
 import com.example.mankomania.gamedata.GameData;
+import com.example.mankomania.map.GameController;
+import com.example.mankomania.network.NetworkConstants;
 import com.example.mankomania.roulette.ColorActivity;
 import com.example.mankomania.roulette.DozenActivity;
 import com.example.mankomania.roulette.NumberActivity;
@@ -11,7 +13,6 @@ import com.google.gson.JsonParser;
 
 import java.util.Queue;
 import java.util.Random;
-import com.example.mankomania.network.NetworkConstants;
 
 public class ServerQueueHandler extends Thread{
     private ClientHandler[] clientHandlers;
@@ -45,6 +46,7 @@ public class ServerQueueHandler extends Thread{
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(in).getAsJsonObject();
 
+        Log.i("C->S",in);
         switch (jsonToString(jsonObject,NetworkConstants.OPERATION)) {
             case NetworkConstants.SEND_MONEY:
                 setMoney(jsonObject);
@@ -93,18 +95,21 @@ public class ServerQueueHandler extends Thread{
         startTurn(player);
     }
 
-    private void startTurn(int player) {
+    void startTurn(int player) {
         gameData.setTurn(player);
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION,NetworkConstants.START_TURN);
         json.addProperty(NetworkConstants.PLAYER, player);
         //Send only one Player
-        clientHandlers[player].send(json.toString());
+        sendAllClients(json.toString());
     }
 
     private void spinWheel(JsonObject jsonObject) {
         // TODO Spin the Wheel ServerSide
+
         int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
+
+        //TODO: I have changed this
         if(ColorActivity.getMoneyAmount() != 0){
             sendSpinResult(player, ColorActivity.getMoneyAmount());
         }
@@ -113,8 +118,6 @@ public class ServerQueueHandler extends Thread{
         }
         else{sendSpinResult(player, DozenActivity.getMoneyAmount());}
     }
-        //how much the player wins/looses would be more interesting?
-        //Answer: its easier for the Network this way, the diff can/should be calculated in the upper layer
 
     private void sendSpinResult(int idx, int result) {
         JsonObject json = new JsonObject();
@@ -125,12 +128,10 @@ public class ServerQueueHandler extends Thread{
     }
 
     private void rollDice(JsonObject jsonObject) {
-        // TODO Roll the Dice ServerSide
         int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
         int result = new Random().nextInt(11)+2;
-        Log.i("DICEEX","Received dice event and diced "+result);
-        // gameData.movePlayer(result);
-
+        gameData.setPosition(player, (gameData.getPosition()[player]+result)% GameController.allfields.length);
+        sendPosition(player,gameData.getPosition()[player]);
         sendDiceResult(player, result);
     }
 

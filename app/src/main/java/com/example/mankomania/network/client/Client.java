@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.map.MapView;
+import com.example.mankomania.network.NetworkConstants;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
@@ -15,7 +16,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
-import com.example.mankomania.network.NetworkConstants;
 
 // Client class
 public class Client extends Thread {
@@ -35,17 +35,16 @@ public class Client extends Thread {
 
     @Override
     public void run() {
-        try (
-                // establish the connection with server port 5056
-                Socket socket = new Socket(InetAddress.getByName(ipHost), 5056);
-                // obtaining INPUT and out
-                PrintWriter output1 = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()))
-                )
+        try
         {
-            Queue<String> queue = new LinkedBlockingQueue<>();
+            // establish the connection with server port 5056
+            Socket socket = new Socket(InetAddress.getByName(ipHost), 5056);
+            // obtaining INPUT and out
+            output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+            BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            output= output1;
+
+            Queue<String> queue = new LinkedBlockingQueue<>();
 
             // start ClientListener for incoming Messages
             ClientListener clientListener = new ClientListener(input, queue);
@@ -62,9 +61,6 @@ public class Client extends Thread {
     //Index
     void setIdx(int idx) {
         this.idx = idx;
-    }
-    public int getIdx() {
-        return idx;
     }
 
     //Server Requests
@@ -181,7 +177,6 @@ public class Client extends Thread {
     }
     public void rollTheDice(){
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        Log.i("DICEEX","Clientside");
         Thread thread = new Thread(){
             @Override
             public void run(){
