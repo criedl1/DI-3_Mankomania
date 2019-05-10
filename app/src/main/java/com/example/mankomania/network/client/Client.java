@@ -50,9 +50,14 @@ public class Client extends Thread {
             ClientListener clientListener = new ClientListener(input, queue);
             clientListener.start();
 
-            // start CLienQueueHandler
+            // start ClienQueueHandler
             ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue, this, gameData);
             clientQueueHandler.start();
+
+            //Close Socket
+            clientListener.join();
+            clientQueueHandler.join();
+            socket.close();
         } catch (Exception err) {
             Log.e("CLIENT", ""+ err);
         }
@@ -247,5 +252,4 @@ public class Client extends Thread {
     public boolean[] getIsCheater() {
         return gameData.getIsCheater();
     }
-
 }
