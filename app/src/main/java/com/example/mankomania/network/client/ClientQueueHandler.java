@@ -210,34 +210,8 @@ public class ClientQueueHandler extends Thread{
     }
 
     private void generateGameData(JsonObject jsonObject){
-        int playerCount = jsonToInt(jsonObject,NetworkConstants.COUNT);
-        int[] intArr = new int[playerCount];
-        boolean[] boolArr = new boolean[playerCount];
-        String[] strArr = new String[playerCount];
+        gameData.initEmptyGameData(jsonToInt(jsonObject,NetworkConstants.COUNT));
 
-        // Set Player[] (fills in ConnectPlayers)
-        Arrays.fill(strArr,"");
-        gameData.setPlayers(strArr);
-
-        // Set Arrays with 0
-        Arrays.fill(intArr,0);
-        gameData.setMoney(intArr);
-        gameData.setPosition(intArr);
-        gameData.setHypoAktie(intArr);
-        gameData.setStrabagAktie(intArr);
-        gameData.setInfineonAktie(intArr);
-
-        // Set Array with false
-        Arrays.fill(boolArr,false);
-        gameData.setIsCheater(boolArr);
-
-        // Set Lotto to 0
-        gameData.setLotto(0);
-
-        // Set all Hotel to 0
-        intArr = new int[5];
-        Arrays.fill(intArr,0);
-        gameData.setHotels(intArr);
         publishUpdate(jsonObject);
     }
 

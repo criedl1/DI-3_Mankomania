@@ -70,37 +70,12 @@ public class Server extends Thread {
     }
 
     private void generateGameData(){
-        int[] intArr = new int[playercount];
-        int[] intArr2 = new int[playercount];
-        boolean[] boolArr = new boolean[playercount];
-        String[] strArr = new String[playercount];
-
-        // Set Player[] (fills in ConnectPlayers)
-        Arrays.fill(strArr,"");
-        gameData.setPlayers(strArr);
+        gameData.initEmptyGameData(playercount);
 
         // Set Arrays with StartMoney
-        Arrays.fill(intArr2, startmoney);
-        gameData.setMoney(intArr2);
-
-        // Set Arrays with 0
-        Arrays.fill(intArr,0);
-        gameData.setPosition(intArr);
-        gameData.setHypoAktie(intArr);
-        gameData.setStrabagAktie(intArr);
-        gameData.setInfineonAktie(intArr);
-
-        // Set Array with false
-        Arrays.fill(boolArr,false);
-        gameData.setIsCheater(boolArr);
-
-        // Set Lotto to 0
-        gameData.setLotto(0);
-
-        // Set all Hotel to 0
-        intArr = new int[5];
-        Arrays.fill(intArr,0);
-        gameData.setHotels(intArr);
+        int[] intArr = new int[playercount];
+        Arrays.fill(intArr, startmoney);
+        gameData.setMoney(intArr);
     }
 
     private void connectPlayers(ServerSocket serverSocket) throws IOException, InterruptedException {
