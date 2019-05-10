@@ -79,7 +79,7 @@ public class ServerQueueHandler extends QueueHandler {
 
         startTurn(player);
     }
-    private void startTurn(int player) {
+    public void startTurn(int player) {
         gameData.setTurn(player);
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION,NetworkConstants.START_TURN);
