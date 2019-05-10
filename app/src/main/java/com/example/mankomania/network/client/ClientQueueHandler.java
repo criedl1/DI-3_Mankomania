@@ -2,7 +2,6 @@ package com.example.mankomania.network.client;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.network.NetworkConstants;
@@ -20,11 +19,6 @@ public class ClientQueueHandler extends QueueHandler {
         this.queue = queue;
         this.client = client;
         this.gameData = gameData;
-    }
-
-    @Override
-    public void run(){
-       super.run();
     }
 
     protected void handleMessage(String message) {
@@ -84,15 +78,12 @@ public class ClientQueueHandler extends QueueHandler {
     private void startTurn(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
-
     private void spinWheel(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
-
     private void rollDice(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
-
     private void setHotel(JsonObject jsonObject) {
         int[] arr = gameData.getHotels();
         //Get Values
@@ -103,7 +94,6 @@ public class ClientQueueHandler extends QueueHandler {
         gameData.setHotels(arr);
         publishUpdate(jsonObject);
     }
-
     private void setLotto(JsonObject jsonObject) {
         //Get Values
         int amount = jsonToInt(jsonObject,NetworkConstants.AMOUNT);
@@ -111,7 +101,6 @@ public class ClientQueueHandler extends QueueHandler {
         gameData.setLotto(amount);
         publishUpdate(jsonObject);
     }
-
     private void setCheater(JsonObject jsonObject) {
         boolean[] arr = gameData.getIsCheater();
         //Get Values
@@ -122,7 +111,6 @@ public class ClientQueueHandler extends QueueHandler {
         gameData.setIsCheater(arr);
         publishUpdate(jsonObject);
     }
-
     private void setInfineonAktie(JsonObject jsonObject) {
         int[] arr = gameData.getInfineonAktie();
         //Get Values
@@ -133,7 +121,6 @@ public class ClientQueueHandler extends QueueHandler {
         gameData.setInfineonAktie(arr);
         publishUpdate(jsonObject);
     }
-
     private void setStrabagAktie(JsonObject jsonObject) {
         int[] arr = gameData.getStrabagAktie();
         //Get Values
@@ -144,7 +131,6 @@ public class ClientQueueHandler extends QueueHandler {
         gameData.setStrabagAktie(arr);
         publishUpdate(jsonObject);
     }
-
     private void setHypoAktie(JsonObject jsonObject) {
         int[] arr = gameData.getHypoAktie();
         //Get Values
@@ -155,7 +141,6 @@ public class ClientQueueHandler extends QueueHandler {
         gameData.setHypoAktie(arr);
         publishUpdate(jsonObject);
     }
-
     private void setPosition(JsonObject jsonObject) {
         int[] arr = gameData.getPosition();
         //Get Values
@@ -166,7 +151,6 @@ public class ClientQueueHandler extends QueueHandler {
         gameData.setPosition(arr);
         publishUpdate(jsonObject);
     }
-
     private void setMoney(JsonObject jsonObject) {
         int[] arr = gameData.getMoney();
         //Get Values
@@ -177,7 +161,6 @@ public class ClientQueueHandler extends QueueHandler {
         gameData.setMoney(arr);
         publishUpdate(jsonObject);
     }
-
     private void setPlayerId(JsonObject jsonObject) {
         String[] arr = gameData.getPlayers();
         //Get Values
@@ -192,7 +175,6 @@ public class ClientQueueHandler extends QueueHandler {
     private String jsonToString(JsonObject jsonObject, String key){
         return jsonObject.get(key).getAsString();
     }
-
     private int jsonToInt(JsonObject jsonObject, String key){
         return Integer.parseInt(jsonObject.get(key).getAsString());
     }
