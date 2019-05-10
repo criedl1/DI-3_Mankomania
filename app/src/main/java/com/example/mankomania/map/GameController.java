@@ -85,8 +85,9 @@ public class GameController {
     }
 
     void setPosition(int player, int position) {
-        this.players.get(player).setPosition(position);
         this.mapView.step1();
+        this.players.get(player).setPosition(position);
+
     }
 
     void setHypoAktie(int player, int count) {
