@@ -6,14 +6,13 @@ import android.util.Log;
 
 import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.network.NetworkConstants;
+import com.example.mankomania.network.QueueHandler;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.util.Arrays;
 import java.util.Queue;
 
-public class ClientQueueHandler extends Thread{
-    private Queue<String> queue;
+public class ClientQueueHandler extends QueueHandler {
     private Client client;
     private GameData gameData;
 
@@ -25,21 +24,10 @@ public class ClientQueueHandler extends Thread{
 
     @Override
     public void run(){
-        String in;
-        try{
-            while (true){
-                // wait for a new message in the queue
-                if(!queue.isEmpty()){
-                    in = queue.poll();
-                    handleMessage(in);
-                }
-            }
-        }catch (Exception e){
-            Log.e("CLIENT_QUEUE_HANDLER",""+e);
-        }
+       super.run();
     }
 
-    private void handleMessage(String message) {
+    protected void handleMessage(String message) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
         switch (jsonToString(jsonObject,NetworkConstants.OPERATION)) {

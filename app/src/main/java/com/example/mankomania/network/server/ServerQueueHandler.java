@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.map.GameController;
 import com.example.mankomania.network.NetworkConstants;
+import com.example.mankomania.network.QueueHandler;
 import com.example.mankomania.roulette.ColorActivity;
 import com.example.mankomania.roulette.DozenActivity;
 import com.example.mankomania.roulette.NumberActivity;
@@ -14,9 +15,9 @@ import com.google.gson.JsonParser;
 import java.util.Queue;
 import java.util.Random;
 
-public class ServerQueueHandler extends Thread{
+public class ServerQueueHandler extends QueueHandler {
     private ClientHandler[] clientHandlers;
-    private Queue<String> queue;
+
     private GameData gameData;
 
     ServerQueueHandler(ClientHandler[] clientHandlers, Queue<String> queue, GameData gameData){
@@ -28,21 +29,10 @@ public class ServerQueueHandler extends Thread{
 
     @Override
     public void run(){
-        String in;
-        try{
-            while(true){
-                // wait for a new message in the queue
-                if(!queue.isEmpty()){
-                    in = queue.poll();
-                    handleMessage(in);
-                }
-            }
-        }catch (Exception e){
-            Log.e("SERVER_QUEUE_HANDLER",""+e);
-        }
+        super.run();
     }
 
-    private void handleMessage(String in) {
+    protected void handleMessage(String in) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(in).getAsJsonObject();
 
@@ -105,8 +95,6 @@ public class ServerQueueHandler extends Thread{
     }
 
     private void spinWheel(JsonObject jsonObject) {
-        // TODO Spin the Wheel ServerSide
-
         int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
 
         //TODO: I have changed this
