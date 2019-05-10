@@ -108,7 +108,7 @@ public class Server extends Thread {
         String[] arr;
 
         while (playerCount< gameData.getPlayers().length) {
-            // SOCKET object to receive incoming client requests
+            // socket object to receive incoming client requests
             sockets[playerCount] = serverSocket.accept();
 
             // Set player address in Players[]
