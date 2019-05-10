@@ -55,9 +55,24 @@ public class Server extends Thread {
             // Start listening
             serverQueueHandler.start();
 
-
+            //Close Socket
+            serverQueueHandler.join();
+            joinClientHandlers(clientHandlers);
+            closeSockets(sockets);
         } catch (Exception err) {
             Log.e("CLIENT", "" + err);
+        }
+    }
+
+    private void closeSockets(Socket[] sockets) throws Exception{
+        for (Socket socket: sockets) {
+            socket.close();
+        }
+    }
+
+    private void joinClientHandlers(ClientHandler[] clientHandlers) throws Exception{
+        for (ClientHandler clientHandler: clientHandlers) {
+            clientHandler.join();
         }
     }
 
