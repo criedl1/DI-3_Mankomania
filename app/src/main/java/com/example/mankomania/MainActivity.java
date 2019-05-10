@@ -68,6 +68,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         openMap();
     }
 
+    public void btn_Find_Lobby_OnClick(View v){
+        Button btn = findViewById(R.id.btn_findLobby);
+        btn.setEnabled(false);
+
+
+
+        Toast.makeText(this,"Waiting for Lobby", Toast.LENGTH_LONG).show();
+    }
+
+    public void btn_Send_Lobby_OnClick(View v){
+        Toast.makeText(this,"Sending Lobby "+getIPAddress(), Toast.LENGTH_LONG).show();
+    }
+
     public void openMap() {
         Intent intent = new Intent(this, MapView.class);
         intent.putExtra("IP", ip);
@@ -79,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         return Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
