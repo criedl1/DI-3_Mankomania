@@ -64,13 +64,13 @@ public class Server extends Thread {
         }
     }
 
-    private void closeSockets(Socket[] sockets) throws Exception{
+    private void closeSockets(Socket[] sockets) throws IOException{
         for (Socket socket: sockets) {
             socket.close();
         }
     }
 
-    private void joinClientHandlers(ClientHandler[] clientHandlers) throws Exception{
+    private void joinClientHandlers(ClientHandler[] clientHandlers) throws InterruptedException{
         for (ClientHandler clientHandler: clientHandlers) {
             clientHandler.join();
         }
