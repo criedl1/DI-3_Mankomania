@@ -5,7 +5,6 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Formatter;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,8 +13,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.mankomania.network.server.Server;
 import com.example.mankomania.map.MapView;
+import com.example.mankomania.network.server.Server;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -57,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void btn_Connect_To_Lobby_OnClick(View v)  {
-        Log.i("INIT", "Clicked");
         EditText et =  findViewById(R.id.textinput);
         Button btnCreate =  findViewById(R.id.btnCreateLobby);
         Button btnConnect =  findViewById(R.id.btnConnectToLobby);
@@ -71,9 +69,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void openMap() {
-        Log.i("INIT", "Open Map with "+ ip);
         Intent intent = new Intent(this, MapView.class);
-        intent.putExtra("ip", ip);
+        intent.putExtra("IP", ip);
         startActivity(intent);
     }
 
@@ -86,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.i("INIT", "Selection changed to: "+ position);
         this.selectedPlayerCount = position+1;
     }
 

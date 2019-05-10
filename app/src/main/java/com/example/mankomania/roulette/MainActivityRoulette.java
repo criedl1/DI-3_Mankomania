@@ -1,4 +1,4 @@
-package com.example.mankomania.Roulette;
+package com.example.mankomania.roulette;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,27 +11,18 @@ import com.example.mankomania.R;
 
 public class MainActivityRoulette extends AppCompatActivity {
 
-
-    TextView welcome;
-    TextView tv1;
-    TextView tv2;
-    TextView tv3;
-    Button color;
-    Button number;
-    Button dozen;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainroulette);
 
-        welcome = findViewById(R.id.tvWillkommen);
-        color = findViewById(R.id.btnFarbe);
-        number = findViewById(R.id.btnZahl);
-        dozen = findViewById(R.id.btnDutzend);
-        tv1 = findViewById(R.id.textView1);
-        tv2 = findViewById(R.id.textView2);
-        tv3 = findViewById(R.id.textView3);
+        TextView welcome = findViewById(R.id.tvWillkommen);
+        Button color = findViewById(R.id.btnFarbe);
+        Button number = findViewById(R.id.btnZahl);
+        Button dozen = findViewById(R.id.btnDutzend);
+        TextView tv1 = findViewById(R.id.textView1);
+        TextView tv2 = findViewById(R.id.textView2);
+        TextView tv3 = findViewById(R.id.textView3);
 
 
         welcome.setText(getString(R.string.roulette_welcome));
@@ -65,19 +56,19 @@ public class MainActivityRoulette extends AppCompatActivity {
         });
     }
 
-    public void openColorActivity(){
+    private void openColorActivity(){
         Intent it = new Intent(this, ColorActivity.class);
         startActivity(it);
         finish();
     }
 
-    public void openNumberActivity(){
+    private void openNumberActivity(){
         Intent it = new Intent(this, NumberActivity.class);
         startActivity(it);
         finish();
     }
 
-    public void openDozenActivity(){
+    private void openDozenActivity(){
         Intent it = new Intent(this, DozenActivity.class);
         startActivity(it);
         finish();

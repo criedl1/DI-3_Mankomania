@@ -1,29 +1,29 @@
 package com.example.mankomania.map;
 
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 public class Player {
 
-    private int index;
     private ImageView figure;
     private int currentField;
-    private int money;
+    private int money = 0;
     private TextView currentmoney;
+    private int[] aktien = new int[3];
+    private String ip;
 
-    Player(ImageView figure, TextView currentmoney) {
+    Player() {
         currentField = 0;
-        this.figure = figure;
-        this. currentmoney = currentmoney;
-        this.currentmoney.setText(String.format(Locale.GERMAN,"%d",10000000));
+        Arrays.fill(aktien,0);
     }
 
-    void moveFields(int fields, int maxfields) {
-        Log.i("MOVE", "Player "+index+" von Feld "+currentField+" zu "+(currentField + fields)% maxfields);
-        currentField = (currentField + fields)% maxfields;
+    void initFields(ImageView figure, TextView currentmoney){
+        this.figure = figure;
+        this.currentmoney = currentmoney;
+        this.updateMoneyField();
     }
 
     ImageView getFigure() {
@@ -41,10 +41,36 @@ public class Player {
 
     public void setMoney(int money) {
         this.money = money;
+        this.updateMoneyField();
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    private void updateMoneyField(){
+        this.currentmoney.setText(String.format(Locale.GERMAN,"%d",this.money));
+    }
+
+
+    public void setPosition(int position) {
+        this.currentField = position;
+    }
+
+    void setAktie(Aktien aktien, int count) {
+        switch(aktien){
+            case HYPO:
+                this.aktien[0]= count;
+                break;
+            case STRABAG:
+                this.aktien[1] = count;
+                break;
+            case INFINEON:
+                this.aktien[2] = count;
+                break;
+            default:
+                throw new IllegalStateException("Aktie does not exist");
+        }
+    }
+
+    void setIP(String ip) {
+        this.ip = ip;
     }
 }
 

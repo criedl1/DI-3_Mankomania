@@ -1,4 +1,4 @@
-package com.example.mankomania.Roulette;
+package com.example.mankomania.roulette;
 
 class FieldClass {
     private ColorEnum color;
@@ -11,15 +11,15 @@ class FieldClass {
         this.degree = degree;
     }
 
-    ColorEnum getColor() {
+    protected ColorEnum getColor() {
         return color;
     }
 
-    int getValue() {
+    protected int getValue() {
         return value;
     }
 
-    float getDegree(){
+    protected float getDegree(){
         return this.degree;
     }
 }

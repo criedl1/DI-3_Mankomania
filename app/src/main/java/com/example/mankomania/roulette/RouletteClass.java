@@ -1,11 +1,13 @@
-package com.example.mankomania.Roulette;
+package com.example.mankomania.roulette;
+
+import java.security.SecureRandom;
 
 public class RouletteClass {
 
-    static int randomNumber;
-    static FieldClass array[] = new FieldClass[36];
+    private int randomNumber;
+    private FieldClass[] fieldClassArray = new FieldClass[36];
 
-    public FieldClass[] setUpFields() {
+    protected FieldClass[] setUpFields() {
         FieldClass fieldClass0 = new FieldClass(ColorEnum.GREEN, 0, 0f);
         FieldClass fieldClass32 = new FieldClass(ColorEnum.RED, 32, 9.73f);
         FieldClass fieldClass15 = new FieldClass(ColorEnum.BLACK, 15, 19.46f);
@@ -45,33 +47,37 @@ public class RouletteClass {
         FieldClass fieldClass26 = new FieldClass(ColorEnum.BLACK, 26, 350.28f);
 
 
-        FieldClass[] array = {fieldClass0, fieldClass32, fieldClass15, fieldClass19, fieldClass4, fieldClass21, fieldClass2, fieldClass25, fieldClass17,
+        FieldClass[] tempArray = {fieldClass0, fieldClass32, fieldClass15, fieldClass19, fieldClass4, fieldClass21, fieldClass2, fieldClass25, fieldClass17,
                 fieldClass34, fieldClass6, fieldClass27, fieldClass13, fieldClass36, fieldClass11, fieldClass30, fieldClass8, fieldClass23,
                 fieldClass10, fieldClass5, fieldClass24, fieldClass16, fieldClass33, fieldClass1, fieldClass20, fieldClass14, fieldClass31,
                 fieldClass9, fieldClass22, fieldClass18, fieldClass29, fieldClass7, fieldClass28, fieldClass12, fieldClass35, fieldClass3,
                 fieldClass26};
 
-        this.array = array;
+        this.fieldClassArray = tempArray;
 
-        return array;
+        return tempArray;
     }
 
-    public int spinIt(){
+    protected int spinIt(){
         setUpFields();
-        randomNumber = (int) (Math.random() *36) + 0;
+
+        SecureRandom random = new SecureRandom();
+
+        randomNumber = random.nextInt(36);
         return randomNumber;
     }
 
-    public static FieldClass getTheField() {
+    protected FieldClass getTheField() {
         FieldClass field = null;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i].getValue() == getRandomNumber()) {
-                field = array[i];
+        for (int i = 0; i < fieldClassArray.length; i++) {
+            if (fieldClassArray[i].getValue() == getRandomNumber()) {
+                field = fieldClassArray[i];
             }
         } return field;
     }
 
-    public static int getRandomNumber(){
+    protected int getRandomNumber(){
         return randomNumber;
     }
+
 }

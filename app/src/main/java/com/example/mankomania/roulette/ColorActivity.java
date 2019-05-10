@@ -1,4 +1,4 @@
-package com.example.mankomania.Roulette;
+package com.example.mankomania.roulette;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,23 +14,22 @@ import com.google.gson.JsonObject;
 
 public class ColorActivity extends AppCompatActivity {
 
-    RouletteClass roulette = new RouletteClass();
-    FieldClass[] array = roulette.setUpFields();
-    static String returnString;
-    static int money;
+    private RouletteClass roulette = new RouletteClass();
+    private FieldClass[] array = roulette.setUpFields();
+    private String returnString;
+    private int money;
 
-    Button red;
-    Button black;
-    TextView selectColor;
+    //for Network
+    private static int moneyAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color);
 
-        red = findViewById(R.id.btnRed);
-        black = findViewById(R.id.btnBlack);
-        selectColor = findViewById(R.id.tvSelectColor);
+        Button red = findViewById(R.id.btnRed);
+        Button black = findViewById(R.id.btnBlack);
+        TextView selectColor = findViewById(R.id.tvSelectColor);
 
         red.setText(getString(R.string.color_red));
         black.setText(getString(R.string.color_black));
@@ -53,7 +52,7 @@ public class ColorActivity extends AppCompatActivity {
         });
     }
 
-    public void checkWin(ColorEnum choosenColor){
+    private void checkWin(ColorEnum choosenColor) {
         //calculates if user wins or not
 
         double rouletteNumber = roulette.spinIt();
@@ -61,32 +60,46 @@ public class ColorActivity extends AppCompatActivity {
         for (FieldClass anArray : array) {
             if (rouletteNumber == anArray.getValue()) {
                 if (anArray.getColor() == choosenColor) {
-                    money = 30000;  //--> 80000-50000 Einsatz
-                    returnString = getString(R.string.roulette_won, money);
+                    setMoney(30000); //--> 80000-50000 Einsatz
+                    setReturnString(getString(R.string.roulette_won, getMoney()));
+                    moneyAmount = getMoney();
+
                 } else {
-                    money = -5000; //Einsatz
-                    returnString = getString(R.string.roulette_lost, money * -1);
+                    setMoney(-5000); //Einsatz
+                    setReturnString(getString(R.string.roulette_lost, getMoney() * -1));
+                    moneyAmount = getMoney();
                 }
-                sendMoneyChange(money);
+                sendMoneyChange(getMoney());
             }
         }
     }
 
-    public static String getReturnString(){
-        return returnString;
+    private int getRandomNumberFromRouletteClass(){
+        return roulette.getRandomNumber();
     }
 
-    public static void setReturnString(String newReturnString){
-        returnString = newReturnString;
+    private float getDegreeFromRouletteClass(){
+        return roulette.getTheField().getDegree();
     }
 
-    public void openRotateActivity(){
+    private ColorEnum getColorFromRouletteClass(){
+        return roulette.getTheField().getColor();
+    }
+
+    private void openRotateActivity() {
+        Bundle extras = new Bundle();
         Intent it = new Intent(this, RotateActivity.class);
+        extras.putString("returnString", getReturnString());
+        extras.putInt("money", getMoney());
+        extras.putInt("randomNumber", getRandomNumberFromRouletteClass());
+        extras.putSerializable("color", getColorFromRouletteClass());
+        extras.putFloat("degree", getDegreeFromRouletteClass());
+        it.putExtras(extras);
         startActivity(it);
         finish();
     }
 
-    private void sendMoneyChange(int rouletteResult){
+    private void sendMoneyChange(int rouletteResult) {
         JsonObject object = new JsonObject();
         object.addProperty("result", rouletteResult);
         object.addProperty("OPERATION", "ROULETTERESULT");
@@ -96,7 +109,24 @@ public class ColorActivity extends AppCompatActivity {
                 .sendBroadcast(intent);
     }
 
-    public static int getMoney(){
+    private int getMoney() {
         return money;
+    }
+
+    private void setMoney(int newMoney) {
+        money = newMoney;
+    }
+
+    private String getReturnString() {
+        return returnString;
+    }
+
+    private void setReturnString(String returnString){
+        this.returnString = returnString;
+    }
+
+    public static int getMoneyAmount(){
+        //temporary solution
+        return moneyAmount;
     }
 }
