@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,7 +22,10 @@ import android.widget.Toast;
 
 import com.example.mankomania.R;
 import com.example.mankomania.dice.Dice;
+import com.example.mankomania.roulette.DozenActivity;
 import com.example.mankomania.roulette.MainActivityRoulette;
+
+import java.util.Arrays;
 
 
 public class MapView extends AppCompatActivity {
@@ -55,6 +59,7 @@ public class MapView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_view);
         initButtons();
+        Log.d("xxx", "llll" + Arrays.toString(GameController.allfields));
 
 
 
@@ -132,10 +137,10 @@ public class MapView extends AppCompatActivity {
 
     public void movePlayerOut(final Player player){
         float distance;
-            distance = screenWidth;
+        distance = screenWidth;
 
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
-        animation.setDuration(5000);
+        animation.setDuration(1000);
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -143,26 +148,46 @@ public class MapView extends AppCompatActivity {
             }
         });
         animation.start();
-
+    }
+    public void movePlayerOverScreen(final Player player) {
+        float distance;
+        distance = screenWidth - field0;
+        player.getFigure().setX(field0);
+        player.getFigure().setVisibility(View.VISIBLE);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
+        animation.setDuration(1000);
+        animation.start();
+        animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+               step2();
+            }
+        });
     }
 
     public void movePlayerIn(final Player player) {
         float distance;
+        if ((player.getCurrentField() & 1) != 0) {
+            distance = field2;
+        } else {
             distance = field1 - field0;
+        }
 
         player.getFigure().setX(field0);
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), "translationX", distance);
-        animation.setDuration(5000);
+        animation.setDuration(1000);
         animation.start();
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
 
                 super.onAnimationEnd(animation);
-                startRoulette();
+                runFieldAction(player.getCurrentField());
             }
         });
     }
+
+
 
     private void initButtons() {
         imgview1 =  findViewById(R.id.imageViewStart);
@@ -188,17 +213,34 @@ public class MapView extends AppCompatActivity {
 
     public void step1() {
         Player cPlayer = gameController.currentPlayer();
+        cPlayer.setTemporaryField(cPlayer.getCurrentField());
+        Log.d("xxx","step1 currentfield: " + cPlayer.getCurrentField());
         displayField(cPlayer.getCurrentField());
         movePlayerOut(cPlayer);
     }
 
-
     public void step2() {
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setTemporaryField(cPlayer.getTemporaryField()+2);
+        Log.d("xxx","step2 currentfield: " + cPlayer.getCurrentField());
+
+        if(cPlayer.getTemporaryField()/2 < cPlayer.getCurrentField()/2){
+            displayField(cPlayer.getTemporaryField());
+            movePlayerOverScreen(cPlayer);
+        } else{
+            step3();
+        }
+    }
+
+    public void step3() {
 
         Player cPlayer = gameController.currentPlayer();
+        Log.d("xxx","step3 currentfield: " + cPlayer.getCurrentField());
         movePlayerIn(cPlayer);
         displayField(cPlayer.getCurrentField());
     }
+
+
 
     public void nextSideofMap(View view) {
         currentField += 2;
@@ -244,7 +286,90 @@ public class MapView extends AppCompatActivity {
             }
         }
     }
+    private void runFieldAction(int currentField) {
+        int fieldID = GameController.allfields[currentField];
+    if(fieldID == R.drawable.field_casino){
+        startRoulette();
+    } else if(fieldID == R.drawable.field_getsomemoney) {
+        getMoneyFinanzamt();
+    } else if(fieldID == R.drawable.field_lindwurm) {
+        loseMoneyLindwurm();
+    } else if(fieldID == R.drawable.field_stadium) {
+        loseMoneyStadium();
+    } else if(fieldID == R.drawable.field_zoo) {
+        loseMoneyZoo();
+    } else if(fieldID == R.drawable.field_alterplatz){
+        getMoneyAlterPlatz();
+    } else if(fieldID == R.drawable.field_klage) {
+        getMoneyKlage();
+    } else if(fieldID == R.drawable.field_woerthersee) {
+        loseMoneyWoerthersee();
+    } else if(fieldID == R.drawable.field_aktie1) {
+        //TODO: method aktie1
+        Toast.makeText(this,"Du erhälst die Aktie Hypo!", Toast.LENGTH_LONG).show();
+    }
+    else if(fieldID == R.drawable.field_aktie2) {
+        //TODO: method  aktie2
+        Toast.makeText(this,"Du erhälst die Aktie Infineon!", Toast.LENGTH_LONG).show();
+    }
+    else if(fieldID == R.drawable.field_aktie3) {
+        //TODO: method aktie3
+        Toast.makeText(this,"Du erhälst die Aktie Strabag!", Toast.LENGTH_LONG).show();
+    } else if(fieldID == R.drawable.field_horserace) {
+        //TODO: method horserace
+    }
+    else if(fieldID == R.drawable.field_lottery) {
+        //TODO: method lottery
+    }
+    else if(fieldID == R.drawable.field_hotelsandwirth) {
+        //TODO: method Hotel sandwirth
+        Toast.makeText(this,"Du erhälst das Hotel Sandwirth!", Toast.LENGTH_LONG).show();
+    }
+    else if(fieldID == R.drawable.field_plattenwirt) {
+        //TODO: method Hotel Plattenwirt
+        Toast.makeText(this,"Du erhälst das Hotel Plattenwirt!", Toast.LENGTH_LONG).show();
+    }
+    else if(fieldID == R.drawable.field_seeparkhotel) {
+        //TODO: method Hotel Seepark
+        Toast.makeText(this,"Du erhälst das Seepark-Hotel!", Toast.LENGTH_LONG).show();
+    }
+    }
 
+    public void getMoneyFinanzamt() {
+        Toast.makeText(this,"Du erhälst 10.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() + 10000);
+    }
+    public void loseMoneyLindwurm() {
+        Toast.makeText(this,"Du verlierst 100.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() - 100000);
+    }
+    public void loseMoneyStadium() {
+        Toast.makeText(this,"Du verlierst 5.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() - 5000);
+    }
+    public void loseMoneyZoo() {
+        Toast.makeText(this,"Du verlierst 50.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() - 50000);
+    }
+    public void getMoneyAlterPlatz() {
+        Toast.makeText(this,"Du erhälst 10.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() + 10000);
+    }
+    public void getMoneyKlage() {
+        Toast.makeText(this,"Du erhälst 25.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() + 25000);
+    }
+    public void loseMoneyWoerthersee() {
+        Toast.makeText(this,"Du verlierst 10.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() - 10000);
+    }
     public void startRoulette(){
         Intent it = new Intent(this, MainActivityRoulette.class);
         startActivity(it);

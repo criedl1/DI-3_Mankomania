@@ -9,6 +9,9 @@ import java.util.Locale;
 public class Player {
 
     private ImageView figure;
+
+
+    private int temporaryField;
     private int currentField;
     private int money = 0;
     private TextView currentmoney;
@@ -17,6 +20,7 @@ public class Player {
 
     Player() {
         currentField = 0;
+        temporaryField = 0;
         Arrays.fill(aktien,0);
     }
 
@@ -24,6 +28,13 @@ public class Player {
         this.figure = figure;
         this.currentmoney = currentmoney;
         this.updateMoneyField();
+    }
+    public int getTemporaryField() {
+        return temporaryField;
+    }
+
+    public void setTemporaryField(int temporaryField) {
+        this.temporaryField = temporaryField;
     }
 
     ImageView getFigure() {
