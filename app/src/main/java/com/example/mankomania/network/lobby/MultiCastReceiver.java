@@ -11,22 +11,22 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 public class MultiCastReceiver extends Thread {
-    private static String IPADDRESS = "230.0.0.0";
-    private static int PORT = 6789;
+    private static String ipaddress = "230.0.0.0";
+    private static int port = 6789;
     protected MulticastSocket socket = null;
     private static MainActivity mainActivity;
+    private static String name = "MultiCastReceiver";
 
     public MultiCastReceiver(MainActivity mA) {
-        mainActivity = mA;
     }
 
     @Override
     public void run() {
         try {
             //init
-            Log.i("MultiCastReceiver", "starting");
-            socket = new MulticastSocket(PORT);
-            InetAddress group = InetAddress.getByName(IPADDRESS);
+            Log.i(name, "starting");
+            socket = new MulticastSocket(port);
+            InetAddress group = InetAddress.getByName(ipaddress);
             byte[] buffer = new byte[256];
             socket.joinGroup(group);
 
@@ -34,13 +34,15 @@ public class MultiCastReceiver extends Thread {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             socket.receive(packet);
             String received = new String(packet.getData(), 0, packet.getLength());
-            Log.i("MultiCastReceiver", received);
+            Log.i(name, received);
 
             //to UI Layer
             publishUpdate(received);
 
+            socket.leaveGroup(group);
+            socket.close();
         } catch (Exception e) {
-            Log.e("MultiCastReceiver", "" + e);
+            Log.e(name, "" + e);
         }
     }
 
