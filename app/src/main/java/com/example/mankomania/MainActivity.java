@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mankomania.map.MapView;
+import com.example.mankomania.network.lobby.MultiCastPublisher;
 import com.example.mankomania.network.lobby.MultiCastReceiver;
 import com.example.mankomania.network.server.Server;
 
@@ -92,6 +93,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void btn_Send_Lobby_OnClick(View v){
         Toast.makeText(this,"Sending Lobby "+getIPAddress(), Toast.LENGTH_LONG).show();
+
+        MultiCastPublisher multiCastPublisher = new MultiCastPublisher(getIPAddress());
+        multiCastPublisher.start();
     }
 
     private BroadcastReceiver createBroadcastReceiver() {

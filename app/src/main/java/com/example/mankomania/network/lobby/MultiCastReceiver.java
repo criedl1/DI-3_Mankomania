@@ -12,7 +12,7 @@ import java.net.MulticastSocket;
 
 public class MultiCastReceiver extends Thread {
     private static String IPADDRESS = "230.0.0.0";
-    private static int PORT = 666;
+    private static int PORT = 6789;
     protected MulticastSocket socket = null;
     private static MainActivity mainActivity;
 
