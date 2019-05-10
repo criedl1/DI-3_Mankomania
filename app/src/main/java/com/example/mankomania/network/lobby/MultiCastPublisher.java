@@ -25,7 +25,6 @@ public class MultiCastPublisher extends Thread {
             DatagramPacket packet = new DatagramPacket(buf, buf.length, group, port);
             socket.send(packet);
 
-            socket.close();
             Log.i("MultiCastPublisher", message);
         }catch (Exception e){
             Log.e("MultiCastPublisher",""+e);
