@@ -17,9 +17,7 @@ public class MultiCastPublisher extends Thread {
 
     @Override
     public void run() {
-        try {
-            //init
-            DatagramSocket socket = new DatagramSocket();
+        try (DatagramSocket socket = new DatagramSocket()){
             InetAddress group = InetAddress.getByName(ipaddress);
 
             //send via Multi-cast
