@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.mankomania.R;
 import com.example.mankomania.dice.Dice;
+import com.example.mankomania.roulette.DozenActivity;
 import com.example.mankomania.roulette.MainActivityRoulette;
 
 import java.util.Arrays;
@@ -182,7 +183,6 @@ public class MapView extends AppCompatActivity {
 
                 super.onAnimationEnd(animation);
                 runFieldAction(player.getCurrentField());
-              //  startRoulette();
             }
         });
     }
@@ -304,28 +304,71 @@ public class MapView extends AppCompatActivity {
         getMoneyKlage();
     } else if(fieldID == R.drawable.field_woerthersee) {
         loseMoneyWoerthersee();
+    } else if(fieldID == R.drawable.field_aktie1) {
+        //TODO: method aktie1
+        Toast.makeText(this,"Du erhälst die Aktie Hypo!", Toast.LENGTH_LONG).show();
+    }
+    else if(fieldID == R.drawable.field_aktie2) {
+        //TODO: method  aktie2
+        Toast.makeText(this,"Du erhälst die Aktie Infineon!", Toast.LENGTH_LONG).show();
+    }
+    else if(fieldID == R.drawable.field_aktie3) {
+        //TODO: method aktie3
+        Toast.makeText(this,"Du erhälst die Aktie Strabag!", Toast.LENGTH_LONG).show();
+    } else if(fieldID == R.drawable.field_horserace) {
+        //TODO: method horserace
+    }
+    else if(fieldID == R.drawable.field_lottery) {
+        //TODO: method lottery
+    }
+    else if(fieldID == R.drawable.field_hotelsandwirth) {
+        //TODO: method Hotel sandwirth
+        Toast.makeText(this,"Du erhälst das Hotel Sandwirth!", Toast.LENGTH_LONG).show();
+    }
+    else if(fieldID == R.drawable.field_plattenwirt) {
+        //TODO: method Hotel Plattenwirt
+        Toast.makeText(this,"Du erhälst das Hotel Plattenwirt!", Toast.LENGTH_LONG).show();
+    }
+    else if(fieldID == R.drawable.field_seeparkhotel) {
+        //TODO: method Hotel Seepark
+        Toast.makeText(this,"Du erhälst das Seepark-Hotel!", Toast.LENGTH_LONG).show();
     }
     }
+
     public void getMoneyFinanzamt() {
         Toast.makeText(this,"Du erhälst 10.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() + 10000);
     }
     public void loseMoneyLindwurm() {
         Toast.makeText(this,"Du verlierst 100.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() - 100000);
     }
     public void loseMoneyStadium() {
         Toast.makeText(this,"Du verlierst 5.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() - 5000);
     }
     public void loseMoneyZoo() {
         Toast.makeText(this,"Du verlierst 50.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() - 50000);
     }
     public void getMoneyAlterPlatz() {
         Toast.makeText(this,"Du erhälst 10.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() + 10000);
     }
     public void getMoneyKlage() {
         Toast.makeText(this,"Du erhälst 25.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() + 25000);
     }
     public void loseMoneyWoerthersee() {
         Toast.makeText(this,"Du verlierst 10.000€!", Toast.LENGTH_LONG).show();
+        Player cPlayer = gameController.currentPlayer();
+        cPlayer.setMoney(cPlayer.getMoney() - 10000);
     }
     public void startRoulette(){
         Intent it = new Intent(this, MainActivityRoulette.class);
