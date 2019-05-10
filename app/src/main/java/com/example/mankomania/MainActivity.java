@@ -1,8 +1,12 @@
 package com.example.mankomania;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Formatter;
 import android.view.View;
@@ -14,12 +18,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mankomania.map.MapView;
+import com.example.mankomania.network.lobby.MultiCastReceiver;
 import com.example.mankomania.network.server.Server;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private int selectedPlayerCount = 1;
     private String ip;
+    BroadcastReceiver resultReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         spinner.setSelection(0);
+
+        // create Receiver
+        resultReceiver = createBroadcastReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                resultReceiver,
+                new IntentFilter("Lobby.update"));
     }
 
     public void btn_Create_Lobby_OnClick(View v) {
@@ -72,13 +84,27 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Button btn = findViewById(R.id.btn_findLobby);
         btn.setEnabled(false);
 
-
+        MultiCastReceiver multiCastReceiver = new MultiCastReceiver(this);
+        multiCastReceiver.start();
 
         Toast.makeText(this,"Waiting for Lobby", Toast.LENGTH_LONG).show();
     }
 
     public void btn_Send_Lobby_OnClick(View v){
         Toast.makeText(this,"Sending Lobby "+getIPAddress(), Toast.LENGTH_LONG).show();
+    }
+
+    private BroadcastReceiver createBroadcastReceiver() {
+        return new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Button btn = findViewById(R.id.btn_findLobby);
+                btn.setEnabled(true);
+                EditText et =  findViewById(R.id.textinput);
+                String result = intent.getStringExtra("result");
+                et.setText(result);
+            }
+        };
     }
 
     public void openMap() {
