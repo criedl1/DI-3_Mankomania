@@ -35,10 +35,10 @@ public class Client extends Thread {
 
     @Override
     public void run() {
-        try
+        try(// establish the connection with server port 5056
+            Socket socket = new Socket(InetAddress.getByName(ipHost), 5056))
         {
-            // establish the connection with server port 5056
-            Socket socket = new Socket(InetAddress.getByName(ipHost), 5056);
+
             // obtaining INPUT and out
             output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -57,7 +57,6 @@ public class Client extends Thread {
             //Close Socket
             clientListener.join();
             clientQueueHandler.join();
-            socket.close();
         } catch (Exception err) {
             Log.e("CLIENT", ""+ err);
         }
