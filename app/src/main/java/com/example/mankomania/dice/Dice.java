@@ -91,14 +91,7 @@ public class Dice extends Fragment implements SensorEventListener {
 
         };
 
-        int[] ddiceResult = new int[2];
-        if (result >= 7) {
-            ddiceResult[0] = (result - 6 + random.nextInt(Math.abs(result - 12) + 1));
-            ddiceResult[1] = result - ddiceResult[0];
-        } else {
-            ddiceResult[0] = random.nextInt(result - 1) + 1;
-            ddiceResult[1] = result - ddiceResult[0];
-        }
+        int[] ddiceResult = splitResult(result);
         Toast.makeText(getActivity(), "Du hast " + result + " gewürfelt", Toast.LENGTH_SHORT).show();
 
         ivDice1.setImageResource(wuerfelImages[ddiceResult[0]-1]);
@@ -107,5 +100,16 @@ public class Dice extends Fragment implements SensorEventListener {
         ivDice1.animate().scaleX(0.8f).scaleY(0.8f).setDuration(1300);
         ivDice2.animate().scaleX(0.8f).scaleY(0.8f).setDuration(1300);
         btnClose.setVisibility(View.VISIBLE);
+    }
+    public int [] splitResult(int result){
+        int[] ddiceResult = new int[2];
+        if (result >= 7) {
+            ddiceResult[0] = (result - 6 + random.nextInt(Math.abs(result - 12) + 1));
+            ddiceResult[1] = result - ddiceResult[0];
+        } else {
+            ddiceResult[0] = random.nextInt(result - 1) + 1;
+            ddiceResult[1] = result - ddiceResult[0];
+        }
+        return ddiceResult;
     }
 }
