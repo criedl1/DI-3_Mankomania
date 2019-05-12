@@ -9,15 +9,17 @@ import android.widget.ImageView;
 import com.example.mankomania.R;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SlotMachineActivity extends AppCompatActivity {
 
     public static int amount;
-    private List<Symbol> slot1;
-    private List<Symbol> slot2;
-    private List<Symbol> slot3;
+    private List<Symbol> slot1 = new ArrayList<>();
+    private List<Symbol> slot2 = new ArrayList<>();
+    private List<Symbol> slot3 = new ArrayList<>();
+    ImageView machine;
     ImageView white1;
     ImageView white2;
     ImageView white3;
@@ -33,7 +35,7 @@ public class SlotMachineActivity extends AppCompatActivity {
     ImageView dollar1;
     ImageView dollar2;
     ImageView dollar3;
-    Button start;
+    Button spin;
     String returnString;
 
     @Override
@@ -41,8 +43,7 @@ public class SlotMachineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slot_machine);
 
-        setUpSlotMachine();
-
+        machine = findViewById(R.id.ivMachine);
         white1 = findViewById(R.id.ivWhite1);
         white2 = findViewById(R.id.ivWhite2);
         white3 = findViewById(R.id.ivWhite3);
@@ -58,8 +59,8 @@ public class SlotMachineActivity extends AppCompatActivity {
         dollar1 = findViewById(R.id.ivDollar1);
         dollar2 = findViewById(R.id.ivDollar2);
         dollar3 = findViewById(R.id.ivDollar3);
-        start = findViewById(R.id.btnSpin);
-        Button spin = findViewById(R.id.btnSpin);
+        spin = findViewById(R.id.btnSpin);
+        setUpSlotMachine();
 
         spin.setOnClickListener(new View.OnClickListener() {
             @Override

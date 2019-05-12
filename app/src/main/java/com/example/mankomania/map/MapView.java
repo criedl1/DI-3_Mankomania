@@ -24,6 +24,7 @@ import com.example.mankomania.R;
 import com.example.mankomania.dice.Dice;
 import com.example.mankomania.roulette.DozenActivity;
 import com.example.mankomania.roulette.MainActivityRoulette;
+import com.example.mankomania.slotmachine.SlotMachineActivity;
 
 import java.util.Arrays;
 
@@ -182,7 +183,8 @@ public class MapView extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
 
                 super.onAnimationEnd(animation);
-                runFieldAction(player.getCurrentField());
+                //runFieldAction(player.getCurrentField());
+                startSlotMachine();
             }
         });
     }
@@ -372,6 +374,12 @@ public class MapView extends AppCompatActivity {
     }
     public void startRoulette(){
         Intent it = new Intent(this, MainActivityRoulette.class);
+        startActivity(it);
+    }
+
+    //TODO: This starts before or playing Roulette. Just implemented this for testing.
+    public void startSlotMachine(){
+        Intent it = new Intent(this, SlotMachineActivity.class);
         startActivity(it);
     }
 
