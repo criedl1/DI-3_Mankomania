@@ -7,7 +7,7 @@ public class RouletteClass {
     private int randomNumber;
     private FieldClass[] fieldClassArray = new FieldClass[36];
 
-    protected FieldClass[] setUpFields() {
+    public FieldClass[] setUpFields() {
         FieldClass fieldClass0 = new FieldClass(ColorEnum.GREEN, 0, 0f);
         FieldClass fieldClass32 = new FieldClass(ColorEnum.RED, 32, 9.73f);
         FieldClass fieldClass15 = new FieldClass(ColorEnum.BLACK, 15, 19.46f);
@@ -58,7 +58,7 @@ public class RouletteClass {
         return tempArray;
     }
 
-    protected int spinIt(){
+    public int spinIt(){
         setUpFields();
 
         SecureRandom random = new SecureRandom();
@@ -67,7 +67,7 @@ public class RouletteClass {
         return randomNumber;
     }
 
-    protected FieldClass getTheField() {
+    public FieldClass getTheField() {
         FieldClass field = null;
         for (int i = 0; i < fieldClassArray.length; i++) {
             if (fieldClassArray[i].getValue() == getRandomNumber()) {

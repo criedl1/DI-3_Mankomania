@@ -52,7 +52,8 @@ public class NumberActivity extends AppCompatActivity {
         });
     }
 
-    private int spinWheel(int choosenNumber) {
+
+    public int spinWheel(int choosenNumber) {
 
         int rouletteNumber = roulette.spinIt();
 
@@ -114,7 +115,7 @@ public class NumberActivity extends AppCompatActivity {
         this.money = money;
     }
 
-    private int getMoney(){
+    public int getMoney(){
         return money;
     }
 

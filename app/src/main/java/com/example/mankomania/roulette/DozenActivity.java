@@ -64,7 +64,7 @@ public class DozenActivity extends AppCompatActivity {
         });
     }
 
-    private void spinWheel(int choosenDozen){
+    public void spinWheel(int choosenDozen){
 
         int rouletteNumber = roulette.spinIt();
         int dozen = 0;
@@ -127,7 +127,7 @@ public class DozenActivity extends AppCompatActivity {
                 .sendBroadcast(intent);
     }
 
-    private int getMoney(){
+    public int getMoney(){
         return money;
     }
 

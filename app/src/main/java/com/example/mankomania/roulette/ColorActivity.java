@@ -38,7 +38,7 @@ public class ColorActivity extends AppCompatActivity {
         red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkWin(ColorEnum.RED);
+                spinWheel(ColorEnum.RED);
                 openRotateActivity();
             }
         });
@@ -46,13 +46,13 @@ public class ColorActivity extends AppCompatActivity {
         black.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkWin(ColorEnum.BLACK);
+                spinWheel(ColorEnum.BLACK);
                 openRotateActivity();
             }
         });
     }
 
-    private void checkWin(ColorEnum choosenColor) {
+    public void spinWheel(ColorEnum choosenColor) {
         //calculates if user wins or not
 
         double rouletteNumber = roulette.spinIt();
@@ -109,7 +109,7 @@ public class ColorActivity extends AppCompatActivity {
                 .sendBroadcast(intent);
     }
 
-    private int getMoney() {
+    public int getMoney() {
         return money;
     }
 
