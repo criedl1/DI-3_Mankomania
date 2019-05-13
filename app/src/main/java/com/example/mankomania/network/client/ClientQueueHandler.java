@@ -2,18 +2,16 @@ package com.example.mankomania.network.client;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.network.NetworkConstants;
+import com.example.mankomania.network.QueueHandler;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.util.Arrays;
 import java.util.Queue;
 
-public class ClientQueueHandler extends Thread{
-    private Queue<String> queue;
+public class ClientQueueHandler extends QueueHandler {
     private Client client;
     private GameData gameData;
 
@@ -23,23 +21,7 @@ public class ClientQueueHandler extends Thread{
         this.gameData = gameData;
     }
 
-    @Override
-    public void run(){
-        String in;
-        try{
-            while (true){
-                // wait for a new message in the queue
-                if(!queue.isEmpty()){
-                    in = queue.poll();
-                    handleMessage(in);
-                }
-            }
-        }catch (Exception e){
-            Log.e("CLIENT_QUEUE_HANDLER",""+e);
-        }
-    }
-
-    private void handleMessage(String message) {
+    protected void handleMessage(String message) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(message).getAsJsonObject();
         switch (jsonToString(jsonObject,NetworkConstants.OPERATION)) {
@@ -96,15 +78,12 @@ public class ClientQueueHandler extends Thread{
     private void startTurn(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
-
     private void spinWheel(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
-
     private void rollDice(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
-
     private void setHotel(JsonObject jsonObject) {
         int[] arr = gameData.getHotels();
         //Get Values
@@ -115,7 +94,6 @@ public class ClientQueueHandler extends Thread{
         gameData.setHotels(arr);
         publishUpdate(jsonObject);
     }
-
     private void setLotto(JsonObject jsonObject) {
         //Get Values
         int amount = jsonToInt(jsonObject,NetworkConstants.AMOUNT);
@@ -123,7 +101,6 @@ public class ClientQueueHandler extends Thread{
         gameData.setLotto(amount);
         publishUpdate(jsonObject);
     }
-
     private void setCheater(JsonObject jsonObject) {
         boolean[] arr = gameData.getIsCheater();
         //Get Values
@@ -134,7 +111,6 @@ public class ClientQueueHandler extends Thread{
         gameData.setIsCheater(arr);
         publishUpdate(jsonObject);
     }
-
     private void setInfineonAktie(JsonObject jsonObject) {
         int[] arr = gameData.getInfineonAktie();
         //Get Values
@@ -145,7 +121,6 @@ public class ClientQueueHandler extends Thread{
         gameData.setInfineonAktie(arr);
         publishUpdate(jsonObject);
     }
-
     private void setStrabagAktie(JsonObject jsonObject) {
         int[] arr = gameData.getStrabagAktie();
         //Get Values
@@ -156,7 +131,6 @@ public class ClientQueueHandler extends Thread{
         gameData.setStrabagAktie(arr);
         publishUpdate(jsonObject);
     }
-
     private void setHypoAktie(JsonObject jsonObject) {
         int[] arr = gameData.getHypoAktie();
         //Get Values
@@ -167,7 +141,6 @@ public class ClientQueueHandler extends Thread{
         gameData.setHypoAktie(arr);
         publishUpdate(jsonObject);
     }
-
     private void setPosition(JsonObject jsonObject) {
         int[] arr = gameData.getPosition();
         //Get Values
@@ -178,7 +151,6 @@ public class ClientQueueHandler extends Thread{
         gameData.setPosition(arr);
         publishUpdate(jsonObject);
     }
-
     private void setMoney(JsonObject jsonObject) {
         int[] arr = gameData.getMoney();
         //Get Values
@@ -189,7 +161,6 @@ public class ClientQueueHandler extends Thread{
         gameData.setMoney(arr);
         publishUpdate(jsonObject);
     }
-
     private void setPlayerId(JsonObject jsonObject) {
         String[] arr = gameData.getPlayers();
         //Get Values
@@ -204,40 +175,13 @@ public class ClientQueueHandler extends Thread{
     private String jsonToString(JsonObject jsonObject, String key){
         return jsonObject.get(key).getAsString();
     }
-
     private int jsonToInt(JsonObject jsonObject, String key){
         return Integer.parseInt(jsonObject.get(key).getAsString());
     }
 
     private void generateGameData(JsonObject jsonObject){
-        int playerCount = jsonToInt(jsonObject,NetworkConstants.COUNT);
-        int[] intArr = new int[playerCount];
-        boolean[] boolArr = new boolean[playerCount];
-        String[] strArr = new String[playerCount];
+        gameData.initEmptyGameData(jsonToInt(jsonObject,NetworkConstants.COUNT));
 
-        // Set Player[] (fills in ConnectPlayers)
-        Arrays.fill(strArr,"");
-        gameData.setPlayers(strArr);
-
-        // Set Arrays with 0
-        Arrays.fill(intArr,0);
-        gameData.setMoney(intArr);
-        gameData.setPosition(intArr);
-        gameData.setHypoAktie(intArr);
-        gameData.setStrabagAktie(intArr);
-        gameData.setInfineonAktie(intArr);
-
-        // Set Array with false
-        Arrays.fill(boolArr,false);
-        gameData.setIsCheater(boolArr);
-
-        // Set Lotto to 0
-        gameData.setLotto(0);
-
-        // Set all Hotel to 0
-        intArr = new int[5];
-        Arrays.fill(intArr,0);
-        gameData.setHotels(intArr);
         publishUpdate(jsonObject);
     }
 

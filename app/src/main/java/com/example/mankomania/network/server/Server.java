@@ -28,10 +28,10 @@ public class Server extends Thread {
 
     @Override
     public void run() {
-        try
+        try(// server is listening on port 5056
+            ServerSocket serverSocket = new ServerSocket(5056))
         {
-            // server is listening on port 5056
-            ServerSocket serverSocket = new ServerSocket(5056);
+
 
             // set arrays for sockets and Handlers
             sockets = new Socket[playercount];
@@ -55,9 +55,17 @@ public class Server extends Thread {
             // Start listening
             serverQueueHandler.start();
 
-
+            //Close Socket
+            serverQueueHandler.join();
+            joinClientHandlers(clientHandlers);
         } catch (Exception err) {
             Log.e("CLIENT", "" + err);
+        }
+    }
+
+    private void joinClientHandlers(ClientHandler[] clientHandlers) throws InterruptedException{
+        for (ClientHandler clientHandler: clientHandlers) {
+            clientHandler.join();
         }
     }
 
@@ -70,37 +78,12 @@ public class Server extends Thread {
     }
 
     private void generateGameData(){
-        int[] intArr = new int[playercount];
-        int[] intArr2 = new int[playercount];
-        boolean[] boolArr = new boolean[playercount];
-        String[] strArr = new String[playercount];
-
-        // Set Player[] (fills in ConnectPlayers)
-        Arrays.fill(strArr,"");
-        gameData.setPlayers(strArr);
+        gameData.initEmptyGameData(playercount);
 
         // Set Arrays with StartMoney
-        Arrays.fill(intArr2, startmoney);
-        gameData.setMoney(intArr2);
-
-        // Set Arrays with 0
-        Arrays.fill(intArr,0);
-        gameData.setPosition(intArr);
-        gameData.setHypoAktie(intArr);
-        gameData.setStrabagAktie(intArr);
-        gameData.setInfineonAktie(intArr);
-
-        // Set Array with false
-        Arrays.fill(boolArr,false);
-        gameData.setIsCheater(boolArr);
-
-        // Set Lotto to 0
-        gameData.setLotto(0);
-
-        // Set all Hotel to 0
-        intArr = new int[5];
-        Arrays.fill(intArr,0);
-        gameData.setHotels(intArr);
+        int[] intArr = new int[playercount];
+        Arrays.fill(intArr, startmoney);
+        gameData.setMoney(intArr);
     }
 
     private void connectPlayers(ServerSocket serverSocket) throws IOException, InterruptedException {
@@ -108,7 +91,7 @@ public class Server extends Thread {
         String[] arr;
 
         while (playerCount< gameData.getPlayers().length) {
-            // SOCKET object to receive incoming client requests
+            // socket object to receive incoming client requests
             sockets[playerCount] = serverSocket.accept();
 
             // Set player address in Players[]
