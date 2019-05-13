@@ -50,9 +50,10 @@ public class Player {
         return money;
     }
 
-    public void setMoney(int money) {
+    public int setMoney(int money) {
         this.money = money;
         this.updateMoneyField();
+        return money;
     }
 
     private void updateMoneyField(){

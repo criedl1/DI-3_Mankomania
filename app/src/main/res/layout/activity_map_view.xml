@@ -4,6 +4,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/framel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".map.MapView">
@@ -12,6 +13,7 @@
         android:id="@+id/background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/background_of_game"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,8 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/background"
         tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="96dp"
-        android:contentDescription="@string/background_of_game" />
+        tools:layout_editor_absoluteY="96dp" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/mainview"
@@ -56,18 +57,18 @@
                 android:layout_width="210dp"
                 android:layout_height="280dp"
                 android:layout_margin="10dp"
+                android:contentDescription="@string/left_player_field"
                 android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/ic_launcher_foreground_start"
-                android:contentDescription="@string/left_player_field" />
+                app:srcCompat="@mipmap/ic_launcher_foreground_start" />
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="210dp"
                 android:layout_height="281dp"
                 android:layout_margin="10dp"
+                android:contentDescription="@string/right_player_field"
                 android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/ic_launcher_foreground"
-                android:contentDescription="@string/right_player_field" />
+                app:srcCompat="@mipmap/ic_launcher_foreground" />
         </LinearLayout>
 
         <LinearLayout
@@ -87,48 +88,48 @@
                 android:layout_width="74dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:contentDescription="@string/figure_of_player_1"
                 android:visibility="invisible"
                 app:srcCompat="@mipmap/ic_figure1_round"
                 tools:layout_editor_absoluteX="236dp"
                 tools:layout_editor_absoluteY="229dp"
-                tools:visibility="invisible"
-                android:contentDescription="@string/figure_of_player_1" />
+                tools:visibility="invisible" />
 
             <ImageView
                 android:id="@+id/figure2"
                 android:layout_width="74dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:contentDescription="@string/figure_of_player_2"
                 android:visibility="invisible"
                 app:srcCompat="@mipmap/ic_figure2_round"
                 tools:layout_editor_absoluteX="120dp"
                 tools:layout_editor_absoluteY="90dp"
-                tools:visibility="invisible"
-                android:contentDescription="@string/figure_of_player_2" />
+                tools:visibility="invisible" />
 
             <ImageView
                 android:id="@+id/figure3"
                 android:layout_width="74dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:contentDescription="@string/figure_of_player_3"
                 android:visibility="invisible"
                 app:srcCompat="@mipmap/ic_figure3_round"
                 tools:layout_editor_absoluteX="204dp"
                 tools:layout_editor_absoluteY="97dp"
-                tools:visibility="invisible"
-                android:contentDescription="@string/figure_of_player_3" />
+                tools:visibility="invisible" />
 
             <ImageView
                 android:id="@+id/figure4"
                 android:layout_width="74dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:contentDescription="@string/figure_of_player_4"
                 android:visibility="invisible"
                 app:srcCompat="@mipmap/ic_figure4_round"
                 tools:layout_editor_absoluteX="136dp"
                 tools:layout_editor_absoluteY="229dp"
-                tools:visibility="invisible"
-                android:contentDescription="@string/figure_of_player_4" />
+                tools:visibility="invisible" />
 
         </LinearLayout>
 
