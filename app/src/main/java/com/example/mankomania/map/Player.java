@@ -21,14 +21,15 @@ public class Player {
     Player() {
         currentField = 0;
         temporaryField = 0;
-        Arrays.fill(aktien,0);
+        Arrays.fill(aktien, 0);
     }
 
-    void initFields(ImageView figure, TextView currentmoney){
+    void initFields(ImageView figure, TextView currentmoney) {
         this.figure = figure;
         this.currentmoney = currentmoney;
         this.updateMoneyField();
     }
+
     public int getTemporaryField() {
         return temporaryField;
     }
@@ -56,8 +57,8 @@ public class Player {
         return money;
     }
 
-    private void updateMoneyField(){
-        this.currentmoney.setText(String.format(Locale.GERMAN,"%d",this.money));
+    private void updateMoneyField() {
+        this.currentmoney.setText(String.format(Locale.GERMAN, "%d", this.money));
     }
 
 
@@ -66,9 +67,9 @@ public class Player {
     }
 
     void setAktie(Aktien aktien, int count) {
-        switch(aktien){
+        switch (aktien) {
             case HYPO:
-                this.aktien[0]= count;
+                this.aktien[0] = count;
                 break;
             case STRABAG:
                 this.aktien[1] = count;
@@ -81,8 +82,33 @@ public class Player {
         }
     }
 
+    public int[] getAktien() {
+        return aktien;
+    }
+
     void setIP(String ip) {
         this.ip = ip;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Player) {
+            Player p = (Player) o;
+            if (p.getCurrentField() == currentField && p.getTemporaryField() == temporaryField && p.getMoney() == money) {
+                for (int i = 0; i < aktien.length; i++) {
+                    if (p.getAktien()[i] != aktien[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }
 

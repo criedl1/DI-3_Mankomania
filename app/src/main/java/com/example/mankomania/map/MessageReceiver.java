@@ -80,6 +80,7 @@ class MessageReceiver {
         gameController.setRouletteResult(moneyChange);
     }
 
+
     private void initPlayerCount(JsonObject jsonObject) {
         int playerCount = jsonToInt(jsonObject,NetworkConstants.COUNT);
         gameController.initPlayer(playerCount);
