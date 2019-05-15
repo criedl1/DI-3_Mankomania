@@ -21,12 +21,10 @@ public class ServerListener extends Thread {
             while(true){
                 String msg = in.readLine();
                 if(msg != null){
-                    //TODO: Timon msg = null, why ?
                     queue.offer(msg);
                 }
             }
         }catch (Exception e){
-            e.printStackTrace();
             Log.e("SERVER_LISTENER",""+e);
         }
     }
