@@ -17,9 +17,6 @@ public class MultiCastReceiver extends Thread {
     private static MainActivity mainActivity;
     private static String name = "MultiCastReceiver";
 
-    public MultiCastReceiver(MainActivity mA) {
-    }
-
     @Override
     public void run() {
         try {

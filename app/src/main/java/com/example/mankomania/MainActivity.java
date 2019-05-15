@@ -20,8 +20,6 @@ import android.widget.Toast;
 import com.example.mankomania.map.MapView;
 import com.example.mankomania.network.lobby.BroadcastServer;
 import com.example.mankomania.network.lobby.BroadcastingClient;
-import com.example.mankomania.network.lobby.MultiCastPublisher;
-import com.example.mankomania.network.lobby.MultiCastReceiver;
 import com.example.mankomania.network.server.Server;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Button btn = findViewById(R.id.btn_findLobby);
         btn.setEnabled(false);
 
-        BroadcastingClient broadcastingClient = new BroadcastingClient(this);
+        BroadcastingClient broadcastingClient = new BroadcastingClient();
         broadcastingClient.start();
 
         Toast.makeText(this,"Waiting for Lobby", Toast.LENGTH_LONG).show();

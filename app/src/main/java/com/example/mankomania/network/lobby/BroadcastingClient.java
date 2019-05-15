@@ -16,10 +16,6 @@ public class BroadcastingClient extends Thread{
     private static MainActivity mainActivity;
     private static byte[] buf = new byte[256];
 
-    public BroadcastingClient(MainActivity mA) {
-        mainActivity=mA;
-    }
-
     @Override
     public void run() {
         try {
