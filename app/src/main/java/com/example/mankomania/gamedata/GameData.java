@@ -2,6 +2,8 @@ package com.example.mankomania.gamedata;
 
 import com.example.mankomania.network.server.ServerQueueHandler;
 
+import java.util.Arrays;
+
 public class GameData {
     private String[] players;
     private int[] position;
@@ -116,5 +118,35 @@ public class GameData {
 
     public void setServer(ServerQueueHandler serverQueueHandler) {
         this.server = serverQueueHandler;
+    }
+
+    public void initEmptyGameData(int playerCount){
+        int[] intArr = new int[playerCount];
+        boolean[] boolArr = new boolean[playerCount];
+        String[] strArr = new String[playerCount];
+
+        // Set Player[] (fills in ConnectPlayers)
+        Arrays.fill(strArr,"");
+        setPlayers(strArr);
+
+        // Set Arrays with 0
+        Arrays.fill(intArr,0);
+        setMoney(intArr);
+        setPosition(intArr);
+        setHypoAktie(intArr);
+        setStrabagAktie(intArr);
+        setInfineonAktie(intArr);
+
+        // Set Array with false
+        Arrays.fill(boolArr,false);
+        setIsCheater(boolArr);
+
+        // Set Lotto to 0
+        setLotto(0);
+
+        // Set all Hotel to 0
+        intArr = new int[5];
+        Arrays.fill(intArr,0);
+        setHotels(intArr);
     }
 }

@@ -384,9 +384,14 @@ public class MapView extends AppCompatActivity {
         gameController.rollTheDice();
     }
 
+    public void rollForce (View view){
+        gameController.rollTheDice();
+    }
+
     public void closeDiceFragment(View view) {
         getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.diceContainer)).commit();
     }
+
 
     public void showMyDiceResult(int outcome) {
         Dice fragment = ((Dice) getSupportFragmentManager().findFragmentById(R.id.diceContainer));
