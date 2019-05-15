@@ -37,7 +37,7 @@ public class BroadcastingClient extends Thread{
         publishUpdate(res);
     }
 
-    private DatagramPacket receiveUDPMessage() throws IOException {
+    private static DatagramPacket receiveUDPMessage() throws IOException {
         socket = new DatagramSocket(4446);
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         socket.receive(packet);

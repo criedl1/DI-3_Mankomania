@@ -11,8 +11,7 @@ public class BroadcastServer extends Thread {
 
     @Override
     public void run() {
-        try {
-            DatagramSocket socket = new DatagramSocket(4445);
+        try (DatagramSocket socket = new DatagramSocket(4445)){
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             socket.receive(packet);
 
@@ -22,8 +21,6 @@ public class BroadcastServer extends Thread {
             Thread.sleep(200);
 
             socket.send(packet);
-
-            socket.close();
         }catch (Exception e){
             Log.e("BroadcastServer",""+e);
         }
