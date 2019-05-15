@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class MapViewTest{
-    public static Matcher<View> withDrawable(final int resourceId) {
+   /* public static Matcher<View> withDrawable(final int resourceId) {
         return new DrawableMatcher(resourceId);
     }
 
@@ -69,7 +69,7 @@ public class MapViewTest{
         catch (Exception e) {
 
         }
-    }
+    }*/
 
  }
 

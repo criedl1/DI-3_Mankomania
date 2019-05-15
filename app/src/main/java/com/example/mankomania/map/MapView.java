@@ -139,7 +139,6 @@ public class MapView extends AppCompatActivity {
     public void movePlayerOut(final Player player) {
         float distance;
         distance = screenWidth;
-
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationX, distance);
         animation.setDuration(1000);
         animation.addListener(new AnimatorListenerAdapter() {
