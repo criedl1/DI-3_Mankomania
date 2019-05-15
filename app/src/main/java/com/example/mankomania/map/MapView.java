@@ -357,7 +357,6 @@ public class MapView extends AppCompatActivity {
         setMoney(i);
     }
 
-
     public void loseMoneyLindwurm(int i) {
         setMoney(i);
     }
