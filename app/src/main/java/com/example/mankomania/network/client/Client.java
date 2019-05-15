@@ -179,7 +179,21 @@ public class Client extends Thread {
         };
         thread.start();
     }
-    public void rollTheDice(){
+
+    public void updateMoney(final int balance) {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                JsonObject json = new JsonObject();
+                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.MONEY_UPDATE);
+                json.addProperty(NetworkConstants.PLAYER, idx);
+                json.addProperty(NetworkConstants.MONEY, balance);
+                output.println(json.toString());
+            }
+        };
+    }
+
+    public void rollTheDice() {
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
             @Override
