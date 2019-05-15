@@ -88,6 +88,7 @@ public class GameController {
         if (balance < 0)
             balance = -balance;
         client.updateMoney(balance);
+        client.endTurn();
     }
 
     void setMyPlayerID(int player) {
@@ -99,6 +100,7 @@ public class GameController {
         this.players.get(player).setMoney(money);
         showMoneyUpdate(player, money);
     }
+
 
     void setPosition(int player, int position) {
         this.mapView.step1();
@@ -187,4 +189,18 @@ public class GameController {
         this.players.get(player).setIP(ip);
     }
 
+    public void startHorseRace() {
+        // TODO - horse race
+        client.endTurn();
+    }
+
+    public void getShare() {
+        // TODO - add share
+        client.endTurn();
+    }
+
+    public void getHotel() {
+        // TODO - add hotel
+        client.endTurn();
+    }
 }
