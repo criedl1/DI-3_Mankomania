@@ -25,18 +25,17 @@ public class Client extends Thread {
     private int idx;
     public static MapView mapView;
 
-    public Client(){
+    public Client() {
     }
 
-    public void init(String ipHost, MapView mapView){
+    public void init(String ipHost, MapView mapView) {
         Client.ipHost = ipHost;
         Client.mapView = mapView;
     }
 
     @Override
     public void run() {
-        try
-        {
+        try {
             // establish the connection with server port 5056
             Socket socket = new Socket(InetAddress.getByName(ipHost), 5056);
             // obtaining INPUT and out
@@ -54,7 +53,7 @@ public class Client extends Thread {
             ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue, this, gameData);
             clientQueueHandler.start();
         } catch (Exception err) {
-            Log.e("CLIENT", ""+ err);
+            Log.e("CLIENT", "" + err);
         }
     }
 
@@ -64,13 +63,13 @@ public class Client extends Thread {
     }
 
     //Server Requests
-    public void setMoneyOnServer(final int idx, final int money){
+    public void setMoneyOnServer(final int idx, final int money) {
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.SEND_MONEY);
+                json.addProperty("OPERATION", NetworkConstants.SEND_MONEY);
                 json.addProperty("PLAYER", idx);
                 json.addProperty("Money", money);
                 output.println(json.toString());
@@ -78,13 +77,14 @@ public class Client extends Thread {
         };
         thread.start();
     }
-    public void setPostionOnServer(final int idx,final int pos){
+
+    public void setPostionOnServer(final int idx, final int pos) {
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_POSITION);
+                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_POSITION);
                 json.addProperty(NetworkConstants.PLAYER, idx);
                 json.addProperty(NetworkConstants.POSITION, pos);
                 output.println(json.toString());
@@ -92,13 +92,14 @@ public class Client extends Thread {
         };
         thread.start();
     }
-    public void setHypoAktieOnServer(final int idx,final int count){
+
+    public void setHypoAktieOnServer(final int idx, final int count) {
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_HYPO_AKTIE);
+                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_HYPO_AKTIE);
                 json.addProperty(NetworkConstants.PLAYER, idx);
                 json.addProperty(NetworkConstants.COUNT, count);
                 output.println(json.toString());
@@ -106,13 +107,14 @@ public class Client extends Thread {
         };
         thread.start();
     }
-    public void setStrabagAktieOnServer(final int idx,final int count){
+
+    public void setStrabagAktieOnServer(final int idx, final int count) {
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_STRABAG_AKTIE);
+                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_STRABAG_AKTIE);
                 json.addProperty(NetworkConstants.PLAYER, idx);
                 json.addProperty(NetworkConstants.COUNT, count);
                 output.println(json.toString());
@@ -120,13 +122,14 @@ public class Client extends Thread {
         };
         thread.start();
     }
-    public void setInfineonAktieOnServer(final int idx, final int count){
+
+    public void setInfineonAktieOnServer(final int idx, final int count) {
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_INFINEON_AKTIE);
+                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_INFINEON_AKTIE);
                 json.addProperty(NetworkConstants.PLAYER, idx);
                 json.addProperty(NetworkConstants.COUNT, count);
                 output.println(json.toString());
@@ -134,13 +137,14 @@ public class Client extends Thread {
         };
         thread.start();
     }
-    public void setCheaterOnServer(final int idx,final boolean cheater){
+
+    public void setCheaterOnServer(final int idx, final boolean cheater) {
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_CHEATER);
+                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_CHEATER);
                 json.addProperty(NetworkConstants.PLAYER, idx);
                 json.addProperty(NetworkConstants.CHEATER, cheater);
                 output.println(json.toString());
@@ -148,26 +152,28 @@ public class Client extends Thread {
         };
         thread.start();
     }
-    public void setLottoOnServer(final int amount){
+
+    public void setLottoOnServer(final int amount) {
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_LOTTO);
+                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_LOTTO);
                 json.addProperty(NetworkConstants.AMOUNT, amount);
                 output.println(json.toString());
             }
         };
         thread.start();
     }
-    public void setHotelOnServer(final int idx,final int owner){
+
+    public void setHotelOnServer(final int idx, final int owner) {
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_HOTEL);
+                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_HOTEL);
                 json.addProperty(NetworkConstants.HOTEL, idx);
                 json.addProperty(NetworkConstants.OWNER, owner);
                 output.println(json.toString());
@@ -175,41 +181,56 @@ public class Client extends Thread {
         };
         thread.start();
     }
-    public void rollTheDice(){
-        // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
+
+    public void updateMoney(final int balance) {
+        Thread thread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.ROLL_DICE);
-                json.addProperty(NetworkConstants.PLAYER,idx);
+                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.MONEY_UPDATE);
+                json.addProperty(NetworkConstants.PLAYER, idx);
+                json.addProperty(NetworkConstants.MONEY, balance);
+                output.println(json.toString());
+            }
+        };
+    }
+
+    public void rollTheDice() {
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                JsonObject json = new JsonObject();
+                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.ROLL_DICE);
+                json.addProperty(NetworkConstants.PLAYER, idx);
                 output.println(json.toString());
             }
         };
         thread.start();
     }
 
-    public void playRoulette(){
+    public void playRoulette() {
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SPIN_WHEEL);
-                json.addProperty(NetworkConstants.PLAYER,idx);
+                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SPIN_WHEEL);
+                json.addProperty(NetworkConstants.PLAYER, idx);
                 output.println(json.toString());
             }
         };
         thread.start();
     }
-    public void endTurn(){
+
+    public void endTurn() {
         // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.END_TURN);
-                json.addProperty(NetworkConstants.PLAYER,idx);
+                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.END_TURN);
+                json.addProperty(NetworkConstants.PLAYER, idx);
                 output.println(json.toString());
             }
         };
@@ -217,33 +238,42 @@ public class Client extends Thread {
     }
 
     //GameDate Requests
-    public String getOwnIP(){
+    public String getOwnIP() {
         return gameData.getPlayers()[idx];
     }
+
     public String[] getPlayers() {
         return gameData.getPlayers();
     }
+
     public int[] getPosition() {
         return gameData.getPosition();
     }
+
     public int[] getMoney() {
         return gameData.getMoney();
     }
+
     public int getLotto() {
         return gameData.getLotto();
     }
+
     public int[] getHotels() {
         return gameData.getHotels();
     }
+
     public int[] getInfineonAktie() {
         return gameData.getInfineonAktie();
     }
+
     public int[] getHypoAktie() {
         return gameData.getHypoAktie();
     }
+
     public int[] getStrabagAktie() {
         return gameData.getStrabagAktie();
     }
+
     public boolean[] getIsCheater() {
         return gameData.getIsCheater();
     }

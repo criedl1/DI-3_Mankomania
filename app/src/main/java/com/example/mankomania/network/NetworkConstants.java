@@ -19,6 +19,8 @@ public class NetworkConstants {
     public static final String SPIN_WHEEL = "spinWheel";
     public static final String START_TURN = "StartTurn";
     public static final String END_TURN = "endTurn";
+    public static final String MONEY_UPDATE = "updateMoney";
+    public static final String ROULETTE = "ROULETTERESULT";
     //Values
     public static final String OPERATION = "OPERATION";
     public static final String ID = "ID";

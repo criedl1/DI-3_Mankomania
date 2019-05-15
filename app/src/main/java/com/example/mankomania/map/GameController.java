@@ -67,12 +67,27 @@ public class GameController {
         }
     }
 
+    void showMoneyUpdate(int player, int outcome) {
+        if (isMyTurn()) {
+            mapView.showMyAccountBalance(outcome);
+        } else {
+            mapView.showSomeonesAccountBalance(player, outcome);
+        }
+    }
+
+
     private boolean isMyTurn() {
         return hasTurn == myID;
     }
 
     void rollTheDice() {
         client.rollTheDice();
+    }
+
+    void updateMoney(int balance) {
+        if (balance < 0)
+            balance = -balance;
+        client.updateMoney(balance);
     }
 
     void setMyPlayerID(int player) {
@@ -82,6 +97,7 @@ public class GameController {
 
     public void setMoney(int player, int money) {
         this.players.get(player).setMoney(money);
+        showMoneyUpdate(player, money);
     }
 
     void setPosition(int player, int position) {
@@ -152,8 +168,10 @@ public class GameController {
         client.endTurn();
     }
 
+
     /**
      * gibt Listen-Index des übergebenen Spielers aus
+     *
      * @param p Player-Objekt
      * @return Index, wenn p in Liste gefunden, -1 sonst.
      */

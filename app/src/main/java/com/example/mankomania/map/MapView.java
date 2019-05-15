@@ -22,7 +22,9 @@ import android.widget.Toast;
 
 import com.example.mankomania.R;
 import com.example.mankomania.dice.Dice;
+import com.example.mankomania.network.NetworkConstants;
 import com.example.mankomania.roulette.MainActivityRoulette;
+import com.google.gson.JsonObject;
 
 import java.util.Arrays;
 
@@ -287,132 +289,103 @@ public class MapView extends AppCompatActivity {
 
     private void runFieldAction(int currentField) {
         int fieldID = GameController.allfields[currentField];
-         switch (fieldID){
+        switch (fieldID) {
             case R.drawable.field_casino:
                 startRoulette();
                 break;
             case R.drawable.field_getsomemoney:
                 getMoneyFinanzamt(10000);
-                break;
-             case R.drawable.field_lindwurm:
-                 loseMoneyLindwurm(100000);
-                 break;
-             case R.drawable.field_stadium:
-                 loseMoneyStadium(5000);
-                 break;
-             case R.drawable.field_zoo:
-                 loseMoneyZoo(50000);
-                 break;
-             case R.drawable.field_alterplatz:
-                 getMoneyAlterPlatz(10000);
-                 break;
-             case R.drawable.field_klage:
-                 getMoneyKlage(25000);
-                 break;
-             case R.drawable.field_woerthersee:
-                 loseMoneyWoerthersee(10000);
-                 break;
-             case R.drawable.field_aktie1:
-                 Toast.makeText(this, "Du erhälst die Aktie Hypo!", Toast.LENGTH_LONG).show();
-                 break;
-             case R.drawable.field_aktie2:
-                 Toast.makeText(this, "Du erhälst die Aktie Infineon!", Toast.LENGTH_LONG).show();
-                 break;
-             case R.drawable.field_aktie3:
-                 Toast.makeText(this, "Du erhälst die Aktie Strabag!", Toast.LENGTH_LONG).show();
-                 break;
-             case R.drawable.field_horserace:
 
-                 break;
-             case R.drawable.field_hotelsandwirth:
-                 Toast.makeText(this, "Du erhälst das Hotel Sandwirth!", Toast.LENGTH_LONG).show();
-                 break;
-             case R.drawable.field_plattenwirt:
-                 Toast.makeText(this, "Du erhälst das Hotel Plattenwirt!", Toast.LENGTH_LONG).show();
-                 break;
-             case R.drawable.field_seeparkhotel:
-                 Toast.makeText(this, "Du erhälst das Seepark-Hotel!", Toast.LENGTH_LONG).show();
-                 break;
+                break;
+            case R.drawable.field_lindwurm:
+                loseMoneyLindwurm(-100000);
+                break;
+            case R.drawable.field_stadium:
+                loseMoneyStadium(-5000);
+                break;
+            case R.drawable.field_zoo:
+                loseMoneyZoo(-50000);
+                break;
+            case R.drawable.field_alterplatz:
+                getMoneyAlterPlatz(10000);
+                break;
+            case R.drawable.field_klage:
+                getMoneyKlage(25000);
+                break;
+            case R.drawable.field_woerthersee:
+                loseMoneyWoerthersee(-10000);
+                break;
+            case R.drawable.field_aktie1:
+                Toast.makeText(this, "Du erhälst die Aktie Hypo!", Toast.LENGTH_LONG).show();
+                break;
+            case R.drawable.field_aktie2:
+                Toast.makeText(this, "Du erhälst die Aktie Infineon!", Toast.LENGTH_LONG).show();
+                break;
+            case R.drawable.field_aktie3:
+                Toast.makeText(this, "Du erhälst die Aktie Strabag!", Toast.LENGTH_LONG).show();
+                break;
+            case R.drawable.field_horserace:
+
+                break;
+            case R.drawable.field_hotelsandwirth:
+                Toast.makeText(this, "Du erhälst das Hotel Sandwirth!", Toast.LENGTH_LONG).show();
+                break;
+            case R.drawable.field_plattenwirt:
+                Toast.makeText(this, "Du erhälst das Hotel Plattenwirt!", Toast.LENGTH_LONG).show();
+                break;
+            case R.drawable.field_seeparkhotel:
+                Toast.makeText(this, "Du erhälst das Seepark-Hotel!", Toast.LENGTH_LONG).show();
+                break;
         }
-       
+
     }
 
-    public int getMoneyFinanzamt(int i) {
-        Toast.makeText(this, "Du erhälst 10.000€!", Toast.LENGTH_LONG).show();
-        Player cPlayer = gameController.currentPlayer();
+    private void showMoneyUpdate(Player cPlayer, int i) {
         int playerIdx = gameController.getPlayerIndex(cPlayer);
         if (playerIdx >= 0) {
             gameController.setMoney(playerIdx, cPlayer.getMoney() + i);
-
+            gameController.updateMoney(i);
         }
-        return cPlayer.setMoney(cPlayer.getMoney() + i);
     }
 
-    public int loseMoneyLindwurm(int i) {
-        Toast.makeText(this, "Du verlierst 100.000€!", Toast.LENGTH_LONG).show();
+    private void setMoney(int i) {
         Player cPlayer = gameController.currentPlayer();
-        int playerIdx = gameController.getPlayerIndex(cPlayer);
-        if(playerIdx >= 0) {
-            gameController.setMoney(playerIdx, cPlayer.getMoney()+i);
-        }
-        return cPlayer.setMoney(cPlayer.getMoney() - 100000);
+        showMoneyUpdate(cPlayer, i);
     }
 
-    public int loseMoneyStadium(int i) {
-        Toast.makeText(this, "Du verlierst 5.000€!", Toast.LENGTH_LONG).show();
-        Player cPlayer = gameController.currentPlayer();
-        int playerIdx = gameController.getPlayerIndex(cPlayer);
-        if(playerIdx >= 0) {
-            gameController.setMoney(playerIdx, cPlayer.getMoney()+i);
-        }
-        return cPlayer.setMoney(cPlayer.getMoney() - 5000);
+    public void getMoneyFinanzamt(int i) {
+        setMoney(i);
     }
 
-    public int loseMoneyZoo(int i) {
-        Toast.makeText(this, "Du verlierst 50.000€!", Toast.LENGTH_LONG).show();
-        Player cPlayer = gameController.currentPlayer();
-        int playerIdx = gameController.getPlayerIndex(cPlayer);
-        if(playerIdx >= 0) {
-            gameController.setMoney(playerIdx, cPlayer.getMoney()+i);
-        }
-        return cPlayer.setMoney(cPlayer.getMoney() - 50000);
+
+    public void loseMoneyLindwurm(int i) {
+        setMoney(i);
     }
 
-    public int getMoneyAlterPlatz(int i) {
-        Toast.makeText(this, "Du erhälst 10.000€!", Toast.LENGTH_LONG).show();
-        Player cPlayer = gameController.currentPlayer();
-        int playerIdx = gameController.getPlayerIndex(cPlayer);
-        if(playerIdx >= 0) {
-            gameController.setMoney(playerIdx, cPlayer.getMoney()+i);
-        }
-        return cPlayer.setMoney(cPlayer.getMoney() + 10000);
+    public void loseMoneyStadium(int i) {
+        setMoney(i);
     }
 
-    public int getMoneyKlage(int i) {
-        Toast.makeText(this, "Du erhälst 25.000€!", Toast.LENGTH_LONG).show();
-        Player cPlayer = gameController.currentPlayer();
-        int playerIdx = gameController.getPlayerIndex(cPlayer);
-        if(playerIdx >= 0) {
-            gameController.setMoney(playerIdx, cPlayer.getMoney()+i);
-        }
-        return cPlayer.setMoney(cPlayer.getMoney() + 25000);
+    public void loseMoneyZoo(int i) {
+        setMoney(i);
     }
 
-    public int loseMoneyWoerthersee(int i) {
-        Toast.makeText(this, "Du verlierst 10.000€!", Toast.LENGTH_LONG).show();
-        Player cPlayer = gameController.currentPlayer();
-        int playerIdx = gameController.getPlayerIndex(cPlayer);
-        if(playerIdx >= 0) {
-            gameController.setMoney(playerIdx, cPlayer.getMoney()+i);
-        }
-        return cPlayer.setMoney(cPlayer.getMoney() - 10000);
+    public void getMoneyAlterPlatz(int i) {
+        setMoney(i);
+    }
+
+    public void getMoneyKlage(int i) {
+        setMoney(i);
+    }
+
+    public void loseMoneyWoerthersee(int i) {
+        setMoney(i);
     }
 
     public void startRoulette() {
         Intent it = new Intent(this, MainActivityRoulette.class);
         startActivity(it);
     }
-
 
     public void sendRollDice() {
         gameController.rollTheDice();
@@ -432,9 +405,18 @@ public class MapView extends AppCompatActivity {
         }
     }
 
+    public void showMyAccountBalance(int outcome) {
+        Toast.makeText(this, "Dein Kontostand ändert sich auf " + outcome, Toast.LENGTH_LONG).show();
+    }
+
     public void showSomeonesDiceResult(int player, int outcome) {
         Toast.makeText(this, "Player " + (player + 1) + " diced " + outcome, Toast.LENGTH_LONG).show();
     }
+
+    public void showSomeonesAccountBalance(int player, int outcome) {
+        Toast.makeText(this, "Der Kontostand von Player " + (player + 1) + " ändert sich auf " + outcome, Toast.LENGTH_LONG).show();
+    }
+
 
     public void initPlayerFields() {
         for (int i = 0; i < this.gameController.players.size(); i++) {
