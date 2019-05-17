@@ -22,9 +22,7 @@ import android.widget.Toast;
 
 import com.example.mankomania.R;
 import com.example.mankomania.dice.Dice;
-import com.example.mankomania.network.NetworkConstants;
 import com.example.mankomania.roulette.MainActivityRoulette;
-import com.google.gson.JsonObject;
 
 import java.util.Arrays;
 
@@ -353,8 +351,10 @@ public class MapView extends AppCompatActivity {
 
     }
 
+
     private void getHotel() {
         gameController.getHotel();
+
     }
 
     private void getShare() {
