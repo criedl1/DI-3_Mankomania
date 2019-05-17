@@ -74,6 +74,13 @@ public class GameController {
             mapView.showSomeonesAccountBalance(player, outcome);
         }
     }
+    void showAktienUpdate(int player, Aktien aktien){
+        if (isMyTurn()) {
+            mapView.showMyAktienkauf(aktien);
+        } else {
+            mapView.showSomeonesAktienkauf(player, aktien);
+        }
+    }
 
 
     private boolean isMyTurn() {
@@ -108,16 +115,19 @@ public class GameController {
 
     void setHypoAktie(int player, int count) {
         this.players.get(player).setAktie(Aktien.HYPO, count);
+        showAktienUpdate(player,Aktien.HYPO);
         // TODO: update UI
     }
 
     void setStrabagAktie(int player, int count) {
         this.players.get(player).setAktie(Aktien.STRABAG, count);
+        showAktienUpdate(player,Aktien.STRABAG);
         // TODO: update UI
     }
 
     void setInfineonAktie(int player, int count) {
         this.players.get(player).setAktie(Aktien.INFINEON, count);
+        showAktienUpdate(player,Aktien.INFINEON);
         // TODO: update UI
     }
 
