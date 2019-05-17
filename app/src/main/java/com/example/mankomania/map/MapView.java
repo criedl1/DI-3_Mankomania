@@ -137,7 +137,6 @@ public class MapView extends AppCompatActivity {
     public void movePlayerOut(final Player player) {
         float distance;
         distance = screenWidth;
-
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationX, distance);
         animation.setDuration(1000);
         animation.addListener(new AnimatorListenerAdapter() {
@@ -292,91 +291,87 @@ public class MapView extends AppCompatActivity {
                 startRoulette();
                 break;
             case R.drawable.field_getsomemoney:
-                getMoneyFinanzamt(10000);
-
+                showMoneyUpdate(10000);
                 break;
             case R.drawable.field_lindwurm:
-                loseMoneyLindwurm(-100000);
+                showMoneyUpdate(-100000);
                 break;
             case R.drawable.field_stadium:
-                loseMoneyStadium(-5000);
+                showMoneyUpdate(-5000);
                 break;
             case R.drawable.field_zoo:
-                loseMoneyZoo(-50000);
+                showMoneyUpdate(-50000);
                 break;
             case R.drawable.field_alterplatz:
-                getMoneyAlterPlatz(10000);
+                showMoneyUpdate(10000);
                 break;
             case R.drawable.field_klage:
-                getMoneyKlage(25000);
+                showMoneyUpdate(25000);
                 break;
             case R.drawable.field_woerthersee:
-                loseMoneyWoerthersee(-10000);
+                showMoneyUpdate(-10000);
                 break;
             case R.drawable.field_aktie1:
                 Toast.makeText(this, "Du erhälst die Aktie Hypo!", Toast.LENGTH_LONG).show();
+                // TODO - change method signature if needed and then do your stuff
+                getShare();
                 break;
             case R.drawable.field_aktie2:
                 Toast.makeText(this, "Du erhälst die Aktie Infineon!", Toast.LENGTH_LONG).show();
+                // TODO - change method signature if needed and then do your stuff
+                getShare();
                 break;
             case R.drawable.field_aktie3:
                 Toast.makeText(this, "Du erhälst die Aktie Strabag!", Toast.LENGTH_LONG).show();
+                // TODO - change method signature if needed and then do your stuff
+                getShare();
                 break;
             case R.drawable.field_horserace:
-
+                // TODO - change method signature if needed and then do your stuff
+                startHorseRace();
                 break;
             case R.drawable.field_hotelsandwirth:
                 Toast.makeText(this, "Du erhälst das Hotel Sandwirth!", Toast.LENGTH_LONG).show();
+                // TODO - change method signature if needed and then do your stuff
+                getHotel();
                 break;
             case R.drawable.field_plattenwirt:
                 Toast.makeText(this, "Du erhälst das Hotel Plattenwirt!", Toast.LENGTH_LONG).show();
+                // TODO - change method signature if needed and then do your stuff
+                getHotel();
                 break;
             case R.drawable.field_seeparkhotel:
                 Toast.makeText(this, "Du erhälst das Seepark-Hotel!", Toast.LENGTH_LONG).show();
+                // TODO - change method signature if needed and then do your stuff
+                getHotel();
                 break;
+            default:
+                return;
         }
 
     }
 
-    private void showMoneyUpdate(Player cPlayer, int i) {
+
+    private void getHotel() {
+        gameController.getHotel();
+
+    }
+
+    private void getShare() {
+        gameController.getShare();
+    }
+
+    private void startHorseRace() {
+        gameController.startHorseRace();
+    }
+
+    private void showMoneyUpdate(int amount) {
+        Player cPlayer = gameController.currentPlayer();
         int playerIdx = gameController.getPlayerIndex(cPlayer);
         if (playerIdx >= 0) {
-            gameController.setMoney(playerIdx, cPlayer.getMoney() + i);
-            gameController.updateMoney(i);
+            gameController.setMoney(playerIdx, cPlayer.getMoney() + amount);
+            gameController.updateMoney(amount);
         }
-    }
-
-    private void setMoney(int i) {
-        Player cPlayer = gameController.currentPlayer();
-        showMoneyUpdate(cPlayer, i);
-    }
-
-    public void getMoneyFinanzamt(int i) {
-        setMoney(i);
-    }
-
-    public void loseMoneyLindwurm(int i) {
-        setMoney(i);
-    }
-
-    public void loseMoneyStadium(int i) {
-        setMoney(i);
-    }
-
-    public void loseMoneyZoo(int i) {
-        setMoney(i);
-    }
-
-    public void getMoneyAlterPlatz(int i) {
-        setMoney(i);
-    }
-
-    public void getMoneyKlage(int i) {
-        setMoney(i);
-    }
-
-    public void loseMoneyWoerthersee(int i) {
-        setMoney(i);
     }
 
     public void startRoulette() {
