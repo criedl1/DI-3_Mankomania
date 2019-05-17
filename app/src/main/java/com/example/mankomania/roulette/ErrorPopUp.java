@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatDialogFragment;
 
 import com.example.mankomania.R;
 
-public class ErrorClass extends AppCompatDialogFragment {
+public class ErrorPopUp extends AppCompatDialogFragment {
 
     @Override
     public Dialog onCreateDialog(@NonNull Bundle savedInstanceState) {

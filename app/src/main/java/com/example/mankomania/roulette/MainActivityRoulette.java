@@ -11,6 +11,8 @@ import com.example.mankomania.R;
 
 public class MainActivityRoulette extends AppCompatActivity {
 
+    String choosenActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,39 +39,51 @@ public class MainActivityRoulette extends AppCompatActivity {
         color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openColorActivity();
+                setChoosenActivity("Color");
+                askQuestion(getChoosenActivity());
             }
         });
 
         number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNumberActivity();
+                setChoosenActivity("Number");
+                askQuestion(getChoosenActivity());
             }
         });
 
         dozen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDozenActivity();
+                setChoosenActivity("Number");
+                askQuestion(getChoosenActivity());
             }
         });
     }
 
-    private void openColorActivity(){
-        Intent it = new Intent(this, ColorActivity.class);
-        startActivity(it);
-        finish();
+    public String getChoosenActivity(){
+        return this.choosenActivity;
     }
 
-    private void openNumberActivity(){
-        Intent it = new Intent(this, NumberActivity.class);
-        startActivity(it);
-        finish();
+    public void setChoosenActivity(String choosenActivity){
+        this.choosenActivity = choosenActivity;
     }
 
-    private void openDozenActivity(){
-        Intent it = new Intent(this, DozenActivity.class);
+    //TODO: Work this out
+    public QuestionFragment askQuestion(String choosenActivity){
+        QuestionFragment qf = new QuestionFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("choosenActivity", choosenActivity);
+        qf.setArguments(bundle);
+        return qf;
+    }
+
+    private void spinWheel(){
+
+        //TODO: Unvollständig, Farben, Nummern und Dutzends müssen mitübergeben werden
+
+        Intent it = new Intent(this, RouletteLogic.class);
+        it.putExtra("choosenActivity", choosenActivity);
         startActivity(it);
         finish();
     }

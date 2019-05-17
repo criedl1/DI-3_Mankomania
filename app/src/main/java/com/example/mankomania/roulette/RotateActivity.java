@@ -103,14 +103,14 @@ public class RotateActivity extends AppCompatActivity {
     }
 
     private void openPopUp() {
-        PopClass popClass = new PopClass();
-        popClass.show(getSupportFragmentManager(), "alert");
+        PopUp popUp = new PopUp();
+        popUp.show(getSupportFragmentManager(), "alert");
 
         Bundle extras = new Bundle();
         extras.putString("returnString", returnString);
         extras.putInt("randomNumber", randomNumber); //toString() is not possible here
         extras.putString("color", color.toString());
-        popClass.setArguments(extras);
+        popUp.setArguments(extras);
     }
 
     protected ColorEnum getColor() {

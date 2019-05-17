@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatDialogFragment;
 
 import com.example.mankomania.R;
 
-public class PopClass extends AppCompatDialogFragment {
+public class PopUp extends AppCompatDialogFragment {
 
     private String theNumberIsString;
     private String colorString;
