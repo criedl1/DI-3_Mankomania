@@ -1,18 +1,23 @@
 package com.example.mankomania.slotmachine;
 
+import android.media.Image;
 import android.widget.ImageView;
 
 public class Symbol {
-    ImageView image;
+    int image;
     int id;
 
-    protected Symbol(ImageView iv, int id){
+    protected Symbol(int image, int id){
         this.id = id;
-        this.image = iv;
+        this.image = image;
     }
 
-    protected ImageView getImage(){
+    protected int getImage(){
         return this.image;
+    }
+
+    protected void setImage(int image){
+        this.image = image;
     }
 
     protected int getId(){

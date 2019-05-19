@@ -25,9 +25,6 @@
     <string name="roulette_invalid_number">Ungültige Zahl!</string>
     <string name="roulette_enter_number_between">Bitte gib eine Zahl zwischen 0 und 36 ein!</string>
     <string name="casino_ok">OK</string>
-    <string name="slot_you_have">Du hast </string>
-    <string name="slot_win"> gewonnen!</string>
-    <string name="slot_lost"> verloren!</string>
     <string name="display_ip">Display IP</string>
     <string name="to_game">zum Spielfeld</string>
     <string name="connect_to_lobby">Connect to Lobby</string>

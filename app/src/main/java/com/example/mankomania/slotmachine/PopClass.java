@@ -23,8 +23,8 @@ public class PopClass extends AppCompatDialogFragment {
         returnString = getArguments().getString("returnString");
 
 
-        alert.setTitle(getString(R.string.slot_you_have) + returnString);
-        alert.setMessage(getString(R.string.slot_you_have) + amount + returnString);
+        alert.setTitle(returnString);
+        alert.setMessage(returnString);
         alert.setPositiveButton(getString(R.string.casino_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
