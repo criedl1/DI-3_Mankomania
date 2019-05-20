@@ -55,7 +55,7 @@ public class MainActivityRoulette extends AppCompatActivity {
         dozen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setChoosenActivity("Number");
+                setChoosenActivity("Dozen");
                 askQuestion(getChoosenActivity());
             }
         });
@@ -70,21 +70,11 @@ public class MainActivityRoulette extends AppCompatActivity {
     }
 
     //TODO: Work this out
-    public QuestionFragment askQuestion(String choosenActivity){
-        QuestionFragment qf = new QuestionFragment();
+    public void askQuestion(String choosenActivity){
+        Intent it = new Intent(this, QuestionActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("choosenActivity", choosenActivity);
-        qf.setArguments(bundle);
-        return qf;
-    }
-
-    private void spinWheel(){
-
-        //TODO: Unvollständig, Farben, Nummern und Dutzends müssen mitübergeben werden
-
-        Intent it = new Intent(this, RouletteLogic.class);
-        it.putExtra("choosenActivity", choosenActivity);
+        it.putExtras(bundle);
         startActivity(it);
-        finish();
     }
 }

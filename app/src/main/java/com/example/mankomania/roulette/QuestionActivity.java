@@ -1,39 +1,27 @@
-/*
 package com.example.mankomania.roulette;
 
-
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.mankomania.R;
 
-public class QuestionFragment extends Fragment {
-
+public class QuestionActivity extends AppCompatActivity {
     private int choosenNumber;
     private ColorEnum choosenColor;
     private String choosenDozen;
     private RouletteLogic roulette;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        return inflater.inflate(R.layout.activity_question, container, false);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Bundle bundle = getArguments();
-        final String choosenActivity = bundle.getString("choosenActivity");
+        setContentView(R.layout.activity_question);
+        Intent it = getIntent();
+        String choosenActivity = it.getStringExtra("choosenActivity");
 
         if (choosenActivity.equals("Number")) {
             getNumberSetUp();
@@ -54,13 +42,16 @@ public class QuestionFragment extends Fragment {
 
     private void openErrorPopUp() {
         ErrorPopUp error = new ErrorPopUp();
-        error.show(getFragmentManager(), "alert");
+        error.show(getSupportFragmentManager(), "alert");
     }
 
     public void getNumberSetUp(){
-        final EditText number = getActivity().findViewById(R.id.etInsertNumber);
-        final TextView selectNumber = getActivity().findViewById(R.id.tvSelectNumber);
-        Button go = getActivity().findViewById(R.id.btnGo);
+        final EditText number = findViewById(R.id.etInsertNumber);
+        number.setVisibility(View.VISIBLE);
+        final TextView selectNumber = findViewById(R.id.tvSelectNumber);
+        selectNumber.setVisibility(View.VISIBLE);
+        Button go = findViewById(R.id.btnGo);
+        go.setVisibility(View.VISIBLE);
 
         selectNumber.setText(getString(R.string.roulette_choose_number));
         number.setHint(getString(R.string.roulette_enter_number));
@@ -73,16 +64,20 @@ public class QuestionFragment extends Fragment {
                 if (choosenNumber > 36 || choosenNumber < 0 || number.getText().toString().isEmpty()) {
                     openErrorPopUp();
                 } else {
-                   roulette = new RouletteLogic(choosenNumber);
+                    roulette = new RouletteLogic(choosenNumber);
+                    startRotating();
                 }
             }
         });
     }
 
     public void getColorSetUp(){
-        Button red = getActivity().findViewById(R.id.btnRed);
-        Button black = getActivity().findViewById(R.id.btnBlack);
-        TextView selectColor = getActivity().findViewById(R.id.tvSelectColor);
+        Button red = findViewById(R.id.btnRed);
+        red.setVisibility(View.VISIBLE);
+        Button black = findViewById(R.id.btnBlack);
+        black.setVisibility(View.VISIBLE);
+        TextView selectColor = findViewById(R.id.tvSelectColor);
+        selectColor.setVisibility(View.VISIBLE);
 
         red.setText(getString(R.string.color_red));
         black.setText(getString(R.string.color_black));
@@ -93,7 +88,7 @@ public class QuestionFragment extends Fragment {
             public void onClick(View v) {
                 choosenColor = ColorEnum.RED;
                 roulette = new RouletteLogic(choosenColor);
-                finish();
+                startRotating();
             }
         });
 
@@ -101,19 +96,24 @@ public class QuestionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 choosenColor = ColorEnum.BLACK;
-                finish();
+                roulette = new RouletteLogic(choosenColor);
+                startRotating();
             }
         });
     }
 
     public void getDozenSetUp(){
-        TextView selectDozen = getActivity().findViewById(R.id.tvSelectDozen);
+        TextView selectDozen = findViewById(R.id.tvSelectDozen);
 
-        Button btn1 = getActivity().findViewById(R.id.btn1_12);
-        Button btn13 = getActivity().findViewById(R.id.btn13_24);
-        Button btn25 = getActivity().findViewById(R.id.btn25_36);
+        Button btn1 = findViewById(R.id.btn1_12);
+        btn1.setVisibility(View.VISIBLE);
+        Button btn13 = findViewById(R.id.btn13_24);
+        btn13.setVisibility(View.VISIBLE);
+        Button btn25 = findViewById(R.id.btn25_36);
+        btn25.setVisibility(View.VISIBLE);
 
         selectDozen.setText(getString(R.string.roulette_choose_dozen));
+        selectDozen.setVisibility(View.VISIBLE);
 
         btn1.setText(getString(R.string.roulette_first_dozen));
         btn13.setText(getString(R.string.roulette_second_dozen));
@@ -125,7 +125,7 @@ public class QuestionFragment extends Fragment {
                 choosenDozen = "1";
                 //TODO: Check, if Integer.parseInt works correctly!!
                 roulette = new RouletteLogic(choosenDozen);
-                finish();
+                startRotating();
             }
         });
 
@@ -134,7 +134,7 @@ public class QuestionFragment extends Fragment {
             public void onClick(View v) {
                 choosenDozen = "2";
                 roulette = new RouletteLogic(choosenDozen);
-                finish();
+                startRotating();
             }
         });
 
@@ -143,13 +143,20 @@ public class QuestionFragment extends Fragment {
             public void onClick(View v) {
                 choosenDozen = "3";
                 roulette = new RouletteLogic(choosenDozen);
-                finish();
+                startRotating();
             }
         });
     }
 
-    private void finish() {
-        Intent it = new Intent(getActivity(), RotateActivity.class);
+    private void startRotating() {
+        Intent it = new Intent(this, RotateActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("returnString", roulette.getReturnString());
+        bundle.putSerializable("Color", roulette.getColorFromRoulette());
+        bundle.putInt("randomNumber", roulette.getRandomNumberFromRoulette());
+        bundle.putFloat("degree", roulette.getDegreeFromRoulette());
+        bundle.putString("colorString", roulette.getColorString());
+        it.putExtras(bundle);
         startActivity(it);
     }
-}*/
+}

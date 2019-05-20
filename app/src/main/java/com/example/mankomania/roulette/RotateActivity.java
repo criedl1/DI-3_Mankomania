@@ -23,6 +23,7 @@ public class RotateActivity extends AppCompatActivity {
     private String returnString;
     private ColorEnum color;
     private int randomNumber;
+    private String colorString;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -34,6 +35,7 @@ public class RotateActivity extends AppCompatActivity {
         Bundle extras = it.getExtras();
         returnString = extras.getString("returnString");
         color = (ColorEnum) extras.get("color");
+        colorString = extras.getString("colorString");
         randomNumber = extras.getInt("randomNumber");
         degree = extras.getFloat("degree");
 
@@ -103,18 +105,17 @@ public class RotateActivity extends AppCompatActivity {
     }
 
     private void openPopUp() {
-        PopUp popUp = new PopUp();
-        popUp.show(getSupportFragmentManager(), "alert");
+        PopUp popClass = new PopUp();
+        popClass.show(getSupportFragmentManager(), "alert");
 
         Bundle extras = new Bundle();
         extras.putString("returnString", returnString);
         extras.putInt("randomNumber", randomNumber); //toString() is not possible here
-        extras.putString("color", color.toString());
-        popUp.setArguments(extras);
+        extras.putString("color", colorString);
+        popClass.setArguments(extras);
     }
 
     protected ColorEnum getColor() {
         return color;
     }
-
 }

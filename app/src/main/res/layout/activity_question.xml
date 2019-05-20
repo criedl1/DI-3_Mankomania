@@ -8,6 +8,7 @@
 
     <EditText
         android:id="@+id/etInsertNumber"
+        android:visibility="invisible"
         android:layout_width="139dp"
         android:layout_height="69dp"
         android:layout_marginStart="8dp"
@@ -23,6 +24,7 @@
 
     <TextView
         android:id="@+id/tvSelectNumber"
+        android:visibility="invisible"
         android:layout_width="173dp"
         android:layout_height="75dp"
         android:layout_marginStart="8dp"
@@ -37,6 +39,7 @@
 
     <Button
         android:id="@+id/btnGo"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -52,6 +55,7 @@
 
     <Button
         android:id="@+id/btnBlack"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -64,6 +68,7 @@
 
     <Button
         android:id="@+id/btnRed"
+        android:visibility="invisible"
         android:layout_width="84dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -76,6 +81,7 @@
 
     <TextView
         android:id="@+id/tvSelectColor"
+        android:visibility="invisible"
         android:layout_width="174dp"
         android:layout_height="62dp"
         android:layout_marginStart="8dp"
@@ -91,6 +97,7 @@
 
     <TextView
         android:id="@+id/tvSelectDozen"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -106,6 +113,7 @@
 
     <Button
         android:id="@+id/btn1-12"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -121,6 +129,7 @@
 
     <Button
         android:id="@+id/btn13-24"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -136,6 +145,7 @@
 
     <Button
         android:id="@+id/btn25-36"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
