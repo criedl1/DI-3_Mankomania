@@ -5,6 +5,9 @@ import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -19,15 +22,16 @@ public class SlotMachineActivity extends AppCompatActivity {
 
     public int money;
     private List<Symbol> slotList = new ArrayList<>();
-    Symbol cherry = new Symbol(R.drawable.cherry, 1);
-    Symbol dollar = new Symbol(R.drawable.dollar, 2);
-    Symbol star = new Symbol(R.drawable.star, 3);
-    Symbol seven = new Symbol(R.drawable.sieben, 7);
-    ImageView slot1;
-    ImageView slot2;
-    ImageView slot3;
-    Button spin;
-    String returnString;
+    private Symbol cherry = new Symbol(R.drawable.cherry, 0);
+    private Symbol dollar = new Symbol(R.drawable.dollar, 1);
+    private Symbol star = new Symbol(R.drawable.star, 2);
+    private Symbol seven = new Symbol(R.drawable.sieben, 3);
+    private ImageView slot1;
+    private ImageView slot2;
+    private ImageView slot3;
+    private Button spin;
+    private String returnString;
+    private String winString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +59,17 @@ public class SlotMachineActivity extends AppCompatActivity {
 
     public void startMachine() {
 
-        for (int j = 0; j < 3; j++) {
-            for (int i = 0; i < slotList.size(); i++) {
-                slot1.setImageResource(slotList.get(i).getImage());
-            }
-            for (int i = 1; i < slotList.size(); i++) {
-                slot2.setImageResource(slotList.get(i).getImage());
-            }
-            for (int i = 2; i < slotList.size(); i++) {
-                slot3.setImageResource(slotList.get(i).getImage());
-            }
-        }
+        //TODO: Animation does not work correctly
 
-        checkWin();
+        slot1.setImageResource(slotList.get(0).getImage());
+        startAnimation(slot1);
+        slot2.setImageResource(slotList.get(1).getImage());
+        startAnimation(slot2);
+        slot3.setImageResource(slotList.get(2).getImage());
+        startAnimation(slot3);
+        slot1.postDelayed(animationRunnable(slot1,1),500);
+        slot3.postDelayed(createRunnable(),3000);
+        slot3.postDelayed(waitForPopUp(),4000);
     }
 
     public void checkWin(){
@@ -92,24 +94,65 @@ public class SlotMachineActivity extends AppCompatActivity {
         if (id1 == id2 && id2 == id3) {
             if (id1 == 3) { //When player has three dollar signs
                 money = 230000;
-                returnString = "Du hast " + money + " gewonnen!";
-                openPopUp();
+                winString = "Gewonnen!";
+                returnString = "Hauptgewinn! Du hast " + money + " gewonnen!";
 
             } else {
                 money = 120000;
-                returnString = "Du hast " + money + " gewonnen!";
-                openPopUp();
+                winString = "Gewonnen!";
+                returnString = "Drei gleiche Symbole! Du hast " + money + " gewonnen!";
             }
         } else if (id1 == id2 || id2 == id3 || id1 == id3) {
             money = 50000;
-            returnString = "Du hast " + money + " gewonnen!";
-            openPopUp();
+            winString = "Gewonnen!";
+            returnString = "Zwei gleiche Symbole! Du hast " + money + " gewonnen!";
         }
         else{
             money = -20000;
+            winString = "Verloren!";
             returnString = "Du hast " + money*-1 + " verloren!";
-            openPopUp();
         }
+    }
+
+    private Runnable createRunnable() {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                checkWin();
+            }
+        };
+        return runnable;
+    }
+
+    private Runnable waitForPopUp(){
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                openPopUp();
+            }
+        };
+        return runnable;
+    }
+
+    private Runnable animationRunnable(final ImageView iv, final int i){
+        Runnable r = new Runnable() {
+
+
+            @Override
+            public void run() {
+                if (i >= 2){
+                    throw new IllegalArgumentException();
+                }
+                slot1.setImageResource(slotList.get(i).getImage());
+                startAnimation(slot1);
+                slot2.setImageResource(slotList.get(i+1).getImage());
+                startAnimation(slot2);
+                slot3.setImageResource(slotList.get(i+2).getImage());
+                startAnimation(slot3);
+                startAnimation(iv);
+            }
+        }; return r;
     }
 
     private void openPopUp() {
@@ -118,7 +161,17 @@ public class SlotMachineActivity extends AppCompatActivity {
         Bundle extras = new Bundle();
         extras.putInt("amount", money);
         extras.putString("returnString", returnString);
+        extras.putString("winString", winString);
         popClass.setArguments(extras);
     }
-}
 
+    private Animation startAnimation(ImageView iv){
+        Animation animation = new AlphaAnimation(1, 0);
+        animation.setDuration(600);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(2);
+        animation.setRepeatMode(1);
+        iv.startAnimation(animation);
+        return animation;
+    }
+}
