@@ -18,7 +18,7 @@ public class ErrorPopUp extends AppCompatDialogFragment {
 
         alert.setTitle(getString(R.string.roulette_invalid_number));
         alert.setMessage(getString(R.string.roulette_enter_number_between));
-        alert.setPositiveButton(getString(R.string.roulette_ok), new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(getString(R.string.casino_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //by letting this empty, the pop-up closes

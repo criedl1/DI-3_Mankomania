@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".slotmachine.SlotMachineActivity">
+
+    <ImageView
+        android:id="@+id/ivMachine"
+        android:layout_width="747dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/slotmachine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnSpin"
+        android:layout_width="134dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="516dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.136"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/ivSlot1"
+        android:layout_width="138dp"
+        android:layout_height="166dp"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="112dp"
+        android:visibility="visible"
+        app:srcCompat="@drawable/whitelayer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivSlot2"
+        android:layout_width="138dp"
+        android:layout_height="166dp"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="112dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/whitelayer" />
+
+    <ImageView
+        android:id="@+id/ivSlot3"
+        android:layout_width="138dp"
+        android:layout_height="166dp"
+        android:layout_marginStart="472dp"
+        android:layout_marginTop="112dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/whitelayer" />
+
+</android.support.constraint.ConstraintLayout>

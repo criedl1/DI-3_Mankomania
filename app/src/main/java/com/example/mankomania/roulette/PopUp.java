@@ -35,7 +35,7 @@ public class PopUp extends AppCompatDialogFragment {
         }
 
         alert.setMessage(getString(R.string.roulette_result, getTheNumberIsString(), getColorString()));
-        alert.setPositiveButton(getString(R.string.roulette_ok), new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(getString(R.string.casino_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //by letting this empty, the pop-up closes when button is pressed.
