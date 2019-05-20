@@ -14,11 +14,11 @@ public class GameController {
     List<Player> players;
 
 
-    public static int[] allfields = { R.drawable.field_start, R.drawable.field_aktie1, R.drawable.field_lindwurm,
+    public static int[] allfields = {R.drawable.field_start, R.drawable.field_aktie1, R.drawable.field_lindwurm,
             R.drawable.field_lottery, R.drawable.field_casino, R.drawable.field_getsomemoney,
             R.drawable.field_alterplatz, R.drawable.field_aktie2, R.drawable.field_horserace,
             R.drawable.field_stadium, R.drawable.field_casino, R.drawable.field_alterplatz,
-            R.drawable.field_horserace, R.drawable.field_lindwurm,R.drawable.field_klage,
+            R.drawable.field_horserace, R.drawable.field_lindwurm, R.drawable.field_klage,
             R.drawable.field_hotelsandwirth, R.drawable.field_getsomemoney, R.drawable.field_aktie2,
             R.drawable.field_woerthersee, R.drawable.field_horserace, R.drawable.field_casino,
             R.drawable.field_zoo, R.drawable.field_aktie3, R.drawable.field_lindwurm,
@@ -35,17 +35,17 @@ public class GameController {
     private int lotto;
     private int hasTurn;
 
-    GameController( String ip, MapView mapView){
+    GameController(String ip, MapView mapView) {
         this.mapView = mapView;
         players = new ArrayList<>();
 
         this.initReceiver();
         client = new Client();
         client.init(ip, mapView);
-        Log.i("JONTEST", "Start Client with IP "+ip);
+        Log.i("JONTEST", "Start Client with IP " + ip);
     }
 
-    void startClient(){
+    void startClient() {
         client.start();
     }
 
@@ -60,29 +60,47 @@ public class GameController {
 
 
     void rollDiceUpdate(int player, int outcome) {
-        if(isMyTurn()){
+        if (isMyTurn()) {
             mapView.showMyDiceResult(outcome);
-        }else{
-            mapView.showSomeonesDiceResult(player,outcome);
+        } else {
+            mapView.showSomeonesDiceResult(player, outcome);
         }
     }
 
-    private boolean isMyTurn() {
-        return hasTurn==myID;
+    void showMoneyUpdate(int player, int outcome) {
+        if (isMyTurn()) {
+            mapView.showMyAccountBalance(outcome);
+        } else {
+            mapView.showSomeonesAccountBalance(player, outcome);
+        }
+    }
+
+
+    boolean isMyTurn() {
+        return hasTurn == myID;
     }
 
     void rollTheDice() {
         client.rollTheDice();
     }
 
+    void updateMoney(int balance) {
+        if (balance < 0)
+            balance = -balance;
+        client.updateMoney(balance);
+        client.endTurn();
+    }
+
     void setMyPlayerID(int player) {
         this.myID = player;
-
+        this.players.get(myID).initMyMoneyField();
     }
 
     public void setMoney(int player, int money) {
         this.players.get(player).setMoney(money);
+        showMoneyUpdate(player, money);
     }
+
 
     void setPosition(int player, int position) {
         this.mapView.step1();
@@ -91,7 +109,7 @@ public class GameController {
     }
 
     void setHypoAktie(int player, int count) {
-        this.players.get(player).setAktie(Aktien.HYPO,count);
+        this.players.get(player).setAktie(Aktien.HYPO, count);
         // TODO: update UI
     }
 
@@ -111,7 +129,7 @@ public class GameController {
 
     void setLotto(int amount) {
         this.lotto = amount;
-        //TODO: Update UI
+        mapView.setLotto(this.lotto);
     }
 
     void setHotel(int hotel, int owner) {
@@ -124,13 +142,13 @@ public class GameController {
 
     void setTurn(int player) {
         boolean wasMyTurn = false;
-        if(isMyTurn() && player != myID){
+        if (isMyTurn() && player != myID) {
             wasMyTurn = true;
         }
         this.hasTurn = player;
-        if(isMyTurn()){
+        if (isMyTurn()) {
             mapView.startMyTurn();
-        }else if(wasMyTurn){
+        } else if (wasMyTurn) {
             mapView.endMyTurn();
         }
     }
@@ -147,12 +165,47 @@ public class GameController {
     }
 
     void setRouletteResult(int moneyChange) {
-        client.setMoneyOnServer(this.myID,this.currentPlayer().getMoney()+moneyChange);
+        client.setMoneyOnServer(this.myID, this.currentPlayer().getMoney() + moneyChange);
         // TODO: end Turn with a Button ?
         client.endTurn();
     }
 
+
+    /**
+     * gibt Listen-Index des übergebenen Spielers aus
+     *
+     * @param p Player-Objekt
+     * @return Index, wenn p in Liste gefunden, -1 sonst.
+     */
+    int getPlayerIndex(Player p) {
+        for (int i = 0; i < players.size(); i++) {
+            if (p.equals(players.get(i)))
+                return i;
+        }
+        return -1;
+    }
+
     void setPlayerIP(int player, String ip) {
         this.players.get(player).setIP(ip);
+    }
+
+    public void startHorseRace() {
+        // TODO - horse race
+        client.endTurn();
+    }
+
+    public void getShare() {
+        // TODO - add share
+        client.endTurn();
+    }
+
+    public void getHotel() {
+        // TODO - add hotel
+        client.endTurn();
+    }
+
+    void sendMoveOverLotto() {
+        this.setMoney(hasTurn, this.currentPlayer().getMoney()-5000);
+        this.client.setLottoOnServer(this.lotto+5000);
     }
 }

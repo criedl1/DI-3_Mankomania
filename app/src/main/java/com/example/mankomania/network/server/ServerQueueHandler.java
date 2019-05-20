@@ -205,9 +205,6 @@ public class ServerQueueHandler extends QueueHandler {
 
         //sendData
         sendMoney(player,money);
-        gameData.setTurn((gameData.getHasTurn()+1)%gameData.getPlayerCount());
-        startTurn(gameData.getHasTurn());
-
     }
 
     private void sendAllClients(String message) {
