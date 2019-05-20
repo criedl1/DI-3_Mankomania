@@ -47,5 +47,6 @@
     <string name="figure_of_player_4">Figure of Player 4</string>
     <string name="movetest">moveTest</string>
     <string name="setmoney">setmoney</string>
+    <string name="lottery_toast">Du bist über die Lotterie gegangen, du verlierst 5000</string>
 
 </resources>

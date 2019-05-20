@@ -1,5 +1,6 @@
 package com.example.mankomania.map;
 
+import android.graphics.Color;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -109,6 +110,10 @@ public class Player {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    void initMyMoneyField() {
+        this.currentmoney.setBackgroundColor(Color.GREEN);
     }
 }
 
