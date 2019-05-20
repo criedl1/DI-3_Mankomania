@@ -76,7 +76,7 @@ public class GameController {
     }
 
 
-    private boolean isMyTurn() {
+    boolean isMyTurn() {
         return hasTurn == myID;
     }
 
@@ -93,7 +93,7 @@ public class GameController {
 
     void setMyPlayerID(int player) {
         this.myID = player;
-
+        this.players.get(myID).initMyMoneyField();
     }
 
     public void setMoney(int player, int money) {
@@ -129,7 +129,7 @@ public class GameController {
 
     void setLotto(int amount) {
         this.lotto = amount;
-        //TODO: Update UI
+        mapView.setLotto(this.lotto);
     }
 
     void setHotel(int hotel, int owner) {
@@ -202,5 +202,10 @@ public class GameController {
     public void getHotel() {
         // TODO - add hotel
         client.endTurn();
+    }
+
+    void sendMoveOverLotto() {
+        this.setMoney(hasTurn, this.currentPlayer().getMoney()-5000);
+        this.client.setLottoOnServer(this.lotto+5000);
     }
 }
