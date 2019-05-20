@@ -37,6 +37,7 @@ public class PopClass extends AppCompatDialogFragment {
                 bundle.putInt("slotMoney", money);
                 it.putExtras(bundle);
                 startActivity(it);
+                getActivity().finish();
             }
         });
         return alert.create();

@@ -15,13 +15,16 @@ public class QuestionActivity extends AppCompatActivity {
     private ColorEnum choosenColor;
     private String choosenDozen;
     private RouletteLogic roulette;
+    private int slotMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         Intent it = getIntent();
-        String choosenActivity = it.getStringExtra("choosenActivity");
+        Bundle extras = it.getExtras();
+        String choosenActivity = extras.getString("choosenActivity");
+        slotMoney = extras.getInt("slotMoney");
 
         if (choosenActivity.equals("Number")) {
             getNumberSetUp();
@@ -156,6 +159,7 @@ public class QuestionActivity extends AppCompatActivity {
         bundle.putInt("randomNumber", roulette.getRandomNumberFromRoulette());
         bundle.putFloat("degree", roulette.getDegreeFromRoulette());
         bundle.putString("colorString", roulette.getColorString());
+        bundle.putInt("slotMoney", slotMoney);
         it.putExtras(bundle);
         startActivity(it);
         finish();

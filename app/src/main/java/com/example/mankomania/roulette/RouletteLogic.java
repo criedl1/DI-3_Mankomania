@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.example.mankomania.network.client.Client;
+import com.example.mankomania.slotmachine.SlotMachineActivity;
 import com.google.gson.JsonObject;
 
 public class RouletteLogic {
@@ -49,14 +50,14 @@ public class RouletteLogic {
                 if (anArray.getColor() == choosenColor) {
                     setMoney(30000); //--> 80000-50000 Einsatz
                     setReturnString("Du hast " +  getMoney() + " gewonnen.");
-                    moneyAmount = getMoney();
+                    moneyAmount =  getMoney() + SlotMachineActivity.getMoneyamout();
 
                 } else {
                     setMoney(-5000); //Einsatz
                     setReturnString("Du hast " +  getMoney() * -1 + " verloren.");
-                    moneyAmount = getMoney();
+                    moneyAmount =  getMoney() + SlotMachineActivity.getMoneyamout();
                 }
-                //sendMoneyChange(getMoney());
+                sendMoneyChange(getMoney());
             }
         }
     }
@@ -68,10 +69,10 @@ public class RouletteLogic {
             setReturnString("Du hast " +  getMoney() + " gewonnen.");
         } else {
             setMoney(- 50000); //Einsatz
-            moneyAmount = getMoney();
+            moneyAmount =  getMoney() + SlotMachineActivity.getMoneyamout();
             setReturnString("Du hast " +  getMoney() * -1 + " verloren.");
         }
-        //this.sendMoneyChange(getMoney());
+        this.sendMoneyChange(getMoney());
         return money;
     }
 
@@ -93,13 +94,13 @@ public class RouletteLogic {
         if (choosenDozen == dozen){
             setMoney(80000); //100000 - 20000 Einsatz
             setReturnString("Du hast " +  getMoney() + " gewonnen.");
-            moneyAmount = getMoney();}
+            moneyAmount = getMoney() + SlotMachineActivity.getMoneyamout();}
         else {
             setMoney(- 20000);
             setReturnString("Du hast " +  getMoney() * -1 + " verloren.");
-            moneyAmount = getMoney();
+            moneyAmount = getMoney() + SlotMachineActivity.getMoneyamout();
         }
-        //this.sendMoneyChange(getMoney());
+        this.sendMoneyChange(getMoney());
     }
 
     public int getRandomNumberFromRoulette() {
@@ -118,7 +119,7 @@ public class RouletteLogic {
         return roulette.getTheField().getColor().toString();
     }
 
-    /*
+
     private void sendMoneyChange(int rouletteResult) {
         JsonObject object = new JsonObject();
         object.addProperty("result", rouletteResult);
@@ -127,7 +128,7 @@ public class RouletteLogic {
         intent.putExtra("result", object.toString());
         LocalBroadcastManager.getInstance(Client.mapView)
                 .sendBroadcast(intent);
-    }*/
+    }
 
     public int getMoney() {
         return money;

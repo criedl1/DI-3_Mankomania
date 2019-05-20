@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.example.mankomania.R;
 import com.example.mankomania.dice.Dice;
-import com.example.mankomania.roulette.MainActivityRoulette;
+import com.example.mankomania.slotmachine.SlotMachineActivity;
 
 import java.util.Arrays;
 
@@ -186,7 +186,7 @@ public class MapView extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
 
                 super.onAnimationEnd(animation);
-                startRoulette();
+                startCasino();
                 runFieldAction(player.getCurrentField());
             }
         });
@@ -298,7 +298,7 @@ public class MapView extends AppCompatActivity {
             int fieldID = GameController.allfields[currentField];
             switch (fieldID) {
                 case R.drawable.field_casino:
-                    startRoulette();
+                    startCasino();
                     break;
                 case R.drawable.field_getsomemoney:
                     showMoneyUpdate(10000);
@@ -385,8 +385,8 @@ public class MapView extends AppCompatActivity {
         }
     }
 
-    public void startRoulette() {
-        Intent it = new Intent(this, MainActivityRoulette.class);
+    public void startCasino() {
+        Intent it = new Intent(this, SlotMachineActivity.class);
         startActivity(it);
     }
 

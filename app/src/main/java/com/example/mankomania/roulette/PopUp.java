@@ -14,6 +14,7 @@ public class PopUp extends AppCompatDialogFragment {
     private String theNumberIsString;
     private String colorString;
     private String returnString;
+    private int slotMoney;
 
     @NonNull
     @Override

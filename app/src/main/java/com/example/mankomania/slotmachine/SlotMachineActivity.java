@@ -20,7 +20,8 @@ import java.util.concurrent.TimeUnit;
 
 public class SlotMachineActivity extends AppCompatActivity {
 
-    public int money;
+    private int money;
+    private static int moneyamout; //for Network
     private List<Symbol> slotList = new ArrayList<>();
     private Symbol cherry = new Symbol(R.drawable.cherry, 0);
     private Symbol dollar = new Symbol(R.drawable.dollar, 1);
@@ -94,21 +95,25 @@ public class SlotMachineActivity extends AppCompatActivity {
         if (id1 == id2 && id2 == id3) {
             if (id1 == 3) { //When player has three dollar signs
                 money = 230000;
+                moneyamout = money;
                 winString = "Gewonnen!";
                 returnString = "Hauptgewinn! Du hast " + money + " gewonnen!";
 
             } else {
                 money = 120000;
+                moneyamout = money;
                 winString = "Gewonnen!";
                 returnString = "Drei gleiche Symbole! Du hast " + money + " gewonnen!";
             }
         } else if (id1 == id2 || id2 == id3 || id1 == id3) {
             money = 50000;
+            moneyamout = money;
             winString = "Gewonnen!";
             returnString = "Zwei gleiche Symbole! Du hast " + money + " gewonnen!";
         }
         else{
             money = -20000;
+            moneyamout = money;
             winString = "Verloren!";
             returnString = "Du hast " + money*-1 + " verloren!";
         }
@@ -173,5 +178,9 @@ public class SlotMachineActivity extends AppCompatActivity {
         animation.setRepeatMode(1);
         iv.startAnimation(animation);
         return animation;
+    }
+
+    public static int getMoneyamout(){
+        return moneyamout;
     }
 }
