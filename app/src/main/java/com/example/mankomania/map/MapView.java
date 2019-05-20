@@ -186,7 +186,6 @@ public class MapView extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
 
                 super.onAnimationEnd(animation);
-                startCasino();
                 runFieldAction(player.getCurrentField());
             }
         });

@@ -1,7 +1,6 @@
 package com.example.mankomania.slotmachine;
 
 import android.graphics.Color;
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.example.mankomania.R;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class SlotMachineActivity extends AppCompatActivity {
 
@@ -30,7 +28,6 @@ public class SlotMachineActivity extends AppCompatActivity {
     private ImageView slot1;
     private ImageView slot2;
     private ImageView slot3;
-    private Button spin;
     private String returnString;
     private String winString;
 
@@ -48,7 +45,7 @@ public class SlotMachineActivity extends AppCompatActivity {
         slotList.add(seven);
         slotList.add(dollar);
 
-        spin = findViewById(R.id.btnSpin);
+        Button spin = findViewById(R.id.btnSpin);
         spin.setBackgroundColor(Color.TRANSPARENT);
         spin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,26 +91,26 @@ public class SlotMachineActivity extends AppCompatActivity {
 
         if (id1 == id2 && id2 == id3) {
             if (id1 == 3) { //When player has three dollar signs
-                money = 230000;
-                moneyamout = money;
+                setMoney(230000);
+                setMoneyamout(getMoney());
                 winString = "Gewonnen!";
                 returnString = "Hauptgewinn! Du hast " + money + " gewonnen!";
 
             } else {
-                money = 120000;
-                moneyamout = money;
+                setMoney(120000);
+                setMoneyamout(getMoney());
                 winString = "Gewonnen!";
                 returnString = "Drei gleiche Symbole! Du hast " + money + " gewonnen!";
             }
         } else if (id1 == id2 || id2 == id3 || id1 == id3) {
-            money = 50000;
-            moneyamout = money;
+            setMoney(50000);
+            setMoneyamout(getMoney());
             winString = "Gewonnen!";
             returnString = "Zwei gleiche Symbole! Du hast " + money + " gewonnen!";
         }
         else{
-            money = -20000;
-            moneyamout = money;
+            setMoney(-20000);
+            setMoneyamout(getMoney());
             winString = "Verloren!";
             returnString = "Du hast " + money*-1 + " verloren!";
         }
@@ -182,5 +179,17 @@ public class SlotMachineActivity extends AppCompatActivity {
 
     public static int getMoneyamout(){
         return moneyamout;
+    }
+
+    public void setMoney(int money){
+        this.money = money;
+    }
+
+    public int getMoney(){
+        return this.money;
+    }
+
+    private static void setMoneyamout(int newMoneyAmount){
+        moneyamout = newMoneyAmount;
     }
 }
