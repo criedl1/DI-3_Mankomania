@@ -54,13 +54,11 @@ public class RouletteClass {
                 fieldClass26};
 
         this.fieldClassArray = tempArray;
-
         return tempArray;
     }
 
     public int spinIt(){
         setUpFields();
-
         SecureRandom random = new SecureRandom();
 
         randomNumber = random.nextInt(36);
@@ -80,4 +78,11 @@ public class RouletteClass {
         return randomNumber;
     }
 
+    public int getFieldArrayLength(){
+        return fieldClassArray.length;
+    }
+
+    public FieldClass[] getFieldClassArray() {
+        return fieldClassArray;
+    }
 }

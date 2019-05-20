@@ -158,5 +158,6 @@ public class QuestionActivity extends AppCompatActivity {
         bundle.putString("colorString", roulette.getColorString());
         it.putExtras(bundle);
         startActivity(it);
+        finish();
     }
 }

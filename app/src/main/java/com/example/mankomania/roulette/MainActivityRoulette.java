@@ -76,5 +76,6 @@ public class MainActivityRoulette extends AppCompatActivity {
         bundle.putString("choosenActivity", choosenActivity);
         it.putExtras(bundle);
         startActivity(it);
+        finish();
     }
 }

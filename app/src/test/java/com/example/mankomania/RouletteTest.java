@@ -1,37 +1,28 @@
 package com.example.mankomania;
 
-import com.example.mankomania.roulette.ColorActivity;
 import com.example.mankomania.roulette.ColorEnum;
-import com.example.mankomania.roulette.DozenActivity;
 import com.example.mankomania.roulette.FieldClass;
-import com.example.mankomania.roulette.NumberActivity;
-import com.example.mankomania.roulette.RouletteClass;
-
+import com.example.mankomania.roulette.RouletteLogic;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class RouletteTest {
 
+    RouletteLogic roulette;
     FieldClass[] fieldClassArray;
-    RouletteClass roulette = new RouletteClass();
-    NumberActivity na;
-    ColorActivity ca;
-    DozenActivity da;
-    int i;
+    int randomNumber;
 
     @Before
     public void setUp() {
-        fieldClassArray = roulette.setUpFields();
-        na = new NumberActivity();
-        ca = new ColorActivity();
-        da = new DozenActivity();
-        i = roulette.spinIt();
+        roulette = new RouletteLogic();
+        fieldClassArray = roulette.getRoulette().getFieldClassArray();
+        roulette.spinRoulette();
     }
 
     @Test
     public void testSetUpRoulette() {
-        assertEquals(37, fieldClassArray.length);
+        assertEquals(37, roulette.getRoulette().getFieldArrayLength());
     }
 
     @Test
@@ -40,70 +31,74 @@ public class RouletteTest {
         assertEquals(32, fieldClassArray[1].getValue());
         assertEquals(ColorEnum.BLACK, fieldClassArray[14].getColor());
         assertEquals(11, fieldClassArray[14].getValue());
-
-    }
-
-    //TODO: Ab hier gibt es noch einen kleinen Denkfehler, spinWheel dreht Roulette neu!
-
-    @Test
-    public void testNumberActivityWin() {
-        na.spinWheel(i);
-        assertEquals(145000, na.getMoney());
     }
 
     @Test
-    public void testNumberActivityLost() {
-        if(i != 3){
-        na.spinWheel(3);}
+    public void testNumberWin() {
+        roulette.spinRoulette();
+        randomNumber = roulette.getRandomNumberFromRoulette();
+        roulette.checkNumber(randomNumber);
+        assertEquals(145000, roulette.getMoney());
+    }
+
+    @Test
+    public void testNumberLost() {
+        roulette.spinRoulette();
+        randomNumber = roulette.getRandomNumberFromRoulette();
+        if (randomNumber != 3) {
+            roulette.checkNumber(3);
+        } else {
+            roulette.checkNumber(4);
+        }
+        assertEquals(-50000, roulette.getMoney());
+    }
+
+    @Test
+    public void testColorWin(){
+        roulette.spinRoulette();
+        ColorEnum color = roulette.getColorFromRoulette();
+        roulette.checkColor(color);
+        assertEquals(30000, roulette.getMoney());
+    }
+
+    @Test
+    public void testColorLost(){
+        roulette.spinRoulette();
+        if(roulette.getColorFromRoulette()== ColorEnum.BLACK|| fieldClassArray[randomNumber].getColor()== ColorEnum.GREEN){
+            roulette.checkColor(ColorEnum.RED);
+        }
         else{
-            na.spinWheel(4); //checks if randomNumber isn't 3
+            roulette.checkColor(ColorEnum.BLACK);
         }
-        assertEquals(- 50000, na.getMoney());
+        assertEquals(-5000, roulette.getMoney());
     }
 
     @Test
-    public void testColorActivityWin(){
-        ca.spinWheel(fieldClassArray[i].getColor());
-
-        assertEquals(30000, ca.getMoney());
-    }
-
-    @Test
-    public void testColorActivityLost(){
-        if(fieldClassArray[i].getColor()== ColorEnum.BLACK|| fieldClassArray[i].getColor()== ColorEnum.GREEN){
-            ca.spinWheel(ColorEnum.RED);
-        }
-        else{
-            ca.spinWheel(ColorEnum.BLACK);
-        }
-        assertEquals(-5000, ca.getMoney());
-    }
-
-    @Test
-    public void testDozenActivityWin(){
+    public void testDozenWin(){
         int actualDozen;
-        if(fieldClassArray[i].getValue() <= 12){
+
+        if(roulette.getRandomNumberFromRoulette() <= 12){
             actualDozen = 1;
         }
-        else if(fieldClassArray[i].getValue() <= 24){
+        else if(roulette.getRandomNumberFromRoulette() <= 24){
             actualDozen = 2;
         }
         else {
             actualDozen = 3;
         }
 
-        da.spinWheel(actualDozen);
-        assertEquals(80000, da.getMoney());
+        roulette.checkDozen(actualDozen);
+        assertEquals(80000, roulette.getMoney());
     }
 
     @Test
-    public void testDozenActivityLost(){
+    public void testDozenLost(){
         int actualDozen;
         int choosenDozen;
-        if(fieldClassArray[i].getValue() <= 12){
+        if(roulette.getRandomNumberFromRoulette() <= 12){
             actualDozen = 1;
         }
-        else if(fieldClassArray[i].getValue() <= 24){
+        else if(roulette.getRandomNumberFromRoulette()<= 24){
             actualDozen = 2;
         }
         else {
@@ -117,8 +112,8 @@ public class RouletteTest {
             choosenDozen = 2;
         }
 
-        da.spinWheel(choosenDozen);
-        assertEquals(- 20000, da.getMoney());
+        roulette.checkDozen(choosenDozen);
+        assertEquals(- 20000, roulette.getMoney());
     }
 }
 
