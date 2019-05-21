@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatDialogFragment;
 
 import com.example.mankomania.R;
 
-public class ErrorClass extends AppCompatDialogFragment {
+public class ErrorPopUp extends AppCompatDialogFragment {
 
     @Override
     public Dialog onCreateDialog(@NonNull Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class ErrorClass extends AppCompatDialogFragment {
 
         alert.setTitle(getString(R.string.roulette_invalid_number));
         alert.setMessage(getString(R.string.roulette_enter_number_between));
-        alert.setPositiveButton(getString(R.string.roulette_ok), new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(getString(R.string.casino_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //by letting this empty, the pop-up closes

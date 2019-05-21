@@ -11,10 +11,15 @@ import com.example.mankomania.R;
 
 public class MainActivityRoulette extends AppCompatActivity {
 
+    String choosenActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainroulette);
+
+        Intent it = getIntent();
+        Bundle extras = it.getExtras();
 
         TextView welcome = findViewById(R.id.tvWillkommen);
         Button color = findViewById(R.id.btnFarbe);
@@ -37,39 +42,41 @@ public class MainActivityRoulette extends AppCompatActivity {
         color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openColorActivity();
+                setChoosenActivity("Color");
+                askQuestion(getChoosenActivity());
             }
         });
 
         number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNumberActivity();
+                setChoosenActivity("Number");
+                askQuestion(getChoosenActivity());
             }
         });
 
         dozen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDozenActivity();
+                setChoosenActivity("Dozen");
+                askQuestion(getChoosenActivity());
             }
         });
     }
 
-    private void openColorActivity(){
-        Intent it = new Intent(this, ColorActivity.class);
-        startActivity(it);
-        finish();
+    public String getChoosenActivity(){
+        return this.choosenActivity;
     }
 
-    private void openNumberActivity(){
-        Intent it = new Intent(this, NumberActivity.class);
-        startActivity(it);
-        finish();
+    public void setChoosenActivity(String choosenActivity){
+        this.choosenActivity = choosenActivity;
     }
 
-    private void openDozenActivity(){
-        Intent it = new Intent(this, DozenActivity.class);
+    public void askQuestion(String choosenActivity){
+        Intent it = new Intent(this, QuestionActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("choosenActivity", choosenActivity);
+        it.putExtras(bundle);
         startActivity(it);
         finish();
     }

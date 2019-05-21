@@ -6,9 +6,7 @@ import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.map.GameController;
 import com.example.mankomania.network.NetworkConstants;
 import com.example.mankomania.network.QueueHandler;
-import com.example.mankomania.roulette.ColorActivity;
-import com.example.mankomania.roulette.DozenActivity;
-import com.example.mankomania.roulette.NumberActivity;
+import com.example.mankomania.roulette.RouletteLogic;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -91,13 +89,7 @@ public class ServerQueueHandler extends QueueHandler {
         int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
 
         //TODO: I have changed this
-        if(ColorActivity.getMoneyAmount() != 0){
-            sendSpinResult(player, ColorActivity.getMoneyAmount());
-        }
-        else if (NumberActivity.getMoneyAmount() != 0){
-            sendSpinResult(player, NumberActivity.getMoneyAmount());
-        }
-        else{sendSpinResult(player, DozenActivity.getMoneyAmount());}
+            sendSpinResult(player, RouletteLogic.getMoneyAmount());
     }
     private void sendSpinResult(int idx, int result) {
         JsonObject json = new JsonObject();

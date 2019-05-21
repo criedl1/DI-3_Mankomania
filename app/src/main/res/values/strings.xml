@@ -24,7 +24,7 @@
     <string name="roulette_result">Die Zahl lautet %1$s, die Farbe ist %2$s.</string>
     <string name="roulette_invalid_number">Ungültige Zahl!</string>
     <string name="roulette_enter_number_between">Bitte gib eine Zahl zwischen 0 und 36 ein!</string>
-    <string name="roulette_ok">OK</string>
+    <string name="casino_ok">OK</string>
     <string name="display_ip">Display IP</string>
     <string name="to_game">zum Spielfeld</string>
     <string name="connect_to_lobby">Connect to Lobby</string>
