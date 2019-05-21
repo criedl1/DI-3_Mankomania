@@ -323,19 +323,13 @@ public class MapView extends AppCompatActivity {
                     showMoneyUpdate(-10000);
                     break;
                 case R.drawable.field_aktie1:
-                    Toast.makeText(this, "Du erhälst die Aktie Hypo!", Toast.LENGTH_LONG).show();
-                    // TODO - change method signature if needed and then do your stuff
-                    getShare();
+                    buyAktie(Aktien.HYPO);
                     break;
                 case R.drawable.field_aktie2:
-                    Toast.makeText(this, "Du erhälst die Aktie Infineon!", Toast.LENGTH_LONG).show();
-                    // TODO - change method signature if needed and then do your stuff
-                    getShare();
+                    buyAktie(Aktien.INFINEON);
                     break;
                 case R.drawable.field_aktie3:
-                    Toast.makeText(this, "Du erhälst die Aktie Strabag!", Toast.LENGTH_LONG).show();
-                    // TODO - change method signature if needed and then do your stuff
-                    getShare();
+                    buyAktie(Aktien.STRABAG);
                     break;
                 case R.drawable.field_horserace:
                     // TODO - change method signature if needed and then do your stuff
@@ -429,7 +423,7 @@ public class MapView extends AppCompatActivity {
         Toast.makeText(this, "Der Kontostand von Player " + (player + 1) + " ändert sich auf " + outcome, Toast.LENGTH_LONG).show();
     }
     public void showSomeonesAktienkauf(int player, Aktien aktien){
-        Toast.makeText(this,  (player + 1) + " erhält Aktie  " + aktien, Toast.LENGTH_LONG).show();
+        Toast.makeText(this,  "Spieler"+ (+player + 1) + " erhält Aktie  " + aktien, Toast.LENGTH_LONG).show();
     }
 
 
@@ -454,6 +448,30 @@ public class MapView extends AppCompatActivity {
     public void setLotto(int lotto) {
         Toast.makeText(this, "Lotto ändert sich auf " + lotto, Toast.LENGTH_LONG).show();
     }
+    private void setAktie(Aktien aktie){
+        Player cPlayer = gameController.currentPlayer();
+        showAktieUpdate(cPlayer, aktie);
+
+    }
+    private void showAktieUpdate(Player cPlayer, Aktien aktien) {
+        int playerIdx = gameController.getPlayerIndex(cPlayer);
+        if (playerIdx >= 0) {
+            switch (aktien) {
+                case HYPO:
+                    gameController.setHypoAktie(playerIdx,cPlayer.getAktien()[0]+1);
+
+                    break;
+                case STRABAG:
+                    gameController.setStrabagAktie(playerIdx,cPlayer.getAktien()[1]+1);
+                    break;
+                case INFINEON:
+                    gameController.setInfineonAktie(playerIdx,cPlayer.getAktien()[2]+1);
+                    break;
+                default:
+                    throw new IllegalStateException("Aktie does not exist");
+            }
+        }
+    }
 
     public void buyAktie(final Aktien aktie){
         AlertDialog.Builder a_builder = new AlertDialog.Builder(MapView.this);
@@ -469,7 +487,7 @@ public class MapView extends AppCompatActivity {
                 .setNegativeButton("NEIN!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //TODO: Nothing
+                        gameController.justEndTurn();
                     }
                 });
 

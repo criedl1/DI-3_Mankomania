@@ -118,6 +118,7 @@ public class GameController {
     void setHypoAktie(int player, int count) {
         this.players.get(player).setAktie(Aktien.HYPO, count);
         showAktienUpdate(player,Aktien.HYPO);
+        client.endTurn();
         // TODO: update UI
     }
 
@@ -125,12 +126,14 @@ public class GameController {
         this.players.get(player).setAktie(Aktien.STRABAG, count);
         showAktienUpdate(player,Aktien.STRABAG);
         // TODO: update UI
+        client.endTurn();
     }
 
     void setInfineonAktie(int player, int count) {
         this.players.get(player).setAktie(Aktien.INFINEON, count);
         showAktienUpdate(player,Aktien.INFINEON);
         // TODO: update UI
+        client.endTurn();
     }
 
     void setCheater(int player) {
@@ -211,6 +214,9 @@ public class GameController {
 
     public void getHotel() {
         // TODO - add hotel
+        client.endTurn();
+    }
+    public void justEndTurn(){
         client.endTurn();
     }
 
