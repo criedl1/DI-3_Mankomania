@@ -1,6 +1,6 @@
 package com.example.mankomania.roulette;
 
-class FieldClass {
+public class FieldClass {
     private ColorEnum color;
     private int value;
     private float degree;
@@ -11,15 +11,15 @@ class FieldClass {
         this.degree = degree;
     }
 
-    protected ColorEnum getColor() {
+    public ColorEnum getColor() {
         return color;
     }
 
-    protected int getValue() {
+    public int getValue() {
         return value;
     }
 
-    protected float getDegree(){
+    public float getDegree(){
         return this.degree;
     }
 }
