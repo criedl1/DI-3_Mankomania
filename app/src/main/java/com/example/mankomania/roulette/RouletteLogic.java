@@ -15,19 +15,19 @@ public class RouletteLogic {
         spinRoulette();
     }
 
-    protected RouletteLogic(int choosenNumber) {
+    public RouletteLogic(int choosenNumber) {
         spinRoulette();
         setMoney(SlotMachineActivity.getMoneyamout());
         checkNumber(choosenNumber);
     }
 
-    protected RouletteLogic(ColorEnum choosenColor) {
+    public RouletteLogic(ColorEnum choosenColor) {
         spinRoulette();
         setMoney(SlotMachineActivity.getMoneyamout());
         checkColor(choosenColor);
     }
 
-    protected RouletteLogic(String choosenDozen) {
+    public RouletteLogic(String choosenDozen) {
         spinRoulette();
         setMoney(SlotMachineActivity.getMoneyamout());
         checkDozen(Integer.parseInt(choosenDozen));
@@ -144,7 +144,7 @@ public class RouletteLogic {
         this.wonMoney = wonMoney;
     }
 
-    public void sendMoneyChange(){
+    private void sendMoneyChange(){
         sendMoney = new sendMoneyClass();
         sendMoney.sendMoneyChange(getMoney());
     }

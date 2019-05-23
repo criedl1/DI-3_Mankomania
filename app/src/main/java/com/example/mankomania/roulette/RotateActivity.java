@@ -76,7 +76,7 @@ public class RotateActivity extends AppCompatActivity {
         rotate.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                //Override Method
             }
 
             @Override
@@ -86,7 +86,7 @@ public class RotateActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
+                //Override Method
             }
         });
     }

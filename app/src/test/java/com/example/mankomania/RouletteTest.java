@@ -9,9 +9,9 @@ import static org.junit.Assert.assertEquals;
 
 public class RouletteTest {
 
-    RouletteLogic roulette;
-    FieldClass[] fieldClassArray;
-    int randomNumber;
+    private RouletteLogic roulette;
+    private FieldClass[] fieldClassArray;
+    private int randomNumber;
 
     @Before
     public void setUp() {
@@ -34,6 +34,19 @@ public class RouletteTest {
     }
 
     @Test
+    public void testNumberConstructor(){
+        RouletteLogic numberRoulette = new RouletteLogic(15);
+
+        if(numberRoulette.getRandomNumberFromRoulette() == 15){
+            assertEquals(numberRoulette.getWonMoney(), 145000);
+        }
+        else{
+            assertEquals(numberRoulette.getWonMoney(), -50000);
+        }
+    }
+
+
+    @Test
     public void testNumberWin() {
         roulette.spinRoulette();
         randomNumber = roulette.getRandomNumberFromRoulette();
@@ -54,6 +67,18 @@ public class RouletteTest {
     }
 
     @Test
+    public void testColorConstructor(){
+        RouletteLogic colorRoulette = new RouletteLogic(ColorEnum.BLACK);
+
+        if(colorRoulette.getColorFromRoulette().equals(ColorEnum.BLACK)){
+            assertEquals(colorRoulette.getWonMoney(), 30000);
+        }
+        else{
+            assertEquals(colorRoulette.getWonMoney(), -5000);
+        }
+    }
+
+    @Test
     public void testColorWin(){
         roulette.spinRoulette();
         ColorEnum color = roulette.getColorFromRoulette();
@@ -64,13 +89,25 @@ public class RouletteTest {
     @Test
     public void testColorLost(){
         roulette.spinRoulette();
-        if(roulette.getColorFromRoulette()== ColorEnum.BLACK|| fieldClassArray[randomNumber].getColor()== ColorEnum.GREEN){
+        if(roulette.getColorFromRoulette()== ColorEnum.BLACK|| roulette.getColorFromRoulette()== ColorEnum.GREEN){
             roulette.checkColor(ColorEnum.RED);
         }
         else{
             roulette.checkColor(ColorEnum.BLACK);
         }
         assertEquals(-5000, roulette.getMoney());
+    }
+
+    @Test
+    public void testDozenConstructor(){
+        RouletteLogic dozenRoulette = new RouletteLogic("2");
+
+        if(dozenRoulette.getRandomNumberFromRoulette() <= 24 && dozenRoulette.getRandomNumberFromRoulette() > 12){
+            assertEquals(dozenRoulette.getWonMoney(), 80000);
+        }
+        else {
+            assertEquals(dozenRoulette.getWonMoney(), -20000);
+        }
     }
 
     @Test
@@ -98,7 +135,7 @@ public class RouletteTest {
         if(roulette.getRandomNumberFromRoulette() <= 12){
             actualDozen = 1;
         }
-        else if(roulette.getRandomNumberFromRoulette()<= 24){
+        else if(roulette.getRandomNumberFromRoulette()<= 24 && roulette.getRandomNumberFromRoulette() > 12){
             actualDozen = 2;
         }
         else {
@@ -114,6 +151,18 @@ public class RouletteTest {
 
         roulette.checkDozen(choosenDozen);
         assertEquals(- 20000, roulette.getMoney());
+    }
+
+    @Test
+    public void testGetColorString(){
+        String cs = roulette.getColorFromRoulette().toString();
+        assertEquals(roulette.getColorString(), cs);
+    }
+
+    @Test
+    public void testGetDegreeFromRoulette(){
+        float dfr = roulette.getRoulette().getTheField().getDegree();
+        assertEquals(roulette.getDegreeFromRoulette(), dfr, 0);
     }
 }
 
