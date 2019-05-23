@@ -21,6 +21,7 @@ public class RotateActivity extends AppCompatActivity {
     private ColorEnum color;
     private int randomNumber;
     private String colorString;
+    private int money;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -35,6 +36,8 @@ public class RotateActivity extends AppCompatActivity {
         colorString = extras.getString("colorString");
         randomNumber = extras.getInt("randomNumber");
         degree = extras.getFloat("degree");
+        money = extras.getInt("money");
+
 
         Button btnBack = findViewById(R.id.btnBack);
         btnBack.setText(getString(R.string.roulette_back));
@@ -99,6 +102,7 @@ public class RotateActivity extends AppCompatActivity {
         extras.putString("returnString", returnString);
         extras.putInt("randomNumber", randomNumber); //toString() is not possible here
         extras.putString("color", colorString);
+        extras.putInt("money", money);
         popClass.setArguments(extras);
     }
 

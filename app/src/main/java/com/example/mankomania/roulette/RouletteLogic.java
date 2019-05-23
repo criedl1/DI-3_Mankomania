@@ -100,7 +100,7 @@ public class RouletteLogic extends AppCompatActivity {
             setMoney(getWonMoney() + getMoney());
             setReturnString("Du hast " + getWonMoney() * -1 + " verloren.");
         }
-        //sendMoneyChange();
+        sendMoneyChange();
     }
 
     public int getRandomNumberFromRoulette() {
