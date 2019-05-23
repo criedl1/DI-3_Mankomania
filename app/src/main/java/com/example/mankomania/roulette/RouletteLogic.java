@@ -1,7 +1,10 @@
 package com.example.mankomania.roulette;
+import android.support.v7.app.AppCompatActivity;
+
+import com.example.mankomania.R;
 import com.example.mankomania.slotmachine.SlotMachineActivity;
 
-public class RouletteLogic {
+public class RouletteLogic extends AppCompatActivity {
 
     private RouletteClass roulette;
     private FieldClass[] fieldArray;

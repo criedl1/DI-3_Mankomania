@@ -25,6 +25,7 @@ public class SlotMachineActivity extends AppCompatActivity {
     private Symbol dollar = new Symbol(R.drawable.dollar, 1);
     private Symbol star = new Symbol(R.drawable.star, 2);
     private Symbol seven = new Symbol(R.drawable.sieben, 3);
+    private ImageView casino;
     private ImageView slot1;
     private ImageView slot2;
     private ImageView slot3;
