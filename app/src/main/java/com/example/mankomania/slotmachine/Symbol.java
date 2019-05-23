@@ -1,8 +1,5 @@
 package com.example.mankomania.slotmachine;
 
-import android.media.Image;
-import android.widget.ImageView;
-
 public class Symbol {
     int image;
     int id;

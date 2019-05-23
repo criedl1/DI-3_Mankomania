@@ -6,7 +6,7 @@ import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.map.GameController;
 import com.example.mankomania.network.NetworkConstants;
 import com.example.mankomania.network.QueueHandler;
-import com.example.mankomania.roulette.RouletteLogic;
+import com.example.mankomania.roulette.sendMoneyClass;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -88,8 +88,7 @@ public class ServerQueueHandler extends QueueHandler {
     private void spinWheelForClients(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
 
-        //TODO: I have changed this
-            sendSpinResult(player, RouletteLogic.getMoneyAmount());
+            sendSpinResult(player, sendMoneyClass.getMoneyAmount());
     }
     private void sendSpinResult(int idx, int result) {
         JsonObject json = new JsonObject();

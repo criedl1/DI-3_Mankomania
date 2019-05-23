@@ -1,4 +1,4 @@
-/*package com.example.mankomania;
+package com.example.mankomania;
 
 import com.example.mankomania.roulette.ColorEnum;
 import com.example.mankomania.roulette.FieldClass;
@@ -115,6 +115,6 @@ public class RouletteTest {
         roulette.checkDozen(choosenDozen);
         assertEquals(- 20000, roulette.getMoney());
     }
-}*/
+}
 
 
