@@ -51,7 +51,7 @@ public class RouletteTest {
         roulette.spinRoulette();
         randomNumber = roulette.getRandomNumberFromRoulette();
         roulette.checkNumber(randomNumber);
-        assertEquals(145000, roulette.getMoney());
+        assertEquals(145000, roulette.getWonMoney());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class RouletteTest {
         } else {
             roulette.checkNumber(4);
         }
-        assertEquals(-50000, roulette.getMoney());
+        assertEquals(-50000, roulette.getWonMoney());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class RouletteTest {
         roulette.spinRoulette();
         ColorEnum color = roulette.getColorFromRoulette();
         roulette.checkColor(color);
-        assertEquals(30000, roulette.getMoney());
+        assertEquals(30000, roulette.getWonMoney());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class RouletteTest {
         else{
             roulette.checkColor(ColorEnum.BLACK);
         }
-        assertEquals(-5000, roulette.getMoney());
+        assertEquals(-5000, roulette.getWonMoney());
     }
 
     @Test
@@ -125,7 +125,7 @@ public class RouletteTest {
         }
 
         roulette.checkDozen(actualDozen);
-        assertEquals(80000, roulette.getMoney());
+        assertEquals(80000, roulette.getWonMoney());
     }
 
     @Test
@@ -150,7 +150,29 @@ public class RouletteTest {
         }
 
         roulette.checkDozen(choosenDozen);
-        assertEquals(- 20000, roulette.getMoney());
+        assertEquals(- 20000, roulette.getWonMoney());
+    }
+
+    @Test
+    public void testDozen1(){
+        RouletteLogic dozenRoulette = new RouletteLogic("1");
+        if (dozenRoulette.getRandomNumberFromRoulette() > 12){
+            assertEquals(- 20000, dozenRoulette.getWonMoney());
+        }
+        else{
+            assertEquals(80000, dozenRoulette.getWonMoney());
+        }
+    }
+
+    @Test
+    public void testDozen3(){
+        RouletteLogic dozenRoulette = new RouletteLogic("3");
+        if (dozenRoulette.getRandomNumberFromRoulette() <= 24){
+            assertEquals(- 20000, dozenRoulette.getWonMoney());
+        }
+        else{
+            assertEquals(80000, dozenRoulette.getWonMoney());
+        }
     }
 
     @Test
@@ -163,6 +185,14 @@ public class RouletteTest {
     public void testGetDegreeFromRoulette(){
         float dfr = roulette.getRoulette().getTheField().getDegree();
         assertEquals(roulette.getDegreeFromRoulette(), dfr, 0);
+    }
+
+    @Test
+    public void testReturnString(){
+        roulette.spinRoulette();
+        randomNumber = roulette.getRandomNumberFromRoulette();
+        roulette.checkNumber(randomNumber);
+        assertEquals("Du hast 145000 gewonnen.", roulette.getReturnString());
     }
 }
 

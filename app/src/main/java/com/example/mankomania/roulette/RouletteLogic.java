@@ -1,7 +1,5 @@
 package com.example.mankomania.roulette;
 import android.support.v7.app.AppCompatActivity;
-
-import com.example.mankomania.R;
 import com.example.mankomania.slotmachine.SlotMachineActivity;
 
 public class RouletteLogic extends AppCompatActivity {
@@ -57,7 +55,6 @@ public class RouletteLogic extends AppCompatActivity {
                     setMoney(getWonMoney() + getMoney());
                     setReturnString("Du hast " + getWonMoney() * -1 + " verloren.");
                 }
-                //sendMoneyChange();
             }
         }
     }
@@ -72,7 +69,6 @@ public class RouletteLogic extends AppCompatActivity {
             setMoney(getWonMoney() + getMoney());
             setReturnString("Du hast " + getWonMoney() * -1 + " verloren.");
         }
-        //sendMoneyChange();
         return money;
     }
 
@@ -100,7 +96,6 @@ public class RouletteLogic extends AppCompatActivity {
             setMoney(getWonMoney() + getMoney());
             setReturnString("Du hast " + getWonMoney() * -1 + " verloren.");
         }
-        sendMoneyChange();
     }
 
     public int getRandomNumberFromRoulette() {
@@ -145,10 +140,5 @@ public class RouletteLogic extends AppCompatActivity {
 
     public void setWonMoney(int wonMoney) {
         this.wonMoney = wonMoney;
-    }
-
-    private void sendMoneyChange(){
-        sendMoney = new sendMoneyClass();
-        sendMoney.sendMoneyChange(getMoney());
     }
 }
