@@ -65,7 +65,6 @@ public class MapView extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MapView.this, "Mini Maaaaap", Toast.LENGTH_LONG).show();
                 DialogFragment miniMapDialog = new MiniMapDialogFragment();
                 Bundle args = new Bundle();
                 args.putSerializable("PLAYERS",gameController);
@@ -73,6 +72,7 @@ public class MapView extends AppCompatActivity {
                 miniMapDialog.show(getSupportFragmentManager(),"mini_map");
             }
         });
+
         initButtons();
         Log.d("xxx", "llll" + Arrays.toString(GameController.allfields));
 
