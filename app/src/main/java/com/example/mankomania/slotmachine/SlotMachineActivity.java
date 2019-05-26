@@ -25,12 +25,15 @@ public class SlotMachineActivity extends AppCompatActivity {
     private Symbol dollar = new Symbol(R.drawable.dollar, 1);
     private Symbol star = new Symbol(R.drawable.star, 2);
     private Symbol seven = new Symbol(R.drawable.sieben, 3);
-    private ImageView casino;
+    private int id1;
+    private int id2;
+    private int id3;
     private ImageView slot1;
     private ImageView slot2;
     private ImageView slot3;
     private String returnString;
     private String winString;
+    private SlotMachineLogic sml;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,58 +74,32 @@ public class SlotMachineActivity extends AppCompatActivity {
         slot3.postDelayed(waitForPopUp(),4000);
     }
 
-    public void checkWin(){
+    public void stopMachine() {
         SecureRandom random = new SecureRandom();
 
-        int id1;
         int stop = random.nextInt(3);
         slot1.setImageResource(slotList.get(stop).getImage());
         id1 = slotList.get(stop).getId();
 
-        int id2;
         stop = random.nextInt(3);
         slot2.setImageResource(slotList.get(stop).getImage());
         id2 = slotList.get(stop).getId();
 
-        int id3;
         stop = random.nextInt(3);
         slot3.setImageResource(slotList.get(stop).getImage());
         id3 = slotList.get(stop).getId();
 
-
-        if (id1 == id2 && id2 == id3) {
-            if (id1 == 3) { //When player has three dollar signs
-                setMoney(230000);
-                setMoneyamout(getMoney());
-                winString = "Gewonnen!";
-                returnString = "Hauptgewinn! Du hast " + money + " gewonnen!";
-
-            } else {
-                setMoney(120000);
-                setMoneyamout(getMoney());
-                winString = "Gewonnen!";
-                returnString = "Drei gleiche Symbole! Du hast " + money + " gewonnen!";
-            }
-        } else if (id1 == id2 || id2 == id3 || id1 == id3) {
-            setMoney(50000);
-            setMoneyamout(getMoney());
-            winString = "Gewonnen!";
-            returnString = "Zwei gleiche Symbole! Du hast " + money + " gewonnen!";
-        }
-        else{
-            setMoney(-20000);
-            setMoneyamout(getMoney());
-            winString = "Verloren!";
-            returnString = "Du hast " + money*-1 + " verloren!";
-        }
+        sml = new SlotMachineLogic(id1, id2, id3, this);
     }
+
 
     private Runnable createRunnable() {
 
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                checkWin();
+                stopMachine();
+                sml.checkWin();
             }
         };
         return runnable;
@@ -190,7 +167,23 @@ public class SlotMachineActivity extends AppCompatActivity {
         return this.money;
     }
 
-    private static void setMoneyamout(int newMoneyAmount){
+    public static void setMoneyamout(int newMoneyAmount){
         moneyamout = newMoneyAmount;
+    }
+
+    public String getReturnString() {
+        return returnString;
+    }
+
+    public void setReturnString(String returnString) {
+        this.returnString = returnString;
+    }
+
+    public String getWinString() {
+        return winString;
+    }
+
+    public void setWinString(String winString) {
+        this.winString = winString;
     }
 }

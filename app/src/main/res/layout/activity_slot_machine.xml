@@ -39,7 +39,7 @@
         android:layout_marginStart="168dp"
         android:layout_marginTop="112dp"
         android:visibility="visible"
-        app:srcCompat="@drawable/whitelayer"
+        app:srcCompat="@drawable/cherry"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,7 +52,7 @@
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/whitelayer" />
+        app:srcCompat="@drawable/star" />
 
     <ImageView
         android:id="@+id/ivSlot3"
@@ -63,6 +63,6 @@
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/whitelayer" />
+        app:srcCompat="@drawable/dollar" />
 
 </android.support.constraint.ConstraintLayout>
