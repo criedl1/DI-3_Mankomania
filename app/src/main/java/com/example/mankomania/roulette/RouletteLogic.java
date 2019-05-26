@@ -1,43 +1,41 @@
 package com.example.mankomania.roulette;
-
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
-
-import com.example.mankomania.network.client.Client;
+import android.support.v7.app.AppCompatActivity;
 import com.example.mankomania.slotmachine.SlotMachineActivity;
-import com.google.gson.JsonObject;
 
-public class RouletteLogic {
+public class RouletteLogic extends AppCompatActivity {
 
     private RouletteClass roulette;
     private FieldClass[] fieldArray;
     private String returnString;
     private int money;
+    private int wonMoney;
     int rouletteNumber;
-
-    //for Network
-    private static int moneyAmount;
+    private sendMoneyClass sendMoney;
 
     public RouletteLogic(){
         spinRoulette();
     }
 
-    protected RouletteLogic(int choosenNumber){
+    public RouletteLogic(int choosenNumber) {
         spinRoulette();
+        setMoney(SlotMachineActivity.getMoneyamout());
         checkNumber(choosenNumber);
     }
 
-    protected RouletteLogic(ColorEnum choosenColor){
+    public RouletteLogic(ColorEnum choosenColor) {
         spinRoulette();
+        setMoney(SlotMachineActivity.getMoneyamout());
         checkColor(choosenColor);
     }
 
-    protected RouletteLogic(String choosenDozen){
+    public RouletteLogic(String choosenDozen) {
         spinRoulette();
+        setMoney(SlotMachineActivity.getMoneyamout());
         checkDozen(Integer.parseInt(choosenDozen));
 
-}
-    public void spinRoulette(){
+    }
+
+    public void spinRoulette() {
         roulette = new RouletteClass();
         roulette.setUpFields();
         fieldArray = roulette.getFieldClassArray();
@@ -48,35 +46,33 @@ public class RouletteLogic {
         for (FieldClass anArray : fieldArray) {
             if (rouletteNumber == anArray.getValue()) {
                 if (anArray.getColor() == choosenColor) {
-                    setMoney(30000); //--> 80000-50000 Einsatz
-                    setReturnString("Du hast " +  getMoney() + " gewonnen.");
-                    moneyAmount =  getMoney() + SlotMachineActivity.getMoneyamout();
+                    setWonMoney(30000);
+                    setMoney(getWonMoney() + getMoney()); //--> 80000-50000 Einsatz
+                    setReturnString("Du hast " + getWonMoney() + " gewonnen.");
 
                 } else {
-                    setMoney(-5000); //Einsatz
-                    setReturnString("Du hast " +  getMoney() * -1 + " verloren.");
-                    moneyAmount =  getMoney() + SlotMachineActivity.getMoneyamout();
+                    setWonMoney(-5000);
+                    setMoney(getWonMoney() + getMoney());
+                    setReturnString("Du hast " + getWonMoney() * -1 + " verloren.");
                 }
-                sendMoneyChange(getMoney());
             }
         }
     }
 
     public int checkNumber(int choosenNumber) {
         if (rouletteNumber == choosenNumber) {
-            setMoney(145000);  //--> 150000 - 5000 Einsatz
-            moneyAmount = getMoney();
-            setReturnString("Du hast " +  getMoney() + " gewonnen.");
+            setWonMoney(145000);
+            setMoney(getWonMoney() + getMoney());
+            setReturnString("Du hast " + getWonMoney() + " gewonnen.");
         } else {
-            setMoney(- 50000); //Einsatz
-            moneyAmount =  getMoney() + SlotMachineActivity.getMoneyamout();
-            setReturnString("Du hast " +  getMoney() * -1 + " verloren.");
+            setWonMoney(-50000);
+            setMoney(getWonMoney() + getMoney());
+            setReturnString("Du hast " + getWonMoney() * -1 + " verloren.");
         }
-        this.sendMoneyChange(getMoney());
         return money;
     }
 
-    public void checkDozen(int choosenDozen){
+    public void checkDozen(int choosenDozen) {
         int dozen = 0;
 
         for (FieldClass fieldClass : fieldArray) {
@@ -91,16 +87,15 @@ public class RouletteLogic {
             }
         }
 
-        if (choosenDozen == dozen){
-            setMoney(80000); //100000 - 20000 Einsatz
-            setReturnString("Du hast " +  getMoney() + " gewonnen.");
-            moneyAmount = getMoney() + SlotMachineActivity.getMoneyamout();}
-        else {
-            setMoney(- 20000);
-            setReturnString("Du hast " +  getMoney() * -1 + " verloren.");
-            moneyAmount = getMoney() + SlotMachineActivity.getMoneyamout();
+        if (choosenDozen == dozen) {
+            setWonMoney(80000);
+            setMoney(getWonMoney() + getMoney());
+            setReturnString("Du hast " + getWonMoney() + " gewonnen.");
+        } else {
+            setWonMoney(-20000);
+            setMoney(getWonMoney() + getMoney());
+            setReturnString("Du hast " + getWonMoney() * -1 + " verloren.");
         }
-        this.sendMoneyChange(getMoney());
     }
 
     public int getRandomNumberFromRoulette() {
@@ -115,19 +110,8 @@ public class RouletteLogic {
         return roulette.getTheField().getColor();
     }
 
-    public String getColorString(){
+    public String getColorString() {
         return roulette.getTheField().getColor().toString();
-    }
-
-
-    private void sendMoneyChange(int rouletteResult) {
-        JsonObject object = new JsonObject();
-        object.addProperty("result", rouletteResult);
-        object.addProperty("OPERATION", "ROULETTERESULT");
-        Intent intent = new Intent("client.update");
-        intent.putExtra("result", object.toString());
-        LocalBroadcastManager.getInstance(Client.mapView)
-                .sendBroadcast(intent);
     }
 
     public int getMoney() {
@@ -146,19 +130,15 @@ public class RouletteLogic {
         this.returnString = returnString;
     }
 
-    public static int getMoneyAmount() {
-        return moneyAmount;
-    }
-
-    public RouletteClass getRoulette(){
+    public RouletteClass getRoulette() {
         return roulette;
     }
 
-    public FieldClass[] getFieldArray() {
-        return fieldArray;
+    public int getWonMoney() {
+        return wonMoney;
     }
 
-    public int getRouletteNumber() {
-        return rouletteNumber;
+    public void setWonMoney(int wonMoney) {
+        this.wonMoney = wonMoney;
     }
 }
