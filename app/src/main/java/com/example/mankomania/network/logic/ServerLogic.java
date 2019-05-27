@@ -27,25 +27,20 @@ public class ServerLogic {
         }
     }
 
-    public boolean doAction(int player){
-        if(sls == ServerLogicStates.ACTION && this.player == player){
-            sls = ServerLogicStates.CHANGES;
+    public boolean doAction(int player) {
+        if (sls == ServerLogicStates.ACTION && this.player == player)
             return true;
-        }else {
-            return false;
-        }
+        return false;
     }
 
-    public boolean changeValue(int player){
-        if(sls == ServerLogicStates.CHANGES && this.player == player){
+    public boolean changeValue(int player) {
+        if (sls == ServerLogicStates.ACTION && this.player == player)
             return true;
-        }else {
-            return false;
-        }
+        return false;
     }
 
     public boolean endTurn(int player){
-        if(sls == ServerLogicStates.CHANGES && this.player == player){
+        if(sls == ServerLogicStates.ACTION && this.player == player){
             sls = ServerLogicStates.END;
             return true;
         }else {
