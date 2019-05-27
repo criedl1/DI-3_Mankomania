@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -58,6 +60,19 @@ public class MapView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_view);
+        FloatingActionButton fab = findViewById(R.id.miniMap);
+        fab.setImageDrawable(getDrawable(R.drawable.game_board_icon));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment miniMapDialog = new MiniMapDialogFragment();
+                Bundle args = new Bundle();
+                args.putSerializable("PLAYERS",gameController);
+                miniMapDialog.setArguments(args);
+                miniMapDialog.show(getSupportFragmentManager(),"mini_map");
+            }
+        });
+
         initButtons();
         Log.d("xxx", "llll" + Arrays.toString(GameController.allfields));
 
@@ -162,8 +177,8 @@ public class MapView extends AppCompatActivity {
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                if(movingOverLottery){
-                    Toast.makeText(_this, getString(R.string.lottery_toast), Toast.LENGTH_LONG).show();
+                if (movingOverLottery) {
+                    //   Toast.makeText(_this, getString(R.string.lottery_toast), Toast.LENGTH_LONG).show();
                     gameController.sendMoveOverLotto();
                 }
                 step2();
@@ -227,14 +242,14 @@ public class MapView extends AppCompatActivity {
     public void step2() {
         Player cPlayer = gameController.currentPlayer();
         boolean movingOverLottery = false;
-        if(gameController.isMyTurn() && ( GameController.allfields[cPlayer.getTemporaryField()] == R.drawable.field_lottery || GameController.allfields[(cPlayer.getTemporaryField()+1)%GameController.allfields.length] == R.drawable.field_lottery)){
+        if (gameController.isMyTurn() && (GameController.allfields[cPlayer.getTemporaryField()] == R.drawable.field_lottery || GameController.allfields[(cPlayer.getTemporaryField() + 1) % GameController.allfields.length] == R.drawable.field_lottery)) {
             movingOverLottery = true;
         }
         cPlayer.setTemporaryField(cPlayer.getTemporaryField() + 2);
         Log.d("xxx", "step2 currentfield: " + cPlayer.getCurrentField());
         if (cPlayer.getTemporaryField() / 2 < cPlayer.getCurrentField() / 2) {
             displayField(cPlayer.getTemporaryField());
-            movePlayerOverScreen(cPlayer,movingOverLottery);
+            movePlayerOverScreen(cPlayer, movingOverLottery);
         } else {
             step3();
         }
@@ -295,7 +310,7 @@ public class MapView extends AppCompatActivity {
     }
 
     private void runFieldAction(int currentField) {
-        if(gameController.isMyTurn()){
+        if (gameController.isMyTurn()) {
             int fieldID = GameController.allfields[currentField];
             switch (fieldID) {
                 case R.drawable.field_casino:
@@ -321,6 +336,9 @@ public class MapView extends AppCompatActivity {
                     break;
                 case R.drawable.field_woerthersee:
                     showMoneyUpdate(-10000);
+                    break;
+                case R.drawable.field_minimundus:
+                    showMoneyUpdate(-30000);
                     break;
                 case R.drawable.field_aktie1:
                     buyAktie(Aktien.HYPO);
@@ -389,7 +407,7 @@ public class MapView extends AppCompatActivity {
         gameController.rollTheDice();
     }
 
-    public void rollForce (View view){
+    public void rollForce(View view) {
         gameController.rollTheDice();
     }
 
@@ -411,7 +429,8 @@ public class MapView extends AppCompatActivity {
     public void showMyAccountBalance(int outcome) {
         Toast.makeText(this, "Dein Kontostand ändert sich auf " + outcome, Toast.LENGTH_LONG).show();
     }
-    public void showMyAktienkauf(Aktien aktien){
+
+    public void showMyAktienkauf(Aktien aktien) {
         Toast.makeText(this, "Du erhälst Aktie  " + aktien, Toast.LENGTH_LONG).show();
     }
 
@@ -422,8 +441,9 @@ public class MapView extends AppCompatActivity {
     public void showSomeonesAccountBalance(int player, int outcome) {
         Toast.makeText(this, "Der Kontostand von Player " + (player + 1) + " ändert sich auf " + outcome, Toast.LENGTH_LONG).show();
     }
-    public void showSomeonesAktienkauf(int player, Aktien aktien){
-        Toast.makeText(this,  "Spieler"+ (+player + 1) + " erhält Aktie  " + aktien, Toast.LENGTH_LONG).show();
+
+    public void showSomeonesAktienkauf(int player, Aktien aktien) {
+        Toast.makeText(this, "Spieler" + (+player + 1) + " erhält Aktie  " + aktien, Toast.LENGTH_LONG).show();
     }
 
 
@@ -448,24 +468,26 @@ public class MapView extends AppCompatActivity {
     public void setLotto(int lotto) {
         Toast.makeText(this, "Lotto ändert sich auf " + lotto, Toast.LENGTH_LONG).show();
     }
-    private void setAktie(Aktien aktie){
+
+    private void setAktie(Aktien aktie) {
         Player cPlayer = gameController.currentPlayer();
         showAktieUpdate(cPlayer, aktie);
 
     }
+
     private void showAktieUpdate(Player cPlayer, Aktien aktien) {
         int playerIdx = gameController.getPlayerIndex(cPlayer);
         if (playerIdx >= 0) {
             switch (aktien) {
                 case HYPO:
-                    gameController.setHypoAktie(playerIdx,cPlayer.getAktien()[0]+1);
+                    gameController.setHypoAktie(playerIdx, cPlayer.getAktien()[0] + 1);
 
                     break;
                 case STRABAG:
-                    gameController.setStrabagAktie(playerIdx,cPlayer.getAktien()[1]+1);
+                    gameController.setStrabagAktie(playerIdx, cPlayer.getAktien()[1] + 1);
                     break;
                 case INFINEON:
-                    gameController.setInfineonAktie(playerIdx,cPlayer.getAktien()[2]+1);
+                    gameController.setInfineonAktie(playerIdx, cPlayer.getAktien()[2] + 1);
                     break;
                 default:
                     throw new IllegalStateException("Aktie does not exist");
@@ -473,10 +495,10 @@ public class MapView extends AppCompatActivity {
         }
     }
 
-    public void buyAktie(final Aktien aktie){
+    public void buyAktie(final Aktien aktie) {
         AlertDialog.Builder a_builder = new AlertDialog.Builder(MapView.this);
 
-        a_builder.setMessage("Wollen sie eine Aktie der Firma "+ aktie + " kaufen?")
+        a_builder.setMessage("Wollen sie eine Aktie der Firma " + aktie + " kaufen?")
                 .setCancelable(false)
                 .setPositiveButton("JA!", new DialogInterface.OnClickListener() {
                     @Override
