@@ -192,7 +192,7 @@ public class RouletteTest {
         roulette.spinRoulette();
         randomNumber = roulette.getRandomNumberFromRoulette();
         roulette.checkNumber(randomNumber);
-        assertEquals("Du hast 145000 gewonnen.", roulette.getReturnString());
+        assertEquals("Du hast 145000 gewonnen!", roulette.getReturnString());
     }
 }
 
