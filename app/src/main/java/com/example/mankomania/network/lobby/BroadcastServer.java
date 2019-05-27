@@ -12,18 +12,16 @@ public class BroadcastServer extends Thread {
     @Override
     public void run() {
         try (DatagramSocket socket = new DatagramSocket(4445)){
-            int i = 0;
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
-            while(i<4) {
+            while(true) {
                 socket.receive(packet);
 
                 InetAddress address = packet.getAddress();
                 packet = new DatagramPacket(buf, buf.length, address, 4446);
 
-                Thread.sleep(200);
+                Thread.sleep(500);
 
                 socket.send(packet);
-                i++;
             }
         }catch (Exception e){
             Log.e("BroadcastServer",""+e);

@@ -3,6 +3,7 @@ package com.example.mankomania.network.server;
 import android.util.Log;
 
 import com.example.mankomania.gamedata.GameData;
+import com.example.mankomania.network.lobby.BroadcastServer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -28,6 +29,9 @@ public class Server extends Thread {
 
     @Override
     public void run() {
+        BroadcastServer broadcastServer = new BroadcastServer();
+        broadcastServer.start();
+
         try(// server is listening on port 5056
             ServerSocket serverSocket = new ServerSocket(5056))
         {

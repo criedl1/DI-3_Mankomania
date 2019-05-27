@@ -50,7 +50,7 @@ public class Client extends Thread {
             ClientListener clientListener = new ClientListener(input, queue);
             clientListener.start();
 
-            // start ClienQueueHandler
+            // start ClientQueueHandler
             ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue, this, gameData);
             clientQueueHandler.start();
 

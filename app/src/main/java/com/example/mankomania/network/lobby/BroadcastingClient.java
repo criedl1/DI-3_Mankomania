@@ -13,7 +13,6 @@ import java.net.InetAddress;
 
 public class BroadcastingClient extends Thread{
     private static DatagramSocket socket = null;
-    private static MainActivity mainActivity;
     private static byte[] buf = new byte[256];
 
     @Override
@@ -59,7 +58,7 @@ public class BroadcastingClient extends Thread{
     private void publishUpdate(String address){
         Intent intent = new Intent("Lobby.update");
         intent.putExtra("result", address);
-        LocalBroadcastManager.getInstance(BroadcastingClient.mainActivity)
+        LocalBroadcastManager.getInstance(new MainActivity())
                 .sendBroadcast(intent);
     }
 }

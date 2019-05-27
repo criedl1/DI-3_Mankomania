@@ -98,6 +98,7 @@ class MessageReceiver {
     private void setCheaterUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         //TODO: why is this count here ?
+        //count is the wrong name, the boolean returns if the player is a cheater or not anymore
         boolean count = (jsonToInt(jsonObject, NetworkConstants.CHEATER) == 1);
 
         gameController.setCheater(player);

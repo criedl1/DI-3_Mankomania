@@ -13,12 +13,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mankomania.map.MapView;
-import com.example.mankomania.network.lobby.BroadcastServer;
 import com.example.mankomania.network.lobby.BroadcastingClient;
 import com.example.mankomania.network.server.Server;
 
@@ -49,13 +47,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void btn_Create_Lobby_OnClick(View v) {
-        Button btnCreate =  findViewById(R.id.btnCreateLobby);
-        Button btnConnect =  findViewById(R.id.btnConnectToLobby);
-
-        // Disable Buttons
-        btnCreate.setEnabled(false);
-        btnConnect.setEnabled(false);
-
         this.ip = getIPAddress();
 
         // Set ip Address
@@ -68,34 +59,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         openMap();
     }
 
-    public void btn_Connect_To_Lobby_OnClick(View v)  {
-        EditText et =  findViewById(R.id.textinput);
-        Button btnCreate =  findViewById(R.id.btnCreateLobby);
-        Button btnConnect =  findViewById(R.id.btnConnectToLobby);
-
-        // Disable Buttons
-        btnCreate.setEnabled(false);
-        btnConnect.setEnabled(false);
-
-        this.ip = et.getText().toString();
-        openMap();
-    }
-
     public void btn_Find_Lobby_OnClick(View v){
-        Button btn = findViewById(R.id.btn_findLobby);
-        btn.setEnabled(false);
-
         BroadcastingClient broadcastingClient = new BroadcastingClient();
         broadcastingClient.start();
-
-        Toast.makeText(this,"Waiting for Lobby", Toast.LENGTH_LONG).show();
-    }
-
-    public void btn_Send_Lobby_OnClick(View v){
-        Toast.makeText(this,"Sending Lobby "+getIPAddress(), Toast.LENGTH_LONG).show();
-
-        BroadcastServer broadcastServer = new BroadcastServer();
-        broadcastServer.start();
     }
 
     private BroadcastReceiver createBroadcastReceiver() {
@@ -104,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             public void onReceive(Context context, Intent intent) {
                 Button btn = findViewById(R.id.btn_findLobby);
                 btn.setEnabled(true);
-                EditText et =  findViewById(R.id.textinput);
                 String result = intent.getStringExtra("result");
-                et.setText(result);
+                ip = result;
+                openMap();
             }
         };
     }
