@@ -18,8 +18,6 @@ public class MainActivityRoulette extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainroulette);
 
-        Intent it = getIntent();
-
         TextView welcome = findViewById(R.id.tvWillkommen);
         Button color = findViewById(R.id.btnFarbe);
         Button number = findViewById(R.id.btnZahl);

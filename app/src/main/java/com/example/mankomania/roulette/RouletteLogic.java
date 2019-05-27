@@ -10,7 +10,9 @@ public class RouletteLogic extends AppCompatActivity {
     private int money;
     private int wonMoney;
     int rouletteNumber;
-    private sendMoneyClass sendMoney;
+    private static final String you_have = "Du hast ";
+    private static final String won = " gewonnen!";
+    private static final String lost = " verloren";
 
     public RouletteLogic(){
         spinRoulette();
@@ -48,12 +50,12 @@ public class RouletteLogic extends AppCompatActivity {
                 if (anArray.getColor() == choosenColor) {
                     setWonMoney(30000);
                     setMoney(getWonMoney() + getMoney()); //--> 80000-50000 Einsatz
-                    setReturnString("Du hast " + getWonMoney() + " gewonnen.");
+                    setReturnString(you_have + getWonMoney() + won);
 
                 } else {
                     setWonMoney(-5000);
                     setMoney(getWonMoney() + getMoney());
-                    setReturnString("Du hast " + getWonMoney() * -1 + " verloren.");
+                    setReturnString(you_have + getWonMoney() * -1 + lost);
                 }
             }
         }
@@ -63,11 +65,11 @@ public class RouletteLogic extends AppCompatActivity {
         if (rouletteNumber == choosenNumber) {
             setWonMoney(145000);
             setMoney(getWonMoney() + getMoney());
-            setReturnString("Du hast " + getWonMoney() + " gewonnen.");
+            setReturnString(you_have + getWonMoney() + won);
         } else {
             setWonMoney(-50000);
             setMoney(getWonMoney() + getMoney());
-            setReturnString("Du hast " + getWonMoney() * -1 + " verloren.");
+            setReturnString(you_have + getWonMoney() * -1 + lost);
         }
         return money;
     }
@@ -90,11 +92,11 @@ public class RouletteLogic extends AppCompatActivity {
         if (choosenDozen == dozen) {
             setWonMoney(80000);
             setMoney(getWonMoney() + getMoney());
-            setReturnString("Du hast " + getWonMoney() + " gewonnen.");
+            setReturnString(you_have + getWonMoney() + won);
         } else {
             setWonMoney(-20000);
             setMoney(getWonMoney() + getMoney());
-            setReturnString("Du hast " + getWonMoney() * -1 + " verloren.");
+            setReturnString(you_have + getWonMoney() * -1 + lost);
         }
     }
 

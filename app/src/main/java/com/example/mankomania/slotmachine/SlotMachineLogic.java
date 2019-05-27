@@ -2,6 +2,13 @@ package com.example.mankomania.slotmachine;
 
 public class SlotMachineLogic {
 
+    private static final String you_have = "Du hast ";
+    private static final String won = " Gewonnen!";
+    private static final String lost = " Verloren";
+    private static final String bigWin = "Hauptgewinn! ";
+    private static final String threeSymbols = "Drei gleiche Symbole! ";
+    private static final String twoSymbols = "Zwei gleiche Symbole! ";
+
     int id1;
     int id2;
     int id3;
@@ -19,26 +26,26 @@ public class SlotMachineLogic {
             if (id1 == 3) { //When player has three dollar signs
                 setMoney(230000);
                 sma.setMoneyamout(getMoney());
-                setWinString("Gewonnen!");
-                setReturnString("Hauptgewinn! Du hast " + getMoney() + " gewonnen!");
+                setWinString(won);
+                setReturnString(bigWin + you_have + getMoney() + won);
 
             } else {
                 setMoney(120000);
                 sma.setMoneyamout(getMoney());
-                setWinString("Gewonnen!");
-                setReturnString("Drei gleiche Symbole! Du hast " + getMoney() + " gewonnen!");
+                setWinString(won);
+                setReturnString(threeSymbols + getMoney() + won);
             }
         } else if (id1 == id2 || id2 == id3 || id1 == id3) {
             setMoney(50000);
             sma.setMoneyamout(getMoney());
-            setWinString("Gewonnen!");
-            setReturnString("Zwei gleiche Symbole! Du hast " + getMoney() + " gewonnen!");
+            setWinString(won);
+            setReturnString(twoSymbols + getMoney() + won);
         }
         else{
             setMoney(-20000);
             sma.setMoneyamout(getMoney());
-            setWinString("Verloren!");
-            setReturnString("Du hast " + getMoney()*-1 + " verloren!");
+            setWinString(lost);
+            setReturnString(you_have+ getMoney()*-1 + lost);
         }
     }
 

@@ -54,15 +54,15 @@ public class SlotMachineTest {
     public void testReturnString(){
         sml = new SlotMachineLogic(3, 3, 3, sma);
         sml.checkWin();
-        assertEquals("Hauptgewinn! Du hast 230000 gewonnen!", sml.getReturnString());
-        assertEquals("Hauptgewinn! Du hast 230000 gewonnen!", sma.getReturnString());
+        assertEquals("Hauptgewinn! Du hast 230000 Gewonnen!", sml.getReturnString());
+        assertEquals("Hauptgewinn! Du hast 230000 Gewonnen!", sma.getReturnString());
     }
 
     @Test
     public void testWinString(){
         sml = new SlotMachineLogic(1, 1, 1, sma);
         sml.checkWin();
-        assertEquals("Gewonnen!", sml.getWinString());
-        assertEquals("Gewonnen!", sma.getWinString());
+        assertEquals(" Gewonnen!", sml.getWinString());
+        assertEquals(" Gewonnen!", sma.getWinString());
     }
 }

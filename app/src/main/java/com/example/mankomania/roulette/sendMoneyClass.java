@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 
 public class sendMoneyClass {
 
-   private static int moneyAmount;
+   private static int moneyAmount; //for Server Queue Handler
 
     protected void sendMoneyChange(int rouletteResult) {
 

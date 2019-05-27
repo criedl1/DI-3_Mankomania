@@ -21,10 +21,6 @@ public class SlotMachineActivity extends AppCompatActivity {
     private int money;
     private static int moneyamout;
     private List<Symbol> slotList;
-    private Symbol cherry;
-    private Symbol dollar;
-    private Symbol star;
-    private Symbol seven;
     private int id1;
     private int id2;
     private int id3;
@@ -42,10 +38,10 @@ public class SlotMachineActivity extends AppCompatActivity {
 
         slotList = new ArrayList<>();
 
-        cherry = new Symbol(R.drawable.cherry, 0);
-        dollar = new Symbol(R.drawable.dollar, 1);
-        star = new Symbol(R.drawable.star, 2);
-        seven = new Symbol(R.drawable.sieben, 3);
+        Symbol cherry = new Symbol(R.drawable.cherry, 0);
+        Symbol dollar = new Symbol(R.drawable.dollar, 1);
+        Symbol star = new Symbol(R.drawable.star, 2);
+        Symbol seven = new Symbol(R.drawable.sieben, 3);
 
         slot1 = findViewById(R.id.ivSlot1);
         slot2 = findViewById(R.id.ivSlot2);
