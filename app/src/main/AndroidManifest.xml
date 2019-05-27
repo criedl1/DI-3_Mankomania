@@ -15,7 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".roulette.QuestionActivity"></activity>
+        <activity
+            android:name=".slotmachine.CasinoStartScreen"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".roulette.QuestionActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".slotmachine.SlotMachineActivity"
             android:screenOrientation="landscape" />
@@ -24,15 +29,6 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".roulette.RotateActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".roulette.DozenActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".roulette.NumberActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".roulette.ColorActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".roulette.MainActivityRoulette"

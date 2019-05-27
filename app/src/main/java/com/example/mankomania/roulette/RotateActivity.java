@@ -3,12 +3,10 @@ package com.example.mankomania.roulette;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,11 +17,11 @@ public class RotateActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private float degree;
-
     private String returnString;
     private ColorEnum color;
     private int randomNumber;
     private String colorString;
+    private int money;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -38,6 +36,8 @@ public class RotateActivity extends AppCompatActivity {
         colorString = extras.getString("colorString");
         randomNumber = extras.getInt("randomNumber");
         degree = extras.getFloat("degree");
+        money = extras.getInt("money");
+
 
         Button btnBack = findViewById(R.id.btnBack);
         btnBack.setText(getString(R.string.roulette_back));
@@ -53,55 +53,45 @@ public class RotateActivity extends AppCompatActivity {
         imageView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) { //since this is an override method, i am not able
                 //to make the return type void.
-                int touch = MotionEventCompat.getActionMasked(event);
 
-                if (touch == MotionEvent.ACTION_MOVE) {
-                    rotateAnimation();
-                }
+               if(event.getAction() == MotionEvent.ACTION_MOVE) {
+                   if (event.getX() <= imageView.getX()) {
+                       float degrees = (1080+degree)*-1;
+                       rotateAnimation(degrees);
+                   } else if (event.getX() > imageView.getX()) {
+                       float degrees = (1080 + degree*-1);
+                       rotateAnimation(degrees);
+                   }
+               }
                 return true;
             }
         });
     }
 
-    private void rotateAnimation() {
-        Animation rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
-        imageView.startAnimation(rotateAnimation);
-        rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
-
+    private void rotateAnimation(float toDegrees) {
+        RotateAnimation rotate = new RotateAnimation((float) 0, (float) toDegrees,
+                RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+                RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setDuration(2000);
+        rotate.setFillEnabled(true);
+        rotate.setFillAfter(true);
+        imageView.startAnimation(rotate);
+        rotate.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                //no need for this, but have to override it because AnimationListener is an interface
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-                //no need for this, but have to override it because AnimationListener is an interface
+                //Override Method
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                final RotateAnimation finalRotate = new RotateAnimation(0.0f, 360 + degree * (-1),
-                        RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-                        RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-
-                finalRotate.setDuration(1000);
-                finalRotate.setFillAfter(true);
-                imageView.startAnimation(finalRotate);
-                imageView.postDelayed(createRunnable(), 2000);
-            }
-        });
-    }
-
-    private Runnable createRunnable() {
-
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
                 openPopUp();
             }
-        };
-        return runnable;
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                //Override Method
+            }
+        });
     }
 
     private void openPopUp() {
@@ -112,6 +102,7 @@ public class RotateActivity extends AppCompatActivity {
         extras.putString("returnString", returnString);
         extras.putInt("randomNumber", randomNumber); //toString() is not possible here
         extras.putString("color", colorString);
+        extras.putInt("money", money);
         popClass.setArguments(extras);
     }
 
