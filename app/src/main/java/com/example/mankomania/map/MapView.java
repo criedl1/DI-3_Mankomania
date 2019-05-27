@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.example.mankomania.R;
 import com.example.mankomania.dice.Dice;
-import com.example.mankomania.slotmachine.casinoStartScreen;
+import com.example.mankomania.slotmachine.CasinoStartScreen;
 
 import java.util.Arrays;
 
@@ -382,7 +382,7 @@ public class MapView extends AppCompatActivity {
     }
 
     public void startCasino() {
-        Intent it = new Intent(this, casinoStartScreen.class);
+        Intent it = new Intent(this, CasinoStartScreen.class);
         startActivity(it);
     }
 
