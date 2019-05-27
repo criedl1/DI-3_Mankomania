@@ -17,28 +17,54 @@ public class SlotMachineLogic {
     public void checkWin(){
         if (id1 == id2 && id2 == id3) {
             if (id1 == 3) { //When player has three dollar signs
-                sma.setMoney(230000);
-                sma.setMoneyamout(sma.getMoney());
-                sma.setWinString("Gewonnen!");
-                sma.setReturnString("Hauptgewinn! Du hast " + sma.getMoney() + " gewonnen!");
+                setMoney(230000);
+                sma.setMoneyamout(getMoney());
+                setWinString("Gewonnen!");
+                setReturnString("Hauptgewinn! Du hast " + getMoney() + " gewonnen!");
 
             } else {
-                sma.setMoney(120000);
-                sma.setMoneyamout(sma.getMoney());
-                sma.setWinString("Gewonnen!");
-                sma.setReturnString("Drei gleiche Symbole! Du hast " + sma.getMoney() + " gewonnen!");
+                setMoney(120000);
+                sma.setMoneyamout(getMoney());
+                setWinString("Gewonnen!");
+                setReturnString("Drei gleiche Symbole! Du hast " + getMoney() + " gewonnen!");
             }
         } else if (id1 == id2 || id2 == id3 || id1 == id3) {
-            sma.setMoney(50000);
-            sma.setMoneyamout(sma.getMoney());
-            sma.setWinString("Gewonnen!");
-            sma.setReturnString("Zwei gleiche Symbole! Du hast " + sma.getMoney() + " gewonnen!");
+            setMoney(50000);
+            sma.setMoneyamout(getMoney());
+            setWinString("Gewonnen!");
+            setReturnString("Zwei gleiche Symbole! Du hast " + getMoney() + " gewonnen!");
         }
         else{
-            sma.setMoney(-20000);
-            sma.setMoneyamout(sma.getMoney());
-            sma.setWinString("Verloren!");
-            sma.setReturnString("Du hast " + sma.getMoney()*-1 + " verloren!");
+            setMoney(-20000);
+            sma.setMoneyamout(getMoney());
+            setWinString("Verloren!");
+            setReturnString("Du hast " + getMoney()*-1 + " verloren!");
         }
+    }
+
+    //Made Getter and Setter here too, to have them in both classes
+
+    public int getMoney(){
+        return sma.getMoney();
+    }
+
+    public void setMoney(int money){
+        sma.setMoney(money);
+    }
+
+    public void setReturnString(String string){
+        sma.setReturnString(string);
+    }
+
+    public String getReturnString(){
+        return sma.getReturnString();
+    }
+
+    public void setWinString(String string){
+        sma.setWinString(string);
+    }
+
+    public String getWinString(){
+        return sma.getWinString();
     }
 }

@@ -19,12 +19,12 @@ import java.util.List;
 public class SlotMachineActivity extends AppCompatActivity {
 
     private int money;
-    private static int moneyamout; //for Network
-    private List<Symbol> slotList = new ArrayList<>();
-    private Symbol cherry = new Symbol(R.drawable.cherry, 0);
-    private Symbol dollar = new Symbol(R.drawable.dollar, 1);
-    private Symbol star = new Symbol(R.drawable.star, 2);
-    private Symbol seven = new Symbol(R.drawable.sieben, 3);
+    private static int moneyamout;
+    private List<Symbol> slotList;
+    private Symbol cherry;
+    private Symbol dollar;
+    private Symbol star;
+    private Symbol seven;
     private int id1;
     private int id2;
     private int id3;
@@ -39,6 +39,13 @@ public class SlotMachineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slot_machine);
+
+        slotList = new ArrayList<>();
+
+        cherry = new Symbol(R.drawable.cherry, 0);
+        dollar = new Symbol(R.drawable.dollar, 1);
+        star = new Symbol(R.drawable.star, 2);
+        seven = new Symbol(R.drawable.sieben, 3);
 
         slot1 = findViewById(R.id.ivSlot1);
         slot2 = findViewById(R.id.ivSlot2);
@@ -74,30 +81,29 @@ public class SlotMachineActivity extends AppCompatActivity {
         slot3.postDelayed(waitForPopUp(),4000);
     }
 
-    public void stopMachine() {
+    public void getStopIds(){
         SecureRandom random = new SecureRandom();
-
-        int stop = random.nextInt(3);
-        slot1.setImageResource(slotList.get(stop).getImage());
-        id1 = slotList.get(stop).getId();
-
-        stop = random.nextInt(3);
-        slot2.setImageResource(slotList.get(stop).getImage());
-        id2 = slotList.get(stop).getId();
-
-        stop = random.nextInt(3);
-        slot3.setImageResource(slotList.get(stop).getImage());
-        id3 = slotList.get(stop).getId();
-
+        id1 = slotList.get(random.nextInt(3)).getId();
+        id2 = slotList.get(random.nextInt(3)).getId();
+        id3 = slotList.get(random.nextInt(3)).getId();
         sml = new SlotMachineLogic(id1, id2, id3, this);
     }
 
+    public void stopMachine() {
+
+        slot1.setImageResource(slotList.get(id1).getImage());
+
+        slot2.setImageResource(slotList.get(id2).getImage());
+
+        slot3.setImageResource(slotList.get(id3).getImage());
+    }
 
     private Runnable createRunnable() {
 
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
+                getStopIds();
                 stopMachine();
                 sml.checkWin();
             }
