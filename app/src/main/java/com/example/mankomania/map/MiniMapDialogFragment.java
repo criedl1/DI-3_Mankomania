@@ -12,9 +12,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.example.mankomania.R;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class MiniMapDialogFragment extends DialogFragment {
     private List<Player> players;
     private ScaleGestureDetector scaleGestureDetector;
     private float scaleFactor = 1.0f;
-    private ImageView map;
+    private PhotoView map;
 
 
     @NonNull
@@ -36,16 +36,17 @@ public class MiniMapDialogFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View myDialog = inflater.inflate(R.layout.dialog_mini_map, null);
-        myDialog.setOnTouchListener(new View.OnTouchListener() {
+        /*myDialog.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 scaleGestureDetector.onTouchEvent(event);
                 return true;
             }
-        });
+        });*/
 
         map = myDialog.findViewById(R.id.miniMapImg);
-        scaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
+        map.setImageResource(R.drawable.mankomania_minimap);
+//        scaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
         // TODO - set Player positions on minimap
         builder.setView(myDialog);
         builder.setPositiveButton(R.string.mini_map_OK, new DialogInterface.OnClickListener() {
