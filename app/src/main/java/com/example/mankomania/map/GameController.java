@@ -5,27 +5,53 @@ import android.util.Log;
 import com.example.mankomania.R;
 import com.example.mankomania.network.client.Client;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameController {
+public class GameController implements Serializable {
 
     private final MapView mapView;
     List<Player> players;
 
 
-    public static int[] allfields = {R.drawable.field_start, R.drawable.field_aktie1, R.drawable.field_lindwurm,
-            R.drawable.field_lottery, R.drawable.field_casino, R.drawable.field_getsomemoney,
-            R.drawable.field_alterplatz, R.drawable.field_aktie2, R.drawable.field_horserace,
-            R.drawable.field_stadium, R.drawable.field_casino, R.drawable.field_alterplatz,
-            R.drawable.field_horserace, R.drawable.field_lindwurm, R.drawable.field_klage,
-            R.drawable.field_hotelsandwirth, R.drawable.field_getsomemoney, R.drawable.field_aktie2,
-            R.drawable.field_woerthersee, R.drawable.field_horserace, R.drawable.field_casino,
-            R.drawable.field_zoo, R.drawable.field_aktie3, R.drawable.field_lindwurm,
-            R.drawable.field_woerthersee, R.drawable.field_klage, R.drawable.field_casino,
-            R.drawable.field_seeparkhotel, R.drawable.field_plattenwirt, R.drawable.field_zoo,
-            R.drawable.field_stadium, R.drawable.field_getsomemoney, R.drawable.field_aktie3,
-            R.drawable.field_aktie1, R.drawable.field_casino, R.drawable.field_zoo
+    public static int[] allfields = {
+            R.drawable.field_start,
+            R.drawable.field_aktie1,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lottery,
+            R.drawable.field_casino,
+            R.drawable.field_getsomemoney,
+            R.drawable.field_alterplatz,
+            R.drawable.field_aktie2,
+            R.drawable.field_horserace,
+            R.drawable.field_zoo,
+            R.drawable.field_stadium,
+            R.drawable.field_casino,
+            R.drawable.field_alterplatz,
+            R.drawable.field_lindwurm,
+            R.drawable.field_hotelsandwirth,
+            R.drawable.field_horserace,
+            R.drawable.field_klage,
+            R.drawable.field_minimundus,
+            R.drawable.field_getsomemoney,
+            R.drawable.field_aktie3,
+            R.drawable.field_woerthersee,
+            R.drawable.field_lottery,
+            R.drawable.field_casino,
+            R.drawable.field_zoo,
+            R.drawable.field_aktie2,
+            R.drawable.field_lindwurm,
+            R.drawable.field_minimundus,
+            R.drawable.field_klage,
+            R.drawable.field_aktie1,
+            R.drawable.field_casino,
+            R.drawable.field_seeparkhotel,
+            R.drawable.field_zoo,
+            R.drawable.field_stadium,
+            R.drawable.field_plattenwirt,
+            R.drawable.field_getsomemoney,
+            R.drawable.field_aktie3,
     };
 
     private Client client;
@@ -74,7 +100,8 @@ public class GameController {
             mapView.showSomeonesAccountBalance(player, outcome);
         }
     }
-    void showAktienUpdate(int player, Aktien aktien){
+
+    void showAktienUpdate(int player, Aktien aktien) {
         if (isMyTurn()) {
             mapView.showMyAktienkauf(aktien);
         } else {
@@ -117,21 +144,21 @@ public class GameController {
 
     void setHypoAktie(int player, int count) {
         this.players.get(player).setAktie(Aktien.HYPO, count);
-        showAktienUpdate(player,Aktien.HYPO);
+        showAktienUpdate(player, Aktien.HYPO);
         client.endTurn();
         // TODO: update UI
     }
 
     void setStrabagAktie(int player, int count) {
         this.players.get(player).setAktie(Aktien.STRABAG, count);
-        showAktienUpdate(player,Aktien.STRABAG);
+        showAktienUpdate(player, Aktien.STRABAG);
         // TODO: update UI
         client.endTurn();
     }
 
     void setInfineonAktie(int player, int count) {
         this.players.get(player).setAktie(Aktien.INFINEON, count);
-        showAktienUpdate(player,Aktien.INFINEON);
+        showAktienUpdate(player, Aktien.INFINEON);
         // TODO: update UI
         client.endTurn();
     }
@@ -216,12 +243,13 @@ public class GameController {
         // TODO - add hotel
         client.endTurn();
     }
-    public void justEndTurn(){
+
+    public void justEndTurn() {
         client.endTurn();
     }
 
     void sendMoveOverLotto() {
-        this.setMoney(hasTurn, this.currentPlayer().getMoney()-5000);
-        this.client.setLottoOnServer(this.lotto+5000);
+        this.setMoney(hasTurn, this.currentPlayer().getMoney() - 5000);
+        this.client.setLottoOnServer(this.lotto + 5000);
     }
 }

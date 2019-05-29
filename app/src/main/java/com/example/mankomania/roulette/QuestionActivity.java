@@ -156,7 +156,7 @@ public class QuestionActivity extends AppCompatActivity {
         bundle.putInt("randomNumber", roulette.getRandomNumberFromRoulette());
         bundle.putFloat("degree", roulette.getDegreeFromRoulette());
         bundle.putString("colorString", roulette.getColorString());
-
+        bundle.putInt("money", roulette.getMoney());
         it.putExtras(bundle);
         startActivity(it);
         finish();

@@ -48,5 +48,6 @@
     <string name="movetest">moveTest</string>
     <string name="setmoney">setmoney</string>
     <string name="lottery_toast">Du bist über die Lotterie gegangen, du verlierst 5000</string>
-
+    <string name="mini_map_OK">OK</string>
+    <string name="mini_map_title">Mini Map</string>
 </resources>

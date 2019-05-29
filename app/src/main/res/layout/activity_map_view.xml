@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/background"
+        app:srcCompat="@drawable/background_money"
         tools:layout_editor_absoluteX="18dp"
         tools:layout_editor_absoluteY="96dp" />
 
@@ -236,6 +236,24 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/miniMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="658dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="70dp"
+            android:background="#00A52B2B"
+            android:backgroundTint="@android:color/background_dark"
+            android:clickable="true"
+            app:backgroundTint="@color/design_default_color_primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@android:drawable/ic_input_add" />
 
     </android.support.constraint.ConstraintLayout>
 
