@@ -1,6 +1,5 @@
 package com.example.mankomania.roulette;
 import android.support.v7.app.AppCompatActivity;
-import com.example.mankomania.slotmachine.SlotMachineActivity;
 
 public class RouletteLogic extends AppCompatActivity {
 
@@ -9,30 +8,34 @@ public class RouletteLogic extends AppCompatActivity {
     private String returnString;
     private int money;
     private int wonMoney;
-    int rouletteNumber;
-    private static final String you_have = "Du hast ";
-    private static final String won = " gewonnen!";
-    private static final String lost = " verloren";
+    private int rouletteNumber;
+    private int slotMoney;
+    private static final String YOU_HAVE = "Du hast ";
+    private static final String WON = " gewonnen!";
+    private static final String LOST = " verloren";
 
     public RouletteLogic(){
         spinRoulette();
     }
 
-    public RouletteLogic(int choosenNumber) {
+    public RouletteLogic(int choosenNumber, int slotMoney) {
+        this.slotMoney = slotMoney;
         spinRoulette();
-        setMoney(SlotMachineActivity.getMoneyamout());
+        setMoney(slotMoney);
         checkNumber(choosenNumber);
     }
 
-    public RouletteLogic(ColorEnum choosenColor) {
+    public RouletteLogic(ColorEnum choosenColor, int slotMoney) {
+        this.slotMoney = slotMoney;
         spinRoulette();
-        setMoney(SlotMachineActivity.getMoneyamout());
+        setMoney(slotMoney);
         checkColor(choosenColor);
     }
 
-    public RouletteLogic(String choosenDozen) {
+    public RouletteLogic(String choosenDozen, int slotMoney) {
+        this.slotMoney = slotMoney;
         spinRoulette();
-        setMoney(SlotMachineActivity.getMoneyamout());
+        setMoney(slotMoney);
         checkDozen(Integer.parseInt(choosenDozen));
 
     }
@@ -50,12 +53,12 @@ public class RouletteLogic extends AppCompatActivity {
                 if (anArray.getColor() == choosenColor) {
                     setWonMoney(30000);
                     setMoney(getWonMoney() + getMoney()); //--> 80000-50000 Einsatz
-                    setReturnString(you_have + getWonMoney() + won);
+                    setReturnString(YOU_HAVE + getWonMoney() + WON);
 
                 } else {
                     setWonMoney(-5000);
                     setMoney(getWonMoney() + getMoney());
-                    setReturnString(you_have + getWonMoney() * -1 + lost);
+                    setReturnString(YOU_HAVE + getWonMoney() * -1 + LOST);
                 }
             }
         }
@@ -65,11 +68,11 @@ public class RouletteLogic extends AppCompatActivity {
         if (rouletteNumber == choosenNumber) {
             setWonMoney(145000);
             setMoney(getWonMoney() + getMoney());
-            setReturnString(you_have + getWonMoney() + won);
+            setReturnString(YOU_HAVE + getWonMoney() + WON);
         } else {
             setWonMoney(-50000);
             setMoney(getWonMoney() + getMoney());
-            setReturnString(you_have + getWonMoney() * -1 + lost);
+            setReturnString(YOU_HAVE + getWonMoney() * -1 + LOST);
         }
         return money;
     }
@@ -92,11 +95,11 @@ public class RouletteLogic extends AppCompatActivity {
         if (choosenDozen == dozen) {
             setWonMoney(80000);
             setMoney(getWonMoney() + getMoney());
-            setReturnString(you_have + getWonMoney() + won);
+            setReturnString(YOU_HAVE + getWonMoney() + WON);
         } else {
             setWonMoney(-20000);
             setMoney(getWonMoney() + getMoney());
-            setReturnString(you_have + getWonMoney() * -1 + lost);
+            setReturnString(YOU_HAVE + getWonMoney() * -1 + LOST);
         }
     }
 
@@ -142,5 +145,9 @@ public class RouletteLogic extends AppCompatActivity {
 
     public void setWonMoney(int wonMoney) {
         this.wonMoney = wonMoney;
+    }
+
+    public int getSlotMoney(){
+        return this.slotMoney;
     }
 }

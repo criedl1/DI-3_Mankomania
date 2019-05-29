@@ -19,7 +19,6 @@ import java.util.List;
 public class SlotMachineActivity extends AppCompatActivity {
 
     private int money;
-    private static int moneyamout;
     private List<Symbol> slotList;
     private int id1;
     private int id2;
@@ -96,7 +95,7 @@ public class SlotMachineActivity extends AppCompatActivity {
 
     private Runnable createRunnable() {
 
-        Runnable runnable = new Runnable() {
+        return new Runnable() {
             @Override
             public void run() {
                 getStopIds();
@@ -104,21 +103,19 @@ public class SlotMachineActivity extends AppCompatActivity {
                 sml.checkWin();
             }
         };
-        return runnable;
     }
 
     private Runnable waitForPopUp(){
-        Runnable runnable = new Runnable() {
+        return new Runnable() {
             @Override
             public void run() {
                 openPopUp();
             }
         };
-        return runnable;
     }
 
     private Runnable animationRunnable(final ImageView iv, final int i){
-        Runnable r = new Runnable() {
+        return new Runnable() {
 
 
             @Override
@@ -134,7 +131,7 @@ public class SlotMachineActivity extends AppCompatActivity {
                 startAnimation(slot3);
                 startAnimation(iv);
             }
-        }; return r;
+        };
     }
 
     private void openPopUp() {
@@ -157,20 +154,12 @@ public class SlotMachineActivity extends AppCompatActivity {
         return animation;
     }
 
-    public static int getMoneyamout(){
-        return moneyamout;
-    }
-
     public void setMoney(int money){
         this.money = money;
     }
 
     public int getMoney(){
         return this.money;
-    }
-
-    public static void setMoneyamout(int newMoneyAmount){
-        moneyamout = newMoneyAmount;
     }
 
     public String getReturnString() {

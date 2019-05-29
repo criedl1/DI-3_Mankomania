@@ -15,6 +15,7 @@ public class QuestionActivity extends AppCompatActivity {
     private ColorEnum choosenColor;
     private String choosenDozen;
     private RouletteLogic roulette;
+    private int slotMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class QuestionActivity extends AppCompatActivity {
         Intent it = getIntent();
         Bundle extras = it.getExtras();
         String choosenActivity = extras.getString("choosenActivity");
+        slotMoney = extras.getInt("slotMoney");
 
         if (choosenActivity.equals("Number")) {
             getNumberSetUp();
@@ -65,7 +67,7 @@ public class QuestionActivity extends AppCompatActivity {
                 if (choosenNumber > 36 || choosenNumber < 0 || number.getText().toString().isEmpty()) {
                     openErrorPopUp();
                 } else {
-                    roulette = new RouletteLogic(choosenNumber);
+                    roulette = new RouletteLogic(choosenNumber, slotMoney);
                     startRotating();
                 }
             }
@@ -88,7 +90,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 choosenColor = ColorEnum.RED;
-                roulette = new RouletteLogic(choosenColor);
+                roulette = new RouletteLogic(choosenColor, slotMoney);
                 startRotating();
             }
         });
@@ -97,7 +99,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 choosenColor = ColorEnum.BLACK;
-                roulette = new RouletteLogic(choosenColor);
+                roulette = new RouletteLogic(choosenColor, slotMoney);
                 startRotating();
             }
         });
@@ -124,7 +126,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 choosenDozen = "1";
-                roulette = new RouletteLogic(choosenDozen);
+                roulette = new RouletteLogic(choosenDozen, slotMoney);
                 startRotating();
             }
         });
@@ -133,7 +135,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 choosenDozen = "2";
-                roulette = new RouletteLogic(choosenDozen);
+                roulette = new RouletteLogic(choosenDozen, slotMoney);
                 startRotating();
             }
         });
@@ -142,7 +144,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 choosenDozen = "3";
-                roulette = new RouletteLogic(choosenDozen);
+                roulette = new RouletteLogic(choosenDozen, slotMoney);
                 startRotating();
             }
         });

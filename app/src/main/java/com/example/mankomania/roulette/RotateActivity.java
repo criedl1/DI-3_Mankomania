@@ -38,7 +38,6 @@ public class RotateActivity extends AppCompatActivity {
         degree = extras.getFloat("degree");
         money = extras.getInt("money");
 
-
         Button btnBack = findViewById(R.id.btnBack);
         btnBack.setText(getString(R.string.roulette_back));
 

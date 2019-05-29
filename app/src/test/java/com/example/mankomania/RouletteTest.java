@@ -35,7 +35,7 @@ public class RouletteTest {
 
     @Test
     public void testNumberConstructor(){
-        RouletteLogic numberRoulette = new RouletteLogic(15);
+        RouletteLogic numberRoulette = new RouletteLogic(15, 0);
 
         if(numberRoulette.getRandomNumberFromRoulette() == 15){
             assertEquals(numberRoulette.getWonMoney(), 145000);
@@ -68,7 +68,7 @@ public class RouletteTest {
 
     @Test
     public void testColorConstructor(){
-        RouletteLogic colorRoulette = new RouletteLogic(ColorEnum.BLACK);
+        RouletteLogic colorRoulette = new RouletteLogic(ColorEnum.BLACK, 0);
 
         if(colorRoulette.getColorFromRoulette().equals(ColorEnum.BLACK)){
             assertEquals(colorRoulette.getWonMoney(), 30000);
@@ -100,7 +100,7 @@ public class RouletteTest {
 
     @Test
     public void testDozenConstructor(){
-        RouletteLogic dozenRoulette = new RouletteLogic("2");
+        RouletteLogic dozenRoulette = new RouletteLogic("2",0);
 
         if(dozenRoulette.getRandomNumberFromRoulette() <= 24 && dozenRoulette.getRandomNumberFromRoulette() > 12){
             assertEquals(dozenRoulette.getWonMoney(), 80000);
@@ -155,7 +155,7 @@ public class RouletteTest {
 
     @Test
     public void testDozen1(){
-        RouletteLogic dozenRoulette = new RouletteLogic("1");
+        RouletteLogic dozenRoulette = new RouletteLogic("1",0);
         if (dozenRoulette.getRandomNumberFromRoulette() > 12){
             assertEquals(- 20000, dozenRoulette.getWonMoney());
         }
@@ -166,7 +166,7 @@ public class RouletteTest {
 
     @Test
     public void testDozen3(){
-        RouletteLogic dozenRoulette = new RouletteLogic("3");
+        RouletteLogic dozenRoulette = new RouletteLogic("3",0);
         if (dozenRoulette.getRandomNumberFromRoulette() <= 24){
             assertEquals(- 20000, dozenRoulette.getWonMoney());
         }

@@ -7,7 +7,7 @@ public class NetworkConstants {
     public static final String SET_ID = "SET_ID";
     public static final String SET_PLAYER_COUNT = "SET_PLAYER_COUNT";
     public static final String SEND_PLAYER = "sendPlayer";
-    public static final String SEND_MONEY = "sendMoney";
+    public static final String SEND_MONEY = "SendMoneyClass";
     public static final String SET_POSITION = "setPosition";
     public static final String SET_HYPO_AKTIE = "setHypoAktie";
     public static final String SET_STRABAG_AKTIE = "setStrabagAktie";

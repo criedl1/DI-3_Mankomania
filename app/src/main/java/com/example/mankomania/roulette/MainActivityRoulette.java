@@ -12,11 +12,16 @@ import com.example.mankomania.R;
 public class MainActivityRoulette extends AppCompatActivity {
 
     String choosenActivity;
+    int slotMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainroulette);
+
+        Intent it = getIntent();
+        Bundle extras = it.getExtras();
+        slotMoney = extras.getInt("slotMoney");
 
         TextView welcome = findViewById(R.id.tvWillkommen);
         Button color = findViewById(R.id.btnFarbe);
@@ -73,6 +78,7 @@ public class MainActivityRoulette extends AppCompatActivity {
         Intent it = new Intent(this, QuestionActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("choosenActivity", choosenActivity);
+        bundle.putInt("slotMoney", slotMoney);
         it.putExtras(bundle);
         startActivity(it);
         finish();

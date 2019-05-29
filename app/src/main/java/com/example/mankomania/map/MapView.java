@@ -159,6 +159,7 @@ public class MapView extends AppCompatActivity {
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+                startCasino();
                 step2();
             }
         });

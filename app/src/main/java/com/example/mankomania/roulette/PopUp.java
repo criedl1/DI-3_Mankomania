@@ -27,7 +27,6 @@ public class PopUp extends AppCompatDialogFragment {
         returnString = getArguments().getString("returnString");
         money = getArguments().getInt("money");
 
-
         alert.setTitle(getReturnString());
         if(colorString.equals("BLACK")){
             colorString = getString(R.string.roulette_black);}
@@ -61,7 +60,7 @@ public class PopUp extends AppCompatDialogFragment {
     }
 
     private void sendMoneyChange(){
-        sendMoneyClass moneyClass = new sendMoneyClass();
+        SendMoneyClass moneyClass = new SendMoneyClass();
         moneyClass.sendMoneyChange(money);
     }
 }
