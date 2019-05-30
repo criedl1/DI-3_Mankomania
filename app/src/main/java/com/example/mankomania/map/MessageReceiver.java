@@ -41,8 +41,14 @@ class MessageReceiver {
             case NetworkConstants.SET_LOTTO:
                 setLottoUpdate(jsonObject);
                 break;
-            case NetworkConstants.SET_HOTEL:
-                setHotelUpdate(jsonObject);
+            case NetworkConstants.SET_SANDWIRTH:
+                setSandwirthUpdate(jsonObject);
+                break;
+            case NetworkConstants.SET_SEEPARK:
+                setSeeparkUpdate(jsonObject);
+                break;
+            case NetworkConstants.SET_PLATTENWIRT:
+                setPlattenwirtUpdate(jsonObject);
                 break;
             case NetworkConstants.ROLL_DICE:
                 rollDiceUpdate(jsonObject);
@@ -124,6 +130,28 @@ class MessageReceiver {
         gameController.setInfineonAktie(player, count);
     }
 
+    private void setSandwirthUpdate(JsonObject jsonObject) {
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
+       // int hotel = jsonToInt(jsonObject, NetworkConstants.HOTEL);
+       // int owner = jsonToInt(jsonObject, NetworkConstants.OWNER);
+
+        gameController.setSandwirtHotel(player, count);
+    }
+    private void setPlattenwirtUpdate(JsonObject jsonObject) {
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
+
+        gameController.setPlattenwirtHotel(player, count);
+    }
+
+    private void setSeeparkUpdate(JsonObject jsonObject) {
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
+
+        gameController.setSeeparkHotel(player, count);
+    }
+
     private void setPositionUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int position = jsonToInt(jsonObject, NetworkConstants.POSITION);
@@ -145,12 +173,6 @@ class MessageReceiver {
         gameController.setLotto(amount);
     }
 
-    private void setHotelUpdate(JsonObject jsonObject) {
-        int hotel = jsonToInt(jsonObject, NetworkConstants.HOTEL);
-        int owner = jsonToInt(jsonObject, NetworkConstants.OWNER);
-
-        gameController.setHotel(hotel, owner);
-    }
 
     private void spinWheelUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);

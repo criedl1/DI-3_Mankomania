@@ -33,6 +33,9 @@ import java.util.Arrays;
 import static com.example.mankomania.map.Aktien.HYPO;
 import static com.example.mankomania.map.Aktien.INFINEON;
 import static com.example.mankomania.map.Aktien.STRABAG;
+import static com.example.mankomania.map.Hotel.PLATTENWIRT;
+import static com.example.mankomania.map.Hotel.SANDWIRTH;
+import static com.example.mankomania.map.Hotel.SEEPARK;
 
 
 public class MapView extends AppCompatActivity {
@@ -358,19 +361,13 @@ public class MapView extends AppCompatActivity {
                     startHorseRace();
                     break;
                 case R.drawable.field_hotelsandwirth:
-                    Toast.makeText(this, "Du erhälst das Hotel Sandwirth!", Toast.LENGTH_LONG).show();
-                    // TODO - change method signature if needed and then do your stuff
-                    getHotel();
+                    buyHotel(SANDWIRTH);
                     break;
                 case R.drawable.field_plattenwirt:
-                    Toast.makeText(this, "Du erhälst das Hotel Plattenwirt!", Toast.LENGTH_LONG).show();
-                    // TODO - change method signature if needed and then do your stuff
-                    getHotel();
+                    buyHotel(PLATTENWIRT);
                     break;
                 case R.drawable.field_seeparkhotel:
-                    Toast.makeText(this, "Du erhälst das Seepark-Hotel!", Toast.LENGTH_LONG).show();
-                    // TODO - change method signature if needed and then do your stuff
-                    getHotel();
+                    buyHotel(SEEPARK);
                     break;
                 default:
                     return;
@@ -380,14 +377,6 @@ public class MapView extends AppCompatActivity {
     }
 
 
-    private void getHotel() {
-        gameController.getHotel();
-
-    }
-
-    private void getShare() {
-        gameController.getShare();
-    }
 
     private void startHorseRace() {
         gameController.startHorseRace();
@@ -440,6 +429,14 @@ public class MapView extends AppCompatActivity {
         Toast.makeText(this, "Du erhälst Aktie  " + aktien, Toast.LENGTH_LONG).show();
     }
 
+    public void showMyHotelkauf(Hotel hotel) {
+        Toast.makeText(this, "Du erhälst das Hotel  " + hotel, Toast.LENGTH_LONG).show();
+    }
+
+    public void showSomeonesHotelkauf(int player, Hotel hotel) {
+        Toast.makeText(this, "Spieler  " + (player +1) + "erhält das Hotel " + hotel, Toast.LENGTH_LONG).show();
+    }
+
     public void showSomeonesDiceResult(int player, int outcome) {
         Toast.makeText(this, "Player " + (player + 1) + " diced " + outcome, Toast.LENGTH_LONG).show();
     }
@@ -480,6 +477,10 @@ public class MapView extends AppCompatActivity {
         showAktieUpdate(cPlayer, aktie);
 
     }
+    private void setHotel(Hotel hotel) {
+        Player cPlayer = gameController.currentPlayer();
+        showHotelUpdate(cPlayer, hotel);
+    }
 
     private void showAktieUpdate(Player cPlayer, Aktien aktien) {
         int playerIdx = gameController.getPlayerIndex(cPlayer);
@@ -497,6 +498,25 @@ public class MapView extends AppCompatActivity {
                     break;
                 default:
                     throw new IllegalStateException("Aktie does not exist");
+            }
+        }
+    }
+    private void showHotelUpdate(Player cPlayer, Hotel hotel) {
+        int playerIdx = gameController.getPlayerIndex(cPlayer);
+        if (playerIdx >= 0) {
+            switch (hotel) {
+                case SANDWIRTH:
+                    gameController.setSandwirtHotel(playerIdx, cPlayer.getHotel()[0] + 1);
+
+                    break;
+                case PLATTENWIRT:
+                    gameController.setPlattenwirtHotel(playerIdx, cPlayer.getHotel()[1] + 1);
+                    break;
+                case SEEPARK:
+                    gameController.setSeeparkHotel(playerIdx, cPlayer.getHotel()[2] + 1);
+                    break;
+                default:
+                    throw new IllegalStateException("Hotel does not exist");
             }
         }
     }
@@ -523,5 +543,28 @@ public class MapView extends AppCompatActivity {
         alert.show();
 
 
+    }
+
+    public void buyHotel(final Hotel hotel) {
+        AlertDialog.Builder a_builder = new AlertDialog.Builder(MapView.this);
+
+        a_builder.setMessage("Wollen sie das Hotel " + hotel + " kaufen?")
+                .setCancelable(false)
+                .setPositiveButton("JA!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        setHotel(hotel);
+                        showMoneyUpdate(-150000);
+                    }
+                })
+                .setNegativeButton("NEIN!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        gameController.justEndTurn();
+                    }
+                });
+
+        AlertDialog alert = a_builder.create();
+        alert.show();
     }
 }

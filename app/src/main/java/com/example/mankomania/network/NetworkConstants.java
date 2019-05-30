@@ -12,6 +12,9 @@ public class NetworkConstants {
     public static final String SET_HYPO_AKTIE = "setHypoAktie";
     public static final String SET_STRABAG_AKTIE = "setStrabagAktie";
     public static final String SET_INFINEON_AKTIE = "setInfineonAktie";
+    public static final String SET_SANDWIRTH = "setSandwirthHotel";
+    public static final String SET_PLATTENWIRT = "setPlattenwirtHotel";
+    public static final String SET_SEEPARK= "setSeeparkhotel";
     public static final String SET_CHEATER = "setCheater";
     public static final String SET_LOTTO = "setLotto";
     public static final String SET_HOTEL = "setHotel";
