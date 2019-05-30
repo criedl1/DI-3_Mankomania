@@ -61,7 +61,7 @@ public class GameController implements Serializable {
     private int lotto;
     private int hasTurn;
 
-    GameController(String ip, MapView mapView) {
+    public GameController(String ip, MapView mapView) {
         this.mapView = mapView;
         players = new ArrayList<>();
 
@@ -118,14 +118,13 @@ public class GameController implements Serializable {
         client.rollTheDice();
     }
 
-    void updateMoney(int balance) {
-        if (balance < 0)
-            balance = -balance;
-        client.updateMoney(balance);
+    void updateMoney(int playerIdx, int balance) {
+        int bal = currentPlayer().getMoney();
+        client.setMoneyOnServer(playerIdx,bal+balance);
         client.endTurn();
     }
 
-    void setMyPlayerID(int player) {
+   public void setMyPlayerID(int player) {
         this.myID = player;
         this.players.get(myID).initMyMoneyField();
     }
@@ -217,7 +216,7 @@ public class GameController implements Serializable {
      * @param p Player-Objekt
      * @return Index, wenn p in Liste gefunden, -1 sonst.
      */
-    int getPlayerIndex(Player p) {
+    public int getPlayerIndex(Player p) {
         for (int i = 0; i < players.size(); i++) {
             if (p.equals(players.get(i)))
                 return i;
@@ -225,7 +224,7 @@ public class GameController implements Serializable {
         return -1;
     }
 
-    void setPlayerIP(int player, String ip) {
+    public void setPlayerIP(int player, String ip) {
         this.players.get(player).setIP(ip);
     }
 
