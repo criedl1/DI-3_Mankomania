@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_map">
 
-    <ImageView
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/miniMapImg"
-        android:layout_width="205dp"
-        android:layout_height="194dp"
+        android:layout_width="266dp"
+        android:layout_height="227dp"
         android:layout_marginStart="166dp"
         android:layout_marginTop="279dp"
         android:layout_marginEnd="167dp"

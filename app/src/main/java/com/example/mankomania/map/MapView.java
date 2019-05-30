@@ -31,6 +31,10 @@ import com.example.mankomania.slotmachine.CasinoStartScreen;
 
 import java.util.Arrays;
 
+import static com.example.mankomania.map.Aktien.HYPO;
+import static com.example.mankomania.map.Aktien.INFINEON;
+import static com.example.mankomania.map.Aktien.STRABAG;
+
 
 public class MapView extends AppCompatActivity {
 
@@ -68,9 +72,9 @@ public class MapView extends AppCompatActivity {
             public void onClick(View view) {
                 DialogFragment miniMapDialog = new MiniMapDialogFragment();
                 Bundle args = new Bundle();
-                args.putSerializable("PLAYERS",gameController);
+                args.putSerializable("PLAYERS", gameController);
                 miniMapDialog.setArguments(args);
-                miniMapDialog.show(getSupportFragmentManager(),"mini_map");
+                miniMapDialog.show(getSupportFragmentManager(), "mini_map");
             }
         });
 
@@ -346,13 +350,13 @@ public class MapView extends AppCompatActivity {
                     showMoneyUpdate(-30000);
                     break;
                 case R.drawable.field_aktie1:
-                    buyAktie(Aktien.HYPO);
+                    buyAktie(HYPO);
                     break;
                 case R.drawable.field_aktie2:
-                    buyAktie(Aktien.INFINEON);
+                    buyAktie(INFINEON);
                     break;
                 case R.drawable.field_aktie3:
-                    buyAktie(Aktien.STRABAG);
+                    buyAktie(STRABAG);
                     break;
                 case R.drawable.field_horserace:
                     // TODO - change method signature if needed and then do your stuff
@@ -394,13 +398,15 @@ public class MapView extends AppCompatActivity {
         gameController.startHorseRace();
     }
 
-    private void showMoneyUpdate(int amount) {
+    public int showMoneyUpdate(int amount) {
         Player cPlayer = gameController.currentPlayer();
         int playerIdx = gameController.getPlayerIndex(cPlayer);
         if (playerIdx >= 0) {
             gameController.setMoney(playerIdx, cPlayer.getMoney() + amount);
-            gameController.updateMoney(amount);
+            gameController.updateMoney(playerIdx, amount);
+
         }
+        return amount;
     }
 
     public void startCasino() {
