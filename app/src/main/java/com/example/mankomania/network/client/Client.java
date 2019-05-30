@@ -249,4 +249,18 @@ public class Client extends Thread {
     public int[] getStrabagAktie() {
         return gameData.getStrabagAktie();
     }
+
+    public void sendBlame(final int cheater) {
+        Thread thread = new Thread(){
+            @Override
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.BLAME_CHEATER);
+                json.addProperty(NetworkConstants.PLAYER,idx);
+                json.addProperty(NetworkConstants.CHEATER,cheater);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
 }

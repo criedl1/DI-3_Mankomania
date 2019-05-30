@@ -83,8 +83,10 @@ public class ServerQueueHandler extends QueueHandler {
                 int[] isCheater = gameData.getIsCheater();
                 isCheater[cheater]=0;
                 gameData.setIsCheater(isCheater);
+                gameData.setMoney(player,gameData.getMoney()[player]-100000);
                 sendBlameResult(player, cheater,true);
             } else {
+                gameData.setMoney(player,gameData.getMoney()[player]+100000);
                 sendBlameResult(player, cheater, false);
             }
         }
@@ -93,7 +95,7 @@ public class ServerQueueHandler extends QueueHandler {
 
     private void sendBlameResult(int player, int cheater, boolean success) {
         JsonObject json = new JsonObject();
-        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.START_TURN);
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.BLAME_RESULT);
         json.addProperty(NetworkConstants.BLAMER, player);
         json.addProperty(NetworkConstants.BLAMED, cheater);
         json.addProperty(NetworkConstants.BLAME_RESULT, success?NetworkConstants.BLAME_SUCCESS:NetworkConstants.BLAME_FAIL);

@@ -265,11 +265,18 @@ public class GameController implements Serializable {
     }
 
     void makeMeCheat() {
+        this.players.get(myID).setDidCheat(true);
         this.mapView.hideCheatButton();
         this.client.setMeAsCheater();
     }
 
     void showCheatSuccess(int successor) {
         this.mapView.showCheatSuccess(successor);
+    }
+
+    void setBlame(int cheater) {
+        this.players.get(myID).setDidBlame(true);
+        this.mapView.hideBlameButton();
+        this.client.sendBlame(cheater);
     }
 }

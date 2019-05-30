@@ -287,6 +287,31 @@ public class MapView extends AppCompatActivity {
         gameController.makeMeCheat();
     }
 
+    public void blame(View view) {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        CharSequence items[] = new CharSequence[gameController.players.size()-1];
+        int index = 0;
+        final int[] players = new int[gameController.players.size()-1];
+        for (int i = 0; i < gameController.players.size(); i++) {
+            if(i!=gameController.getMyID()){
+                players[index] = i;
+                items[index++] = "Spieler "+(i+1);
+            }
+        }
+        adb.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface d, int n) {
+                gameController.setBlame(players[n]);
+                d.cancel();
+            }
+
+        });
+        adb.setNegativeButton("Cancel", null);
+        adb.setTitle("Wen willst du beschuldigen ?");
+        adb.show();
+    }
+
     public void displayField(int field) {
         currentField = field;
 
@@ -468,12 +493,19 @@ public class MapView extends AppCompatActivity {
 
     public void startMyTurn() {
         findViewById(R.id.wuerfeln).setVisibility(View.VISIBLE);
-        findViewById(R.id.cheat_button).setVisibility(View.VISIBLE);
+        Player myPlayer = gameController.players.get(gameController.getMyID());
+        if(!myPlayer.isDidBlame()){
+            findViewById(R.id.blame_button).setVisibility(View.VISIBLE);
+        }
+        if(!myPlayer.isDidCheat()){
+            findViewById(R.id.cheat_button).setVisibility(View.VISIBLE);
+        }
     }
 
     public void endMyTurn() {
         findViewById(R.id.wuerfeln).setVisibility(View.INVISIBLE);
         findViewById(R.id.cheat_button).setVisibility(View.INVISIBLE);
+        findViewById(R.id.blame_button).setVisibility(View.INVISIBLE);
     }
 
     public void setLotto(int lotto) {
@@ -536,6 +568,9 @@ public class MapView extends AppCompatActivity {
 
     public void hideCheatButton() {
         findViewById(R.id.cheat_button).setVisibility(View.INVISIBLE);
+    }
+    public void hideBlameButton() {
+        findViewById(R.id.blame_button).setVisibility(View.INVISIBLE);
     }
 
     public void showCheatSuccess(int successor) {

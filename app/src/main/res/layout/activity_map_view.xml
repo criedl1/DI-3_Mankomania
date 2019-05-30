@@ -43,7 +43,24 @@
             app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
             app:layout_constraintStart_toStartOf="@+id/back1"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-            app:layout_constraintVertical_bias="0.83" />
+            app:layout_constraintVertical_bias="0.866" />
+
+        <Button
+            android:id="@+id/blame_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#CDDC39"
+            android:backgroundTintMode="src_in"
+            android:onClick="blame"
+            android:text="Blame"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/cheat_button"
+            app:layout_constraintStart_toStartOf="@+id/back1"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
             android:id="@+id/wuerfeln"
