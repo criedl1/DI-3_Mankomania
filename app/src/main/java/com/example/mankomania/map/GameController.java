@@ -1,5 +1,6 @@
 package com.example.mankomania.map;
 
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.example.mankomania.R;
@@ -56,6 +57,8 @@ public class GameController implements Serializable {
 
     private Client client;
     private MessageReceiver receiver;
+
+
     private int myID;
     private int cheater;
     private int lotto;
@@ -84,6 +87,10 @@ public class GameController implements Serializable {
         this.receiver.handleMessage(message);
     }
 
+
+    public int getMyID() {
+        return myID;
+    }
 
     void rollDiceUpdate(int player, int outcome) {
         if (isMyTurn()) {
@@ -126,7 +133,7 @@ public class GameController implements Serializable {
 
    public void setMyPlayerID(int player) {
         this.myID = player;
-        this.players.get(myID).initMyMoneyField();
+        this.players.get(myID).initMyMoneyField(ContextCompat.getColor(mapView,R.color.moneyBGMine));
     }
 
     public void setMoney(int player, int money) {
@@ -243,12 +250,33 @@ public class GameController implements Serializable {
         client.endTurn();
     }
 
-    public void justEndTurn() {
+    void justEndTurn() {
         client.endTurn();
     }
 
     void sendMoveOverLotto() {
         this.setMoney(hasTurn, this.currentPlayer().getMoney() - 5000);
+        this.client.setMoneyOnServer(this.myID,this.currentPlayer().getMoney() - 5000);
         this.client.setLottoOnServer(this.lotto + 5000);
+    }
+
+    void showBlameResult(boolean result, int blamer, int blamed) {
+        this.mapView.showBlameResult(result, blamer, blamed);
+    }
+
+    void makeMeCheat() {
+        this.players.get(myID).setDidCheat(true);
+        this.mapView.hideCheatButton();
+        this.client.setMeAsCheater();
+    }
+
+    void showCheatSuccess(int successor) {
+        this.mapView.showCheatSuccess(successor);
+    }
+
+    void setBlame(int cheater) {
+        this.players.get(myID).setDidBlame(true);
+        this.mapView.hideBlameButton();
+        this.client.sendBlame(cheater);
     }
 }

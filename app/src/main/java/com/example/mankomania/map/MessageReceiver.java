@@ -68,9 +68,27 @@ class MessageReceiver {
             case NetworkConstants.MONEY_UPDATE:
                 showMoneyUpdate(jsonObject);
                 break;
+            case NetworkConstants.BLAME_RESULT:
+                showBlameResult(jsonObject);
+                break;
+            case NetworkConstants.SUCCESSCHEAT:
+                showCheatSuccess(jsonObject);
+                break;
             default:
                 throw new IllegalStateException("Network Object should not be here: " + message);
         }
+    }
+
+    private void showCheatSuccess(JsonObject jsonObject) {
+        int successor = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        gameController.showCheatSuccess(successor);
+    }
+
+    private void showBlameResult(JsonObject jsonObject) {
+        boolean result = jsonToString(jsonObject, NetworkConstants.BLAME_RESULT).equals(NetworkConstants.BLAME_SUCCESS);
+        int blamer = jsonToInt(jsonObject, NetworkConstants.BLAMER);
+        int blamed = jsonToInt(jsonObject, NetworkConstants.BLAMED);
+        gameController.showBlameResult(result,blamer,blamed);
     }
 
     private void setPlayer(JsonObject jsonObject) {
@@ -97,10 +115,6 @@ class MessageReceiver {
 
     private void setCheaterUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        //TODO: why is this count here ?
-        //count is the wrong name, the boolean returns if the player is a cheater or not anymore
-        boolean count = (jsonToInt(jsonObject, NetworkConstants.CHEATER) == 1);
-
         gameController.setCheater(player);
     }
 

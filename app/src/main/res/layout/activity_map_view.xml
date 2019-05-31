@@ -29,6 +29,39 @@
         android:layout_height="match_parent">
 
 
+        <Button
+            android:id="@+id/cheat_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#4CAF50"
+            android:backgroundTintMode="src_in"
+            android:onClick="cheat"
+            android:text="@string/cheat"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintStart_toStartOf="@+id/back1"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+            app:layout_constraintVertical_bias="0.866" />
+
+        <Button
+            android:id="@+id/blame_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#CDDC39"
+            android:backgroundTintMode="src_in"
+            android:onClick="blame"
+            android:text="Blame"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/cheat_button"
+            app:layout_constraintStart_toStartOf="@+id/back1"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+            app:layout_constraintVertical_bias="1.0" />
+
         <ImageView
             android:id="@+id/wuerfeln"
             android:layout_width="70dp"
@@ -72,6 +105,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -140,7 +174,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:gravity="center"
-            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -151,12 +184,14 @@
                 android:layout_height="27dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@android:color/holo_red_dark"
+                android:background="@color/moneyBGOther"
+                android:backgroundTintMode="add"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:typeface="sans" />
+                android:typeface="sans"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/currentmoney2"
@@ -164,12 +199,14 @@
                 android:layout_height="27dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@android:color/holo_red_dark"
+                android:background="@color/moneyBGOther"
+                android:backgroundTintMode="add"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:typeface="sans" />
+                android:typeface="sans"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/currentmoney3"
@@ -177,12 +214,14 @@
                 android:layout_height="27dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@android:color/holo_red_dark"
+                android:background="@color/moneyBGOther"
+                android:backgroundTintMode="add"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:typeface="sans" />
+                android:typeface="sans"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/currentmoney4"
@@ -190,12 +229,14 @@
                 android:layout_height="27dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@android:color/holo_red_dark"
+                android:background="@color/moneyBGOther"
+                android:backgroundTintMode="add"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:typeface="sans" />
+                android:typeface="sans"
+                android:visibility="invisible" />
 
         </LinearLayout>
 
@@ -253,7 +294,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            app:srcCompat="@android:drawable/ic_input_add"
+            android:focusable="true" />
 
     </android.support.constraint.ConstraintLayout>
 
