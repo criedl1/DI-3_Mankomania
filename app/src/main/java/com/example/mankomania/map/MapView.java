@@ -386,7 +386,7 @@ public class MapView extends AppCompatActivity {
         Player cPlayer = gameController.currentPlayer();
         int playerIdx = gameController.getPlayerIndex(cPlayer);
         if (playerIdx >= 0) {
-            gameController.setMoney(playerIdx, cPlayer.getMoney() + amount);
+          //  gameController.setMoney(playerIdx, cPlayer.getMoney() + amount);
             gameController.updateMoney(playerIdx, amount);
 
         }
@@ -488,7 +488,6 @@ public class MapView extends AppCompatActivity {
             switch (aktien) {
                 case HYPO:
                     gameController.setHypoAktie(playerIdx, cPlayer.getAktien()[0] + 1);
-
                     break;
                 case STRABAG:
                     gameController.setStrabagAktie(playerIdx, cPlayer.getAktien()[1] + 1);
@@ -507,7 +506,6 @@ public class MapView extends AppCompatActivity {
             switch (hotel) {
                 case SANDWIRTH:
                     gameController.setSandwirtHotel(playerIdx, cPlayer.getHotel()[0] + 1);
-
                     break;
                 case PLATTENWIRT:
                     gameController.setPlattenwirtHotel(playerIdx, cPlayer.getHotel()[1] + 1);

@@ -30,7 +30,7 @@ public class GameController implements Serializable {
             R.drawable.field_casino,
             R.drawable.field_alterplatz,
             R.drawable.field_lindwurm,
-            R.drawable.field_hotelsandwirth,
+            R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,R.drawable.field_hotelsandwirth,
             R.drawable.field_horserace,
             R.drawable.field_klage,
             R.drawable.field_minimundus,
