@@ -9,11 +9,15 @@ import com.example.mankomania.network.client.Client;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameController implements Serializable {
 
     private final MapView mapView;
     List<Player> players;
+    Random randstock =new Random();
+
+
 
 
     public static int[] allfields = {
@@ -25,6 +29,7 @@ public class GameController implements Serializable {
             R.drawable.field_getsomemoney,
             R.drawable.field_alterplatz,
             R.drawable.field_aktie2,
+            R.drawable.field_aktienboerse,
             R.drawable.field_horserace,
             R.drawable.field_zoo,
             R.drawable.field_stadium,
@@ -37,11 +42,13 @@ public class GameController implements Serializable {
             R.drawable.field_minimundus,
             R.drawable.field_getsomemoney,
             R.drawable.field_aktie3,
+            R.drawable.field_aktienboerse,
             R.drawable.field_woerthersee,
             R.drawable.field_lottery,
             R.drawable.field_casino,
             R.drawable.field_zoo,
             R.drawable.field_aktie2,
+            R.drawable.field_aktienboerse,
             R.drawable.field_lindwurm,
             R.drawable.field_minimundus,
             R.drawable.field_klage,
@@ -54,6 +61,8 @@ public class GameController implements Serializable {
             R.drawable.field_getsomemoney,
             R.drawable.field_aktie3,
     };
+
+
 
     private Client client;
     private MessageReceiver receiver;
@@ -148,26 +157,59 @@ public class GameController implements Serializable {
 
     }
 
-    void setHypoAktie(int player, int count) {
+    void setHypoAktieFromMessage(int player, int count) {
         this.players.get(player).setAktie(Aktien.HYPO, count);
         showAktienUpdate(player, Aktien.HYPO);
+
+    }
+    void setHypoAktie(int player, int count) {
+        client.setHypoAktieOnServer(player,count);
+        updateMoney(player,-100000);
         client.endTurn();
-        // TODO: update UI
     }
 
-    void setStrabagAktie(int player, int count) {
+    void setStrabagAktiefromMessage(int player, int count) {
         this.players.get(player).setAktie(Aktien.STRABAG, count);
         showAktienUpdate(player, Aktien.STRABAG);
-        // TODO: update UI
+    }
+    void setStrabagAktie(int player, int count) {
+        client.setStrabagAktieOnServer(player,count);
+        updateMoney(player,-100000);
         client.endTurn();
     }
 
-    void setInfineonAktie(int player, int count) {
+    void setInfineonAktiefromMessage(int player, int count) {
         this.players.get(player).setAktie(Aktien.INFINEON, count);
         showAktienUpdate(player, Aktien.INFINEON);
-        // TODO: update UI
-        client.endTurn();
     }
+    void setInfineonAktie(int player, int count) {
+        client.setInfineonAktieOnServer(player,count);
+        updateMoney(player,-100000);
+        client.endTurn();
+
+    }
+     void stockexchange(){
+         int aktie = randstock.nextInt(2);//
+         int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
+
+         for (Player p:players) {
+             int aktien [] = p.getAktien();
+             if (riseordecrease==0){
+                 if (aktien[aktie]>0){
+                     client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
+                 }
+             }else if (riseordecrease==1){
+                 client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
+             }
+             else {
+                 if (aktien[aktie]>0){
+                     client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()-100000);
+                 }
+             }
+         }
+         client.endTurn();
+     }
+
 
     void setCheater(int player) {
         this.cheater = player;
