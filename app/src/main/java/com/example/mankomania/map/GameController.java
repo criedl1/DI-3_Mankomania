@@ -15,6 +15,7 @@ public class GameController implements Serializable {
 
     private final MapView mapView;
     List<Player> players;
+    Random randstock =new Random();
 
 
 
@@ -188,7 +189,6 @@ public class GameController implements Serializable {
 
     }
      void stockexchange(){
-         Random randstock =new Random();
          int aktie = randstock.nextInt(2);//
          int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
 
