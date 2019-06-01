@@ -1,6 +1,6 @@
 package com.example.mankomania.map;
 
-import android.graphics.Color;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +19,8 @@ public class Player {
     private int[] aktien = new int[3];
     private int[] hotel = new int[3];
     private String ip;
+    private boolean didCheat = false;
+    private boolean didBlame = false;
 
     public Player() {
         currentField = 0;
@@ -29,6 +31,7 @@ public class Player {
     public void initFields(ImageView figure, TextView currentmoney) {
         this.figure = figure;
         this.currentmoney = currentmoney;
+        currentmoney.setVisibility(View.VISIBLE);
         this.updateMoneyField();
     }
 
@@ -135,8 +138,24 @@ public class Player {
         return super.hashCode();
     }
 
-    void initMyMoneyField() {
-        this.currentmoney.setBackgroundColor(Color.GREEN);
+    void initMyMoneyField(int color) {
+        this.currentmoney.setBackgroundColor(color);
+    }
+
+    public boolean isDidCheat() {
+        return didCheat;
+    }
+
+    public void setDidCheat(boolean didCheat) {
+        this.didCheat = didCheat;
+    }
+
+    public boolean isDidBlame() {
+        return didBlame;
+    }
+
+    public void setDidBlame(boolean didBlame) {
+        this.didBlame = didBlame;
     }
 }
 

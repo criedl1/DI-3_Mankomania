@@ -50,7 +50,7 @@ public class Client extends Thread {
             ClientListener clientListener = new ClientListener(input, queue);
             clientListener.start();
 
-            // start ClienQueueHandler
+            // start ClientQueueHandler
             ClientQueueHandler clientQueueHandler = new ClientQueueHandler(queue, this, gameData);
             clientQueueHandler.start();
 
@@ -138,7 +138,7 @@ public class Client extends Thread {
         };
         thread.start();
     }
-    public void setCheaterOnServer(final int idx,final boolean cheater){
+    public void setMeAsCheater(){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
             @Override
@@ -146,7 +146,6 @@ public class Client extends Thread {
                 JsonObject json = new JsonObject();
                 json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_CHEATER);
                 json.addProperty(NetworkConstants.PLAYER, idx);
-                json.addProperty(NetworkConstants.CHEATER, cheater);
                 output.println(json.toString());
             }
         };
@@ -250,7 +249,18 @@ public class Client extends Thread {
     public int[] getStrabagAktie() {
         return gameData.getStrabagAktie();
     }
-    public boolean[] getIsCheater() {
-        return gameData.getIsCheater();
+
+    public void sendBlame(final int cheater) {
+        Thread thread = new Thread(){
+            @Override
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.BLAME_CHEATER);
+                json.addProperty(NetworkConstants.PLAYER,idx);
+                json.addProperty(NetworkConstants.CHEATER,cheater);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
     }
 }
