@@ -383,6 +383,10 @@ public class MapView extends AppCompatActivity {
                 case R.drawable.field_aktie3:
                     buyAktie(STRABAG);
                     break;
+                case R.drawable.field_aktienboerse:
+                    gameController.stockexchange();
+                    // TODO - startstockexchange
+                    break;
                 case R.drawable.field_horserace:
                     // TODO - change method signature if needed and then do your stuff
                     startHorseRace();
@@ -524,7 +528,6 @@ public class MapView extends AppCompatActivity {
             switch (aktien) {
                 case HYPO:
                     gameController.setHypoAktie(playerIdx, cPlayer.getAktien()[0] + 1);
-
                     break;
                 case STRABAG:
                     gameController.setStrabagAktie(playerIdx, cPlayer.getAktien()[1] + 1);

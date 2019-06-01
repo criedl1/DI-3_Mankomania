@@ -122,21 +122,21 @@ class MessageReceiver {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
 
-        gameController.setHypoAktie(player, count);
+        gameController.setHypoAktieFromMessage(player, count);
     }
 
     private void setStrabagAktieUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
 
-        gameController.setStrabagAktie(player, count);
+        gameController.setStrabagAktiefromMessage(player, count);
     }
 
     private void setInfineonAktieUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
 
-        gameController.setInfineonAktie(player, count);
+        gameController.setInfineonAktiefromMessage(player, count);
     }
 
     private void setPositionUpdate(JsonObject jsonObject) {
