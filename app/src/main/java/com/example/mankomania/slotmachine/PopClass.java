@@ -18,11 +18,12 @@ public class PopClass extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
+
         String returnString = getArguments().getString("returnString");
        String winString = getArguments().getString("winString");
          money = getArguments().getInt("money");
 
-
+        setCancelable(false);
         alert.setTitle(winString);
         alert.setMessage(returnString);
         alert.setPositiveButton("Weiter zum Roulette", new DialogInterface.OnClickListener() {
