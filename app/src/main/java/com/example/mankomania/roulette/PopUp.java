@@ -21,6 +21,7 @@ public class PopUp extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
+        setCancelable(false);
         colorString = getArguments().getString("color");
         int randomNumber = getArguments().getInt("randomNumber"); //toString is not possible here
         theNumberIsString = Integer.toString(randomNumber);
@@ -40,6 +41,7 @@ public class PopUp extends AppCompatDialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                sendMoneyChange();
+               getActivity().finish();
             }
         });
 

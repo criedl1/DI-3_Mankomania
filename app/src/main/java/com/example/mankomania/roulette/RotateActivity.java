@@ -38,16 +38,6 @@ public class RotateActivity extends AppCompatActivity {
         degree = extras.getFloat("degree");
         money = extras.getInt("money");
 
-        Button btnBack = findViewById(R.id.btnBack);
-        btnBack.setText(getString(R.string.roulette_back));
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) { //since this is an override method, i am not able
