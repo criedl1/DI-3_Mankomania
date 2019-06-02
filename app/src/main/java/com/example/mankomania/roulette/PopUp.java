@@ -14,6 +14,7 @@ public class PopUp extends AppCompatDialogFragment {
     private String theNumberIsString;
     private String colorString;
     private String returnString;
+    private int money;
 
     @NonNull
     @Override
@@ -24,6 +25,7 @@ public class PopUp extends AppCompatDialogFragment {
         int randomNumber = getArguments().getInt("randomNumber"); //toString is not possible here
         theNumberIsString = Integer.toString(randomNumber);
         returnString = getArguments().getString("returnString");
+        money = getArguments().getInt("money");
 
 
         alert.setTitle(getReturnString());
@@ -38,7 +40,7 @@ public class PopUp extends AppCompatDialogFragment {
         alert.setPositiveButton(getString(R.string.casino_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //by letting this empty, the pop-up closes when button is pressed.
+               sendMoneyChange();
             }
         });
 
@@ -58,5 +60,8 @@ public class PopUp extends AppCompatDialogFragment {
         return returnString;
     }
 
-
+    private void sendMoneyChange(){
+        sendMoneyClass moneyClass = new sendMoneyClass();
+        moneyClass.sendMoneyChange(money);
+    }
 }
