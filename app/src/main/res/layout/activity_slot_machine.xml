@@ -13,15 +13,29 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="0dp"
-        app:layout_constraintGuide_percent=".5" />
+        app:layout_constraintGuide_percent="0.470" />
+
 
     <android.support.constraint.Guideline
-        android:id="@+id/verticalGuideline"
+        android:id="@+id/guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="0dp"
-        app:layout_constraintGuide_percent=".5" />
+        app:layout_constraintGuide_percent="0.11" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.37" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.625" />
 
     <Button
         android:id="@+id/btnSpin"
@@ -42,20 +56,17 @@
         android:id="@+id/ivSlot1"
         android:layout_width="164dp"
         android:layout_height="150dp"
-        android:layout_marginStart="96dp"
         app:layout_constraintBottom_toBottomOf="@id/horizontalGuideline"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toTopOf="@id/horizontalGuideline"
-        app:layout_constraintVertical_bias="0.719"
         app:srcCompat="@drawable/cherry" />
 
     <ImageView
         android:id="@+id/ivSlot2"
         android:layout_width="164dp"
         android:layout_height="150dp"
-        android:layout_marginStart="280dp"
         app:layout_constraintBottom_toBottomOf="@id/horizontalGuideline"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@id/horizontalGuideline"
         app:srcCompat="@drawable/dollar" />
 
@@ -63,12 +74,11 @@
         android:id="@+id/ivSlot3"
         android:layout_width="164dp"
         android:layout_height="150dp"
-        android:layout_marginStart="476dp"
         app:layout_constraintBottom_toBottomOf="@id/horizontalGuideline"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@id/horizontalGuideline"
-        app:layout_constraintVertical_bias="0.329"
         app:srcCompat="@drawable/star" />
+
 
 
 </android.support.constraint.ConstraintLayout>
