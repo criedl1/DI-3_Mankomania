@@ -1,0 +1,12 @@
+
+Xsquid:UnusedPrivateMethod"-Remove this unused private "getShare" method.(íå“ìùÿÿÿÿ
+csquid:CommentedOutCodeLine¶"<This block of commented-out lines of code should be removed.(¿º­Ÿ
+Osquid:S1135â"2Complete the task associated to this TODO comment.(§éĞ¯úÿÿÿÿ
+Osquid:S1135ç"2Complete the task associated to this TODO comment.(§éĞ¯úÿÿÿÿ
+Osquid:S1135ì"2Complete the task associated to this TODO comment.(§éĞ¯úÿÿÿÿ
+Osquid:S1135ñ"2Complete the task associated to this TODO comment.(§éĞ¯úÿÿÿÿ
+Gsquid:S1481±"*Remove this unused "_this" local variable.(é¥Àâúÿÿÿÿ
+Vsquid:S1854±"9Remove this useless assignment to local variable "_this".(é¥Àâúÿÿÿÿ
+ssquid:S00115˜"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(´Ú§Æ
+osquid:S00117±"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(é¥Àâúÿÿÿÿ
+jsquid:S00117ô"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©’æ¨

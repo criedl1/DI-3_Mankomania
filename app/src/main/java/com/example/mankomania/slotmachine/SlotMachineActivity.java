@@ -4,9 +4,6 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -17,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SlotMachineActivity extends AppCompatActivity {
-
     private int money;
     private List<Symbol> slotList;
     private int id1;
@@ -47,9 +43,9 @@ public class SlotMachineActivity extends AppCompatActivity {
         slot3 = findViewById(R.id.ivSlot3);
 
         slotList.add(cherry);
+        slotList.add(dollar);
         slotList.add(star);
         slotList.add(seven);
-        slotList.add(dollar);
 
         Button spin = findViewById(R.id.btnSpin);
         spin.setBackgroundColor(Color.TRANSPARENT);
@@ -62,21 +58,18 @@ public class SlotMachineActivity extends AppCompatActivity {
     }
 
     public void startMachine() {
-
-        //TODO: Animation does not work correctly
-
         slot1.setImageResource(slotList.get(0).getImage());
-        startAnimation(slot1);
         slot2.setImageResource(slotList.get(1).getImage());
-        startAnimation(slot2);
         slot3.setImageResource(slotList.get(2).getImage());
-        startAnimation(slot3);
-        slot1.postDelayed(animationRunnable(slot1,1),500);
-        slot3.postDelayed(createRunnable(),3000);
-        slot3.postDelayed(waitForPopUp(),4000);
+        slot1.postDelayed(changePic(3, 0, 1), 400);
+        slot1.postDelayed(changePic(2, 3, 0), 800);
+        slot1.postDelayed(changePic(1, 2, 3), 1200);
+        slot1.postDelayed(changePic(0, 1, 2), 1600);
+        slot1.postDelayed(stopMachineAndCheckWin(), 2000);
+        slot1.postDelayed(waitForPopUp(), 3000);
     }
 
-    public void getStopIds(){
+    public void getStopIds() {
         SecureRandom random = new SecureRandom();
         id1 = slotList.get(random.nextInt(3)).getId();
         id2 = slotList.get(random.nextInt(3)).getId();
@@ -84,7 +77,7 @@ public class SlotMachineActivity extends AppCompatActivity {
         sml = new SlotMachineLogic(id1, id2, id3, this);
     }
 
-    public void stopMachine() {
+    public void stopAnimation() {
 
         slot1.setImageResource(slotList.get(id1).getImage());
 
@@ -93,19 +86,19 @@ public class SlotMachineActivity extends AppCompatActivity {
         slot3.setImageResource(slotList.get(id3).getImage());
     }
 
-    private Runnable createRunnable() {
+    private Runnable stopMachineAndCheckWin() {
 
         return new Runnable() {
             @Override
             public void run() {
                 getStopIds();
-                stopMachine();
+                stopAnimation();
                 sml.checkWin();
             }
         };
     }
 
-    private Runnable waitForPopUp(){
+    private Runnable waitForPopUp() {
         return new Runnable() {
             @Override
             public void run() {
@@ -114,22 +107,14 @@ public class SlotMachineActivity extends AppCompatActivity {
         };
     }
 
-    private Runnable animationRunnable(final ImageView iv, final int i){
+    private Runnable changePic(final int s1, final int s2, final int s3) {
         return new Runnable() {
-
 
             @Override
             public void run() {
-                if (i >= 2){
-                    throw new IllegalArgumentException();
-                }
-                slot1.setImageResource(slotList.get(i).getImage());
-                startAnimation(slot1);
-                slot2.setImageResource(slotList.get(i+1).getImage());
-                startAnimation(slot2);
-                slot3.setImageResource(slotList.get(i+2).getImage());
-                startAnimation(slot3);
-                startAnimation(iv);
+                slot1.setImageResource(slotList.get(s1).getImage());
+                slot2.setImageResource(slotList.get(s2).getImage());
+                slot3.setImageResource(slotList.get(s3).getImage());
             }
         };
     }
@@ -144,21 +129,11 @@ public class SlotMachineActivity extends AppCompatActivity {
         popClass.setArguments(extras);
     }
 
-    private Animation startAnimation(ImageView iv){
-        Animation animation = new AlphaAnimation(1, 0);
-        animation.setDuration(600);
-        animation.setInterpolator(new LinearInterpolator());
-        animation.setRepeatCount(2);
-        animation.setRepeatMode(1);
-        iv.startAnimation(animation);
-        return animation;
-    }
-
-    public void setMoney(int money){
+    public void setMoney(int money) {
         this.money = money;
     }
 
-    public int getMoney(){
+    public int getMoney() {
         return this.money;
     }
 

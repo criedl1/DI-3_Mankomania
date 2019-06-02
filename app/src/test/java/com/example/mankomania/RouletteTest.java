@@ -38,10 +38,10 @@ public class RouletteTest {
         RouletteLogic numberRoulette = new RouletteLogic(15, 0);
 
         if(numberRoulette.getRandomNumberFromRoulette() == 15){
-            assertEquals(numberRoulette.getWonMoney(), 145000);
+            assertEquals(145000, numberRoulette.getWonMoney() );
         }
         else{
-            assertEquals(numberRoulette.getWonMoney(), -50000);
+            assertEquals(-50000, numberRoulette.getWonMoney());
         }
     }
 
@@ -71,10 +71,10 @@ public class RouletteTest {
         RouletteLogic colorRoulette = new RouletteLogic(ColorEnum.BLACK, 0);
 
         if(colorRoulette.getColorFromRoulette().equals(ColorEnum.BLACK)){
-            assertEquals(colorRoulette.getWonMoney(), 30000);
+            assertEquals(30000, colorRoulette.getWonMoney());
         }
         else{
-            assertEquals(colorRoulette.getWonMoney(), -5000);
+            assertEquals(-5000, colorRoulette.getWonMoney());
         }
     }
 
@@ -103,10 +103,10 @@ public class RouletteTest {
         RouletteLogic dozenRoulette = new RouletteLogic("2",0);
 
         if(dozenRoulette.getRandomNumberFromRoulette() <= 24 && dozenRoulette.getRandomNumberFromRoulette() > 12){
-            assertEquals(dozenRoulette.getWonMoney(), 80000);
+            assertEquals(80000, dozenRoulette.getWonMoney());
         }
         else {
-            assertEquals(dozenRoulette.getWonMoney(), -20000);
+            assertEquals(-20000, dozenRoulette.getWonMoney());
         }
     }
 

@@ -35,3 +35,9 @@ z
 Japp/src/main/java/com/example/mankomania/slotmachine/SlotMachineLogic.java,d/f/df3bebf811eeca0ef40b6b53831d678af93967f0
 p
 @app/src/main/java/com/example/mankomania/slotmachine/Symbol.java,4/c/4ce39219e9bc65cf15789db6493fcdf10cccc745
+i
+9app/src/main/java/com/example/mankomania/map/MapView.java,1/b/1b99262d578b3e3eb0a976de63e35318f40837ae
+m
+=app/src/test/java/com/example/mankomania/SlotMachineTest.java,a/e/ae1e7d1e76929554fdd240b35838fc0c35cd2437
+e
+5app/src/test/java/com/example/mankomania/TestMap.java,4/a/4aca5057d96131a407e3f3388e173c540d57ff77

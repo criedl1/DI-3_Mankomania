@@ -24,10 +24,10 @@
 
     <ImageView
         android:id="@+id/ivSlot1"
-        android:layout_width="149dp"
-        android:layout_height="175dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="108dp"
+        android:layout_width="164dp"
+        android:layout_height="164dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="116dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:visibility="visible"
@@ -37,22 +37,9 @@
 
     <ImageView
         android:id="@+id/ivSlot2"
-        android:layout_width="131dp"
-        android:layout_height="165dp"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="120dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/star" />
-
-    <ImageView
-        android:id="@+id/ivSlot3"
-        android:layout_width="138dp"
-        android:layout_height="166dp"
-        android:layout_marginStart="488dp"
+        android:layout_width="167dp"
+        android:layout_height="164dp"
+        android:layout_marginStart="280dp"
         android:layout_marginTop="116dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
@@ -60,5 +47,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/dollar" />
+
+    <ImageView
+        android:id="@+id/ivSlot3"
+        android:layout_width="157dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="480dp"
+        android:layout_marginTop="116dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/star" />
 
 </android.support.constraint.ConstraintLayout>
