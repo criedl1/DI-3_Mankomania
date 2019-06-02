@@ -1,6 +1,6 @@
 package com.example.mankomania.map;
 
-import android.graphics.Color;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,16 +18,19 @@ public class Player {
     private TextView currentmoney;
     private int[] aktien = new int[3];
     private String ip;
+    private boolean didCheat = false;
+    private boolean didBlame = false;
 
-    Player() {
+    public Player() {
         currentField = 0;
         temporaryField = 0;
         Arrays.fill(aktien, 0);
     }
 
-    void initFields(ImageView figure, TextView currentmoney) {
+    public void initFields(ImageView figure, TextView currentmoney) {
         this.figure = figure;
         this.currentmoney = currentmoney;
+        currentmoney.setVisibility(View.VISIBLE);
         this.updateMoneyField();
     }
 
@@ -43,7 +46,7 @@ public class Player {
         return figure;
     }
 
-    int getCurrentField() {
+    public int getCurrentField() {
         return currentField;
     }
 
@@ -66,6 +69,8 @@ public class Player {
     public void setPosition(int position) {
         this.currentField = position;
     }
+
+
 
     void setAktie(Aktien aktien, int count) {
         switch (aktien) {
@@ -112,8 +117,24 @@ public class Player {
         return super.hashCode();
     }
 
-    void initMyMoneyField() {
-        this.currentmoney.setBackgroundColor(Color.GREEN);
+    void initMyMoneyField(int color) {
+        this.currentmoney.setBackgroundColor(color);
+    }
+
+    public boolean isDidCheat() {
+        return didCheat;
+    }
+
+    public void setDidCheat(boolean didCheat) {
+        this.didCheat = didCheat;
+    }
+
+    public boolean isDidBlame() {
+        return didBlame;
+    }
+
+    public void setDidBlame(boolean didBlame) {
+        this.didBlame = didBlame;
     }
 }
 

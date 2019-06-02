@@ -1,30 +1,41 @@
 package com.example.mankomania;
 
-import com.example.mankomania.gamedata.GameData;
+
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.example.mankomania.map.GameController;
 import com.example.mankomania.map.MapView;
 import com.example.mankomania.map.Player;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class TestMap {
-    MapView map = new MapView();
-    Player player;
-    GameController gc;
 
-    @Before
-    public void setUp(){
-
-
-    }
     @Test
     public void testMoney() {
-//    assertEquals(player.getMoney(), 1000000);
-
+        Player player = new Player();
+        player.initFields(new ImageView(null), new TextView(null));
+        player.setMoney(12345);
+        assertEquals(12345, player.getMoney());
     }
+
+    @Test
+    public void testTemporaryField() {
+        Player player = new Player();
+        player.setTemporaryField(1);
+        assertEquals(1, player.getTemporaryField());
+    }
+
+    @Test
+    public void testPosition() {
+        Player player = new Player();
+        player.setPosition(5);
+        assertEquals(5, player.getCurrentField());
+    }
+    
 
 
 }

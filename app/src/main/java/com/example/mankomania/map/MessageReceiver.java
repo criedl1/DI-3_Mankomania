@@ -68,9 +68,27 @@ class MessageReceiver {
             case NetworkConstants.MONEY_UPDATE:
                 showMoneyUpdate(jsonObject);
                 break;
+            case NetworkConstants.BLAME_RESULT:
+                showBlameResult(jsonObject);
+                break;
+            case NetworkConstants.SUCCESSCHEAT:
+                showCheatSuccess(jsonObject);
+                break;
             default:
                 throw new IllegalStateException("Network Object should not be here: " + message);
         }
+    }
+
+    private void showCheatSuccess(JsonObject jsonObject) {
+        int successor = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        gameController.showCheatSuccess(successor);
+    }
+
+    private void showBlameResult(JsonObject jsonObject) {
+        boolean result = jsonToString(jsonObject, NetworkConstants.BLAME_RESULT).equals(NetworkConstants.BLAME_SUCCESS);
+        int blamer = jsonToInt(jsonObject, NetworkConstants.BLAMER);
+        int blamed = jsonToInt(jsonObject, NetworkConstants.BLAMED);
+        gameController.showBlameResult(result,blamer,blamed);
     }
 
     private void setPlayer(JsonObject jsonObject) {
@@ -97,9 +115,6 @@ class MessageReceiver {
 
     private void setCheaterUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        //TODO: why is this count here ?
-        boolean count = (jsonToInt(jsonObject, NetworkConstants.CHEATER) == 1);
-
         gameController.setCheater(player);
     }
 
@@ -107,21 +122,21 @@ class MessageReceiver {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
 
-        gameController.setHypoAktie(player, count);
+        gameController.setHypoAktieFromMessage(player, count);
     }
 
     private void setStrabagAktieUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
 
-        gameController.setStrabagAktie(player, count);
+        gameController.setStrabagAktiefromMessage(player, count);
     }
 
     private void setInfineonAktieUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
 
-        gameController.setInfineonAktie(player, count);
+        gameController.setInfineonAktiefromMessage(player, count);
     }
 
     private void setPositionUpdate(JsonObject jsonObject) {

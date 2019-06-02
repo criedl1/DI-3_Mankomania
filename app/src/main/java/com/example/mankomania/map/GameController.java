@@ -1,5 +1,6 @@
 package com.example.mankomania.map;
 
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.example.mankomania.R;
@@ -8,11 +9,15 @@ import com.example.mankomania.network.client.Client;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameController implements Serializable {
 
     private final MapView mapView;
     List<Player> players;
+    Random randstock =new Random();
+
+
 
 
     public static int[] allfields = {
@@ -24,6 +29,7 @@ public class GameController implements Serializable {
             R.drawable.field_getsomemoney,
             R.drawable.field_alterplatz,
             R.drawable.field_aktie2,
+            R.drawable.field_aktienboerse,
             R.drawable.field_horserace,
             R.drawable.field_zoo,
             R.drawable.field_stadium,
@@ -36,11 +42,13 @@ public class GameController implements Serializable {
             R.drawable.field_minimundus,
             R.drawable.field_getsomemoney,
             R.drawable.field_aktie3,
+            R.drawable.field_aktienboerse,
             R.drawable.field_woerthersee,
             R.drawable.field_lottery,
             R.drawable.field_casino,
             R.drawable.field_zoo,
             R.drawable.field_aktie2,
+            R.drawable.field_aktienboerse,
             R.drawable.field_lindwurm,
             R.drawable.field_minimundus,
             R.drawable.field_klage,
@@ -54,14 +62,18 @@ public class GameController implements Serializable {
             R.drawable.field_aktie3,
     };
 
+
+
     private Client client;
     private MessageReceiver receiver;
+
+
     private int myID;
     private int cheater;
     private int lotto;
     private int hasTurn;
 
-    GameController(String ip, MapView mapView) {
+    public GameController(String ip, MapView mapView) {
         this.mapView = mapView;
         players = new ArrayList<>();
 
@@ -84,6 +96,10 @@ public class GameController implements Serializable {
         this.receiver.handleMessage(message);
     }
 
+
+    public int getMyID() {
+        return myID;
+    }
 
     void rollDiceUpdate(int player, int outcome) {
         if (isMyTurn()) {
@@ -118,16 +134,15 @@ public class GameController implements Serializable {
         client.rollTheDice();
     }
 
-    void updateMoney(int balance) {
-        if (balance < 0)
-            balance = -balance;
-        client.updateMoney(balance);
+    void updateMoney(int playerIdx, int balance) {
+        int bal = currentPlayer().getMoney();
+        client.setMoneyOnServer(playerIdx,bal+balance);
         client.endTurn();
     }
 
-    void setMyPlayerID(int player) {
+   public void setMyPlayerID(int player) {
         this.myID = player;
-        this.players.get(myID).initMyMoneyField();
+        this.players.get(myID).initMyMoneyField(ContextCompat.getColor(mapView,R.color.moneyBGMine));
     }
 
     public void setMoney(int player, int money) {
@@ -142,26 +157,59 @@ public class GameController implements Serializable {
 
     }
 
-    void setHypoAktie(int player, int count) {
+    void setHypoAktieFromMessage(int player, int count) {
         this.players.get(player).setAktie(Aktien.HYPO, count);
         showAktienUpdate(player, Aktien.HYPO);
+
+    }
+    void setHypoAktie(int player, int count) {
+        client.setHypoAktieOnServer(player,count);
+        updateMoney(player,-100000);
         client.endTurn();
-        // TODO: update UI
     }
 
-    void setStrabagAktie(int player, int count) {
+    void setStrabagAktiefromMessage(int player, int count) {
         this.players.get(player).setAktie(Aktien.STRABAG, count);
         showAktienUpdate(player, Aktien.STRABAG);
-        // TODO: update UI
+    }
+    void setStrabagAktie(int player, int count) {
+        client.setStrabagAktieOnServer(player,count);
+        updateMoney(player,-100000);
         client.endTurn();
     }
 
-    void setInfineonAktie(int player, int count) {
+    void setInfineonAktiefromMessage(int player, int count) {
         this.players.get(player).setAktie(Aktien.INFINEON, count);
         showAktienUpdate(player, Aktien.INFINEON);
-        // TODO: update UI
-        client.endTurn();
     }
+    void setInfineonAktie(int player, int count) {
+        client.setInfineonAktieOnServer(player,count);
+        updateMoney(player,-100000);
+        client.endTurn();
+
+    }
+     void stockexchange(){
+         int aktie = randstock.nextInt(2);//
+         int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
+
+         for (Player p:players) {
+             int aktien [] = p.getAktien();
+             if (riseordecrease==0){
+                 if (aktien[aktie]>0){
+                     client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
+                 }
+             }else if (riseordecrease==1){
+                 client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
+             }
+             else {
+                 if (aktien[aktie]>0){
+                     client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()-100000);
+                 }
+             }
+         }
+         client.endTurn();
+     }
+
 
     void setCheater(int player) {
         this.cheater = player;
@@ -217,7 +265,7 @@ public class GameController implements Serializable {
      * @param p Player-Objekt
      * @return Index, wenn p in Liste gefunden, -1 sonst.
      */
-    int getPlayerIndex(Player p) {
+    public int getPlayerIndex(Player p) {
         for (int i = 0; i < players.size(); i++) {
             if (p.equals(players.get(i)))
                 return i;
@@ -225,7 +273,7 @@ public class GameController implements Serializable {
         return -1;
     }
 
-    void setPlayerIP(int player, String ip) {
+    public void setPlayerIP(int player, String ip) {
         this.players.get(player).setIP(ip);
     }
 
@@ -244,12 +292,33 @@ public class GameController implements Serializable {
         client.endTurn();
     }
 
-    public void justEndTurn() {
+    void justEndTurn() {
         client.endTurn();
     }
 
     void sendMoveOverLotto() {
         this.setMoney(hasTurn, this.currentPlayer().getMoney() - 5000);
+        this.client.setMoneyOnServer(this.myID,this.currentPlayer().getMoney() - 5000);
         this.client.setLottoOnServer(this.lotto + 5000);
+    }
+
+    void showBlameResult(boolean result, int blamer, int blamed) {
+        this.mapView.showBlameResult(result, blamer, blamed);
+    }
+
+    void makeMeCheat() {
+        this.players.get(myID).setDidCheat(true);
+        this.mapView.hideCheatButton();
+        this.client.setMeAsCheater();
+    }
+
+    void showCheatSuccess(int successor) {
+        this.mapView.showCheatSuccess(successor);
+    }
+
+    void setBlame(int cheater) {
+        this.players.get(myID).setDidBlame(true);
+        this.mapView.hideBlameButton();
+        this.client.sendBlame(cheater);
     }
 }

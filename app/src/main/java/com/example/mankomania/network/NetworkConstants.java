@@ -13,6 +13,8 @@ public class NetworkConstants {
     public static final String SET_STRABAG_AKTIE = "setStrabagAktie";
     public static final String SET_INFINEON_AKTIE = "setInfineonAktie";
     public static final String SET_CHEATER = "setCheater";
+    public static final String BLAME_CHEATER = "blameCheater";
+    public static final String BLAME_RESULT = "blameResult";
     public static final String SET_LOTTO = "setLotto";
     public static final String SET_HOTEL = "setHotel";
     public static final String ROLL_DICE = "rollDice";
@@ -21,6 +23,7 @@ public class NetworkConstants {
     public static final String END_TURN = "endTurn";
     public static final String MONEY_UPDATE = "updateMoney";
     public static final String ROULETTE = "ROULETTERESULT";
+    public static final String SUCCESSCHEAT = "SuccessCheat";
     //Values
     public static final String OPERATION = "OPERATION";
     public static final String ID = "ID";
@@ -34,4 +37,8 @@ public class NetworkConstants {
     public static final String MONEY = "Money";
     public static final String IP = "IP";
     public static final String RESULT = "RESULT";
+    public static final String BLAME_SUCCESS = "blameFail";
+    public static final String BLAME_FAIL = "blameSuccess";
+    public static final String BLAMER = "blamer";
+    public static final String BLAMED = "blamed";
 }

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,6 +30,10 @@ import com.example.mankomania.dice.Dice;
 import com.example.mankomania.slotmachine.CasinoStartScreen;
 
 import java.util.Arrays;
+
+import static com.example.mankomania.map.Aktien.HYPO;
+import static com.example.mankomania.map.Aktien.INFINEON;
+import static com.example.mankomania.map.Aktien.STRABAG;
 
 
 public class MapView extends AppCompatActivity {
@@ -67,9 +72,9 @@ public class MapView extends AppCompatActivity {
             public void onClick(View view) {
                 DialogFragment miniMapDialog = new MiniMapDialogFragment();
                 Bundle args = new Bundle();
-                args.putSerializable("PLAYERS",gameController);
+                args.putSerializable("PLAYERS", gameController);
                 miniMapDialog.setArguments(args);
-                miniMapDialog.show(getSupportFragmentManager(),"mini_map");
+                miniMapDialog.show(getSupportFragmentManager(), "mini_map");
             }
         });
 
@@ -174,7 +179,6 @@ public class MapView extends AppCompatActivity {
         ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationX, distance);
         animation.setDuration(1000);
         animation.start();
-        final MapView _this = this;
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -279,6 +283,36 @@ public class MapView extends AppCompatActivity {
         updateField();
     }
 
+
+    public void cheat(View view) {
+        gameController.makeMeCheat();
+    }
+
+    public void blame(View view) {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        CharSequence items[] = new CharSequence[gameController.players.size()-1];
+        int index = 0;
+        final int[] players = new int[gameController.players.size()-1];
+        for (int i = 0; i < gameController.players.size(); i++) {
+            if(i!=gameController.getMyID()){
+                players[index] = i;
+                items[index++] = "Spieler "+(i+1);
+            }
+        }
+        adb.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface d, int n) {
+                gameController.setBlame(players[n]);
+                d.cancel();
+            }
+
+        });
+        adb.setNegativeButton("Cancel", null);
+        adb.setTitle("Wen willst du beschuldigen ?");
+        adb.show();
+    }
+
     public void displayField(int field) {
         currentField = field;
 
@@ -342,13 +376,17 @@ public class MapView extends AppCompatActivity {
                     showMoneyUpdate(-30000);
                     break;
                 case R.drawable.field_aktie1:
-                    buyAktie(Aktien.HYPO);
+                    buyAktie(HYPO);
                     break;
                 case R.drawable.field_aktie2:
-                    buyAktie(Aktien.INFINEON);
+                    buyAktie(INFINEON);
                     break;
                 case R.drawable.field_aktie3:
-                    buyAktie(Aktien.STRABAG);
+                    buyAktie(STRABAG);
+                    break;
+                case R.drawable.field_aktienboerse:
+                    gameController.stockexchange();
+                    // TODO - startstockexchange
                     break;
                 case R.drawable.field_horserace:
                     // TODO - change method signature if needed and then do your stuff
@@ -390,13 +428,15 @@ public class MapView extends AppCompatActivity {
         gameController.startHorseRace();
     }
 
-    private void showMoneyUpdate(int amount) {
+    public int showMoneyUpdate(int amount) {
         Player cPlayer = gameController.currentPlayer();
         int playerIdx = gameController.getPlayerIndex(cPlayer);
         if (playerIdx >= 0) {
             gameController.setMoney(playerIdx, cPlayer.getMoney() + amount);
-            gameController.updateMoney(amount);
+            gameController.updateMoney(playerIdx, amount);
+
         }
+        return amount;
     }
 
     public void startCasino() {
@@ -440,7 +480,7 @@ public class MapView extends AppCompatActivity {
     }
 
     public void showSomeonesAccountBalance(int player, int outcome) {
-        Toast.makeText(this, "Der Kontostand von Player " + (player + 1) + " ändert sich auf " + outcome, Toast.LENGTH_LONG).show();
+        // Toast.makeText(this, "Der Kontostand von Player " + (player + 1) + " ändert sich auf " + outcome, Toast.LENGTH_LONG).show();
     }
 
     public void showSomeonesAktienkauf(int player, Aktien aktien) {
@@ -457,13 +497,20 @@ public class MapView extends AppCompatActivity {
     }
 
     public void startMyTurn() {
-        ImageView wuerfeln = findViewById(R.id.wuerfeln); // button fürs würfeln
-        wuerfeln.setVisibility(View.VISIBLE);
+        findViewById(R.id.wuerfeln).setVisibility(View.VISIBLE);
+        Player myPlayer = gameController.players.get(gameController.getMyID());
+        if(!myPlayer.isDidBlame()){
+            findViewById(R.id.blame_button).setVisibility(View.VISIBLE);
+        }
+        if(!myPlayer.isDidCheat()){
+            findViewById(R.id.cheat_button).setVisibility(View.VISIBLE);
+        }
     }
 
     public void endMyTurn() {
-        ImageView wuerfeln = findViewById(R.id.wuerfeln); // button fürs würfeln
-        wuerfeln.setVisibility(View.INVISIBLE);
+        findViewById(R.id.wuerfeln).setVisibility(View.INVISIBLE);
+        findViewById(R.id.cheat_button).setVisibility(View.INVISIBLE);
+        findViewById(R.id.blame_button).setVisibility(View.INVISIBLE);
     }
 
     public void setLotto(int lotto) {
@@ -482,7 +529,6 @@ public class MapView extends AppCompatActivity {
             switch (aktien) {
                 case HYPO:
                     gameController.setHypoAktie(playerIdx, cPlayer.getAktien()[0] + 1);
-
                     break;
                 case STRABAG:
                     gameController.setStrabagAktie(playerIdx, cPlayer.getAktien()[1] + 1);
@@ -518,5 +564,22 @@ public class MapView extends AppCompatActivity {
         alert.show();
 
 
+    }
+
+    public void showBlameResult(boolean result, int blamer, int blamed) {
+        Toast.makeText(this, "Spieler "+(blamer+1)+" hat Spieler "+(blamed+1)+" beschuldigt. "+(result?"Erfolgreich!!":"Umsonst..."),Toast.LENGTH_LONG).show();
+    }
+
+    public void hideCheatButton() {
+        findViewById(R.id.cheat_button).setVisibility(View.INVISIBLE);
+    }
+    public void hideBlameButton() {
+        findViewById(R.id.blame_button).setVisibility(View.INVISIBLE);
+    }
+
+    public void showCheatSuccess(int successor) {
+        this.moneyFields[successor].setBackgroundTintList(ContextCompat.getColorStateList(this,successor==gameController.getMyID()?R.color.moneyBGMine:R.color.moneyBGOther));
+        this.moneyFields[successor].setBackground(getDrawable(R.drawable.cheatsuccessbg));
+        Toast.makeText(this, "Spieler "+(successor+1)+" hat geschummelt, ohne dass ihr es gemerkt habt!!", Toast.LENGTH_SHORT).show();
     }
 }
