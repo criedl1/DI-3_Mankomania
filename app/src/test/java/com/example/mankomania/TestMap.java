@@ -13,7 +13,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class TestMap {
-/*
+
     @Test
     public void testMoney() {
         Player player = new Player();
@@ -34,7 +34,7 @@ public class TestMap {
         Player player = new Player();
         player.setPosition(5);
         assertEquals(5, player.getCurrentField());
-    }*/
+    }
     
 
 

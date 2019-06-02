@@ -605,7 +605,7 @@ public class MapView extends AppCompatActivity {
                 });
 
         AlertDialog alert = a_builder.create();
-        alert.show();
+        alert.show(); }
 
     public void showBlameResult(boolean result, int blamer, int blamed) {
         Toast.makeText(this, "Spieler "+(blamer+1)+" hat Spieler "+(blamed+1)+" beschuldigt. "+(result?"Erfolgreich!!":"Umsonst..."),Toast.LENGTH_LONG).show();

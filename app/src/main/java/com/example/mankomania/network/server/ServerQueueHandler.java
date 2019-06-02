@@ -371,8 +371,6 @@ public class ServerQueueHandler extends QueueHandler {
         json.addProperty(NetworkConstants.CHEATER, cheater);
         sendAllClients(json.toString());
     }
-    public void sendLotto(int amount){
-
 
     public void sendLotto(int amount) {
 

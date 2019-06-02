@@ -17,7 +17,7 @@ public class GameData {
     private int[] sandwirthHotel;
     private int[] plattenwirtHotel;
     private int[] seeparkHotel;
-    private boolean[] isCheater;
+  //  private boolean[] isCheater;
     private int[] isCheater;
     private boolean[] didBlame;
 
@@ -135,7 +135,6 @@ public class GameData {
         this.seeparkHotel = seeparkHotel;
     }
 
-    public boolean[] getIsCheater() {
     public int[] getIsCheater() {
 
         return isCheater.clone();
