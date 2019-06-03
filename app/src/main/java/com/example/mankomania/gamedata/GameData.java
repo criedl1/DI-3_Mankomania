@@ -13,8 +13,14 @@ public class GameData {
     private int[] infineonAktie;
     private int[] hypoAktie;
     private int[] strabagAktie;
+
+    private int[] sandwirthHotel;
+    private int[] plattenwirtHotel;
+    private int[] seeparkHotel;
+  //  private boolean[] isCheater;
     private int[] isCheater;
     private boolean[] didBlame;
+
     private int hasTurn = 0;
     private ServerQueueHandler server;
 
@@ -109,7 +115,28 @@ public class GameData {
         this.strabagAktie = strabagAktie;
     }
 
+
+    public int[] getSandwirthHotel() {
+        return sandwirthHotel.clone();
+    }
+    public void setSandwirthHotel(int[] sandwirthHotel) {
+        this.sandwirthHotel = sandwirthHotel;
+    }
+    public int[] getPlattenwirtHotel() {
+        return plattenwirtHotel.clone();
+    }
+    public void setPlattenwirtHotel(int[] plattenwirtHotel) {
+        this.plattenwirtHotel = plattenwirtHotel;
+    }
+    public int[] getSeeparkHotel() {
+        return seeparkHotel.clone();
+    }
+    public void setSeeparkHotel(int[] seeparkHotel) {
+        this.seeparkHotel = seeparkHotel;
+    }
+
     public int[] getIsCheater() {
+
         return isCheater.clone();
     }
 

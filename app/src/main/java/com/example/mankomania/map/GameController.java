@@ -125,6 +125,14 @@ public class GameController implements Serializable {
         }
     }
 
+    void showHotelUpdate(int player, Hotel hotel) {
+        if(isMyTurn()) {
+            mapView.showMyHotelkauf(hotel);
+        } else {
+            mapView.showSomeonesHotelkauf(player, hotel);
+        }
+    }
+
 
     boolean isMyTurn() {
         return hasTurn == myID;
@@ -211,6 +219,23 @@ public class GameController implements Serializable {
      }
 
 
+    void setPlattenwirtHotel(int player, int count) {
+        this.players.get(player).setHotel(Hotel.PLATTENWIRT, count);
+        showHotelUpdate(player, Hotel.PLATTENWIRT);
+        client.endTurn();
+    }
+    void setSandwirtHotel(int player, int count) {
+        this.players.get(player).setHotel(Hotel.SANDWIRTH, count);
+        showHotelUpdate(player, Hotel.SANDWIRTH);
+        client.endTurn();
+    }
+    void setSeeparkHotel(int player, int count) {
+        this.players.get(player).setHotel(Hotel.SEEPARK, count);
+        showHotelUpdate(player, Hotel.SEEPARK);
+        client.endTurn();
+    }
+
+
     void setCheater(int player) {
         this.cheater = player;
     }
@@ -220,9 +245,7 @@ public class GameController implements Serializable {
         mapView.setLotto(this.lotto);
     }
 
-    void setHotel(int hotel, int owner) {
-        //TODO: Implement Method
-    }
+
 
     void spinWheelUpdate(int player, int outcome) {
         //TODO: Implement Method
@@ -287,10 +310,6 @@ public class GameController implements Serializable {
         client.endTurn();
     }
 
-    public void getHotel() {
-        // TODO - add hotel
-        client.endTurn();
-    }
 
     void justEndTurn() {
         client.endTurn();
