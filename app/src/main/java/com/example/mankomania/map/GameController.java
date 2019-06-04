@@ -18,8 +18,6 @@ public class GameController implements Serializable {
     Random randstock =new Random();
 
 
-
-
     public static int[] allfields = {
             R.drawable.field_start,
             R.drawable.field_aktie1,
@@ -69,7 +67,7 @@ public class GameController implements Serializable {
 
 
     private int myID;
-    private int cheater;
+
     private int lotto;
     private int hasTurn;
 
@@ -236,16 +234,14 @@ public class GameController implements Serializable {
     }
 
 
-    void setCheater(int player) {
-        this.cheater = player;
-    }
-
     void setLotto(int amount) {
         this.lotto = amount;
         mapView.setLotto(this.lotto);
     }
 
-
+    public int getLotto() {
+        return lotto;
+    }
 
     void spinWheelUpdate(int player, int outcome) {
         //TODO: Implement Method
@@ -339,5 +335,20 @@ public class GameController implements Serializable {
         this.players.get(myID).setDidBlame(true);
         this.mapView.hideBlameButton();
         this.client.sendBlame(cheater);
+    }
+
+    void lotteryAction() {
+
+        int lotto = this.getLotto();
+        if(lotto==0){
+            client.setLottoOnServer(lotto+50000);
+            client.setMoneyOnServer(this.myID, this.players.get(this.myID).getMoney()-50000);
+            mapView.showLottoLoose();
+        }else{
+            client.setLottoOnServer(0);
+            client.setMoneyOnServer(this.myID, this.players.get(this.myID).getMoney()+lotto);
+            mapView.showLottoWin();
+        }
+        client.endTurn();
     }
 }

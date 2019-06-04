@@ -35,9 +35,6 @@ class MessageReceiver {
             case NetworkConstants.SET_INFINEON_AKTIE:
                 setInfineonAktieUpdate(jsonObject);
                 break;
-            case NetworkConstants.SET_CHEATER:
-                setCheaterUpdate(jsonObject);
-                break;
             case NetworkConstants.SET_LOTTO:
                 setLottoUpdate(jsonObject);
                 break;
@@ -119,10 +116,6 @@ class MessageReceiver {
         gameController.setTurn(player);
     }
 
-    private void setCheaterUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        gameController.setCheater(player);
-    }
 
     private void setHypoAktieUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);

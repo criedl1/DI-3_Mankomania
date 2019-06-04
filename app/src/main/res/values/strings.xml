@@ -51,4 +51,6 @@
     <string name="mini_map_OK">OK</string>
     <string name="mini_map_title">Mini Map</string>
     <string name="cheat">Cheat</string>
+    <string name="lottery_won">Du bekommst %d€ vom Lottofeld!</string>
+    <string name="lottery_lost">Die Lotterie ist leer, du darfst selbst 50000€ einzahlen!</string>
 </resources>

@@ -403,6 +403,8 @@ public class MapView extends AppCompatActivity {
                 case R.drawable.field_seeparkhotel:
                     buyHotel(SEEPARK);
                     break;
+                case R.drawable.field_lottery:
+                    onLotteryAction();
                 default:
                     return;
             }
@@ -410,7 +412,17 @@ public class MapView extends AppCompatActivity {
 
     }
 
+    private void onLotteryAction() {
+     gameController.lotteryAction();
+    }
 
+    public void showLottoLoose(){
+        Toast.makeText(this,getString(R.string.lottery_lost), Toast.LENGTH_LONG).show();
+    }
+
+    public void showLottoWin(){
+        Toast.makeText(this, String.format(getString(R.string.lottery_won), gameController.getLotto()),Toast.LENGTH_LONG).show();
+    }
 
     private void startHorseRace() {
         gameController.startHorseRace();
