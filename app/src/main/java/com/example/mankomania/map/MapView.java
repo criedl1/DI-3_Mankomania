@@ -356,7 +356,7 @@ public class MapView extends AppCompatActivity {
                     showMoneyUpdate(10000);
                     break;
                 case R.drawable.field_lindwurm:
-                    showMoneyUpdate(-100000);
+                    showMoneyUpdate(-1000000);
                     break;
                 case R.drawable.field_stadium:
                     showMoneyUpdate(-5000);
@@ -633,5 +633,11 @@ public class MapView extends AppCompatActivity {
         this.moneyFields[successor].setBackground(getDrawable(R.drawable.cheatsuccessbg));
         Toast.makeText(this, String.format(getString(R.string.cheated_successfully), successor + 1), Toast.LENGTH_SHORT).show();
 
+    }
+    public void showMyWin(){
+        Toast.makeText(this, "You win!", Toast.LENGTH_SHORT).show();
+    }
+    public void showSomeonesWin(int player){
+        Toast.makeText(this, "Player " + player + " won!", Toast.LENGTH_SHORT).show();
     }
 }

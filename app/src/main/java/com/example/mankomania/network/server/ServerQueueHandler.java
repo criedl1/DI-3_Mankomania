@@ -117,10 +117,23 @@ public class ServerQueueHandler extends QueueHandler {
         player++;
         player = player % gameData.getPlayers().length;
 
-        startTurn(player);
+        int winner = checkWinner();
+        if(winner<0) {
+            startTurn(player);
+        }else {
+            sendWinner(winner);
+        }
     }
 
-
+    private int checkWinner(){
+        int[] money = gameData.getMoney();
+        for (int i = 0; i <money.length ; i++) {
+            if(money[i]<=0){
+                return i;
+            }
+        }
+        return -1;
+    }
 
     public void startTurn(int player) {
         gameData.setTurn(player);
@@ -394,6 +407,12 @@ public class ServerQueueHandler extends QueueHandler {
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SUCCESSCHEAT);
         json.addProperty(NetworkConstants.PLAYER, index);
         sendAllClients(json.toString());
+    }
 
+    public void sendWinner(int player){
+        JsonObject json = new JsonObject();
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.GAMEEND);
+        json.addProperty(NetworkConstants.PLAYER,player);
+        sendAllClients(json.toString());
     }
 }

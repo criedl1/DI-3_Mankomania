@@ -27,6 +27,7 @@ public class NetworkConstants {
     public static final String MONEY_UPDATE = "updateMoney";
     public static final String ROULETTE = "ROULETTERESULT";
     public static final String SUCCESSCHEAT = "SuccessCheat";
+    public static final String GAMEEND = "GameEnd";
     //Values
     public static final String OPERATION = "OPERATION";
     public static final String ID = "ID";

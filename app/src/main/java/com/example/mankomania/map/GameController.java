@@ -31,7 +31,7 @@ public class GameController implements Serializable {
     private Random randstock =new Random();
 
 
-    public static int[] allfields = {
+    /*public static int[] allfields = {
             R.drawable.field_start,
             R.drawable.field_aktie1,
             R.drawable.field_lindwurm,
@@ -71,8 +71,36 @@ public class GameController implements Serializable {
             R.drawable.field_plattenwirt,
             R.drawable.field_getsomemoney,
             R.drawable.field_aktie3,
-    };
+    };*/
 
+    public static int[] allfields = {
+            R.drawable.field_start,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,
+            R.drawable.field_lindwurm,R.drawable.field_lindwurm,
+
+
+
+
+    };
 
 
     private Client client;
@@ -362,5 +390,14 @@ public class GameController implements Serializable {
             mapView.showLottoWin();
         }
         client.endTurn();
+    }
+    void endGame(int player){
+        if (this.myID== player){
+        mapView.showMyWin();}
+        //mapview du hast gewonnen.
+        else {
+            mapView.showSomeonesWin(player);
+                    //mapview ... player übergeben.
+        }
     }
 }

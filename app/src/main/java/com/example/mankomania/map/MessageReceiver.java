@@ -77,9 +77,16 @@ class MessageReceiver {
             case NetworkConstants.SUCCESSCHEAT:
                 showCheatSuccess(jsonObject);
                 break;
+            case NetworkConstants.GAMEEND:
+                showGameEnd(jsonObject);
             default:
                 throw new IllegalStateException("Network Object should not be here: " + message);
         }
+    }
+
+    private void showGameEnd(JsonObject jsonObject){
+        int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        gameController.endGame(player);
     }
 
     private void showCheatSuccess(JsonObject jsonObject) {
