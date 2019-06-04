@@ -7,9 +7,12 @@ import com.example.mankomania.map.GameController;
 import com.example.mankomania.network.NetworkConstants;
 import com.example.mankomania.network.QueueHandler;
 import com.example.mankomania.roulette.sendMoneyClass;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.Arrays;
 import java.util.Queue;
 import java.util.Random;
 
@@ -76,9 +79,40 @@ public class ServerQueueHandler extends QueueHandler {
             case NetworkConstants.END_TURN:
                 endTurn(jsonObject);
                 break;
+            case NetworkConstants.AMSERVER:
+                setServer(jsonObject);
+                break;
+            case NetworkConstants.SET_NAME:
+                setName(jsonObject);
+                break;
             default:
                 break;
         }
+    }
+
+    private void setName(JsonObject jsonObject) {
+        String name = jsonToString(jsonObject, NetworkConstants.NAME);
+        int idx = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        // Log.d("ORDER", "SETNAME: "+name+" "+idx+" "+ Arrays.toString(gameData.getNames()));
+        this.gameData.setName(idx,name);
+        // Log.d("ORDER", "SETNAME: "+name+" "+idx+" "+ Arrays.toString(gameData.getNames()));
+    }
+
+    private void setServer(JsonObject jsonObject) {
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        this.gameData.setServerPlayer(player);
+    }
+
+    void sendGetOrder(){
+        JsonObject json = new JsonObject();
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.GET_ORDER);
+        JsonArray strArr = new JsonArray();
+        // Log.d("ORDER","Names: " + Arrays.toString(this.gameData.getNames()));
+        for (String name : this.gameData.getNames()) {
+             strArr.add(name);
+        }
+        json.add(NetworkConstants.NAME, strArr);
+        clientHandlers[this.gameData.getPlayerServer()].send(json.toString());
     }
 
     private void blamePerson(JsonObject jsonObject) {
@@ -115,7 +149,7 @@ public class ServerQueueHandler extends QueueHandler {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
 
         player++;
-        player = player % gameData.getPlayers().length;
+        player = player % gameData.getIPAdresses().length;
 
         startTurn(player);
     }
@@ -364,14 +398,6 @@ public class ServerQueueHandler extends QueueHandler {
         sendAllClients(json.toString());
     }
 
-    private void sendCheater(int idx, boolean cheater){
-        JsonObject json = new JsonObject();
-        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_CHEATER);
-        json.addProperty(NetworkConstants.PLAYER, idx);
-        json.addProperty(NetworkConstants.CHEATER, cheater);
-        sendAllClients(json.toString());
-    }
-
     public void sendLotto(int amount) {
 
         JsonObject json = new JsonObject();
@@ -402,5 +428,21 @@ public class ServerQueueHandler extends QueueHandler {
         json.addProperty(NetworkConstants.PLAYER, index);
         sendAllClients(json.toString());
 
+    }
+
+    void waitForNames() throws InterruptedException {
+        // Log.d("ORDER", "SETNAME: "+Arrays.toString(gameData.getNames()));
+        int count = 0;
+        do{
+            String[] names = gameData.getNames();
+            for (int i = 0; i < gameData.getPlayerCount(); i++) {
+                if(!names[i].equals("")){
+                    count++;
+                }
+            }
+            Thread.sleep(100);
+            // Log.d("ORDER", "Names already here: "+count);
+        }while(count<this.gameData.getPlayerCount());
+        sendGetOrder();
     }
 }

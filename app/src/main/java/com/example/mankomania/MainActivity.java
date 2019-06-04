@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mankomania.map.MapView;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Server server = new Server(selectedPlayerCount, 1000000);
         server.start();
 
-        openMap();
+        openMap(true);
     }
 
     public void btn_Find_Lobby_OnClick(View v){
@@ -72,14 +73,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 btn.setEnabled(true);
                 String result = intent.getStringExtra("result");
                 ip = result;
-                openMap();
+                openMap(false);
             }
         };
     }
 
-    public void openMap() {
+    public void openMap(boolean isServer ) {
         Intent intent = new Intent(this, MapView.class);
         intent.putExtra("IP", ip);
+        intent.putExtra("isServer", true);
+        intent.putExtra("Name", ((TextView)findViewById(R.id.playerName)).getText().toString());
         startActivity(intent);
     }
 

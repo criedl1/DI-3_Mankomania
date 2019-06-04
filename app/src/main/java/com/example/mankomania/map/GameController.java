@@ -72,15 +72,16 @@ public class GameController implements Serializable {
     private int cheater;
     private int lotto;
     private int hasTurn;
+    private boolean isServer;
 
-    public GameController(String ip, MapView mapView) {
+    GameController(String ip, String name,boolean isServer, MapView mapView) {
         this.mapView = mapView;
         players = new ArrayList<>();
-
+        this.isServer = isServer;
         this.initReceiver();
         client = new Client();
-        client.init(ip, mapView);
-        Log.i("JONTEST", "Start Client with IP " + ip);
+        client.init(ip, mapView, name);
+        Log.i("JONTEST", "Start Client with Name " + ip);
     }
 
     void startClient() {
@@ -269,6 +270,10 @@ public class GameController implements Serializable {
             this.players.add(new Player());
         }
         mapView.initPlayerFields();
+        if(isServer){
+            client.amServer();
+        }
+        client.setMyName();
     }
 
     Player currentPlayer() {
@@ -339,5 +344,9 @@ public class GameController implements Serializable {
         this.players.get(myID).setDidBlame(true);
         this.mapView.hideBlameButton();
         this.client.sendBlame(cheater);
+    }
+
+    public void showOrderSelection(String[] names) {
+        mapView.showOrderSelection(names);
     }
 }

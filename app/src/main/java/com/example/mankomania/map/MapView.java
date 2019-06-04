@@ -127,9 +127,10 @@ public class MapView extends AppCompatActivity {
                 resultReceiver,
                 new IntentFilter("client.update"));
 
-        this.gameController = new GameController(intent.getStringExtra("IP"), this);
+        this.gameController = new GameController(intent.getStringExtra("IP"),intent.getStringExtra("Name"), intent.getBooleanExtra("isServer",false),this);
 
         this.gameController.startClient();
+
     }
 
     //Broadcast Receiver to get Messages from the Client Thread
@@ -623,5 +624,9 @@ public class MapView extends AppCompatActivity {
         this.moneyFields[successor].setBackground(getDrawable(R.drawable.cheatsuccessbg));
         Toast.makeText(this, "Spieler "+(successor+1)+" hat geschummelt, ohne dass ihr es gemerkt habt!!", Toast.LENGTH_SHORT).show();
 
+    }
+
+    public void showOrderSelection(String[] names) {
+        Log.d("ORDER", "Show Order for: "+ Arrays.toString(names));
     }
 }

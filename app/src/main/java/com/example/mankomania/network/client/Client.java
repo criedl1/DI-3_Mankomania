@@ -19,6 +19,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 // Client class
 public class Client extends Thread {
+    private static String name;
+    private static boolean isServer;
     private final GameData gameData = new GameData();
     private static String ipHost;
     private PrintWriter output;
@@ -28,9 +30,10 @@ public class Client extends Thread {
     public Client(){
     }
 
-    public void init(String ipHost, MapView mapView){
+    public void init(String ipHost, MapView mapView, String name){
         Client.ipHost = ipHost;
         Client.mapView = mapView;
+        Client.name = name;
     }
 
     @Override
@@ -57,9 +60,25 @@ public class Client extends Thread {
             //Close Socket
             clientListener.join();
             clientQueueHandler.join();
+
         } catch (Exception err) {
             Log.e("CLIENT", ""+ err);
         }
+    }
+
+    public void setMyName() {
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            @Override
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_NAME);
+                json.addProperty(NetworkConstants.NAME, name);
+                json.addProperty(NetworkConstants.PLAYER, idx);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
     }
 
     //Index
@@ -74,28 +93,15 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.SEND_MONEY);
-                json.addProperty("PLAYER", idx);
-                json.addProperty("Money", money);
-                output.println(json.toString());
-            }
-        };
-        thread.start();
-    }
-    public void setPostionOnServer(final int idx,final int pos){
-        // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
-            @Override
-            public void run(){
-                JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_POSITION);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SEND_MONEY);
                 json.addProperty(NetworkConstants.PLAYER, idx);
-                json.addProperty(NetworkConstants.POSITION, pos);
+                json.addProperty(NetworkConstants.MONEY, money);
                 output.println(json.toString());
             }
         };
         thread.start();
     }
+
     public void setHypoAktieOnServer(final int idx,final int count){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -223,10 +229,10 @@ public class Client extends Thread {
 
     //GameDate Requests
     public String getOwnIP(){
-        return gameData.getPlayers()[idx];
+        return gameData.getIPAdresses()[idx];
     }
     public String[] getPlayers() {
-        return gameData.getPlayers();
+        return gameData.getIPAdresses();
     }
     public int[] getPosition() {
         return gameData.getPosition();
@@ -258,6 +264,19 @@ public class Client extends Thread {
                 json.addProperty(NetworkConstants.OPERATION,NetworkConstants.BLAME_CHEATER);
                 json.addProperty(NetworkConstants.PLAYER,idx);
                 json.addProperty(NetworkConstants.CHEATER,cheater);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+
+    public void amServer() {
+        Thread thread = new Thread(){
+            @Override
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.AMSERVER);
+                json.addProperty(NetworkConstants.PLAYER,idx);
                 output.println(json.toString());
             }
         };

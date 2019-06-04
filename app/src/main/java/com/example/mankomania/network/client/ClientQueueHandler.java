@@ -73,6 +73,8 @@ public class ClientQueueHandler extends QueueHandler {
             case NetworkConstants.START_TURN:
                 startTurn(jsonObject);
                 break;
+            case NetworkConstants.GET_ORDER:
+                publishUpdate(jsonObject);
             default:
                 break;
         }
@@ -164,13 +166,13 @@ public class ClientQueueHandler extends QueueHandler {
         publishUpdate(jsonObject);
     }
     private void setPlayerId(JsonObject jsonObject) {
-        String[] arr = gameData.getPlayers();
+        String[] arr = gameData.getIPAdresses();
         //Get Values
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         String ip = jsonToString(jsonObject, NetworkConstants.IP);
         //Change GameData
         arr[player] = ip;
-        gameData.setPlayers(arr);
+        gameData.setIPAdresses(arr);
         publishUpdate(jsonObject);
     }
 

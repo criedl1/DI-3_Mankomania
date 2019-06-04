@@ -5,7 +5,7 @@ import com.example.mankomania.network.server.ServerQueueHandler;
 import java.util.Arrays;
 
 public class GameData {
-    private String[] players;
+    private String[] IPAdresses;
     private int[] position;
     private int[] money;
     private int lotto;
@@ -24,12 +24,28 @@ public class GameData {
     private int hasTurn = 0;
     private ServerQueueHandler server;
 
-    public String[] getPlayers() {
-        return players.clone();
+    public int getPlayerServer() {
+        return playerServer;
     }
 
-    public void setPlayers(String[] player) {
-        players = player;
+    private int playerServer;
+
+    public String[] getNames() {
+        return names.clone();
+    }
+
+    public void setNames(String[] names) {
+        this.names = names;
+    }
+
+    private String[] names;
+
+    public String[] getIPAdresses() {
+        return IPAdresses.clone();
+    }
+
+    public void setIPAdresses(String[] player) {
+        IPAdresses = player;
     }
 
     public int[] getPosition() {
@@ -63,7 +79,7 @@ public class GameData {
 
     public int getPlayerCount() {
         int count = 0;
-        for (String player : this.players) {
+        for (String player : this.IPAdresses) {
             if (player != null) {
                 count++;
             }
@@ -161,10 +177,15 @@ public class GameData {
         int[] boolArr = new int[playerCount];
         String[] strArr = new String[playerCount];
         boolean[] didBlame = new boolean[playerCount];
+        String[] namesArr = new String[playerCount];
 
         // Set Player[] (fills in ConnectPlayers)
         Arrays.fill(strArr, "");
-        setPlayers(strArr);
+        setIPAdresses(strArr);
+
+        // set Player Names
+        Arrays.fill(namesArr,"");
+        setNames(namesArr);
 
 
         // Set Arrays with 0
@@ -214,5 +235,13 @@ public class GameData {
             index++;
         }
         setIsCheater(isCheater);
+    }
+
+    public void setServerPlayer(int player) {
+        this.playerServer = player;
+    }
+
+    synchronized public void setName(int idx, String name) {
+        this.names[idx] = name;
     }
 }
