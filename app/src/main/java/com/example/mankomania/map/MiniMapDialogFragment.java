@@ -20,9 +20,6 @@ import java.util.List;
 public class MiniMapDialogFragment extends DialogFragment {
     List<Player> players;
 
-    private float scaleFactor = 1.0f;
-    private PhotoView map;
-
 
     @NonNull
     @Override
@@ -30,12 +27,12 @@ public class MiniMapDialogFragment extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         Bundle args = getArguments();
         GameController controller = (GameController) args.getSerializable("PLAYERS");
-        players = controller.players;
+        players = controller.getPlayers();
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View myDialog = inflater.inflate(R.layout.dialog_mini_map, null);
 
-        map = myDialog.findViewById(R.id.miniMapImg);
+        PhotoView map = myDialog.findViewById(R.id.miniMapImg);
         map.setImageResource(R.drawable.mankomania_minimap);
         // TODO - set Player positions on minimap
         builder.setView(myDialog);
