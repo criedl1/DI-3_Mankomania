@@ -325,7 +325,7 @@ public class GameController implements Serializable {
 
     void sendMoveOverLotto() {
         this.setMoney(hasTurn, this.currentPlayer().getMoney() - 5000);
-        this.client.setMoneyOnServer(this.myID,this.currentPlayer().getMoney() - 5000);
+        this.client.setMoneyOnServer(this.myID,this.currentPlayer().getMoney());
         this.client.setLottoOnServer(this.lotto + 5000);
     }
 
