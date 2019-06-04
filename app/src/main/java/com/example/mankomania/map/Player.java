@@ -18,7 +18,6 @@ public class Player {
     private TextView currentmoney;
     private int[] aktien = new int[3];
     private int[] hotel = new int[3];
-    private String ip;
     private boolean didCheat = false;
     private boolean didBlame = false;
 
@@ -114,7 +113,7 @@ public class Player {
     }
 
     void setIP(String ip) {
-        this.ip = ip;
+        // maybe needed in future
     }
 
     @Override

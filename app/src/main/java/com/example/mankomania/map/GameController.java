@@ -14,7 +14,20 @@ import java.util.Random;
 public class GameController implements Serializable {
 
     private final MapView mapView;
-    List<Player> players;
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public int getPlayerCount(){
+        if(this.players!= null){
+            return this.players.size();
+        }else{
+            return 0;
+        }
+    }
+
+    private List<Player> players;
     Random randstock =new Random();
 
 
@@ -199,7 +212,7 @@ public class GameController implements Serializable {
          int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
 
          for (Player p:players) {
-             int aktien [] = p.getAktien();
+             int aktien[] = p.getAktien();
              if (riseordecrease==0){
                  if (aktien[aktie]>0){
                      client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
@@ -239,7 +252,7 @@ public class GameController implements Serializable {
         mapView.setLotto(this.lotto);
     }
 
-    public int getLotto() {
+    int getLotto() {
         return lotto;
     }
 
