@@ -141,19 +141,19 @@ public class Player {
         this.currentmoney.setBackgroundColor(color);
     }
 
-    public boolean isDidCheat() {
+    boolean isDidCheat() {
         return didCheat;
     }
 
-    public void setDidCheat(boolean didCheat) {
+    void setDidCheat(boolean didCheat) {
         this.didCheat = didCheat;
     }
 
-    public boolean isDidBlame() {
+    boolean isDidBlame() {
         return didBlame;
     }
 
-    public void setDidBlame(boolean didBlame) {
+    void setDidBlame(boolean didBlame) {
         this.didBlame = didBlame;
     }
 }

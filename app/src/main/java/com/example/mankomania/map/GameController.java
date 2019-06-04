@@ -15,11 +15,11 @@ public class GameController implements Serializable {
 
     private final MapView mapView;
 
-    public List<Player> getPlayers() {
+    List<Player> getPlayers() {
         return players;
     }
 
-    public int getPlayerCount(){
+    int getPlayerCount(){
         if(this.players!= null){
             return this.players.size();
         }else{
@@ -28,7 +28,7 @@ public class GameController implements Serializable {
     }
 
     private List<Player> players;
-    Random randstock =new Random();
+    private Random randstock =new Random();
 
 
     public static int[] allfields = {
@@ -84,7 +84,7 @@ public class GameController implements Serializable {
     private int lotto;
     private int hasTurn;
 
-    public GameController(String ip, MapView mapView) {
+    GameController(String ip, MapView mapView) {
         this.mapView = mapView;
         players = new ArrayList<>();
 
@@ -108,7 +108,7 @@ public class GameController implements Serializable {
     }
 
 
-    public int getMyID() {
+    int getMyID() {
         return myID;
     }
 
@@ -128,7 +128,7 @@ public class GameController implements Serializable {
         }
     }
 
-    void showAktienUpdate(int player, Aktien aktien) {
+    private void showAktienUpdate(int player, Aktien aktien) {
         if (isMyTurn()) {
             mapView.showMyAktienkauf(aktien);
         } else {
@@ -136,7 +136,7 @@ public class GameController implements Serializable {
         }
     }
 
-    void showHotelUpdate(int player, Hotel hotel) {
+    private void showHotelUpdate(int player, Hotel hotel) {
         if(isMyTurn()) {
             mapView.showMyHotelkauf(hotel);
         } else {
@@ -159,7 +159,7 @@ public class GameController implements Serializable {
         client.endTurn();
     }
 
-   public void setMyPlayerID(int player) {
+   void setMyPlayerID(int player) {
         this.myID = player;
         this.players.get(myID).initMyMoneyField(ContextCompat.getColor(mapView,R.color.moneyBGMine));
     }
@@ -297,7 +297,7 @@ public class GameController implements Serializable {
      * @param p Player-Objekt
      * @return Index, wenn p in Liste gefunden, -1 sonst.
      */
-    public int getPlayerIndex(Player p) {
+    int getPlayerIndex(Player p) {
         for (int i = 0; i < players.size(); i++) {
             if (p.equals(players.get(i)))
                 return i;
@@ -305,11 +305,11 @@ public class GameController implements Serializable {
         return -1;
     }
 
-    public void setPlayerIP(int player, String ip) {
+    void setPlayerIP(int player, String ip) {
         this.players.get(player).setIP(ip);
     }
 
-    public void startHorseRace() {
+    void startHorseRace() {
         // TODO - horse race
         client.endTurn();
     }
@@ -318,7 +318,6 @@ public class GameController implements Serializable {
         // TODO - add share
         client.endTurn();
     }
-
 
     void justEndTurn() {
         client.endTurn();
