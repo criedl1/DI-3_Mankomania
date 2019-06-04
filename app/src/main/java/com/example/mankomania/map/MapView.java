@@ -185,7 +185,6 @@ public class MapView extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 if (movingOverLottery) {
-                    //   Toast.makeText(_this, getString(R.string.lottery_toast), Toast.LENGTH_LONG).show();
                     gameController.sendMoveOverLotto();
                 }
                 step2();
