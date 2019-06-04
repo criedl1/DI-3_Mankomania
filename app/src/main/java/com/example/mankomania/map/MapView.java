@@ -27,6 +27,8 @@ import android.widget.Toast;
 
 import com.example.mankomania.R;
 import com.example.mankomania.dice.Dice;
+import com.example.mankomania.endscreens.SomeoneWin;
+import com.example.mankomania.endscreens.YouWin;
 import com.example.mankomania.slotmachine.CasinoStartScreen;
 
 import java.util.Arrays;
@@ -635,9 +637,12 @@ public class MapView extends AppCompatActivity {
 
     }
     public void showMyWin(){
-        Toast.makeText(this, "You win!", Toast.LENGTH_SHORT).show();
+        Intent it = new Intent(this, YouWin.class);
+        startActivity(it);
     }
     public void showSomeonesWin(int player){
-        Toast.makeText(this, "Player " + player + " won!", Toast.LENGTH_SHORT).show();
+        Intent it = new Intent(this, SomeoneWin.class);
+        it.putExtra("Player",player);
+        startActivity(it);
     }
 }

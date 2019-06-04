@@ -393,11 +393,10 @@ public class GameController implements Serializable {
     }
     void endGame(int player){
         if (this.myID== player){
-        mapView.showMyWin();}
-        //mapview du hast gewonnen.
+        mapView.showMyWin();
+            }
         else {
-            mapView.showSomeonesWin(player);
-                    //mapview ... player übergeben.
+            mapView.showSomeonesWin(player+1);
         }
     }
 }

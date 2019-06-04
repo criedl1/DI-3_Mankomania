@@ -79,6 +79,7 @@ class MessageReceiver {
                 break;
             case NetworkConstants.GAMEEND:
                 showGameEnd(jsonObject);
+                break;
             default:
                 throw new IllegalStateException("Network Object should not be here: " + message);
         }
