@@ -157,12 +157,12 @@ public class MapView extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private static final String translationX = "translationx";
+    private static final String translationx = "translationx";
 
     public void movePlayerOut(final Player player) {
         float distance;
         distance = screenWidth;
-        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationX, distance);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationx, distance);
         animation.setDuration(1000);
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -178,7 +178,7 @@ public class MapView extends AppCompatActivity {
         distance = screenWidth - field0;
         player.getFigure().setX(field0);
         player.getFigure().setVisibility(View.VISIBLE);
-        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationX, distance);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationx, distance);
         animation.setDuration(1000);
         animation.start();
         animation.addListener(new AnimatorListenerAdapter() {
@@ -201,7 +201,7 @@ public class MapView extends AppCompatActivity {
         }
 
         player.getFigure().setX(field0);
-        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationX, distance);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationx, distance);
         animation.setDuration(1000);
         animation.start();
         animation.addListener(new AnimatorListenerAdapter() {
