@@ -27,6 +27,8 @@ import android.widget.Toast;
 
 import com.example.mankomania.R;
 import com.example.mankomania.dice.Dice;
+import com.example.mankomania.endscreens.SomeoneWin;
+import com.example.mankomania.endscreens.YouWin;
 import com.example.mankomania.map.hotels.BuyHotelDialog;
 import com.example.mankomania.map.hotels.Hotel;
 import com.example.mankomania.slotmachine.CasinoStartScreen;
@@ -36,6 +38,7 @@ import java.util.Arrays;
 import static com.example.mankomania.map.Aktien.HYPO;
 import static com.example.mankomania.map.Aktien.INFINEON;
 import static com.example.mankomania.map.Aktien.STRABAG;
+
 
 public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeDialogListener {
 
@@ -666,5 +669,14 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
             return;
         }
         gameController.justEndTurn();
+    }
+    public void showMyWin(){
+        Intent it = new Intent(this, YouWin.class);
+        startActivity(it);
+    }
+    public void showSomeonesWin(int player){
+        Intent it = new Intent(this, SomeoneWin.class);
+        it.putExtra("Player",player);
+        startActivity(it);
     }
 }

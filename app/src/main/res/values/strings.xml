@@ -66,4 +66,5 @@
     <string name="blame">Spieler %d hat Spieler %d beschuldigt. %s</string>
     <string name="cheated_successfully">Spieler %d hat geschummelt, ohne dass ihr es gemerkt habt!!</string>
     <string name="want_hotel">Wollen sie das Hotel %s kaufen?</string>
+    <string name="title_activity_you_win">YouWin</string>
 </resources>

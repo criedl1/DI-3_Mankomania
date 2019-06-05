@@ -371,4 +371,12 @@ public class GameController implements Serializable {
         }
         client.endTurn();
     }
+    void endGame(int player){
+        if (this.myID== player){
+        mapView.showMyWin();
+            }
+        else {
+            mapView.showSomeonesWin(player+1);
+        }
+    }
 }
