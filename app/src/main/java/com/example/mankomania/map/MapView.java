@@ -383,9 +383,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                     // TODO - startstockexchange
                     break;
                 case R.drawable.field_horserace:
-
                     startHorseRace();
-                    gameController.justEndTurn();
                     break;
                 case R.drawable.field_hotelsandwirth:
                     buyHotel(gameController.getHotels()[0]);
@@ -589,7 +587,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
             }
         }
     }
-
+    //method for the case that the hotel is not sold
     public void buyHotel(Hotel hotel, Player cPlayer) {
         Bundle args = new Bundle();
         args.putSerializable("PLAYERS", gameController);
