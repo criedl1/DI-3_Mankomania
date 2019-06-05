@@ -224,8 +224,9 @@ public class GameController implements Serializable {
         //TODO: Implement Method
     }
 
-    void spinWheelUpdate(int player, int outcome) {
+    void casinoUpdate(int player, int outcome) {
         //TODO: Implement Method
+        //Toast der Ergebnis an alle Player schickt
     }
 
     void setTurn(int player) {

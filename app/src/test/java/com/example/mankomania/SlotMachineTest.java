@@ -11,7 +11,8 @@ import static org.junit.Assert.assertEquals;
 public class SlotMachineTest {
 
     SlotMachineLogic sml;
-    SlotMachineActivity sma;
+    SlotMachineActivity sma; //i want to test this too, because i want to see if SlotMachineLogic
+                            //changes the values in SlotMachineActivity correctly.
 
     @Before
     public void setUp(){

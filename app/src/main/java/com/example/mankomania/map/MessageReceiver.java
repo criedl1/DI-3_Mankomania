@@ -171,7 +171,7 @@ class MessageReceiver {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
 
-        gameController.spinWheelUpdate(player, outcome);
+        gameController.casinoUpdate(player, outcome);
     }
 
     private void rollDiceUpdate(JsonObject jsonObject) {

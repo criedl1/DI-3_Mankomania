@@ -16,13 +16,13 @@ public class RouletteTest {
     @Before
     public void setUp() {
         roulette = new RouletteLogic();
-        fieldClassArray = roulette.getRoulette().getFieldClassArray();
+        fieldClassArray = roulette.getFieldClassArray();
         roulette.spinRoulette();
     }
 
     @Test
     public void testSetUpRoulette() {
-        assertEquals(37, roulette.getRoulette().getFieldArrayLength());
+        assertEquals(37, roulette.getFieldArrayLength());
     }
 
     @Test
@@ -183,7 +183,7 @@ public class RouletteTest {
 
     @Test
     public void testGetDegreeFromRoulette(){
-        float dfr = roulette.getRoulette().getTheField().getDegree();
+        float dfr = roulette.getTheField().getDegree();
         assertEquals(roulette.getDegreeFromRoulette(), dfr, 0);
     }
 

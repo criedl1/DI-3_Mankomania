@@ -29,12 +29,12 @@ public class SlotMachineLogic {
                 setReturnString(BIG_WIN + YOU_HAVE + getMoney() + WON);
 
             } else {
-                setMoney(120000);
+                setMoney(130000);
                 setWinString(WON);
                 setReturnString(THREE_SYMBOLS + getMoney() + WON);
             }
         } else if (id1 == id2 || id2 == id3 || id1 == id3) {
-            setMoney(50000);
+            setMoney(30000);
             setWinString(WON);
             setReturnString(TWO_SYMBOLS + getMoney() + WON);
         }

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.mankomania.R;
+import com.example.mankomania.roulette.PopUp;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ public class SlotMachineActivity extends AppCompatActivity {
         });
     }
 
+
     public void startMachine() {
         slot1.setImageResource(slotList.get(0).getImage());
         slot2.setImageResource(slotList.get(1).getImage());
@@ -67,6 +69,10 @@ public class SlotMachineActivity extends AppCompatActivity {
         slot1.postDelayed(changePic(0, 1, 2), 1600);
         slot1.postDelayed(stopMachineAndCheckWin(), 2000);
         slot1.postDelayed(waitForPopUp(), 3000);
+
+        //hardcoded changePic, because i wanted to make sure, that the picture
+        //really changes every time, which isn't guaranteed when i solve it with
+        //random.
     }
 
     public void getStopIds() {
@@ -120,13 +126,15 @@ public class SlotMachineActivity extends AppCompatActivity {
     }
 
     private void openPopUp() {
-        PopClass popClass = new PopClass();
-        popClass.show(getSupportFragmentManager(), "alert");
+        PopUp popUp = new PopUp();
         Bundle extras = new Bundle();
-        extras.putInt("amount", money);
+        extras.putString("popUpFor", "SlotMachineResult");
+        extras.putInt("money", money);
         extras.putString("returnString", returnString);
         extras.putString("winString", winString);
-        popClass.setArguments(extras);
+        popUp.setArguments(extras);
+
+        popUp.show(getSupportFragmentManager(), "alert");
     }
 
     public void setMoney(int money) {
