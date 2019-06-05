@@ -38,9 +38,7 @@ import java.util.Arrays;
 import static com.example.mankomania.map.Aktien.HYPO;
 import static com.example.mankomania.map.Aktien.INFINEON;
 import static com.example.mankomania.map.Aktien.STRABAG;
-import static com.example.mankomania.map.Hotel.PLATTENWIRT;
-import static com.example.mankomania.map.Hotel.SANDWIRTH;
-import static com.example.mankomania.map.Hotel.SEEPARK;
+
 
 public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeDialogListener {
 
