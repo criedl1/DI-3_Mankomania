@@ -31,6 +31,7 @@ public class NetworkConstants {
     public static final String OPERATION = "OPERATION";
     public static final String ID = "ID";
     public static final String HOTEL = "Hotel";
+    public static final String HOTEL_PRICE = "HotelPrice";
     public static final String OWNER = "Owner";
     public static final String AMOUNT = "Amount";
     public static final String PLAYER = "PLAYER";
