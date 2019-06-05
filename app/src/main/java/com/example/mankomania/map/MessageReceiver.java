@@ -2,6 +2,7 @@ package com.example.mankomania.map;
 
 import android.util.Log;
 
+import com.example.mankomania.map.hotels.Hotel;
 import com.example.mankomania.network.NetworkConstants;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -38,14 +39,8 @@ class MessageReceiver {
             case NetworkConstants.SET_LOTTO:
                 setLottoUpdate(jsonObject);
                 break;
-            case NetworkConstants.SET_SANDWIRTH:
-                setSandwirthUpdate(jsonObject);
-                break;
-            case NetworkConstants.SET_SEEPARK:
-                setSeeparkUpdate(jsonObject);
-                break;
-            case NetworkConstants.SET_PLATTENWIRT:
-                setPlattenwirtUpdate(jsonObject);
+            case NetworkConstants.SET_HOTEL:
+                setHotelUpdate(jsonObject);
                 break;
             case NetworkConstants.ROLL_DICE:
                 rollDiceUpdate(jsonObject);
@@ -138,26 +133,10 @@ class MessageReceiver {
         gameController.setInfineonAktiefromMessage(player, count);
     }
 
-    private void setSandwirthUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
-       // int hotel = jsonToInt(jsonObject, NetworkConstants.HOTEL);
-       // int owner = jsonToInt(jsonObject, NetworkConstants.OWNER);
-
-        gameController.setSandwirtHotel(player, count);
-    }
-    private void setPlattenwirtUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
-
-        gameController.setPlattenwirtHotel(player, count);
-    }
-
-    private void setSeeparkUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
-
-        gameController.setSeeparkHotel(player, count);
+    private void setHotelUpdate(JsonObject jsonObject) {
+        int hotel = jsonToInt(jsonObject, NetworkConstants.HOTEL);
+        int player = jsonToInt(jsonObject, NetworkConstants.OWNER);
+        gameController.setHotelfromMessage(player,hotel);
     }
 
     private void setPositionUpdate(JsonObject jsonObject) {
