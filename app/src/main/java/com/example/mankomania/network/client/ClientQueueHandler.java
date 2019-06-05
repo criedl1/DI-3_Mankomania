@@ -73,9 +73,15 @@ public class ClientQueueHandler extends QueueHandler {
             case NetworkConstants.START_TURN:
                 startTurn(jsonObject);
                 break;
+            case NetworkConstants.GAMEEND:
+                gameEnd(jsonObject);
             default:
                 break;
         }
+    }
+
+    private void gameEnd(JsonObject jsonObject){
+        publishUpdate(jsonObject);
     }
 
     private void setCheatSuccess(JsonObject jsonObject) {

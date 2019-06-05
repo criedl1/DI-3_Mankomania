@@ -2,6 +2,7 @@ package com.example.mankomania.map;
 
 import android.util.Log;
 
+import com.example.mankomania.map.hotels.Hotel;
 import com.example.mankomania.network.NetworkConstants;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -34,9 +35,6 @@ class MessageReceiver {
                 break;
             case NetworkConstants.SET_INFINEON_AKTIE:
                 setInfineonAktieUpdate(jsonObject);
-                break;
-            case NetworkConstants.SET_CHEATER:
-                setCheaterUpdate(jsonObject);
                 break;
             case NetworkConstants.SET_LOTTO:
                 setLottoUpdate(jsonObject);
@@ -74,9 +72,17 @@ class MessageReceiver {
             case NetworkConstants.SUCCESSCHEAT:
                 showCheatSuccess(jsonObject);
                 break;
+            case NetworkConstants.GAMEEND:
+                showGameEnd(jsonObject);
+                break;
             default:
                 throw new IllegalStateException("Network Object should not be here: " + message);
         }
+    }
+
+    private void showGameEnd(JsonObject jsonObject){
+        int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        gameController.endGame(player);
     }
 
     private void showCheatSuccess(JsonObject jsonObject) {
@@ -113,10 +119,6 @@ class MessageReceiver {
         gameController.setTurn(player);
     }
 
-    private void setCheaterUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        gameController.setCheater(player);
-    }
 
     private void setHypoAktieUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
@@ -137,6 +139,12 @@ class MessageReceiver {
         int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
 
         gameController.setInfineonAktiefromMessage(player, count);
+    }
+
+    private void setHotelUpdate(JsonObject jsonObject) {
+        int hotel = jsonToInt(jsonObject, NetworkConstants.HOTEL);
+        int player = jsonToInt(jsonObject, NetworkConstants.OWNER);
+        gameController.setHotelfromMessage(player,hotel);
     }
 
     private void setPositionUpdate(JsonObject jsonObject) {
@@ -160,12 +168,6 @@ class MessageReceiver {
         gameController.setLotto(amount);
     }
 
-    private void setHotelUpdate(JsonObject jsonObject) {
-        int hotel = jsonToInt(jsonObject, NetworkConstants.HOTEL);
-        int owner = jsonToInt(jsonObject, NetworkConstants.OWNER);
-
-        gameController.setHotel(hotel, owner);
-    }
 
     private void spinWheelUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);

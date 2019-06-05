@@ -4,10 +4,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class Player {
+public class Player implements Serializable {
 
     private ImageView figure;
 
@@ -18,6 +19,7 @@ public class Player {
     private TextView currentmoney;
     private int[] aktien = new int[3];
     private String ip;
+    private int[] hotel = new int[3];
     private boolean didCheat = false;
     private boolean didBlame = false;
 
@@ -93,7 +95,7 @@ public class Player {
     }
 
     void setIP(String ip) {
-        this.ip = ip;
+        // maybe needed in future
     }
 
     @Override
@@ -121,19 +123,19 @@ public class Player {
         this.currentmoney.setBackgroundColor(color);
     }
 
-    public boolean isDidCheat() {
+    boolean isDidCheat() {
         return didCheat;
     }
 
-    public void setDidCheat(boolean didCheat) {
+    void setDidCheat(boolean didCheat) {
         this.didCheat = didCheat;
     }
 
-    public boolean isDidBlame() {
+    boolean isDidBlame() {
         return didBlame;
     }
 
-    public void setDidBlame(boolean didBlame) {
+    void setDidBlame(boolean didBlame) {
         this.didBlame = didBlame;
     }
 }

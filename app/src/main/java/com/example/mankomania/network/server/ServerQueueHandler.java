@@ -46,6 +46,15 @@ public class ServerQueueHandler extends QueueHandler {
             case NetworkConstants.SET_INFINEON_AKTIE:
                 setInfineonAktieForClients(jsonObject);
                 break;
+            case NetworkConstants.SET_SANDWIRTH:
+                setSandwirthHotelForClients(jsonObject);
+                break;
+            case NetworkConstants.SET_PLATTENWIRT:
+                setPlattenwirtHotelForClients(jsonObject);
+                break;
+            case NetworkConstants.SET_SEEPARK:
+                setSeeparkHotelForClients(jsonObject);
+                break;
             case NetworkConstants.SET_CHEATER:
                 setCheater(jsonObject);
                 break;
@@ -108,10 +117,23 @@ public class ServerQueueHandler extends QueueHandler {
         player++;
         player = player % gameData.getPlayers().length;
 
-        startTurn(player);
+        int winner = checkWinner();
+        if(winner<0) {
+            startTurn(player);
+        }else {
+            sendWinner(winner);
+        }
     }
 
-
+    private int checkWinner(){
+        int[] money = gameData.getMoney();
+        for (int i = 0; i <money.length ; i++) {
+            if(money[i]<=0){
+                return i;
+            }
+        }
+        return -1;
+    }
 
     public void startTurn(int player) {
         gameData.setTurn(player);
@@ -219,6 +241,39 @@ public class ServerQueueHandler extends QueueHandler {
         //sendData
         sendHypoAktie(player, count);
     }
+    private void setSandwirthHotelForClients(JsonObject jsonObject) {
+        int[] arr = gameData.getSandwirthHotel();
+        //Get Values
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        //Change GameData
+        arr[player] = count;
+        gameData.setSandwirthHotel(arr);
+        //sendData
+        sendSandwirthHotel(player,count);
+    }
+    private void setPlattenwirtHotelForClients(JsonObject jsonObject) {
+        int[] arr = gameData.getPlattenwirtHotel();
+        //Get Values
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        //Change GameData
+        arr[player] = count;
+        gameData.setPlattenwirtHotel(arr);
+        //sendData
+        sendPlattenwirtHotel(player,count);
+    }
+    private void setSeeparkHotelForClients(JsonObject jsonObject) {
+        int[] arr = gameData.getSeeparkHotel();
+        //Get Values
+        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        //Change GameData
+        arr[player] = count;
+        gameData.setSeeparkHotel(arr);
+        //sendData
+        sendSeeparkHotel(player,count);
+    }
 
     private void setPositionForClients(JsonObject jsonObject) {
         int[] arr = gameData.getPosition();
@@ -300,8 +355,31 @@ public class ServerQueueHandler extends QueueHandler {
         sendAllClients(json.toString());
     }
 
+    private void sendSandwirthHotel(int idx, int count){
+        JsonObject json = new JsonObject();
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_SANDWIRTH);
+        json.addProperty(NetworkConstants.PLAYER, idx);
+        json.addProperty(NetworkConstants.COUNT, count);
+        sendAllClients(json.toString());
+    }
+    private void sendPlattenwirtHotel(int idx, int count){
+        JsonObject json = new JsonObject();
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_PLATTENWIRT);
+        json.addProperty(NetworkConstants.PLAYER, idx);
+        json.addProperty(NetworkConstants.COUNT, count);
+        sendAllClients(json.toString());
+    }
+    private void sendSeeparkHotel(int idx, int count){
+        JsonObject json = new JsonObject();
+        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_SEEPARK);
+        json.addProperty(NetworkConstants.PLAYER, idx);
+        json.addProperty(NetworkConstants.COUNT, count);
+        sendAllClients(json.toString());
+    }
+
 
     public void sendLotto(int amount) {
+
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_LOTTO);
         json.addProperty(NetworkConstants.AMOUNT, amount);
@@ -329,6 +407,12 @@ public class ServerQueueHandler extends QueueHandler {
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SUCCESSCHEAT);
         json.addProperty(NetworkConstants.PLAYER, index);
         sendAllClients(json.toString());
+    }
 
+    public void sendWinner(int player){
+        JsonObject json = new JsonObject();
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.GAMEEND);
+        json.addProperty(NetworkConstants.PLAYER,player);
+        sendAllClients(json.toString());
     }
 }

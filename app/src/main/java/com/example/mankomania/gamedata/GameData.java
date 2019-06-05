@@ -13,8 +13,14 @@ public class GameData {
     private int[] infineonAktie;
     private int[] hypoAktie;
     private int[] strabagAktie;
+
+    private int[] sandwirthHotel;
+    private int[] plattenwirtHotel;
+    private int[] seeparkHotel;
+
     private int[] isCheater;
     private boolean[] didBlame;
+
     private int hasTurn = 0;
     private ServerQueueHandler server;
 
@@ -109,7 +115,28 @@ public class GameData {
         this.strabagAktie = strabagAktie;
     }
 
+
+    public int[] getSandwirthHotel() {
+        return sandwirthHotel.clone();
+    }
+    public void setSandwirthHotel(int[] sandwirthHotel) {
+        this.sandwirthHotel = sandwirthHotel;
+    }
+    public int[] getPlattenwirtHotel() {
+        return plattenwirtHotel.clone();
+    }
+    public void setPlattenwirtHotel(int[] plattenwirtHotel) {
+        this.plattenwirtHotel = plattenwirtHotel;
+    }
+    public int[] getSeeparkHotel() {
+        return seeparkHotel.clone();
+    }
+    public void setSeeparkHotel(int[] seeparkHotel) {
+        this.seeparkHotel = seeparkHotel;
+    }
+
     public int[] getIsCheater() {
+
         return isCheater.clone();
     }
 
@@ -133,7 +160,7 @@ public class GameData {
         int[] intArr = new int[playerCount];
         int[] boolArr = new int[playerCount];
         String[] strArr = new String[playerCount];
-        boolean[] didBlame = new boolean[playerCount];
+        boolean[] blameArr = new boolean[playerCount];
 
         // Set Player[] (fills in ConnectPlayers)
         Arrays.fill(strArr, "");
@@ -153,8 +180,8 @@ public class GameData {
         setIsCheater(boolArr);
 
 
-        Arrays.fill(didBlame, false);
-        setDidBlame(didBlame);
+        Arrays.fill(blameArr, false);
+        setDidBlame(blameArr);
 
         // Set Lotto to 0
         setLotto(0);
@@ -174,7 +201,7 @@ public class GameData {
     }
 
     public void decrementCheater() {
-        int[] isCheater = this.getIsCheater();
+        int[] cheaterArr = this.getIsCheater();
         int index = 0;
         for (int i : this.isCheater) {
             if (i > 0) {
@@ -182,10 +209,10 @@ public class GameData {
                 if(i==0){
                     server.sendDidCheatSuccessfully(index);
                 }
-                isCheater[index] = i;
+                cheaterArr[index] = i;
             }
             index++;
         }
-        setIsCheater(isCheater);
+        setIsCheater(cheaterArr);
     }
 }
