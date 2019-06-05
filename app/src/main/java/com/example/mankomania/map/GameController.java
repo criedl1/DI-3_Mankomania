@@ -37,7 +37,7 @@ public class GameController implements Serializable {
 
 
 
-    public static int[] allfields = {
+    public static final int[] allfields = {
             R.drawable.field_start,
             R.drawable.field_aktie1,
             R.drawable.field_lindwurm,
@@ -180,7 +180,7 @@ public class GameController implements Serializable {
 
 
     void setPosition(int player, int position) {
-        this.mapView.step1();
+        this.mapView.setPlayerOnCurrentScreen();
         this.players.get(player).setPosition(position);
 
     }
@@ -304,14 +304,9 @@ public class GameController implements Serializable {
     }
 
     void startHorseRace() {
-        // TODO - horse race
         client.endTurn();
     }
 
-    public void getShare() {
-        // TODO - add share
-        client.endTurn();
-    }
 
     void justEndTurn() {
         client.endTurn();
