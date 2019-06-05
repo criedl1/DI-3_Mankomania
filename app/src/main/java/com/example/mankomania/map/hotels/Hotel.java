@@ -24,9 +24,12 @@ public class Hotel implements Serializable {
         return owner != null;
     }
 
-    public void setOwner(Player owner) {
-        if (this.owner == null)
+    public boolean setOwner(Player owner) {
+        if (this.owner == null) {
             this.owner = owner;
+            return true;
+        }
+        return false;
     }
 
     public Player getOwner() {
