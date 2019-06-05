@@ -515,7 +515,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
 
     public void startMyTurn() {
         findViewById(R.id.wuerfeln).setVisibility(View.VISIBLE);
-        Player myPlayer = gameController.players.get(gameController.getMyID());
+        Player myPlayer = gameController.getPlayers().get(gameController.getMyID());
         if (!myPlayer.isDidBlame()) {
             findViewById(R.id.blame_button).setVisibility(View.VISIBLE);
         }

@@ -15,13 +15,12 @@ import java.util.Random;
 public class GameController implements Serializable {
 
     private final MapView mapView;
-    Random randstock = new Random();
     private Hotel[] hotels = new Hotel[]{
             new Hotel(R.drawable.field_hotelsandwirth, "SANDWIRTH"),
             new Hotel(R.drawable.field_plattenwirt, "PLATTENWIRT"),
             new Hotel(R.drawable.field_seeparkhotel, "SEEPARKHOTEL"),
     };
-    List<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
