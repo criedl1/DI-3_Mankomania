@@ -4,6 +4,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.example.mankomania.R;
+import com.example.mankomania.map.hotels.Hotel;
 import com.example.mankomania.network.client.Client;
 
 import java.io.Serializable;
@@ -14,8 +15,12 @@ import java.util.Random;
 public class GameController implements Serializable {
 
     private final MapView mapView;
-
-    List<Player> getPlayers() {
+    private Hotel[] hotels = new Hotel[]{
+            new Hotel(R.drawable.field_hotelsandwirth, "SANDWIRTH"),
+            new Hotel(R.drawable.field_plattenwirt, "PLATTENWIRT"),
+            new Hotel(R.drawable.field_seeparkhotel, "SEEPARKHOTEL"),
+    };
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -29,6 +34,7 @@ public class GameController implements Serializable {
 
     private List<Player> players;
     private Random randstock =new Random();
+
 
 
     public static int[] allfields = {
@@ -49,7 +55,6 @@ public class GameController implements Serializable {
             R.drawable.field_lindwurm,
             R.drawable.field_hotelsandwirth,
             R.drawable.field_horserace,
-            R.drawable.field_klage,
             R.drawable.field_minimundus,
             R.drawable.field_getsomemoney,
             R.drawable.field_aktie3,
@@ -72,6 +77,7 @@ public class GameController implements Serializable {
             R.drawable.field_getsomemoney,
             R.drawable.field_aktie3,
     };
+
 
     private Client client;
     private MessageReceiver receiver;
@@ -134,8 +140,9 @@ public class GameController implements Serializable {
         }
     }
 
-    private void showHotelUpdate(int player, Hotel hotel) {
-        if(isMyTurn()) {
+    void showHotelUpdate(int player, int h) {
+        Hotel hotel = hotels[h];
+        if (isMyTurn()) {
             mapView.showMyHotelkauf(hotel);
         } else {
             mapView.showSomeonesHotelkauf(player, hotel);
@@ -153,13 +160,17 @@ public class GameController implements Serializable {
 
     void updateMoney(int playerIdx, int balance) {
         int bal = currentPlayer().getMoney();
-        client.setMoneyOnServer(playerIdx,bal+balance);
+        client.setMoneyOnServer(playerIdx, bal + balance);
         client.endTurn();
     }
+    void updateMoneyHotelOwner(int playerIdx, int balance) {
+        int bal = currentPlayer().getMoney();
+        client.setMoneyOnServer(playerIdx, bal + balance);
+    }
 
-   void setMyPlayerID(int player) {
+    public void setMyPlayerID(int player) {
         this.myID = player;
-        this.players.get(myID).initMyMoneyField(ContextCompat.getColor(mapView,R.color.moneyBGMine));
+        this.players.get(myID).initMyMoneyField(ContextCompat.getColor(mapView, R.color.moneyBGMine));
     }
 
     public void setMoney(int player, int money) {
@@ -179,9 +190,10 @@ public class GameController implements Serializable {
         showAktienUpdate(player, Aktien.HYPO);
 
     }
+
     void setHypoAktie(int player, int count) {
-        client.setHypoAktieOnServer(player,count);
-        updateMoney(player,-100000);
+        client.setHypoAktieOnServer(player, count);
+        updateMoney(player, -100000);
         client.endTurn();
     }
 
@@ -189,9 +201,10 @@ public class GameController implements Serializable {
         this.players.get(player).setAktie(Aktien.STRABAG, count);
         showAktienUpdate(player, Aktien.STRABAG);
     }
+
     void setStrabagAktie(int player, int count) {
-        client.setStrabagAktieOnServer(player,count);
-        updateMoney(player,-100000);
+        client.setStrabagAktieOnServer(player, count);
+        updateMoney(player, -100000);
         client.endTurn();
     }
 
@@ -199,9 +212,10 @@ public class GameController implements Serializable {
         this.players.get(player).setAktie(Aktien.INFINEON, count);
         showAktienUpdate(player, Aktien.INFINEON);
     }
+
     void setInfineonAktie(int player, int count) {
-        client.setInfineonAktieOnServer(player,count);
-        updateMoney(player,-100000);
+        client.setInfineonAktieOnServer(player, count);
+        updateMoney(player, -100000);
         client.endTurn();
 
     }
@@ -226,24 +240,6 @@ public class GameController implements Serializable {
          }
          client.endTurn();
      }
-
-
-    void setPlattenwirtHotel(int player, int count) {
-        this.players.get(player).setHotel(Hotel.PLATTENWIRT, count);
-        showHotelUpdate(player, Hotel.PLATTENWIRT);
-        client.endTurn();
-    }
-    void setSandwirtHotel(int player, int count) {
-        this.players.get(player).setHotel(Hotel.SANDWIRTH, count);
-        showHotelUpdate(player, Hotel.SANDWIRTH);
-        client.endTurn();
-    }
-    void setSeeparkHotel(int player, int count) {
-        this.players.get(player).setHotel(Hotel.SEEPARK, count);
-        showHotelUpdate(player, Hotel.SEEPARK);
-        client.endTurn();
-    }
-
 
     void setLotto(int amount) {
         this.lotto = amount;
@@ -323,7 +319,7 @@ public class GameController implements Serializable {
 
     void sendMoveOverLotto() {
         this.setMoney(hasTurn, this.currentPlayer().getMoney() - 5000);
-        this.client.setMoneyOnServer(this.myID,this.currentPlayer().getMoney() - 5000);
+        this.client.setMoneyOnServer(this.myID, this.currentPlayer().getMoney() - 5000);
         this.client.setLottoOnServer(this.lotto + 5000);
     }
 
@@ -347,6 +343,20 @@ public class GameController implements Serializable {
         this.client.sendBlame(cheater);
     }
 
+    public Hotel[] getHotels() {
+        return hotels;
+    }
+
+    public void sendHotel(int hotel, int player, int price){
+        this.client.setHotelOnServer(hotel,player, price);
+        updateMoney(player, -price);
+        client.endTurn();
+    }
+
+    public void setHotelfromMessage(int player, int hotelIdx) {
+        this.hotels[hotelIdx].setOwner(players.get(player));
+        showHotelUpdate(player, hotelIdx);
+    }
     void lotteryAction() {
 
         int lotto = this.getLotto();

@@ -29,6 +29,8 @@ import com.example.mankomania.R;
 import com.example.mankomania.dice.Dice;
 import com.example.mankomania.endscreens.SomeoneWin;
 import com.example.mankomania.endscreens.YouWin;
+import com.example.mankomania.map.hotels.BuyHotelDialog;
+import com.example.mankomania.map.hotels.Hotel;
 import com.example.mankomania.slotmachine.CasinoStartScreen;
 
 import java.util.Arrays;
@@ -40,8 +42,7 @@ import static com.example.mankomania.map.Hotel.PLATTENWIRT;
 import static com.example.mankomania.map.Hotel.SANDWIRTH;
 import static com.example.mankomania.map.Hotel.SEEPARK;
 
-
-public class MapView extends AppCompatActivity {
+public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeDialogListener {
 
     private ImageView imgview1;
     private ImageView imgview2;
@@ -175,6 +176,7 @@ public class MapView extends AppCompatActivity {
         animation.start();
     }
 
+
     public void movePlayerOverScreen(final Player player, final boolean movingOverLottery) {
         float distance;
         distance = screenWidth - field0;
@@ -239,6 +241,7 @@ public class MapView extends AppCompatActivity {
 
     }
 
+
     public void step1() {
         Player cPlayer = gameController.currentPlayer();
         cPlayer.setTemporaryField(cPlayer.getCurrentField());
@@ -293,13 +296,14 @@ public class MapView extends AppCompatActivity {
 
     public void blame(View view) {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
+
         CharSequence items[] = new CharSequence[gameController.getPlayerCount()-1];
         int index = 0;
         final int[] players = new int[gameController.getPlayerCount()-1];
         for (int i = 0; i < gameController.getPlayerCount(); i++) {
             if(i!=gameController.getMyID()){
                 players[index] = i;
-                items[index++] = "Spieler "+(i+1);
+                items[index++] = "Spieler " + (i + 1);
             }
         }
         adb.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
@@ -358,7 +362,7 @@ public class MapView extends AppCompatActivity {
                     showMoneyUpdate(10000);
                     break;
                 case R.drawable.field_lindwurm:
-                    showMoneyUpdate(-1000000);
+                    showMoneyUpdate(-100000);
                     break;
                 case R.drawable.field_stadium:
                     showMoneyUpdate(-5000);
@@ -393,16 +397,17 @@ public class MapView extends AppCompatActivity {
                     break;
                 case R.drawable.field_horserace:
                     // TODO - change method signature if needed and then do your stuff
-                    startHorseRace();
+                    // startHorseRace();
+                    gameController.justEndTurn();
                     break;
                 case R.drawable.field_hotelsandwirth:
-                    buyHotel(SANDWIRTH);
+                    buyHotel(gameController.getHotels()[0]);
                     break;
                 case R.drawable.field_plattenwirt:
-                    buyHotel(PLATTENWIRT);
+                    buyHotel(gameController.getHotels()[1]);
                     break;
                 case R.drawable.field_seeparkhotel:
-                    buyHotel(SEEPARK);
+                    buyHotel(gameController.getHotels()[2]);
                     break;
                 case R.drawable.field_lottery:
                     onLotteryAction();
@@ -435,6 +440,15 @@ public class MapView extends AppCompatActivity {
         if (playerIdx >= 0) {
             gameController.updateMoney(playerIdx, amount);
 
+        }
+        return amount;
+    }
+
+    public int showHotelOwnerMoneyUpdate(int amount, Player player) {
+        int playerIdx = gameController.getPlayerIndex(player);
+        if (playerIdx >= 0) {
+            //  gameController.setMoney(playerIdx, cPlayer.getMoney() + amount);
+            gameController.updateMoneyHotelOwner(playerIdx, amount);
         }
         return amount;
     }
@@ -476,11 +490,11 @@ public class MapView extends AppCompatActivity {
     }
 
     public void showMyHotelkauf(Hotel hotel) {
-        Toast.makeText(this, String.format(getString(R.string.change_hotel), hotel), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Du erhälst das Hotel  " + hotel.getHotelName(), Toast.LENGTH_LONG).show();
     }
 
     public void showSomeonesHotelkauf(int player, Hotel hotel) {
-        Toast.makeText(this, String.format(getString(R.string.change_hotel_buy), player + 1, hotel), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Spieler  " + (player + 1) + "erhält das Hotel " + hotel.getHotelName(), Toast.LENGTH_LONG).show();
     }
 
     public void showSomeonesDiceResult(int player, int outcome) {
@@ -507,10 +521,10 @@ public class MapView extends AppCompatActivity {
     public void startMyTurn() {
         findViewById(R.id.wuerfeln).setVisibility(View.VISIBLE);
         Player myPlayer = gameController.getPlayers().get(gameController.getMyID());
-        if(!myPlayer.isDidBlame()){
+        if (!myPlayer.isDidBlame()) {
             findViewById(R.id.blame_button).setVisibility(View.VISIBLE);
         }
-        if(!myPlayer.isDidCheat()){
+        if (!myPlayer.isDidCheat()) {
             findViewById(R.id.cheat_button).setVisibility(View.VISIBLE);
         }
     }
@@ -529,10 +543,6 @@ public class MapView extends AppCompatActivity {
         Player cPlayer = gameController.currentPlayer();
         showAktieUpdate(cPlayer, aktie);
 
-    }
-    private void setHotel(Hotel hotel) {
-        Player cPlayer = gameController.currentPlayer();
-        showHotelUpdate(cPlayer, hotel);
     }
 
     private void showAktieUpdate(Player cPlayer, Aktien aktien) {
@@ -553,22 +563,11 @@ public class MapView extends AppCompatActivity {
             }
         }
     }
+
     private void showHotelUpdate(Player cPlayer, Hotel hotel) {
         int playerIdx = gameController.getPlayerIndex(cPlayer);
         if (playerIdx >= 0) {
-            switch (hotel) {
-                case SANDWIRTH:
-                    gameController.setSandwirtHotel(playerIdx, cPlayer.getHotel()[0] + 1);
-                    break;
-                case PLATTENWIRT:
-                    gameController.setPlattenwirtHotel(playerIdx, cPlayer.getHotel()[1] + 1);
-                    break;
-                case SEEPARK:
-                    gameController.setSeeparkHotel(playerIdx, cPlayer.getHotel()[2] + 1);
-                    break;
-                default:
-                    throw new IllegalStateException("Hotel does not exist");
-            }
+
         }
     }
 
@@ -596,45 +595,82 @@ public class MapView extends AppCompatActivity {
 
     }
 
+    public void buyHotel(Hotel hotel) {
+        Player cPlayer = gameController.currentPlayer();
+        if (!hotel.isSold()) {
+            buyHotel(hotel, cPlayer);
+        } else {
+            if (!hotel.getOwner().equals(cPlayer)) {
+                Toast.makeText(this, "Du musst 1000€ miete zahlen!", Toast.LENGTH_LONG).show();
+                showHotelOwnerMoneyUpdate(1000, hotel.getOwner());
+                showMoneyUpdate(-1000);
+            } else {
+                gameController.justEndTurn();
+            }
+        }
+    }
 
-    public void buyHotel(final Hotel hotel) {
-        AlertDialog.Builder a_builder = new AlertDialog.Builder(MapView.this);
-
-        a_builder.setMessage(String.format(getString(R.string.want_hotel), hotel))
-                .setCancelable(false)
-                .setPositiveButton(getString(R.string.yes_excl), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        setHotel(hotel);
-                        showMoneyUpdate(-150000);
-                    }
-                })
-                .setNegativeButton(getString(R.string.no_excl), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        gameController.justEndTurn();
-                    }
-                });
-
-        AlertDialog alert = a_builder.create();
-        alert.show(); }
+    public void buyHotel(Hotel hotel, Player cPlayer) {
+        Bundle args = new Bundle();
+        args.putSerializable("PLAYERS", gameController);
+        args.putSerializable("HOTEL", hotel);
+        args.putSerializable("CPLAYER", cPlayer);
+        DialogFragment buyHotelFragment = new BuyHotelDialog();
+        buyHotelFragment.setArguments(args);
+        buyHotelFragment.show(getSupportFragmentManager(), "buy_za_HOTEEEL_FML");
+    }
 
     public void showBlameResult(boolean result, int blamer, int blamed) {
-        Toast.makeText(this, String.format(getString(R.string.blame), blamer + 1, blamed + 1, result ? "Erfolgreich!!" : "Umsonst..."),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Spieler " + (blamer + 1) + " hat Spieler " + (blamed + 1) + " beschuldigt. " + (result ? "Erfolgreich!!" : "Umsonst..."), Toast.LENGTH_LONG).show();
     }
 
     public void hideCheatButton() {
         findViewById(R.id.cheat_button).setVisibility(View.INVISIBLE);
     }
+
     public void hideBlameButton() {
         findViewById(R.id.blame_button).setVisibility(View.INVISIBLE);
     }
 
     public void showCheatSuccess(int successor) {
-        this.moneyFields[successor].setBackgroundTintList(ContextCompat.getColorStateList(this,successor==gameController.getMyID()?R.color.moneyBGMine:R.color.moneyBGOther));
+        this.moneyFields[successor].setBackgroundTintList(ContextCompat.getColorStateList(this, successor == gameController.getMyID() ? R.color.moneyBGMine : R.color.moneyBGOther));
         this.moneyFields[successor].setBackground(getDrawable(R.drawable.cheatsuccessbg));
         Toast.makeText(this, String.format(getString(R.string.cheated_successfully), successor + 1), Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        if (dialog instanceof BuyHotelDialog) {
+            BuyHotelDialog bhDialog = (BuyHotelDialog) dialog;
+            Toast.makeText(this, "Wuhuuu, du hast das Hotel " + bhDialog.getHotel().getHotelName() + " erfolgreich gekauft!", Toast.LENGTH_LONG).show();
+            bhDialog.getHotel().setOwner(bhDialog.getcPlayer());
+            switch (bhDialog.getHotel().getHotelName()) {
+                case "SANDWIRTH":
+                    gameController.sendHotel(0, gameController.getPlayerIndex(bhDialog.getcPlayer()), 150000);
+                    return;
+                case "PLATTENWIRT":
+                    gameController.sendHotel(1, gameController.getPlayerIndex(bhDialog.getcPlayer()), 150000);
+                    return;
+                case "SEEPARKHOTEL":
+                    gameController.sendHotel(2, gameController.getPlayerIndex(bhDialog.getcPlayer()), 150000);
+                    return;
+                default:
+                    gameController.justEndTurn();
+                    return;
+            }
+        }
+        gameController.justEndTurn();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        if (dialog instanceof BuyHotelDialog) {
+            BuyHotelDialog bhDialog = (BuyHotelDialog) dialog;
+            Toast.makeText(this, "Meeeeeeh, du hast das Hotel " + bhDialog.getHotel().getHotelName() + " nicht gekauft!", Toast.LENGTH_LONG).show();
+            gameController.justEndTurn();
+            return;
+        }
+        gameController.justEndTurn();
     }
     public void showMyWin(){
         Intent it = new Intent(this, YouWin.class);
