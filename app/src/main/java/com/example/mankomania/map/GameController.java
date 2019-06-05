@@ -15,13 +15,27 @@ import java.util.Random;
 public class GameController implements Serializable {
 
     private final MapView mapView;
-    public List<Player> players;
     Random randstock = new Random();
     private Hotel[] hotels = new Hotel[]{
             new Hotel(R.drawable.field_hotelsandwirth, "SANDWIRTH"),
             new Hotel(R.drawable.field_plattenwirt, "PLATTENWIRT"),
             new Hotel(R.drawable.field_seeparkhotel, "SEEPARKHOTEL"),
     };
+    List<Player> getPlayers() {
+        return players;
+    }
+
+    int getPlayerCount(){
+        if(this.players!= null){
+            return this.players.size();
+        }else{
+            return 0;
+        }
+    }
+
+    private List<Player> players;
+    private Random randstock =new Random();
+
 
 
     public static int[] allfields = {
@@ -40,9 +54,8 @@ public class GameController implements Serializable {
             R.drawable.field_casino,
             R.drawable.field_alterplatz,
             R.drawable.field_lindwurm,
-            R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth, R.drawable.field_hotelsandwirth,
-            R.drawable.field_horserace, R.drawable.field_seeparkhotel, R.drawable.field_seeparkhotel, R.drawable.field_seeparkhotel, R.drawable.field_seeparkhotel, R.drawable.field_seeparkhotel, R.drawable.field_seeparkhotel, R.drawable.field_seeparkhotel, R.drawable.field_seeparkhotel, R.drawable.field_seeparkhotel,
-            R.drawable.field_klage,
+            R.drawable.field_hotelsandwirth,
+            R.drawable.field_horserace,
             R.drawable.field_minimundus,
             R.drawable.field_getsomemoney,
             R.drawable.field_aktie3,
@@ -72,11 +85,11 @@ public class GameController implements Serializable {
 
 
     private int myID;
-    private int cheater;
+
     private int lotto;
     private int hasTurn;
 
-    public GameController(String ip, MapView mapView) {
+    GameController(String ip, MapView mapView) {
         this.mapView = mapView;
         players = new ArrayList<>();
 
@@ -100,7 +113,7 @@ public class GameController implements Serializable {
     }
 
 
-    public int getMyID() {
+    int getMyID() {
         return myID;
     }
 
@@ -120,7 +133,7 @@ public class GameController implements Serializable {
         }
     }
 
-    void showAktienUpdate(int player, Aktien aktien) {
+    private void showAktienUpdate(int player, Aktien aktien) {
         if (isMyTurn()) {
             mapView.showMyAktienkauf(aktien);
         } else {
@@ -207,37 +220,36 @@ public class GameController implements Serializable {
         client.endTurn();
 
     }
+     void stockexchange(){
+         int aktie = randstock.nextInt(2);//
+         int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
 
-    void stockexchange() {
-        int aktie = randstock.nextInt(2);//
-        int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
-
-        for (Player p : players) {
-            int aktien[] = p.getAktien();
-            if (riseordecrease == 0) {
-                if (aktien[aktie] > 0) {
-                    client.setMoneyOnServer(getPlayerIndex(p), p.getMoney() + 100000);
-                }
-            } else if (riseordecrease == 1) {
-                client.setMoneyOnServer(getPlayerIndex(p), p.getMoney() + 100000);
-            } else {
-                if (aktien[aktie] > 0) {
-                    client.setMoneyOnServer(getPlayerIndex(p), p.getMoney() - 100000);
-                }
-            }
-        }
-        client.endTurn();
-    }
-
-    void setCheater(int player) {
-        this.cheater = player;
-    }
+         for (Player p:players) {
+             int aktien[] = p.getAktien();
+             if (riseordecrease==0){
+                 if (aktien[aktie]>0){
+                     client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
+                 }
+             }else if (riseordecrease==1){
+                 client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
+             }
+             else {
+                 if (aktien[aktie]>0){
+                     client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()-100000);
+                 }
+             }
+         }
+         client.endTurn();
+     }
 
     void setLotto(int amount) {
         this.lotto = amount;
         mapView.setLotto(this.lotto);
     }
 
+    int getLotto() {
+        return lotto;
+    }
 
     void spinWheelUpdate(int player, int outcome) {
         //TODO: Implement Method
@@ -280,7 +292,7 @@ public class GameController implements Serializable {
      * @param p Player-Objekt
      * @return Index, wenn p in Liste gefunden, -1 sonst.
      */
-    public int getPlayerIndex(Player p) {
+    int getPlayerIndex(Player p) {
         for (int i = 0; i < players.size(); i++) {
             if (p.equals(players.get(i)))
                 return i;
@@ -288,11 +300,11 @@ public class GameController implements Serializable {
         return -1;
     }
 
-    public void setPlayerIP(int player, String ip) {
+    void setPlayerIP(int player, String ip) {
         this.players.get(player).setIP(ip);
     }
 
-    public void startHorseRace() {
+    void startHorseRace() {
         // TODO - horse race
         client.endTurn();
     }
@@ -301,7 +313,6 @@ public class GameController implements Serializable {
         // TODO - add share
         client.endTurn();
     }
-
 
     void justEndTurn() {
         client.endTurn();
@@ -346,5 +357,19 @@ public class GameController implements Serializable {
     public void setHotelfromMessage(int player, int hotelIdx) {
         this.hotels[hotelIdx].setOwner(players.get(player));
         showHotelUpdate(player, hotelIdx);
+    }
+    void lotteryAction() {
+
+        int lotto = this.getLotto();
+        if(lotto==0){
+            client.setLottoOnServer(lotto+50000);
+            client.setMoneyOnServer(this.myID, this.players.get(this.myID).getMoney()-50000);
+            mapView.showLottoLoose();
+        }else{
+            client.setLottoOnServer(0);
+            client.setMoneyOnServer(this.myID, this.players.get(this.myID).getMoney()+lotto);
+            mapView.showLottoWin();
+        }
+        client.endTurn();
     }
 }

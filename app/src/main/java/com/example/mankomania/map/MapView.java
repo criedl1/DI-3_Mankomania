@@ -291,11 +291,12 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
 
     public void blame(View view) {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        CharSequence items[] = new CharSequence[gameController.players.size() - 1];
+
+        CharSequence items[] = new CharSequence[gameController.getPlayerCount()-1];
         int index = 0;
-        final int[] players = new int[gameController.players.size() - 1];
-        for (int i = 0; i < gameController.players.size(); i++) {
-            if (i != gameController.getMyID()) {
+        final int[] players = new int[gameController.getPlayerCount()-1];
+        for (int i = 0; i < gameController.getPlayerCount(); i++) {
+            if(i!=gameController.getMyID()){
                 players[index] = i;
                 items[index++] = "Spieler " + (i + 1);
             }
@@ -332,7 +333,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
     }
 
     public void updatePlayers() {
-        for (Player player : gameController.players) {
+        for (Player player : gameController.getPlayers()) {
             if (player.getCurrentField() == currentField) {
                 player.getFigure().setX(field1);
                 player.getFigure().setVisibility(View.VISIBLE);
@@ -403,6 +404,8 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                 case R.drawable.field_seeparkhotel:
                     buyHotel(gameController.getHotels()[2]);
                     break;
+                case R.drawable.field_lottery:
+                    onLotteryAction();
                 default:
                     return;
             }
@@ -410,6 +413,17 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
 
     }
 
+    private void onLotteryAction() {
+     gameController.lotteryAction();
+    }
+
+    public void showLottoLoose(){
+        Toast.makeText(this,getString(R.string.lottery_lost), Toast.LENGTH_LONG).show();
+    }
+
+    public void showLottoWin(){
+        Toast.makeText(this, String.format(getString(R.string.lottery_won), gameController.getLotto()),Toast.LENGTH_LONG).show();
+    }
 
     private void startHorseRace() {
         gameController.startHorseRace();
@@ -419,7 +433,6 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         Player cPlayer = gameController.currentPlayer();
         int playerIdx = gameController.getPlayerIndex(cPlayer);
         if (playerIdx >= 0) {
-            //  gameController.setMoney(playerIdx, cPlayer.getMoney() + amount);
             gameController.updateMoney(playerIdx, amount);
 
         }
@@ -464,11 +477,11 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
     }
 
     public void showMyAccountBalance(int outcome) {
-        Toast.makeText(this, "Dein Kontostand ändert sich auf " + outcome, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, String.format(getString(R.string.change_money), outcome), Toast.LENGTH_LONG).show();
     }
 
     public void showMyAktienkauf(Aktien aktien) {
-        Toast.makeText(this, "Du erhälst Aktie  " + aktien, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, String.format(getString(R.string.stock_change), aktien), Toast.LENGTH_LONG).show();
     }
 
     public void showMyHotelkauf(Hotel hotel) {
@@ -480,21 +493,21 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
     }
 
     public void showSomeonesDiceResult(int player, int outcome) {
-        Toast.makeText(this, "Player " + (player + 1) + " diced " + outcome, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, String.format(getString(R.string.dice_change), player + 1, outcome), Toast.LENGTH_LONG).show();
     }
 
     public void showSomeonesAccountBalance(int player, int outcome) {
-        // Toast.makeText(this, "Der Kontostand von Player " + (player + 1) + " ändert sich auf " + outcome, Toast.LENGTH_LONG).show();
+        // maybe show Toast or Highlight the Money-Field ?
     }
 
     public void showSomeonesAktienkauf(int player, Aktien aktien) {
-        Toast.makeText(this, "Spieler" + (+player + 1) + " erhält Aktie  " + aktien, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, String.format(getString(R.string.change_stock_buy), +player + 1, aktien), Toast.LENGTH_LONG).show();
     }
 
 
     public void initPlayerFields() {
-        for (int i = 0; i < this.gameController.players.size(); i++) {
-            gameController.players.get(i).initFields(figures[i], moneyFields[i]);
+        for (int i = 0; i < this.gameController.getPlayerCount(); i++) {
+            gameController.getPlayers().get(i).initFields(figures[i], moneyFields[i]);
         }
         updatePlayers();
         closeWaitFragment();
@@ -518,7 +531,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
     }
 
     public void setLotto(int lotto) {
-        Toast.makeText(this, "Lotto ändert sich auf " + lotto, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, String.format(getString(R.string.lotto_change), lotto), Toast.LENGTH_LONG).show();
     }
 
     private void setAktie(Aktien aktie) {
@@ -556,15 +569,15 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
     public void buyAktie(final Aktien aktie) {
         AlertDialog.Builder a_builder = new AlertDialog.Builder(MapView.this);
 
-        a_builder.setMessage("Wollen sie eine Aktie der Firma " + aktie + " kaufen?")
+        a_builder.setMessage(String.format(getString(R.string.want_stock), aktie))
                 .setCancelable(false)
-                .setPositiveButton("JA!", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.yes_excl), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         setAktie(aktie);
                     }
                 })
-                .setNegativeButton("NEIN!", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.no_excl), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         gameController.justEndTurn();
@@ -617,8 +630,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
     public void showCheatSuccess(int successor) {
         this.moneyFields[successor].setBackgroundTintList(ContextCompat.getColorStateList(this, successor == gameController.getMyID() ? R.color.moneyBGMine : R.color.moneyBGOther));
         this.moneyFields[successor].setBackground(getDrawable(R.drawable.cheatsuccessbg));
-        Toast.makeText(this, "Spieler " + (successor + 1) + " hat geschummelt, ohne dass ihr es gemerkt habt!!", Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(this, String.format(getString(R.string.cheated_successfully), successor + 1), Toast.LENGTH_SHORT).show();
     }
 
     @Override
