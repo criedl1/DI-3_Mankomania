@@ -168,7 +168,6 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                startCasino();
                 step2();
             }
         });
@@ -239,7 +238,6 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         transaction.commit();
 
     }
-
 
     public void step1() {
         Player cPlayer = gameController.currentPlayer();
@@ -621,6 +619,18 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
 
     public void showBlameResult(boolean result, int blamer, int blamed) {
         Toast.makeText(this, "Spieler " + (blamer + 1) + " hat Spieler " + (blamed + 1) + " beschuldigt. " + (result ? "Erfolgreich!!" : "Umsonst..."), Toast.LENGTH_LONG).show();
+    }
+
+    public void showCasinoResult(int player, int outcome){
+        String won;
+        if(outcome > 0){
+            won = "gewonnen.";
+        }
+        else{
+            won = "verloren.";
+        }
+
+        Toast.makeText(this, "Spieler " + player + "hat " + outcome + "im Casino" + won, Toast.LENGTH_LONG).show();
     }
 
     public void hideCheatButton() {

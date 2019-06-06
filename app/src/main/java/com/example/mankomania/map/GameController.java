@@ -2,7 +2,9 @@ package com.example.mankomania.map;
 
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.mankomania.MainActivity;
 import com.example.mankomania.R;
 import com.example.mankomania.map.hotels.Hotel;
 import com.example.mankomania.network.client.Client;
@@ -250,9 +252,9 @@ public class GameController implements Serializable {
         return lotto;
     }
 
+
     void casinoUpdate(int player, int outcome) {
-        //TODO: Implement Method
-        //Toast der Ergebnis an alle Player schickt
+        this.mapView.showCasinoResult(player, outcome);
     }
 
     void setTurn(int player) {
@@ -281,7 +283,6 @@ public class GameController implements Serializable {
 
     void setRouletteResult(int moneyChange) {
         client.setMoneyOnServer(this.myID, this.currentPlayer().getMoney() + moneyChange);
-        // TODO: end Turn with a Button ?
         client.endTurn();
     }
 

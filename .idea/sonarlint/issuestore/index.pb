@@ -8,8 +8,6 @@ j
 p
 @app/src/main/java/com/example/mankomania/roulette/ColorEnum.java,b/f/bf2d2d3e084fd09831616d804d8711bfdcd16c90
 q
-Aapp/src/main/java/com/example/mankomania/roulette/ErrorPopUp.java,4/0/40cdc5c522689abf603e9f0f8651550c5ef5ec04
-q
 Aapp/src/main/java/com/example/mankomania/roulette/FieldClass.java,e/c/ec38115bd008a35c852dec8465deba341bca2908
 {
 Kapp/src/main/java/com/example/mankomania/roulette/MainActivityRoulette.java,2/2/22827564c8cf8a96329d7e082ef1c95a0e6e873d
@@ -20,15 +18,11 @@ Gapp/src/main/java/com/example/mankomania/roulette/QuestionActivity.java,6/c/6c
 u
 Eapp/src/main/java/com/example/mankomania/roulette/RotateActivity.java,a/c/ac1dd255e09ace13570905c865f2a28a3cbc893a
 t
-Dapp/src/main/java/com/example/mankomania/roulette/RouletteClass.java,1/9/19c7fd7cb1519bc52a2c58730576715ff17f4424
-t
 Dapp/src/main/java/com/example/mankomania/roulette/RouletteLogic.java,b/d/bddb4cb25bb3d4d18adfaf41e4091b5a1f4b433a
 u
 Eapp/src/main/java/com/example/mankomania/roulette/SendMoneyClass.java,6/b/6ba3cccebf5e038df16d7de786198f5960c61044
 {
 Kapp/src/main/java/com/example/mankomania/slotmachine/CasinoStartScreen.java,3/8/38ddcea0f15b0072291f349bfa45362f7c1a26bb
-r
-Bapp/src/main/java/com/example/mankomania/slotmachine/PopClass.java,f/5/f510335588001f5ee8f6a301abe4266c6bb1d9c2
 }
 Mapp/src/main/java/com/example/mankomania/slotmachine/SlotMachineActivity.java,3/5/3591f7c2758759ee0afb1ac56139906669e97f21
 z
