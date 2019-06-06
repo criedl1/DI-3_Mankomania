@@ -43,3 +43,11 @@ p
 @app/src/main/java/com/example/mankomania/map/GameController.java,d/a/da4e0bb4ca3308520debf321a69ccbfa967ae9af
 j
 :app/src/main/java/com/example/mankomania/MainActivity.java,e/5/e55a623ea7bb00af12c62d061f023d9f799307c3
+g
+7app/src/main/java/com/example/mankomania/dice/Dice.java,c/f/cf28aaae112791ca3d3be3d16935e1f41cc9ae11
+q
+Aapp/src/main/java/com/example/mankomania/dice/ResultSplitter.java,2/3/23a09588ea7ed8268d7c2412c915387522056274
+h
+8app/src/main/java/com/example/mankomania/map/Player.java,9/2/92096d1fb0ccf836f52c0f2ad6939e6da8466dd3
+q
+Aapp/src/main/java/com/example/mankomania/map/MessageReceiver.java,6/e/6e976535c601479e8c61d6cc07f01f0e3bcdc380

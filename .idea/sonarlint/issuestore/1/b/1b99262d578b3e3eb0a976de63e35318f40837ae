@@ -1,12 +1,15 @@
 
-hsquid:S1192«"IDefine a constant instead of duplicating this literal "Spieler " 3 times.(£¡ìá8îøÁí±-
-Osquid:S1135ˆ"2Complete the task associated to this TODO comment.(§éĞ¯úÿÿÿÿ
-ssquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(´Ú§Æ
-jsquid:S00117¢"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©’æ¨
-Osquid:S1135"2Complete the task associated to this TODO comment.(§éĞ¯úÿÿÿÿ
-csquid:CommentedOutCodeLineº"<This block of commented-out lines of code should be removed.(¿º­Ÿ
-isquid:CommentedOutCodeLineã"<This block of commented-out lines of code should be removed.(¤ÿ’$8îøÁí±-
-Osquid:S1135’"2Complete the task associated to this TODO comment.(§éĞ¯úÿÿÿÿ
-Qsquid:S1135…"2Complete the task associated to this TODO comment.(ÉôÏŸ8îøÁí±-
-Wsquid:S1197¥"8Move the array designator from the variable to the type.(ÆöÛ…8îøÁí±-
-Osquid:S1135—"2Complete the task associated to this TODO comment.(§éĞ¯úÿÿÿÿ
+hsquid:S1192¯"IDefine a constant instead of duplicating this literal "Spieler " 3 times.(£¡ìá8îøÁí±-
+Osquid:S1135Œ"2Complete the task associated to this TODO comment.(§éĞ¯úÿÿÿÿ
+ssquid:S00115¡"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(´Ú§Æ
+jsquid:S00117¼"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©’æ¨
+Qsquid:S1135‰"2Complete the task associated to this TODO comment.(ÉôÏŸ8îøÁí±-
+`squid:UnusedPrivateMethod®"3Remove this unused private "startHorseRace" method.(åŸ€ø8ıÉÎâ²-
+fsquid:UnusedPrivateMethod´"4Remove this unused private "showHotelUpdate" method.(İèğ‚øÿÿÿÿ8ıÉÎâ²-
+\squid:S1197©"8Move the array designator from the variable to the type.(Ó—û‰øÿÿÿÿ8ıÉÎâ²-
+j
+squid:S128™"LEnd this switch case with an unconditional break, return or throw statement.(¤¡Ü´8ıÉÎâ²-
+jsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ñ¬Ø8ıÉÎâ²-
+osquid:CommentedOutCodeLine¿"<This block of commented-out lines of code should be removed.(÷‚Šçúÿÿÿÿ8ıÉÎâ²-
+Psquid:S1172´",Remove this unused method parameter "hotel".(İèğ‚øÿÿÿÿ8ıÉÎâ²-
+Nsquid:S00108¶")Either remove or fill this block of code.(¬‡íèıÿÿÿÿ8ıÉÎâ²-

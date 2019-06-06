@@ -41,7 +41,7 @@ public class RouletteTest {
             assertEquals(145000, numberRoulette.getWonMoney() );
         }
         else{
-            assertEquals(-50000, numberRoulette.getWonMoney());
+            assertEquals(-5000, numberRoulette.getWonMoney());
         }
     }
 
@@ -63,7 +63,7 @@ public class RouletteTest {
         } else {
             roulette.checkNumber(4);
         }
-        assertEquals(-50000, roulette.getWonMoney());
+        assertEquals(-5000, roulette.getWonMoney());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class RouletteTest {
             assertEquals(30000, colorRoulette.getWonMoney());
         }
         else{
-            assertEquals(-5000, colorRoulette.getWonMoney());
+            assertEquals(-50000, colorRoulette.getWonMoney());
         }
     }
 
@@ -95,7 +95,7 @@ public class RouletteTest {
         else{
             roulette.checkColor(ColorEnum.BLACK);
         }
-        assertEquals(-5000, roulette.getWonMoney());
+        assertEquals(-50000, roulette.getWonMoney());
     }
 
     @Test
