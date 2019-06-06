@@ -31,16 +31,16 @@ public class SlotMachineTest {
     public void testThreeEqualSymbols(){
         sml = new SlotMachineLogic(1, 1, 1, sma);
         sml.checkWin();
-        assertEquals(120000, sml.getMoney());
-        assertEquals(120000, sma.getMoney());
+        assertEquals(130000, sml.getMoney());
+        assertEquals(130000, sma.getMoney());
     }
 
     @Test
     public void testTwoEqualSymbols(){
         sml = new SlotMachineLogic(2, 0, 2, sma);
         sml.checkWin();
-        assertEquals(50000, sml.getMoney());
-        assertEquals(50000, sma.getMoney());
+        assertEquals(30000, sml.getMoney());
+        assertEquals(30000, sma.getMoney());
     }
 
     @Test
