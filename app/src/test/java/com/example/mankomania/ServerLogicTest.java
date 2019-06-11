@@ -44,4 +44,52 @@ public class ServerLogicTest {
         serverLogic.throwDice(0);
         Assert.assertTrue(serverLogic.endTurn(0));
     }
+    @Test
+    public void standardTest1() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        serverLogic.changeValue(0);
+        Assert.assertTrue(serverLogic.endTurn(0));
+    }
+    @Test
+    public void standardTest2() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        serverLogic.doAction(0);
+        Assert.assertTrue(serverLogic.endTurn(0));
+    }
+    @Test
+    public void standardTest3() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        serverLogic.changeValue(0);
+        serverLogic.doAction(0);
+        Assert.assertTrue(serverLogic.endTurn(0));
+    }
+    @Test
+    public void standardTest4() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        serverLogic.doAction(0);
+        serverLogic.changeValue(0);
+        Assert.assertTrue(serverLogic.endTurn(0));
+    }
+
+    //Single Tests
+    @Test
+    public void singleThrowDice() {
+        Assert.assertFalse(serverLogic.throwDice(0));
+    }
+    @Test
+    public void singleDoAction() {
+        Assert.assertFalse(serverLogic.doAction(0));
+    }
+    @Test
+    public void singleChangeValue() {
+        Assert.assertFalse(serverLogic.changeValue(0));
+    }
+    @Test
+    public void singleEndTurn() {
+        Assert.assertFalse(serverLogic.endTurn(0));
+    }
 }
