@@ -147,7 +147,6 @@ public class ServerQueueHandler extends QueueHandler {
 
     private void spinWheelForClients(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-
         sendSpinResult(player, SendMoneyClass.getMoneyAmount());
     }
 

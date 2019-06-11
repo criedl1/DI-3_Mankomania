@@ -356,65 +356,61 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                     startCasino();
                     break;
                 case R.drawable.field_getsomemoney:
-                    showMoneyUpdate(10000);
+                    startCasino();
                     break;
                 case R.drawable.field_lindwurm:
-                    showMoneyUpdate(-100000);
+                    startCasino();
                     break;
                 case R.drawable.field_stadium:
-                    showMoneyUpdate(-5000);
+                    startCasino();
                     break;
                 case R.drawable.field_zoo:
-                    showMoneyUpdate(-50000);
+                    startCasino();
                     break;
                 case R.drawable.field_alterplatz:
-                    showMoneyUpdate(10000);
+                    startCasino();
                     break;
                 case R.drawable.field_klage:
-                    showMoneyUpdate(25000);
+                    startCasino();
                     break;
                 case R.drawable.field_woerthersee:
-                    showMoneyUpdate(-10000);
+                    startCasino();
                     break;
                 case R.drawable.field_minimundus:
-                    showMoneyUpdate(-30000);
+                    startCasino();
                     break;
                 case R.drawable.field_aktie1:
-                    buyAktie(HYPO);
+                    startCasino();
                     break;
                 case R.drawable.field_aktie2:
-                    buyAktie(INFINEON);
+                    startCasino();
                     break;
                 case R.drawable.field_aktie3:
-                    buyAktie(STRABAG);
+                    startCasino();
                     break;
                 case R.drawable.field_aktienboerse:
-                    gameController.stockexchange();
-                    // TODO - startstockexchange
+                    startCasino();
                     break;
                 case R.drawable.field_horserace:
-                    // TODO - change method signature if needed and then do your stuff
-                    // startHorseRace();
-                    gameController.justEndTurn();
+                    startCasino();
                     break;
                 case R.drawable.field_hotelsandwirth:
-                    buyHotel(gameController.getHotels()[0]);
+                    startCasino();
                     break;
                 case R.drawable.field_plattenwirt:
-                    buyHotel(gameController.getHotels()[1]);
+                    startCasino();
                     break;
                 case R.drawable.field_seeparkhotel:
-                    buyHotel(gameController.getHotels()[2]);
+                    startCasino();
                     break;
                 case R.drawable.field_lottery:
-                    onLotteryAction();
+                    startCasino();
                 default:
                     return;
             }
         }
 
     }
-
     private void onLotteryAction() {
      gameController.lotteryAction();
     }
@@ -621,16 +617,17 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         Toast.makeText(this, "Spieler " + (blamer + 1) + " hat Spieler " + (blamed + 1) + " beschuldigt. " + (result ? "Erfolgreich!!" : "Umsonst..."), Toast.LENGTH_LONG).show();
     }
 
-    public void showCasinoResult(int player, int outcome){
-        String won;
-        if(outcome > 0){
+    //TODO: Finish this method
+    public void showCasinoResult(int result){
+       String won;
+        if(result > 0){
             won = "gewonnen.";
         }
         else{
             won = "verloren.";
         }
 
-        Toast.makeText(this, "Spieler " + player + "hat " + outcome + "im Casino" + won, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Im Casino wurden " + result + " " + won, Toast.LENGTH_LONG).show();
     }
 
     public void hideCheatButton() {

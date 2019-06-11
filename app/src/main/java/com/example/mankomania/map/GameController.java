@@ -253,8 +253,8 @@ public class GameController implements Serializable {
     }
 
 
-    void casinoUpdate(int player, int outcome) {
-        this.mapView.showCasinoResult(player, outcome);
+    void casinoUpdate(int result) {
+        this.mapView.showCasinoResult(result);
     }
 
     void setTurn(int player) {

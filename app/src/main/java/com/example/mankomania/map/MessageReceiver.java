@@ -46,7 +46,7 @@ class MessageReceiver {
                 rollDiceUpdate(jsonObject);
                 break;
             case NetworkConstants.SPIN_WHEEL:
-                spinWheelUpdate(jsonObject);
+               spinWheelUpdate(jsonObject);
                 break;
             case NetworkConstants.START_TURN:
                 startTurnUpdate(jsonObject);
@@ -106,8 +106,8 @@ class MessageReceiver {
     private void setRouletteResult(JsonObject jsonObject) {
         int moneyChange = jsonToInt(jsonObject, "result");
         gameController.setRouletteResult(moneyChange);
+        gameController.casinoUpdate(moneyChange);
     }
-
 
     private void initPlayerCount(JsonObject jsonObject) {
         int playerCount = jsonToInt(jsonObject, NetworkConstants.COUNT);
@@ -172,8 +172,6 @@ class MessageReceiver {
     private void spinWheelUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
-
-        gameController.casinoUpdate(player, outcome);
     }
 
     private void rollDiceUpdate(JsonObject jsonObject) {
