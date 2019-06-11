@@ -70,7 +70,7 @@ public class ServerQueueHandler extends QueueHandler {
             case NetworkConstants.ROLL_DICE:
                 rollDiceForClients(jsonObject);
                 break;
-            case NetworkConstants.SPIN_WHEEL:
+            case NetworkConstants.ROULETTE:
                 spinWheelForClients(jsonObject);
                 break;
             case NetworkConstants.END_TURN:
@@ -147,14 +147,14 @@ public class ServerQueueHandler extends QueueHandler {
 
     private void spinWheelForClients(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        sendSpinResult(player, SendMoneyClass.getMoneyAmount());
+        sendCasinoResult(player, SendMoneyClass.getMoneyAmount());
     }
 
-    private void sendSpinResult(int idx, int result) {
+    private void sendCasinoResult(int player, int result) {
         JsonObject json = new JsonObject();
-        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SPIN_WHEEL);
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.ROULETTE);
         json.addProperty(NetworkConstants.RESULT, result);
-        json.addProperty(NetworkConstants.PLAYER, idx);
+        json.addProperty(NetworkConstants.PLAYER, player);
         sendAllClients(json.toString());
     }
 

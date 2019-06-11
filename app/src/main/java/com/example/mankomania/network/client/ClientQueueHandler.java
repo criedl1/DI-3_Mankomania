@@ -95,12 +95,14 @@ public class ClientQueueHandler extends QueueHandler {
     private void startTurn(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
+
     private void spinWheel(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
     private void rollDice(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
+
     private void setHotel(JsonObject jsonObject) {
         int[] arr = gameData.getHotels();
         //Get Values

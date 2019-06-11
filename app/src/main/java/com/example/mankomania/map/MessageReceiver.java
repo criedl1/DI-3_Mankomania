@@ -2,7 +2,6 @@ package com.example.mankomania.map;
 
 import android.util.Log;
 
-import com.example.mankomania.map.hotels.Hotel;
 import com.example.mankomania.network.NetworkConstants;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -61,7 +60,8 @@ class MessageReceiver {
                 setPlayer(jsonObject);
                 break;
             case NetworkConstants.ROULETTE:
-                setRouletteResult(jsonObject);
+                setCasinoResult(jsonObject);
+                sendCasinoResult(jsonObject);
                 break;
             case NetworkConstants.MONEY_UPDATE:
                 showMoneyUpdate(jsonObject);
@@ -103,10 +103,15 @@ class MessageReceiver {
         gameController.setPlayerIP(player, ip);
     }
 
-    private void setRouletteResult(JsonObject jsonObject) {
+    private void setCasinoResult(JsonObject jsonObject) {
         int moneyChange = jsonToInt(jsonObject, "result");
         gameController.setRouletteResult(moneyChange);
-        gameController.casinoUpdate(moneyChange);
+    }
+
+    private void sendCasinoResult(JsonObject jsonObject)
+    {
+        int result = jsonToInt(jsonObject, "result");
+        gameController.casinoUpdate(result);
     }
 
     private void initPlayerCount(JsonObject jsonObject) {
