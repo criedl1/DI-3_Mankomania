@@ -188,4 +188,11 @@ public class ServerLogicTest {
         serverLogic.endTurn(0);
         Assert.assertFalse(serverLogic.changeValue(0));
     }
+
+    //Fail EndTurn Tests
+    @Test
+    public void failEndTurn1() {
+        serverLogic.startTurn(0);
+        Assert.assertFalse(serverLogic.endTurn(0));
+    }
 }
