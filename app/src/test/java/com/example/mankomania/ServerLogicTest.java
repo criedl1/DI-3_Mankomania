@@ -16,6 +16,25 @@ public class ServerLogicTest {
         serverLogic = new ServerLogic();
     }
 
+    //Single Tests
+    @Test
+    public void singleThrowDice() {
+        Assert.assertFalse(serverLogic.throwDice(0));
+    }
+    @Test
+    public void singleDoAction() {
+        Assert.assertFalse(serverLogic.doAction(0));
+    }
+    @Test
+    public void singleChangeValue() {
+        Assert.assertFalse(serverLogic.changeValue(0));
+    }
+    @Test
+    public void singleEndTurn() {
+        Assert.assertFalse(serverLogic.endTurn(0));
+    }
+
+
     //Base Tests
     @Test
     public void startTurn() {
@@ -75,21 +94,98 @@ public class ServerLogicTest {
         Assert.assertTrue(serverLogic.endTurn(0));
     }
 
-    //Single Tests
+    //Double Call Fail Tests
     @Test
-    public void singleThrowDice() {
+    public void startTurnDouble() {
+        serverLogic.startTurn(0);
+        Assert.assertFalse(serverLogic.startTurn(0));
+    }
+    @Test
+    public void throwDiceDouble() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
         Assert.assertFalse(serverLogic.throwDice(0));
     }
     @Test
-    public void singleDoAction() {
+    public void endTurnDouble() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        serverLogic.endTurn(0);
+        Assert.assertFalse(serverLogic.endTurn(0));
+    }
+
+    //Fail Throw Tests
+    @Test
+    public void failThrowDice1() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        Assert.assertFalse(serverLogic.throwDice(0));
+    }
+    @Test
+    public void failThrowDice2() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        serverLogic.doAction(0);
+        Assert.assertFalse(serverLogic.throwDice(0));
+    }
+    @Test
+    public void failThrowDice3() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        serverLogic.changeValue(0);
+        Assert.assertFalse(serverLogic.throwDice(0));
+    }
+    @Test
+    public void failThrowDice4() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        serverLogic.changeValue(0);
+        serverLogic.doAction(0);
+        Assert.assertFalse(serverLogic.throwDice(0));
+    }
+    @Test
+    public void failThrowDice5() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        serverLogic.doAction(0);
+        serverLogic.changeValue(0);
+        Assert.assertFalse(serverLogic.throwDice(0));
+    }
+    @Test
+    public void failThrowDice6() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        serverLogic.doAction(0);
+        serverLogic.changeValue(0);
+        serverLogic.endTurn(0);
+        Assert.assertFalse(serverLogic.throwDice(0));
+    }
+
+    //Fail DoAction Tests
+    @Test
+    public void failDoAction1() {
+        serverLogic.startTurn(0);
         Assert.assertFalse(serverLogic.doAction(0));
     }
     @Test
-    public void singleChangeValue() {
+    public void failDoAction2() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        serverLogic.endTurn(0);
+        Assert.assertFalse(serverLogic.doAction(0));
+    }
+
+    //Fail DoAction Tests
+    @Test
+    public void failChangeValue1() {
+        serverLogic.startTurn(0);
         Assert.assertFalse(serverLogic.changeValue(0));
     }
     @Test
-    public void singleEndTurn() {
-        Assert.assertFalse(serverLogic.endTurn(0));
+    public void failChangeValue2() {
+        serverLogic.startTurn(0);
+        serverLogic.throwDice(0);
+        serverLogic.endTurn(0);
+        Assert.assertFalse(serverLogic.changeValue(0));
     }
 }
