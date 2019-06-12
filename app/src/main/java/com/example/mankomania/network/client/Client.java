@@ -23,12 +23,18 @@ public class Client extends Thread {
     private static String ipHost;
     private PrintWriter output;
     private int idx;
-    public static MapView mapView;
 
-    public Client(){
+    public static MapView getMapView() {
+        return mapView;
     }
 
-    public void init(String ipHost, MapView mapView){
+    private static MapView mapView;
+
+    public Client(){
+        // just for sonarCloud
+    }
+
+    public static void init(String ipHost, MapView mapView){
         Client.ipHost = ipHost;
         Client.mapView = mapView;
     }

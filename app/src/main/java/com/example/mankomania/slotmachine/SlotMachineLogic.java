@@ -2,17 +2,17 @@ package com.example.mankomania.slotmachine;
 
 public class SlotMachineLogic {
 
-    private static final String you_have = "Du hast ";
-    private static final String won = " Gewonnen!";
-    private static final String lost = " Verloren";
-    private static final String bigWin = "Hauptgewinn! ";
-    private static final String threeSymbols = "Drei gleiche Symbole! ";
-    private static final String twoSymbols = "Zwei gleiche Symbole! ";
+    private static final String YOU_HAVE = "Du hast ";
+    private static final String WON = " Gewonnen!";
+    private static final String LOST = " Verloren";
+    private static final String BIGWIN = "Hauptgewinn! ";
+    private static final String THREESYMBOLS = "Drei gleiche Symbole! ";
+    private static final String TWOSYMBOLS = "Zwei gleiche Symbole! ";
 
-    int id1;
-    int id2;
-    int id3;
-    SlotMachineActivity sma;
+    private int id1;
+    private int id2;
+    private int id3;
+    private SlotMachineActivity sma;
 
     public SlotMachineLogic(int id1, int id2, int id3, SlotMachineActivity sma) {
         this.id1 = id1;
@@ -26,26 +26,26 @@ public class SlotMachineLogic {
             if (id1 == 3) { //When player has three dollar signs
                 setMoney(230000);
                 sma.setMoneyamout(getMoney());
-                setWinString(won);
-                setReturnString(bigWin + you_have + getMoney() + won);
+                setWinString(WON);
+                setReturnString(BIGWIN + YOU_HAVE + getMoney() + WON);
 
             } else {
                 setMoney(120000);
                 sma.setMoneyamout(getMoney());
-                setWinString(won);
-                setReturnString(threeSymbols + getMoney() + won);
+                setWinString(WON);
+                setReturnString(THREESYMBOLS + getMoney() + WON);
             }
         } else if (id1 == id2 || id2 == id3 || id1 == id3) {
             setMoney(50000);
             sma.setMoneyamout(getMoney());
-            setWinString(won);
-            setReturnString(twoSymbols + getMoney() + won);
+            setWinString(WON);
+            setReturnString(TWOSYMBOLS + getMoney() + WON);
         }
         else{
             setMoney(-20000);
             sma.setMoneyamout(getMoney());
-            setWinString(lost);
-            setReturnString(you_have+ getMoney()*-1 + lost);
+            setWinString(LOST);
+            setReturnString(YOU_HAVE + getMoney()*-1 + LOST);
         }
     }
 

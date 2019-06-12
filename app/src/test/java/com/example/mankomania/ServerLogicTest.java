@@ -1,9 +1,7 @@
 package com.example.mankomania;
 
-import com.example.mankomania.dice.ResultSplitter;
 import com.example.mankomania.network.logic.ServerLogic;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -12,7 +12,6 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -40,7 +39,7 @@ public class TestHotel {
 
     @Before
     public void setUp() {
-        this.hotel = new Hotel(-1, "SOME_HOTEL");
+        this.hotel = new Hotel("SOME_HOTEL");
     }
 
     @After

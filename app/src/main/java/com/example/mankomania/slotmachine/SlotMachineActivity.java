@@ -1,8 +1,8 @@
 package com.example.mankomania.slotmachine;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -96,7 +96,7 @@ public class SlotMachineActivity extends AppCompatActivity {
 
     private Runnable createRunnable() {
 
-        Runnable runnable = new Runnable() {
+        return new Runnable() {
             @Override
             public void run() {
                 getStopIds();
@@ -104,21 +104,19 @@ public class SlotMachineActivity extends AppCompatActivity {
                 sml.checkWin();
             }
         };
-        return runnable;
     }
 
     private Runnable waitForPopUp(){
-        Runnable runnable = new Runnable() {
+        return new Runnable() {
             @Override
             public void run() {
                 openPopUp();
             }
         };
-        return runnable;
     }
 
     private Runnable animationRunnable(final ImageView iv, final int i){
-        Runnable r = new Runnable() {
+        return new Runnable() {
 
 
             @Override
@@ -134,7 +132,7 @@ public class SlotMachineActivity extends AppCompatActivity {
                 startAnimation(slot3);
                 startAnimation(iv);
             }
-        }; return r;
+        };
     }
 
     private void openPopUp() {

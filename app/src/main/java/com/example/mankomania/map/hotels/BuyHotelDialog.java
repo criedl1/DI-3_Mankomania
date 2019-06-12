@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 
-import com.example.mankomania.R;
 import com.example.mankomania.map.GameController;
 import com.example.mankomania.map.Player;
 

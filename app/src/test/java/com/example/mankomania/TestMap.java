@@ -3,6 +3,7 @@ package com.example.mankomania;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.example.mankomania.map.Player;
 
 import org.junit.Test;
