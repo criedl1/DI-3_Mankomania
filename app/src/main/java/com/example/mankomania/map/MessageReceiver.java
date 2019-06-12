@@ -44,8 +44,8 @@ class MessageReceiver {
             case NetworkConstants.ROLL_DICE:
                 rollDiceUpdate(jsonObject);
                 break;
-            case NetworkConstants.SPIN_WHEEL:
-               spinWheelUpdate(jsonObject);
+            case NetworkConstants.SEND_CASINO:
+                sendCasinoResult(jsonObject);
                 break;
             case NetworkConstants.START_TURN:
                 startTurnUpdate(jsonObject);
@@ -61,7 +61,6 @@ class MessageReceiver {
                 break;
             case NetworkConstants.ROULETTE:
                 setCasinoResult(jsonObject);
-                sendCasinoResult(jsonObject);
                 break;
             case NetworkConstants.MONEY_UPDATE:
                 showMoneyUpdate(jsonObject);
@@ -174,7 +173,7 @@ class MessageReceiver {
     }
 
 
-    private void spinWheelUpdate(JsonObject jsonObject) {
+    private void sendCasino(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
     }

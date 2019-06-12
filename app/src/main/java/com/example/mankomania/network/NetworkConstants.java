@@ -21,7 +21,7 @@ public class NetworkConstants {
     public static final String SET_LOTTO = "setLotto";
     public static final String SET_HOTEL = "setHotel";
     public static final String ROLL_DICE = "rollDice";
-    public static final String SPIN_WHEEL = "spinWheel";
+    public static final String SEND_CASINO = "sendCasino";
     public static final String START_TURN = "StartTurn";
     public static final String END_TURN = "endTurn";
     public static final String MONEY_UPDATE = "updateMoney";

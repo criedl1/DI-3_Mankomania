@@ -67,7 +67,7 @@ public class ClientQueueHandler extends QueueHandler {
             case NetworkConstants.ROLL_DICE:
                 rollDice(jsonObject);
                 break;
-            case NetworkConstants.SPIN_WHEEL:
+            case NetworkConstants.SEND_CASINO:
                 spinWheel(jsonObject);
                 break;
             case NetworkConstants.START_TURN:
