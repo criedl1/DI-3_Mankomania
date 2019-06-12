@@ -65,4 +65,6 @@
     <string name="cheated_successfully">Spieler %d hat geschummelt, ohne dass ihr es gemerkt habt!!</string>
     <string name="want_hotel">Wollen sie das Hotel %s kaufen?</string>
     <string name="title_activity_you_win">YouWin</string>
+    <string name="player_own">Spieler %d hat gewonnen!</string>
+    <string name="pay_rent">Du musst 1000€ miete zahlen!</string>
 </resources>

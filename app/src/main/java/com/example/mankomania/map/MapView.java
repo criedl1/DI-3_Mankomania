@@ -154,12 +154,12 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         super.onDestroy();
     }
 
-    private static final String translationX = "translationX";
+    private static final String TRANSLATIONX = "translationX";
 
     public void movePlayerOut(final Player player) {
         float distance;
         distance = screenWidth;
-        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationX, distance);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), TRANSLATIONX, distance);
         animation.setDuration(1000);
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -176,7 +176,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         distance = screenWidth - field0;
         player.getFigure().setX(field0);
         player.getFigure().setVisibility(View.VISIBLE);
-        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationX, distance);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), TRANSLATIONX, distance);
         animation.setDuration(1000);
         animation.start();
         animation.addListener(new AnimatorListenerAdapter() {
@@ -199,7 +199,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         }
 
         player.getFigure().setX(field0);
-        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationX, distance);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), TRANSLATIONX, distance);
         animation.setDuration(1000);
         animation.start();
         animation.addListener(new AnimatorListenerAdapter() {
@@ -288,7 +288,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
     public void blame(View view) {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
 
-        CharSequence items[] = new CharSequence[gameController.getPlayerCount()-1];
+        CharSequence[] items = new CharSequence[gameController.getPlayerCount()-1];
         int index = 0;
         final int[] players = new int[gameController.getPlayerCount()-1];
         for (int i = 0; i < gameController.getPlayerCount(); i++) {
@@ -388,7 +388,6 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                     break;
                 case R.drawable.field_horserace:
                     // TODO - change method signature if needed and then do your stuff
-                    // startHorseRace();
                     gameController.justEndTurn();
                     break;
                 case R.drawable.field_hotelsandwirth:
@@ -402,6 +401,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                     break;
                 case R.drawable.field_lottery:
                     onLotteryAction();
+                    break;
                 default:
                     return;
             }
@@ -438,7 +438,6 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
     public int showHotelOwnerMoneyUpdate(int amount, Player player) {
         int playerIdx = gameController.getPlayerIndex(player);
         if (playerIdx >= 0) {
-            //  gameController.setMoney(playerIdx, cPlayer.getMoney() + amount);
             gameController.updateMoneyHotelOwner(playerIdx, amount);
         }
         return amount;
@@ -555,17 +554,10 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         }
     }
 
-    private void showHotelUpdate(Player cPlayer, Hotel hotel) {
-        int playerIdx = gameController.getPlayerIndex(cPlayer);
-        if (playerIdx >= 0) {
-
-        }
-    }
-
     public void buyAktie(final Aktien aktie) {
-        AlertDialog.Builder a_builder = new AlertDialog.Builder(MapView.this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MapView.this);
 
-        a_builder.setMessage(String.format(getString(R.string.want_stock), aktie))
+        dialogBuilder.setMessage(String.format(getString(R.string.want_stock), aktie))
                 .setCancelable(false)
                 .setPositiveButton(getString(R.string.yes_excl), new DialogInterface.OnClickListener() {
                     @Override
@@ -580,9 +572,8 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                     }
                 });
 
-        AlertDialog alert = a_builder.create();
+        AlertDialog alert = dialogBuilder.create();
         alert.show();
-
 
     }
 
@@ -592,7 +583,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
             buyHotel(hotel, cPlayer);
         } else {
             if (!hotel.getOwner().equals(cPlayer)) {
-                Toast.makeText(this, "Du musst 1000€ miete zahlen!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.pay_rent), Toast.LENGTH_LONG).show();
                 showHotelOwnerMoneyUpdate(1000, hotel.getOwner());
                 showMoneyUpdate(-1000);
             } else {
