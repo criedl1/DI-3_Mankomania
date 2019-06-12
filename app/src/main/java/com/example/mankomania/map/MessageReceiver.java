@@ -161,7 +161,6 @@ class MessageReceiver {
 
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int money = jsonToInt(jsonObject, NetworkConstants.MONEY);
-        Log.d("TEST_MONEY", money + "");
         gameController.setMoney(player, money);
     }
 
@@ -187,7 +186,6 @@ class MessageReceiver {
     private void showMoneyUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
-        Log.d("TEST_MONEY", outcome + "");
         gameController.showMoneyUpdate(player, outcome);
     }
 

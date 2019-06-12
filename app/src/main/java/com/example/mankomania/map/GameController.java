@@ -1,8 +1,6 @@
 package com.example.mankomania.map;
 
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.example.mankomania.MainActivity;
 import com.example.mankomania.R;
@@ -18,9 +16,9 @@ public class GameController implements Serializable {
 
     private final MapView mapView;
     private Hotel[] hotels = new Hotel[]{
-            new Hotel(R.drawable.field_hotelsandwirth, "SANDWIRTH"),
-            new Hotel(R.drawable.field_plattenwirt, "PLATTENWIRT"),
-            new Hotel(R.drawable.field_seeparkhotel, "SEEPARKHOTEL"),
+            new Hotel("SANDWIRTH"),
+            new Hotel("PLATTENWIRT"),
+            new Hotel("SEEPARKHOTEL"),
     };
     public List<Player> getPlayers() {
         return players;
@@ -39,7 +37,7 @@ public class GameController implements Serializable {
 
 
 
-    public static int[] allfields = {
+    public static final int[] allfields = {
             R.drawable.field_start,
             R.drawable.field_aktie1,
             R.drawable.field_lindwurm,
@@ -96,8 +94,7 @@ public class GameController implements Serializable {
 
         this.initReceiver();
         client = new Client();
-        client.init(ip, mapView);
-        Log.i("JONTEST", "Start Client with IP " + ip);
+        Client.init(ip, mapView);
     }
 
     void startClient() {
@@ -226,7 +223,7 @@ public class GameController implements Serializable {
          int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
 
          for (Player p:players) {
-             int aktien[] = p.getAktien();
+             int[] aktien = p.getAktien();
              if (riseordecrease==0){
                  if (aktien[aktie]>0){
                      client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
@@ -283,6 +280,7 @@ public class GameController implements Serializable {
 
     void setRouletteResult(int moneyChange) {
         client.setMoneyOnServer(this.myID, this.currentPlayer().getMoney() + moneyChange);
+        // TODO: end Turn with a Button ?
         client.endTurn();
     }
 
@@ -361,14 +359,14 @@ public class GameController implements Serializable {
     }
     void lotteryAction() {
 
-        int lotto = this.getLotto();
-        if(lotto==0){
-            client.setLottoOnServer(lotto+50000);
+        int myLotto = this.getLotto();
+        if(myLotto==0){
+            client.setLottoOnServer(myLotto+50000);
             client.setMoneyOnServer(this.myID, this.players.get(this.myID).getMoney()-50000);
             mapView.showLottoLoose();
         }else{
             client.setLottoOnServer(0);
-            client.setMoneyOnServer(this.myID, this.players.get(this.myID).getMoney()+lotto);
+            client.setMoneyOnServer(this.myID, this.players.get(this.myID).getMoney()+myLotto);
             mapView.showLottoWin();
         }
         client.endTurn();
