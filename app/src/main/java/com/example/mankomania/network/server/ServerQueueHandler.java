@@ -8,11 +8,9 @@ import com.example.mankomania.network.NetworkConstants;
 import com.example.mankomania.network.QueueHandler;
 import com.example.mankomania.roulette.sendMoneyClass;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.util.Arrays;
 import java.util.Queue;
 import java.util.Random;
 
@@ -151,10 +149,23 @@ public class ServerQueueHandler extends QueueHandler {
         player++;
         player = player % gameData.getIPAdresses().length;
 
-        startTurn(player);
+        int winner = checkWinner();
+        if(winner<0) {
+            startTurn(player);
+        }else {
+            sendWinner(winner);
+        }
     }
 
-
+    private int checkWinner(){
+        int[] money = gameData.getMoney();
+        for (int i = 0; i <money.length ; i++) {
+            if(money[i]<=0){
+                return i;
+            }
+        }
+        return -1;
+    }
 
     public void startTurn(int player) {
         gameData.setTurn(player);
@@ -398,6 +409,7 @@ public class ServerQueueHandler extends QueueHandler {
         sendAllClients(json.toString());
     }
 
+
     public void sendLotto(int amount) {
 
         JsonObject json = new JsonObject();
@@ -444,5 +456,12 @@ public class ServerQueueHandler extends QueueHandler {
             // Log.d("ORDER", "Names already here: "+count);
         }while(count<this.gameData.getPlayerCount());
         sendGetOrder();
+    }
+
+    public void sendWinner(int player){
+        JsonObject json = new JsonObject();
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.GAMEEND);
+        json.addProperty(NetworkConstants.PLAYER,player);
+        sendAllClients(json.toString());
     }
 }

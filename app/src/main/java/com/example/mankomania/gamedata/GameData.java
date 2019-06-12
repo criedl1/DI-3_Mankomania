@@ -17,7 +17,7 @@ public class GameData {
     private int[] sandwirthHotel;
     private int[] plattenwirtHotel;
     private int[] seeparkHotel;
-  //  private boolean[] isCheater;
+
     private int[] isCheater;
     private boolean[] didBlame;
 
@@ -176,6 +176,7 @@ public class GameData {
         int[] intArr = new int[playerCount];
         int[] boolArr = new int[playerCount];
         String[] strArr = new String[playerCount];
+        boolean[] blameArr = new boolean[playerCount];
         boolean[] didBlame = new boolean[playerCount];
         String[] namesArr = new String[playerCount];
 
@@ -201,8 +202,8 @@ public class GameData {
         setIsCheater(boolArr);
 
 
-        Arrays.fill(didBlame, false);
-        setDidBlame(didBlame);
+        Arrays.fill(blameArr, false);
+        setDidBlame(blameArr);
 
         // Set Lotto to 0
         setLotto(0);
@@ -222,7 +223,7 @@ public class GameData {
     }
 
     public void decrementCheater() {
-        int[] isCheater = this.getIsCheater();
+        int[] cheaterArr = this.getIsCheater();
         int index = 0;
         for (int i : this.isCheater) {
             if (i > 0) {
@@ -230,11 +231,11 @@ public class GameData {
                 if(i==0){
                     server.sendDidCheatSuccessfully(index);
                 }
-                isCheater[index] = i;
+                cheaterArr[index] = i;
             }
             index++;
         }
-        setIsCheater(isCheater);
+        setIsCheater(cheaterArr);
     }
 
     public void setServerPlayer(int player) {

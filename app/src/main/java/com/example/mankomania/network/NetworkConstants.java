@@ -31,10 +31,12 @@ public class NetworkConstants {
     public static final String GET_ORDER = "getOrder";
     public static final String SET_NAME = "setName";
     public static final String NAME = "name";
+    public static final String GAMEEND = "GameEnd";
     //Values
     public static final String OPERATION = "OPERATION";
     public static final String ID = "ID";
     public static final String HOTEL = "Hotel";
+    public static final String HOTEL_PRICE = "HotelPrice";
     public static final String OWNER = "Owner";
     public static final String AMOUNT = "Amount";
     public static final String PLAYER = "PLAYER";

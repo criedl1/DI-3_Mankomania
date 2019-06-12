@@ -36,20 +36,11 @@ class MessageReceiver {
             case NetworkConstants.SET_INFINEON_AKTIE:
                 setInfineonAktieUpdate(jsonObject);
                 break;
-            case NetworkConstants.SET_CHEATER:
-                setCheaterUpdate(jsonObject);
-                break;
             case NetworkConstants.SET_LOTTO:
                 setLottoUpdate(jsonObject);
                 break;
-            case NetworkConstants.SET_SANDWIRTH:
-                setSandwirthUpdate(jsonObject);
-                break;
-            case NetworkConstants.SET_SEEPARK:
-                setSeeparkUpdate(jsonObject);
-                break;
-            case NetworkConstants.SET_PLATTENWIRT:
-                setPlattenwirtUpdate(jsonObject);
+            case NetworkConstants.SET_HOTEL:
+                setHotelUpdate(jsonObject);
                 break;
             case NetworkConstants.ROLL_DICE:
                 rollDiceUpdate(jsonObject);
@@ -81,6 +72,9 @@ class MessageReceiver {
             case NetworkConstants.SUCCESSCHEAT:
                 showCheatSuccess(jsonObject);
                 break;
+            case NetworkConstants.GAMEEND:
+                showGameEnd(jsonObject);
+                break;
             case NetworkConstants.GET_ORDER:
                 showOrderSelection(jsonObject);
                 break;
@@ -96,6 +90,11 @@ class MessageReceiver {
             names[i] = namesArr.get(i).getAsString();
         }
         gameController.showOrderSelection(names);
+    }
+
+    private void showGameEnd(JsonObject jsonObject){
+        int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        gameController.endGame(player);
     }
 
     private void showCheatSuccess(JsonObject jsonObject) {
@@ -132,10 +131,6 @@ class MessageReceiver {
         gameController.setTurn(player);
     }
 
-    private void setCheaterUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        gameController.setCheater(player);
-    }
 
     private void setHypoAktieUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
@@ -158,26 +153,10 @@ class MessageReceiver {
         gameController.setInfineonAktiefromMessage(player, count);
     }
 
-    private void setSandwirthUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
-       // int hotel = jsonToInt(jsonObject, NetworkConstants.HOTEL);
-       // int owner = jsonToInt(jsonObject, NetworkConstants.OWNER);
-
-        gameController.setSandwirtHotel(player, count);
-    }
-    private void setPlattenwirtUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
-
-        gameController.setPlattenwirtHotel(player, count);
-    }
-
-    private void setSeeparkUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
-
-        gameController.setSeeparkHotel(player, count);
+    private void setHotelUpdate(JsonObject jsonObject) {
+        int hotel = jsonToInt(jsonObject, NetworkConstants.HOTEL);
+        int player = jsonToInt(jsonObject, NetworkConstants.OWNER);
+        gameController.setHotelfromMessage(player,hotel);
     }
 
     private void setPositionUpdate(JsonObject jsonObject) {

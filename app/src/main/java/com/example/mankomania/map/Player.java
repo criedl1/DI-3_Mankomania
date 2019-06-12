@@ -4,10 +4,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class Player {
+public class Player implements Serializable {
 
     private ImageView figure;
 
@@ -17,8 +18,8 @@ public class Player {
     private int money = 0;
     private TextView currentmoney;
     private int[] aktien = new int[3];
-    private int[] hotel = new int[3];
     private String ip;
+    private int[] hotel = new int[3];
     private boolean didCheat = false;
     private boolean didBlame = false;
 
@@ -89,32 +90,12 @@ public class Player {
         }
     }
 
-    void setHotel(Hotel hotel, int count) {
-        switch (hotel) {
-            case PLATTENWIRT:
-                this.hotel[0] = count;
-                break;
-            case SANDWIRTH:
-                this.hotel[1] = count;
-                break;
-            case SEEPARK:
-                this.hotel[2] = count;
-                break;
-                default:
-                    throw  new IllegalStateException("Hotel does not exist");
-        }
-    }
-
     public int[] getAktien() {
         return aktien;
     }
 
-    public int[] getHotel() {
-        return hotel;
-    }
-
     void setIP(String ip) {
-        this.ip = ip;
+        // maybe needed in future
     }
 
     @Override
@@ -142,19 +123,19 @@ public class Player {
         this.currentmoney.setBackgroundColor(color);
     }
 
-    public boolean isDidCheat() {
+    boolean isDidCheat() {
         return didCheat;
     }
 
-    public void setDidCheat(boolean didCheat) {
+    void setDidCheat(boolean didCheat) {
         this.didCheat = didCheat;
     }
 
-    public boolean isDidBlame() {
+    boolean isDidBlame() {
         return didBlame;
     }
 
-    public void setDidBlame(boolean didBlame) {
+    void setDidBlame(boolean didBlame) {
         this.didBlame = didBlame;
     }
 }

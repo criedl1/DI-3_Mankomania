@@ -170,7 +170,7 @@ public class Client extends Thread {
         };
         thread.start();
     }
-    public void setHotelOnServer(final int idx,final int owner){
+    public void setHotelOnServer(final int idx, final int owner, final int price){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
             @Override
@@ -179,6 +179,7 @@ public class Client extends Thread {
                 json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_HOTEL);
                 json.addProperty(NetworkConstants.HOTEL, idx);
                 json.addProperty(NetworkConstants.OWNER, owner);
+                json.addProperty(NetworkConstants.HOTEL_PRICE, price);
                 output.println(json.toString());
             }
         };

@@ -75,9 +75,17 @@ public class ClientQueueHandler extends QueueHandler {
                 break;
             case NetworkConstants.GET_ORDER:
                 publishUpdate(jsonObject);
+                break;
+            case NetworkConstants.GAMEEND:
+                gameEnd(jsonObject);
+                break;
             default:
                 break;
         }
+    }
+
+    private void gameEnd(JsonObject jsonObject){
+        publishUpdate(jsonObject);
     }
 
     private void setCheatSuccess(JsonObject jsonObject) {
