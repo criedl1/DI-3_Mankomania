@@ -67,4 +67,5 @@
     <string name="title_activity_you_win">YouWin</string>
     <string name="player_own">Spieler %d hat gewonnen!</string>
     <string name="pay_rent">Du musst 1000€ miete zahlen!</string>
+    <string name="einem_spiel_beitreten">Einem Spiel beitreten</string>
 </resources>
