@@ -4,8 +4,6 @@ package com.example.mankomania;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mankomania.map.GameController;
-import com.example.mankomania.map.MapView;
 import com.example.mankomania.map.Player;
 
 import org.junit.Test;

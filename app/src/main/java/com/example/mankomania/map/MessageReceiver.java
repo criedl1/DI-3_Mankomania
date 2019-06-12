@@ -33,9 +33,6 @@ class MessageReceiver {
             case NetworkConstants.SET_INFINEON_AKTIE:
                 setInfineonAktieUpdate(jsonObject);
                 break;
-            case NetworkConstants.SET_CHEATER:
-                setCheaterUpdate(jsonObject);
-                break;
             case NetworkConstants.SET_LOTTO:
                 setLottoUpdate(jsonObject);
                 break;
@@ -66,9 +63,35 @@ class MessageReceiver {
             case NetworkConstants.MONEY_UPDATE:
                 showMoneyUpdate(jsonObject);
                 break;
+            case NetworkConstants.BLAME_RESULT:
+                showBlameResult(jsonObject);
+                break;
+            case NetworkConstants.SUCCESSCHEAT:
+                showCheatSuccess(jsonObject);
+                break;
+            case NetworkConstants.GAMEEND:
+                showGameEnd(jsonObject);
+                break;
             default:
                 throw new IllegalStateException("Network Object should not be here: " + message);
         }
+    }
+
+    private void showGameEnd(JsonObject jsonObject){
+        int player = jsonToInt(jsonObject,NetworkConstants.PLAYER);
+        gameController.endGame(player);
+    }
+
+    private void showCheatSuccess(JsonObject jsonObject) {
+        int successor = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        gameController.showCheatSuccess(successor);
+    }
+
+    private void showBlameResult(JsonObject jsonObject) {
+        boolean result = jsonToString(jsonObject, NetworkConstants.BLAME_RESULT).equals(NetworkConstants.BLAME_SUCCESS);
+        int blamer = jsonToInt(jsonObject, NetworkConstants.BLAMER);
+        int blamed = jsonToInt(jsonObject, NetworkConstants.BLAMED);
+        gameController.showBlameResult(result,blamer,blamed);
     }
 
     private void setPlayer(JsonObject jsonObject) {
@@ -93,34 +116,32 @@ class MessageReceiver {
         gameController.setTurn(player);
     }
 
-    private void setCheaterUpdate(JsonObject jsonObject) {
-        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        //TODO: why is this count here ?
-        //count is the wrong name, the boolean returns if the player is a cheater or not anymore
-        boolean count = (jsonToInt(jsonObject, NetworkConstants.CHEATER) == 1);
-
-        gameController.setCheater(player);
-    }
 
     private void setHypoAktieUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
 
-        gameController.setHypoAktie(player, count);
+        gameController.setHypoAktieFromMessage(player, count);
     }
 
     private void setStrabagAktieUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
 
-        gameController.setStrabagAktie(player, count);
+        gameController.setStrabagAktiefromMessage(player, count);
     }
 
     private void setInfineonAktieUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
 
-        gameController.setInfineonAktie(player, count);
+        gameController.setInfineonAktiefromMessage(player, count);
+    }
+
+    private void setHotelUpdate(JsonObject jsonObject) {
+        int hotel = jsonToInt(jsonObject, NetworkConstants.HOTEL);
+        int player = jsonToInt(jsonObject, NetworkConstants.OWNER);
+        gameController.setHotelfromMessage(player,hotel);
     }
 
     private void setPositionUpdate(JsonObject jsonObject) {
@@ -143,12 +164,6 @@ class MessageReceiver {
         gameController.setLotto(amount);
     }
 
-    private void setHotelUpdate(JsonObject jsonObject) {
-        int hotel = jsonToInt(jsonObject, NetworkConstants.HOTEL);
-        int owner = jsonToInt(jsonObject, NetworkConstants.OWNER);
-
-        gameController.setHotel(hotel, owner);
-    }
 
     private void spinWheelUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);

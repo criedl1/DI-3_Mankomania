@@ -1,13 +1,14 @@
 package com.example.mankomania.map;
 
-import android.graphics.Color;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class Player {
+public class Player implements Serializable {
 
     private ImageView figure;
 
@@ -18,6 +19,9 @@ public class Player {
     private TextView currentmoney;
     private int[] aktien = new int[3];
     private String ip;
+    private int[] hotel = new int[3];
+    private boolean didCheat = false;
+    private boolean didBlame = false;
 
     public Player() {
         currentField = 0;
@@ -28,6 +32,7 @@ public class Player {
     public void initFields(ImageView figure, TextView currentmoney) {
         this.figure = figure;
         this.currentmoney = currentmoney;
+        currentmoney.setVisibility(View.VISIBLE);
         this.updateMoneyField();
     }
 
@@ -90,7 +95,7 @@ public class Player {
     }
 
     void setIP(String ip) {
-        this.ip = ip;
+        // maybe needed in future
     }
 
     @Override
@@ -114,8 +119,24 @@ public class Player {
         return super.hashCode();
     }
 
-    void initMyMoneyField() {
-        this.currentmoney.setBackgroundColor(Color.GREEN);
+    void initMyMoneyField(int color) {
+        this.currentmoney.setBackgroundColor(color);
+    }
+
+    boolean isDidCheat() {
+        return didCheat;
+    }
+
+    void setDidCheat(boolean didCheat) {
+        this.didCheat = didCheat;
+    }
+
+    boolean isDidBlame() {
+        return didBlame;
+    }
+
+    void setDidBlame(boolean didBlame) {
+        this.didBlame = didBlame;
     }
 }
 

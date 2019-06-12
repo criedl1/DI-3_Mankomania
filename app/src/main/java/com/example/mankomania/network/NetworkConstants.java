@@ -12,7 +12,12 @@ public class NetworkConstants {
     public static final String SET_HYPO_AKTIE = "setHypoAktie";
     public static final String SET_STRABAG_AKTIE = "setStrabagAktie";
     public static final String SET_INFINEON_AKTIE = "setInfineonAktie";
+    public static final String SET_SANDWIRTH = "setSandwirthHotel";
+    public static final String SET_PLATTENWIRT = "setPlattenwirtHotel";
+    public static final String SET_SEEPARK= "setSeeparkhotel";
     public static final String SET_CHEATER = "setCheater";
+    public static final String BLAME_CHEATER = "blameCheater";
+    public static final String BLAME_RESULT = "blameResult";
     public static final String SET_LOTTO = "setLotto";
     public static final String SET_HOTEL = "setHotel";
     public static final String ROLL_DICE = "rollDice";
@@ -21,10 +26,13 @@ public class NetworkConstants {
     public static final String END_TURN = "endTurn";
     public static final String MONEY_UPDATE = "updateMoney";
     public static final String ROULETTE = "ROULETTERESULT";
+    public static final String SUCCESSCHEAT = "SuccessCheat";
+    public static final String GAMEEND = "GameEnd";
     //Values
     public static final String OPERATION = "OPERATION";
     public static final String ID = "ID";
     public static final String HOTEL = "Hotel";
+    public static final String HOTEL_PRICE = "HotelPrice";
     public static final String OWNER = "Owner";
     public static final String AMOUNT = "Amount";
     public static final String PLAYER = "PLAYER";
@@ -34,4 +42,8 @@ public class NetworkConstants {
     public static final String MONEY = "Money";
     public static final String IP = "IP";
     public static final String RESULT = "RESULT";
+    public static final String BLAME_SUCCESS = "blameFail";
+    public static final String BLAME_FAIL = "blameSuccess";
+    public static final String BLAMER = "blamer";
+    public static final String BLAMED = "blamed";
 }

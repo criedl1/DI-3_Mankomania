@@ -48,4 +48,21 @@
     <string name="lottery_toast">Du bist über die Lotterie gegangen, du verlierst 5000</string>
     <string name="mini_map_OK">OK</string>
     <string name="mini_map_title">Mini Map</string>
+    <string name="cheat">Cheat</string>
+    <string name="lottery_won">Du bekommst %d€ vom Lottofeld!</string>
+    <string name="lottery_lost">Die Lotterie ist leer, du darfst selbst 50000€ einzahlen!</string>
+    <string name="change_money">Dein Kontostand ändert sich auf %d</string>
+    <string name="stock_change">Du erhälst Aktie  %s</string>
+    <string name="change_hotel">Du erhälst das Hotel  %s</string>
+    <string name="change_hotel_buy">Spieler  %d erhält das Hotel %s</string>
+    <string name="dice_change">Player %d diced %d</string>
+    <string name="change_stock_buy">Spieler %d erhält Aktie  %s</string>
+    <string name="lotto_change">Lotto ändert sich auf %d</string>
+    <string name="want_stock">Wollen sie eine Aktie der Firma %s kaufen?</string>
+    <string name="yes_excl">JA!</string>
+    <string name="no_excl">NEIN!</string>
+    <string name="blame">Spieler %d hat Spieler %d beschuldigt. %s</string>
+    <string name="cheated_successfully">Spieler %d hat geschummelt, ohne dass ihr es gemerkt habt!!</string>
+    <string name="want_hotel">Wollen sie das Hotel %s kaufen?</string>
+    <string name="title_activity_you_win">YouWin</string>
 </resources>

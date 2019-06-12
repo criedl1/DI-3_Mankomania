@@ -52,8 +52,11 @@ public class ClientQueueHandler extends QueueHandler {
             case NetworkConstants.SET_INFINEON_AKTIE:
                 setInfineonAktie(jsonObject);
                 break;
-            case NetworkConstants.SET_CHEATER:
-                setCheater(jsonObject);
+            case NetworkConstants.BLAME_RESULT:
+                setBlameResult(jsonObject);
+                break;
+            case NetworkConstants.SUCCESSCHEAT:
+                setCheatSuccess(jsonObject);
                 break;
             case NetworkConstants.SET_LOTTO:
                 setLotto(jsonObject);
@@ -70,9 +73,23 @@ public class ClientQueueHandler extends QueueHandler {
             case NetworkConstants.START_TURN:
                 startTurn(jsonObject);
                 break;
+            case NetworkConstants.GAMEEND:
+                gameEnd(jsonObject);
             default:
                 break;
         }
+    }
+
+    private void gameEnd(JsonObject jsonObject){
+        publishUpdate(jsonObject);
+    }
+
+    private void setCheatSuccess(JsonObject jsonObject) {
+        publishUpdate(jsonObject);
+    }
+
+    private void setBlameResult(JsonObject jsonObject) {
+        publishUpdate(jsonObject);
     }
 
     private void startTurn(JsonObject jsonObject) {
@@ -101,16 +118,7 @@ public class ClientQueueHandler extends QueueHandler {
         gameData.setLotto(amount);
         publishUpdate(jsonObject);
     }
-    private void setCheater(JsonObject jsonObject) {
-        boolean[] arr = gameData.getIsCheater();
-        //Get Values
-        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        boolean count = (jsonToInt(jsonObject,NetworkConstants.CHEATER)==1);
-        //Change GameData
-        arr[player] = count;
-        gameData.setIsCheater(arr);
-        publishUpdate(jsonObject);
-    }
+
     private void setInfineonAktie(JsonObject jsonObject) {
         int[] arr = gameData.getInfineonAktie();
         //Get Values
