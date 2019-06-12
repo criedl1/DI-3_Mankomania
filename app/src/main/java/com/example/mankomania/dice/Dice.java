@@ -16,8 +16,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.mankomania.map.MapView;
 import com.example.mankomania.R;
+import com.example.mankomania.map.MapView;
 
 import java.util.Random;
 
@@ -81,7 +81,7 @@ public class Dice extends Fragment implements SensorEventListener {
         Button btnRoll = getActivity().findViewById(R.id.btnRoll);
         btnRoll.setVisibility(View.INVISIBLE);
 
-        @DrawableRes int wuerfelImages[] = {
+        @DrawableRes int[] wuerfelImages = {
                 R.drawable.dice1,
                 R.drawable.dice2,
                 R.drawable.dice3,

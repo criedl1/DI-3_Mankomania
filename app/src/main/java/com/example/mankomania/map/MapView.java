@@ -16,7 +16,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -27,8 +26,6 @@ import android.widget.Toast;
 import com.example.mankomania.R;
 import com.example.mankomania.dice.Dice;
 import com.example.mankomania.slotmachine.CasinoStartScreen;
-
-import java.util.Arrays;
 
 import static com.example.mankomania.map.Aktien.HYPO;
 import static com.example.mankomania.map.Aktien.INFINEON;
@@ -78,7 +75,6 @@ public class MapView extends AppCompatActivity {
         });
 
         initButtons();
-        Log.d("xxx", "llll" + Arrays.toString(GameController.allfields));
 
 
         //Get Intent and start client
@@ -238,7 +234,6 @@ public class MapView extends AppCompatActivity {
     public void step1() {
         Player cPlayer = gameController.currentPlayer();
         cPlayer.setTemporaryField(cPlayer.getCurrentField());
-        Log.d("xxx", "step1 currentfield: " + cPlayer.getCurrentField());
         displayField(cPlayer.getCurrentField());
         movePlayerOut(cPlayer);
     }
@@ -250,7 +245,6 @@ public class MapView extends AppCompatActivity {
             movingOverLottery = true;
         }
         cPlayer.setTemporaryField(cPlayer.getTemporaryField() + 2);
-        Log.d("xxx", "step2 currentfield: " + cPlayer.getCurrentField());
         if (cPlayer.getTemporaryField() / 2 < cPlayer.getCurrentField() / 2) {
             displayField(cPlayer.getTemporaryField());
             movePlayerOverScreen(cPlayer, movingOverLottery);
@@ -262,7 +256,6 @@ public class MapView extends AppCompatActivity {
     public void step3() {
 
         Player cPlayer = gameController.currentPlayer();
-        Log.d("xxx", "step3 currentfield: " + cPlayer.getCurrentField());
         movePlayerIn(cPlayer);
         displayField(cPlayer.getCurrentField());
     }

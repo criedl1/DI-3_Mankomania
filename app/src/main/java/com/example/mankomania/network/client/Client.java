@@ -23,7 +23,12 @@ public class Client extends Thread {
     private static String ipHost;
     private PrintWriter output;
     private int idx;
-    public static MapView mapView;
+
+    public static MapView getMapView() {
+        return mapView;
+    }
+
+    private static MapView mapView;
 
     public Client(){
     }

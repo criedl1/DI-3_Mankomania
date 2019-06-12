@@ -1,7 +1,5 @@
 package com.example.mankomania.map;
 
-import android.util.Log;
-
 import com.example.mankomania.R;
 import com.example.mankomania.network.client.Client;
 
@@ -15,7 +13,7 @@ public class GameController implements Serializable {
     List<Player> players;
 
 
-    public static int[] allfields = {
+    public static final int[] allfields = {
             R.drawable.field_start,
             R.drawable.field_aktie1,
             R.drawable.field_lindwurm,
@@ -61,14 +59,13 @@ public class GameController implements Serializable {
     private int lotto;
     private int hasTurn;
 
-    public GameController(String ip, MapView mapView) {
+    GameController(String ip, MapView mapView) {
         this.mapView = mapView;
         players = new ArrayList<>();
 
         this.initReceiver();
         client = new Client();
         client.init(ip, mapView);
-        Log.i("JONTEST", "Start Client with IP " + ip);
     }
 
     void startClient() {
