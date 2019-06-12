@@ -347,7 +347,6 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
             }
         }
     }
-
     private void runFieldAction(int currentField) {
         if (gameController.isMyTurn()) {
             int fieldID = GameController.allfields[currentField];
@@ -356,61 +355,65 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                     startCasino();
                     break;
                 case R.drawable.field_getsomemoney:
-                    startCasino();
+                    showMoneyUpdate(10000);
                     break;
                 case R.drawable.field_lindwurm:
-                    startCasino();
+                    showMoneyUpdate(-100000);
                     break;
                 case R.drawable.field_stadium:
-                    startCasino();
+                    showMoneyUpdate(-5000);
                     break;
                 case R.drawable.field_zoo:
-                    startCasino();
+                    showMoneyUpdate(-50000);
                     break;
                 case R.drawable.field_alterplatz:
-                    startCasino();
+                    showMoneyUpdate(10000);
                     break;
                 case R.drawable.field_klage:
-                    startCasino();
+                    showMoneyUpdate(25000);
                     break;
                 case R.drawable.field_woerthersee:
-                    startCasino();
+                    showMoneyUpdate(-10000);
                     break;
                 case R.drawable.field_minimundus:
-                    startCasino();
+                    showMoneyUpdate(-30000);
                     break;
                 case R.drawable.field_aktie1:
-                    startCasino();
+                    buyAktie(HYPO);
                     break;
                 case R.drawable.field_aktie2:
-                    startCasino();
+                    buyAktie(INFINEON);
                     break;
                 case R.drawable.field_aktie3:
-                    startCasino();
+                    buyAktie(STRABAG);
                     break;
                 case R.drawable.field_aktienboerse:
-                    startCasino();
+                    gameController.stockexchange();
+                    // TODO - startstockexchange
                     break;
                 case R.drawable.field_horserace:
-                    startCasino();
+                    // TODO - change method signature if needed and then do your stuff
+                    // startHorseRace();
+                    gameController.justEndTurn();
                     break;
                 case R.drawable.field_hotelsandwirth:
-                    startCasino();
+                    buyHotel(gameController.getHotels()[0]);
                     break;
                 case R.drawable.field_plattenwirt:
-                    startCasino();
+                    buyHotel(gameController.getHotels()[1]);
                     break;
                 case R.drawable.field_seeparkhotel:
-                    startCasino();
+                    buyHotel(gameController.getHotels()[2]);
                     break;
                 case R.drawable.field_lottery:
-                    startCasino();
+                    onLotteryAction();
                 default:
                     return;
             }
         }
 
     }
+
     private void onLotteryAction() {
      gameController.lotteryAction();
     }
