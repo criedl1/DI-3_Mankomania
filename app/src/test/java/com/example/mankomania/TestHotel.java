@@ -39,7 +39,7 @@ public class TestHotel {
 
     @Before
     public void setUp() {
-        this.hotel = new Hotel(-1, "SOME_HOTEL");
+        this.hotel = new Hotel("SOME_HOTEL");
     }
 
     @After

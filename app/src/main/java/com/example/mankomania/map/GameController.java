@@ -15,9 +15,9 @@ public class GameController implements Serializable {
 
     private final MapView mapView;
     private Hotel[] hotels = new Hotel[]{
-            new Hotel(R.drawable.field_hotelsandwirth, "SANDWIRTH"),
-            new Hotel(R.drawable.field_plattenwirt, "PLATTENWIRT"),
-            new Hotel(R.drawable.field_seeparkhotel, "SEEPARKHOTEL"),
+            new Hotel("SANDWIRTH"),
+            new Hotel("PLATTENWIRT"),
+            new Hotel("SEEPARKHOTEL"),
     };
     public List<Player> getPlayers() {
         return players;
@@ -93,7 +93,7 @@ public class GameController implements Serializable {
 
         this.initReceiver();
         client = new Client();
-        client.init(ip, mapView);
+        Client.init(ip, mapView);
     }
 
     void startClient() {

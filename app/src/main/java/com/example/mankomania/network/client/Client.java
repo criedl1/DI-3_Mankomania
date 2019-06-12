@@ -31,9 +31,10 @@ public class Client extends Thread {
     private static MapView mapView;
 
     public Client(){
+        // just for sonarCloud
     }
 
-    public void init(String ipHost, MapView mapView){
+    public static void init(String ipHost, MapView mapView){
         Client.ipHost = ipHost;
         Client.mapView = mapView;
     }

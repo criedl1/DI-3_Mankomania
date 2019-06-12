@@ -6,7 +6,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import com.example.mankomania.network.client.Client;
 import com.google.gson.JsonObject;
 
-public class sendMoneyClass {
+public class SendMoneyClass {
 
    private static int moneyAmount; //for Server Queue Handler
 

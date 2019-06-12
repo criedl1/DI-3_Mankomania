@@ -61,7 +61,7 @@ public class PopUp extends AppCompatDialogFragment {
     }
 
     private void sendMoneyChange(){
-        sendMoneyClass moneyClass = new sendMoneyClass();
+        SendMoneyClass moneyClass = new SendMoneyClass();
         moneyClass.sendMoneyChange(money);
     }
 }

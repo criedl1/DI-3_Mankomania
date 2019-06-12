@@ -75,6 +75,7 @@ public class ClientQueueHandler extends QueueHandler {
                 break;
             case NetworkConstants.GAMEEND:
                 gameEnd(jsonObject);
+                break;
             default:
                 break;
         }
