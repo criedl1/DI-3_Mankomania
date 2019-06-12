@@ -165,6 +165,19 @@ public class RouletteTest {
     }
 
     @Test
+    public void testDozen2(){
+        RouletteLogic dozenRoulette = new RouletteLogic("2",0);
+        if (dozenRoulette.getRandomNumberFromRoulette() > 12
+                && dozenRoulette.getRandomNumberFromRoulette() <= 24){
+            assertEquals(80000, dozenRoulette.getWonMoney());
+        }
+        else{
+            assertEquals(- 20000, dozenRoulette.getWonMoney());
+        }
+    }
+
+
+    @Test
     public void testDozen3(){
         RouletteLogic dozenRoulette = new RouletteLogic("3",0);
         if (dozenRoulette.getRandomNumberFromRoulette() <= 24){

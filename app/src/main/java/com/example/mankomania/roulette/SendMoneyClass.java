@@ -11,7 +11,6 @@ public class SendMoneyClass {
 
     protected void sendMoneyChange(int casinoResult) {
 
-        setMoneyAmount(casinoResult);
         JsonObject object = new JsonObject();
         object.addProperty("result", casinoResult);
         object.addProperty("OPERATION", "ROULETTERESULT");
@@ -26,17 +25,9 @@ public class SendMoneyClass {
 
         Intent intent2 = new Intent("client.update");
         intent2.putExtra("result", object1.toString());
-        LocalBroadcastManager.getInstance(Client.mapView)
+        LocalBroadcastManager.getInstance(Client.getMapView())
                 .sendBroadcast(intent);
-        LocalBroadcastManager.getInstance(Client.mapView)
+        LocalBroadcastManager.getInstance(Client.getMapView())
                 .sendBroadcast(intent2);
-    }
-
-    public static int getMoneyAmount() {
-        return moneyAmount;
-    }
-
-    public static void setMoneyAmount(int newMoneyAmount) {
-        moneyAmount = newMoneyAmount;
     }
 }
