@@ -7,7 +7,7 @@ public class NetworkConstants {
     public static final String SET_ID = "SET_ID";
     public static final String SET_PLAYER_COUNT = "SET_PLAYER_COUNT";
     public static final String SEND_PLAYER = "sendPlayer";
-    public static final String SEND_MONEY = "SendMoneyClass";
+    public static final String SEND_MONEY = "sendMoney";
     public static final String SET_POSITION = "setPosition";
     public static final String SET_HYPO_AKTIE = "setHypoAktie";
     public static final String SET_STRABAG_AKTIE = "setStrabagAktie";
@@ -21,13 +21,14 @@ public class NetworkConstants {
     public static final String SET_LOTTO = "setLotto";
     public static final String SET_HOTEL = "setHotel";
     public static final String ROLL_DICE = "rollDice";
-    public static final String SEND_CASINO = "sendCasino";
+    public static final String SPIN_WHEEL = "spinWheel";
     public static final String START_TURN = "StartTurn";
     public static final String END_TURN = "endTurn";
     public static final String MONEY_UPDATE = "updateMoney";
     public static final String ROULETTE = "ROULETTERESULT";
     public static final String SUCCESSCHEAT = "SuccessCheat";
     public static final String GAMEEND = "GameEnd";
+    public static final String SEND_CASINO = "sendCasino";
     //Values
     public static final String OPERATION = "OPERATION";
     public static final String ID = "ID";

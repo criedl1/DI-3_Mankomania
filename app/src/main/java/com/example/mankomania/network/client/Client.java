@@ -207,7 +207,7 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SEND_CASINO);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SPIN_WHEEL);
                 json.addProperty(NetworkConstants.PLAYER,idx);
                 output.println(json.toString());
             }

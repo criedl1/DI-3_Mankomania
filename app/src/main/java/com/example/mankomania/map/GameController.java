@@ -2,7 +2,6 @@ package com.example.mankomania.map;
 
 import android.support.v4.content.ContextCompat;
 
-import com.example.mankomania.MainActivity;
 import com.example.mankomania.R;
 import com.example.mankomania.map.hotels.Hotel;
 import com.example.mankomania.network.client.Client;
@@ -123,6 +122,10 @@ public class GameController implements Serializable {
         }
     }
 
+    void casinoUpdate(int result) {
+        this.mapView.showCasinoResult(result);
+    }
+
     void showMoneyUpdate(int player, int outcome) {
         if (isMyTurn()) {
             mapView.showMyAccountBalance(outcome);
@@ -218,27 +221,27 @@ public class GameController implements Serializable {
         client.endTurn();
 
     }
-     void stockexchange(){
-         int aktie = randstock.nextInt(2);//
-         int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
+    void stockexchange(){
+        int aktie = randstock.nextInt(2);//
+        int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
 
-         for (Player p:players) {
-             int[] aktien = p.getAktien();
-             if (riseordecrease==0){
-                 if (aktien[aktie]>0){
-                     client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
-                 }
-             }else if (riseordecrease==1){
-                 client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
-             }
-             else {
-                 if (aktien[aktie]>0){
-                     client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()-100000);
-                 }
-             }
-         }
-         client.endTurn();
-     }
+        for (Player p:players) {
+            int[] aktien = p.getAktien();
+            if (riseordecrease==0){
+                if (aktien[aktie]>0){
+                    client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
+                }
+            }else if (riseordecrease==1){
+                client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
+            }
+            else {
+                if (aktien[aktie]>0){
+                    client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()-100000);
+                }
+            }
+        }
+        client.endTurn();
+    }
 
     void setLotto(int amount) {
         this.lotto = amount;
@@ -249,9 +252,8 @@ public class GameController implements Serializable {
         return lotto;
     }
 
-
-    void casinoUpdate(int result) {
-        this.mapView.showCasinoResult(result);
+    void spinWheelUpdate(int player, int outcome) {
+        //TODO: Implement Method
     }
 
     void setTurn(int player) {
@@ -280,7 +282,6 @@ public class GameController implements Serializable {
 
     void setRouletteResult(int moneyChange) {
         client.setMoneyOnServer(this.myID, this.currentPlayer().getMoney() + moneyChange);
-        // TODO: end Turn with a Button ?
         client.endTurn();
     }
 
@@ -373,8 +374,8 @@ public class GameController implements Serializable {
     }
     void endGame(int player){
         if (this.myID== player){
-        mapView.showMyWin();
-            }
+            mapView.showMyWin();
+        }
         else {
             mapView.showSomeonesWin(player+1);
         }

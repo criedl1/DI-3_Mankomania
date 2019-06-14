@@ -51,3 +51,9 @@ h
 8app/src/main/java/com/example/mankomania/map/Player.java,9/2/92096d1fb0ccf836f52c0f2ad6939e6da8466dd3
 q
 Aapp/src/main/java/com/example/mankomania/map/MessageReceiver.java,6/e/6e976535c601479e8c61d6cc07f01f0e3bcdc380
+s
+Capp/src/main/java/com/example/mankomania/network/client/Client.java,9/4/94ecd969eb161c02a63521b69d2ddcaf4dfe83d2
+
+Oapp/src/main/java/com/example/mankomania/network/client/ClientQueueHandler.java,8/7/879493e434a00b8fcf12b7417e1bb6c9be7c70de
+v
+Fapp/src/main/java/com/example/mankomania/network/NetworkConstants.java,a/1/a10678a79d805bd8e5dd01f5c7a74159ec5e64a2

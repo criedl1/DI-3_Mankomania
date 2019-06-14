@@ -70,14 +70,14 @@ public class ServerQueueHandler extends QueueHandler {
             case NetworkConstants.ROLL_DICE:
                 rollDiceForClients(jsonObject);
                 break;
-            case NetworkConstants.ROULETTE:
+            case NetworkConstants.SPIN_WHEEL:
                 spinWheelForClients(jsonObject);
                 break;
-            case NetworkConstants.SEND_CASINO:
-                spinWheelForClients(jsonObject);
             case NetworkConstants.END_TURN:
                 endTurn(jsonObject);
                 break;
+            case NetworkConstants.SEND_CASINO:
+                sendCasinoUpdate(jsonObject);
             default:
                 break;
         }
@@ -150,14 +150,15 @@ public class ServerQueueHandler extends QueueHandler {
     private void spinWheelForClients(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
-        sendCasinoResult(player, result);
+
+        sendSpinResult(player, result);
     }
 
-    private void  sendCasinoResult(int player, int result) {
+    private void sendSpinResult(int idx, int result) {
         JsonObject json = new JsonObject();
-        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SEND_CASINO);
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SPIN_WHEEL);
         json.addProperty(NetworkConstants.RESULT, result);
-        json.addProperty(NetworkConstants.PLAYER, player);
+        json.addProperty(NetworkConstants.PLAYER, idx);
         sendAllClients(json.toString());
     }
 
@@ -174,6 +175,14 @@ public class ServerQueueHandler extends QueueHandler {
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.ROLL_DICE);
         json.addProperty(NetworkConstants.RESULT, result);
         json.addProperty(NetworkConstants.PLAYER, idx);
+        sendAllClients(json.toString());
+    }
+
+    private void sendCasinoUpdate(JsonObject jsonObject){
+        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
+        JsonObject json = new JsonObject();
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SEND_CASINO);
+        json.addProperty(NetworkConstants.RESULT, result);
         sendAllClients(json.toString());
     }
 

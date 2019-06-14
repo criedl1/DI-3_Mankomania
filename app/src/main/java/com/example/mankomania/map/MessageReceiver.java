@@ -1,7 +1,5 @@
 package com.example.mankomania.map;
 
-import android.util.Log;
-
 import com.example.mankomania.network.NetworkConstants;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -44,8 +42,8 @@ class MessageReceiver {
             case NetworkConstants.ROLL_DICE:
                 rollDiceUpdate(jsonObject);
                 break;
-            case NetworkConstants.SEND_CASINO:
-                sendCasinoResult(jsonObject);
+            case NetworkConstants.SPIN_WHEEL:
+                spinWheelUpdate(jsonObject);
                 break;
             case NetworkConstants.START_TURN:
                 startTurnUpdate(jsonObject);
@@ -60,7 +58,7 @@ class MessageReceiver {
                 setPlayer(jsonObject);
                 break;
             case NetworkConstants.ROULETTE:
-                setCasinoResult(jsonObject);
+                setRouletteResult(jsonObject);
                 break;
             case NetworkConstants.MONEY_UPDATE:
                 showMoneyUpdate(jsonObject);
@@ -73,6 +71,9 @@ class MessageReceiver {
                 break;
             case NetworkConstants.GAMEEND:
                 showGameEnd(jsonObject);
+                break;
+            case NetworkConstants.SEND_CASINO:
+                casinoUpdate(jsonObject);
                 break;
             default:
                 throw new IllegalStateException("Network Object should not be here: " + message);
@@ -102,16 +103,11 @@ class MessageReceiver {
         gameController.setPlayerIP(player, ip);
     }
 
-    private void setCasinoResult(JsonObject jsonObject) {
-        int moneyChange = jsonToInt(jsonObject, "result");
+    private void setRouletteResult(JsonObject jsonObject) {
+        int moneyChange = jsonToInt(jsonObject, NetworkConstants.RESULT);
         gameController.setRouletteResult(moneyChange);
     }
 
-    private void sendCasinoResult(JsonObject jsonObject)
-    {
-        int result = jsonToInt(jsonObject, "result");
-        gameController.casinoUpdate(result);
-    }
 
     private void initPlayerCount(JsonObject jsonObject) {
         int playerCount = jsonToInt(jsonObject, NetworkConstants.COUNT);
@@ -172,15 +168,22 @@ class MessageReceiver {
     }
 
 
-    private void sendCasino(JsonObject jsonObject) {
+    private void spinWheelUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
+
+        gameController.spinWheelUpdate(player, outcome);
     }
 
     private void rollDiceUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
         gameController.rollDiceUpdate(player, outcome);
+    }
+
+    private void casinoUpdate(JsonObject jsonObject) {
+        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
+        gameController.casinoUpdate(result);
     }
 
     private void showMoneyUpdate(JsonObject jsonObject) {

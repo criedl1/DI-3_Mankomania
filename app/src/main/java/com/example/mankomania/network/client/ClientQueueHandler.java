@@ -67,7 +67,7 @@ public class ClientQueueHandler extends QueueHandler {
             case NetworkConstants.ROLL_DICE:
                 rollDice(jsonObject);
                 break;
-            case NetworkConstants.SEND_CASINO:
+            case NetworkConstants.SPIN_WHEEL:
                 spinWheel(jsonObject);
                 break;
             case NetworkConstants.START_TURN:
@@ -76,6 +76,8 @@ public class ClientQueueHandler extends QueueHandler {
             case NetworkConstants.GAMEEND:
                 gameEnd(jsonObject);
                 break;
+            case NetworkConstants.SEND_CASINO:
+                sendCasinoUpdate(jsonObject);
             default:
                 break;
         }
@@ -96,14 +98,13 @@ public class ClientQueueHandler extends QueueHandler {
     private void startTurn(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
-
     private void spinWheel(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
     private void rollDice(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
-
+    private void sendCasinoUpdate(JsonObject json){ publishUpdate(json); }
     private void setHotel(JsonObject jsonObject) {
         int[] arr = gameData.getHotels();
         //Get Values
