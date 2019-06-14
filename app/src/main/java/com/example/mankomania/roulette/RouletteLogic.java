@@ -9,11 +9,10 @@ public class RouletteLogic extends AppCompatActivity {
     private String returnString;
     private int money;
     private int wonMoney;
-    private int rouletteNumber;
+    private int randomNumber;
     private static final String YOU_HAVE = "Du hast ";
     private static final String WON = " gewonnen!";
     private static final String LOST = " verloren";
-    private int randomNumber;
     private FieldClass[] fieldClassArray = new FieldClass[36];
 
     //need this for testing
@@ -94,14 +93,6 @@ public class RouletteLogic extends AppCompatActivity {
         return tempArray;
     }
 
-    public int spinIt(){
-        setUpFields();
-        SecureRandom random = new SecureRandom();
-
-        randomNumber = random.nextInt(36);
-        return randomNumber;
-    }
-
     public FieldClass getTheField() {
         FieldClass field = null;
         for (int i = 0; i < fieldClassArray.length; i++) {
@@ -111,16 +102,18 @@ public class RouletteLogic extends AppCompatActivity {
         } return field;
     }
 
-    public void spinRoulette() {
-       setUpFields();
+    public int spinRoulette() {
+        setUpFields();
+        SecureRandom random = new SecureRandom();
         fieldArray = getFieldClassArray();
-        rouletteNumber = spinIt();
+        randomNumber = random.nextInt(36);
+        return randomNumber;
     }
 
     public void checkColor(ColorEnum choosenColor) {
-        for (FieldClass anArray : fieldArray) {
-            if (rouletteNumber == anArray.getValue()) {
-                if (anArray.getColor() == choosenColor) {
+        for (FieldClass fc : fieldArray) {
+            if (randomNumber == fc.getValue()) {
+                if (fc.getColor() == choosenColor) {
                     setWonMoney(30000);
                     setMoney(getWonMoney() + getMoney()); //--> 80000-50000 Einsatz
                     setReturnString(YOU_HAVE + getWonMoney() + WON);
@@ -135,7 +128,7 @@ public class RouletteLogic extends AppCompatActivity {
     }
 
     public int checkNumber(int choosenNumber) {
-        if (rouletteNumber == choosenNumber) {
+        if (randomNumber == choosenNumber) {
             setWonMoney(145000);
             setMoney(getWonMoney() + getMoney());
             setReturnString(YOU_HAVE + getWonMoney() + WON);
@@ -151,7 +144,7 @@ public class RouletteLogic extends AppCompatActivity {
         int dozen = 0;
 
         for (FieldClass fieldClass : fieldArray) {
-            if (fieldClass.getValue() == rouletteNumber) {
+            if (fieldClass.getValue() == randomNumber) {
                 if (fieldClass.getValue() <= 12) {
                     dozen = 1;
                 } else if (fieldClass.getValue() <= 24 && fieldClass.getValue() > 12) {

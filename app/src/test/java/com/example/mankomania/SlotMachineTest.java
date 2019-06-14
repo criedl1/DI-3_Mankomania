@@ -36,8 +36,27 @@ public class SlotMachineTest {
     }
 
     @Test
-    public void testTwoEqualSymbols(){
-        sml = new SlotMachineLogic(2, 0, 2, sma);
+    public void testTwoEqualSymbolsVar1(){
+        //condition id1 == id2
+        sml = new SlotMachineLogic(2, 2, 0, sma);
+        sml.checkWin();
+        assertEquals(30000, sml.getMoney());
+        assertEquals(30000, sma.getMoney());
+    }
+
+    @Test
+    public void testTwoEqualSymbolsVar2(){
+        //condition id2 == id3
+        sml = new SlotMachineLogic(0, 1, 1, sma);
+        sml.checkWin();
+        assertEquals(30000, sml.getMoney());
+        assertEquals(30000, sma.getMoney());
+    }
+
+    @Test
+    public void testTwoEqualSymbolsVar3(){
+        //condition id1 == id3
+        sml = new SlotMachineLogic(3, 0, 3, sma);
         sml.checkWin();
         assertEquals(30000, sml.getMoney());
         assertEquals(30000, sma.getMoney());

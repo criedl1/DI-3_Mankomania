@@ -70,9 +70,9 @@ public class SlotMachineActivity extends AppCompatActivity {
         slot1.postDelayed(stopMachineAndCheckWin(), 2000);
         slot1.postDelayed(waitForPopUp(), 3000);
 
-        //hardcoded changePic, because i wanted to make sure, that the picture
-        //really changes every time, which isn't guaranteed when i solve it with
-        //random.
+        /*hardcoded changePic, because i wanted to make sure, that the picture
+        really changes every time, which isn't guaranteed when i solve it with
+        random.*/
     }
 
     public void getStopIds() {
