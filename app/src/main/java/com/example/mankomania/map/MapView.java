@@ -503,6 +503,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
             won = "gewonnen.";
         }
         else{
+            result = result * (-1);
             won = "verloren.";
         }
 

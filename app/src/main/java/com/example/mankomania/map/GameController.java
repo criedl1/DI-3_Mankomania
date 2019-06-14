@@ -123,6 +123,7 @@ public class GameController implements Serializable {
     }
 
     void casinoUpdate(int result) {
+        client.sendCasinoResult();
         this.mapView.showCasinoResult(result);
     }
 
