@@ -683,5 +683,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
 
     public void showOrderSelection(String[] names) {
         Log.d("ORDER", "Show Order for: "+ Arrays.toString(names));
+        CustomDialogClass cdd=new CustomDialogClass(this, names);
+        cdd.show();
     }
 }
