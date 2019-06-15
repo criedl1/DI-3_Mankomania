@@ -3,7 +3,6 @@ package com.example.mankomania.map;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,7 +23,7 @@ public class MiniMapDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        // Use the Builder class for convenient dialog construction
+
         Bundle args = getArguments();
         GameController controller = (GameController) args.getSerializable("PLAYERS");
         players = controller.getPlayers();
@@ -34,15 +33,8 @@ public class MiniMapDialogFragment extends DialogFragment {
 
         PhotoView map = myDialog.findViewById(R.id.miniMapImg);
         map.setImageResource(R.drawable.mankomania_minimap);
-        // TODO - set Player positions on minimap
+
         builder.setView(myDialog);
-        builder.setPositiveButton(R.string.mini_map_OK, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-
-            }
-        });
-
-        // Create the AlertDialog object and return it
         return builder.create();
     }
 

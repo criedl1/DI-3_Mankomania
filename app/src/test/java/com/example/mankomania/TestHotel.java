@@ -12,6 +12,7 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -35,11 +36,12 @@ public class TestHotel {
         this.player1ID = p1ID;
         this.p2 = p2;
         this.player2ID = p2ID;
+
     }
 
     @Before
     public void setUp() {
-        this.hotel = new Hotel("SOME_HOTEL");
+        this.hotel = new Hotel(1, "SOME_HOTEL");
     }
 
     @After
@@ -68,6 +70,19 @@ public class TestHotel {
         hotel.setOwner(p1);
         assertFalse(hotel.setOwner(p2));
     }
+
+    @Test
+    public void testHotelName() {
+        assertEquals("SOME_HOTEL", hotel.getHotelName());
+    }
+
+    @Test
+    public void testGetOwner() {
+        hotel.setOwner(p2);
+        assertEquals(p2, hotel.getOwner());
+    }
+
+
 
 
 }
