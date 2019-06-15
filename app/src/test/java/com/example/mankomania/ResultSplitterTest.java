@@ -2,7 +2,6 @@ package com.example.mankomania;
 
 import com.example.mankomania.dice.ResultSplitter;
 
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

@@ -17,7 +17,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -33,8 +32,6 @@ import com.example.mankomania.map.hotels.BuyHotelDialog;
 import com.example.mankomania.map.hotels.Hotel;
 import com.example.mankomania.slotmachine.CasinoStartScreen;
 
-import java.util.Arrays;
-
 import static com.example.mankomania.map.Aktien.HYPO;
 import static com.example.mankomania.map.Aktien.INFINEON;
 import static com.example.mankomania.map.Aktien.STRABAG;
@@ -45,6 +42,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
     private ImageView imgview1;
     private ImageView imgview2;
 
+
     //Screen Size
     private int screenWidth;
 
@@ -52,6 +50,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
     private ImageView[] figures = new ImageView[4];
 
     private TextView[] moneyFields = new TextView[4];
+
 
     private float field1;
     private float field2;
@@ -81,7 +80,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         });
 
         initButtons();
-        Log.d("xxx", "llll" + Arrays.toString(GameController.allfields));
+
 
         //Get Intent and start client
         Intent intent = getIntent();
@@ -95,6 +94,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         moneyFields[1] = findViewById(R.id.currentmoney2);
         moneyFields[2] = findViewById(R.id.currentmoney3);
         moneyFields[3] = findViewById(R.id.currentmoney4);
+
 
         //Position on fields for figures
         field1 = 300;
@@ -125,6 +125,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                 new IntentFilter("client.update"));
 
         this.gameController = new GameController(intent.getStringExtra("IP"), this);
+
         this.gameController.startClient();
     }
 
@@ -138,9 +139,11 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         };
     }
 
+
     private void closeWaitFragment() {
         findViewById(R.id.waitContainer).setVisibility(View.INVISIBLE);
     }
+
 
     @Override
     protected void onDestroy() {
@@ -151,17 +154,17 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         super.onDestroy();
     }
 
-    private static final String translationX = "translationX";
+    private static final String TRANSLATIONX = "translationX";
 
-    public void movePlayerOutOfScreen(final Player player) {
+    public void movePlayerOut(final Player player) {
         float distance;
         distance = screenWidth;
-        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationX, distance);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), TRANSLATIONX, distance);
         animation.setDuration(1000);
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                setPlayerInbetweenScreens();
+                step2();
             }
         });
         animation.start();
@@ -173,7 +176,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         distance = screenWidth - field0;
         player.getFigure().setX(field0);
         player.getFigure().setVisibility(View.VISIBLE);
-        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationX, distance);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), TRANSLATIONX, distance);
         animation.setDuration(1000);
         animation.start();
         animation.addListener(new AnimatorListenerAdapter() {
@@ -182,30 +185,33 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                 if (movingOverLottery) {
                     gameController.sendMoveOverLotto();
                 }
-                setPlayerInbetweenScreens();
+                step2();
             }
         });
     }
 
-    public void movePlayerInScreen(final Player player) {
+    public void movePlayerIn(final Player player) {
         float distance;
         if ((player.getCurrentField() & 1) != 0) {
             distance = field2;
         } else {
             distance = field1 - field0;
         }
+
         player.getFigure().setX(field0);
-        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), translationX, distance);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(player.getFigure(), TRANSLATIONX, distance);
         animation.setDuration(1000);
         animation.start();
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+
                 super.onAnimationEnd(animation);
                 runFieldAction(player.getCurrentField());
             }
         });
     }
+
 
     private void initButtons() {
         imgview1 = findViewById(R.id.imageViewStart);
@@ -228,37 +234,34 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         transaction.commit();
 
     }
-    //step 1: take current Player, display current fields and call method to move player out of screen.
-    public void setPlayerOnCurrentScreen() {
+
+
+    public void step1() {
         Player cPlayer = gameController.currentPlayer();
         cPlayer.setTemporaryField(cPlayer.getCurrentField());
-        Log.d("xxx", "setPlayerOnCurrentScreen currentfield: " + cPlayer.getCurrentField());
         displayField(cPlayer.getCurrentField());
-        movePlayerOutOfScreen(cPlayer);
+        movePlayerOut(cPlayer);
     }
-    /*step 2: take current Player, display current fields and call method to move player over map as many fields as diced.
-              when finished, go further with step 3 to show the new current screen*/
-    public void setPlayerInbetweenScreens() {
+
+    public void step2() {
         Player cPlayer = gameController.currentPlayer();
         boolean movingOverLottery = false;
         if (gameController.isMyTurn() && (GameController.allfields[cPlayer.getTemporaryField()] == R.drawable.field_lottery || GameController.allfields[(cPlayer.getTemporaryField() + 1) % GameController.allfields.length] == R.drawable.field_lottery)) {
             movingOverLottery = true;
         }
         cPlayer.setTemporaryField(cPlayer.getTemporaryField() + 2);
-        Log.d("xxx", "setPlayerInbetweenScreens currentfield: " + cPlayer.getCurrentField());
         if (cPlayer.getTemporaryField() / 2 < cPlayer.getCurrentField() / 2) {
             displayField(cPlayer.getTemporaryField());
             movePlayerOverScreen(cPlayer, movingOverLottery);
         } else {
-            setPlayerOnNewCurrentScreen();
+            step3();
         }
     }
-    //step 3
-    public void setPlayerOnNewCurrentScreen() {
+
+    public void step3() {
 
         Player cPlayer = gameController.currentPlayer();
-        Log.d("xxx", "setPlayerOnNewCurrentScreen currentfield: " + cPlayer.getCurrentField());
-        movePlayerInScreen(cPlayer);
+        movePlayerIn(cPlayer);
         displayField(cPlayer.getCurrentField());
     }
 
@@ -285,7 +288,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
     public void blame(View view) {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
 
-        CharSequence items[] = new CharSequence[gameController.getPlayerCount()-1];
+        CharSequence[] items = new CharSequence[gameController.getPlayerCount()-1];
         int index = 0;
         final int[] players = new int[gameController.getPlayerCount()-1];
         for (int i = 0; i < gameController.getPlayerCount(); i++) {
@@ -310,6 +313,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
 
     public void displayField(int field) {
         currentField = field;
+
         if ((currentField & 1) != 0) {
             currentField--;
         }
@@ -383,7 +387,8 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                     // TODO - startstockexchange
                     break;
                 case R.drawable.field_horserace:
-                    startHorseRace();
+                    // TODO - change method signature if needed and then do your stuff
+                    gameController.justEndTurn();
                     break;
                 case R.drawable.field_hotelsandwirth:
                     buyHotel(gameController.getHotels()[0]);
@@ -396,6 +401,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                     break;
                 case R.drawable.field_lottery:
                     onLotteryAction();
+                    break;
                 default:
                     return;
             }
@@ -424,6 +430,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         int playerIdx = gameController.getPlayerIndex(cPlayer);
         if (playerIdx >= 0) {
             gameController.updateMoney(playerIdx, amount);
+
         }
         return amount;
     }
@@ -431,7 +438,6 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
     public int showHotelOwnerMoneyUpdate(int amount, Player player) {
         int playerIdx = gameController.getPlayerIndex(player);
         if (playerIdx >= 0) {
-            //  gameController.setMoney(playerIdx, cPlayer.getMoney() + amount);
             gameController.updateMoneyHotelOwner(playerIdx, amount);
         }
         return amount;
@@ -548,11 +554,10 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         }
     }
 
-
     public void buyAktie(final Aktien aktie) {
-        AlertDialog.Builder a_builder = new AlertDialog.Builder(MapView.this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MapView.this);
 
-        a_builder.setMessage(String.format(getString(R.string.want_stock), aktie))
+        dialogBuilder.setMessage(String.format(getString(R.string.want_stock), aktie))
                 .setCancelable(false)
                 .setPositiveButton(getString(R.string.yes_excl), new DialogInterface.OnClickListener() {
                     @Override
@@ -567,9 +572,8 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                     }
                 });
 
-        AlertDialog alert = a_builder.create();
+        AlertDialog alert = dialogBuilder.create();
         alert.show();
-
 
     }
 
@@ -579,7 +583,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
             buyHotel(hotel, cPlayer);
         } else {
             if (!hotel.getOwner().equals(cPlayer)) {
-                Toast.makeText(this, "Du musst 1000€ miete zahlen!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.pay_rent), Toast.LENGTH_LONG).show();
                 showHotelOwnerMoneyUpdate(1000, hotel.getOwner());
                 showMoneyUpdate(-1000);
             } else {
@@ -587,7 +591,7 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
             }
         }
     }
-    //method for the case that the hotel is not sold
+
     public void buyHotel(Hotel hotel, Player cPlayer) {
         Bundle args = new Bundle();
         args.putSerializable("PLAYERS", gameController);

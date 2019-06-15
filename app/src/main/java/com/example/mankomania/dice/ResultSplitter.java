@@ -5,6 +5,10 @@ import java.util.Random;
 public class ResultSplitter {
     private static Random random = new Random();
 
+    private ResultSplitter(){
+        // is not needed, just for sonarcloud
+    }
+
     public static int [] splitResult(int result){
         int[] ddiceResult = new int[2];
         if (result >= 7) {

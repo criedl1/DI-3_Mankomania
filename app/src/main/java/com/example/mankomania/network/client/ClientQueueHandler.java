@@ -75,6 +75,7 @@ public class ClientQueueHandler extends QueueHandler {
                 break;
             case NetworkConstants.GAMEEND:
                 gameEnd(jsonObject);
+                break;
             default:
                 break;
         }
@@ -196,7 +197,7 @@ public class ClientQueueHandler extends QueueHandler {
     private void publishUpdate(JsonObject jsonObject){
         Intent intent = new Intent("client.update");
         intent.putExtra("result", jsonObject.toString());
-        LocalBroadcastManager.getInstance(Client.mapView)
+        LocalBroadcastManager.getInstance(Client.getMapView())
                 .sendBroadcast(intent);
     }
 }

@@ -5,13 +5,10 @@ import com.example.mankomania.map.Player;
 import java.io.Serializable;
 
 public class Hotel implements Serializable {
-    private int hotelField;
     private String hotelName;
     private Player owner;
-    private boolean sold;
 
-    public Hotel(int hotelField, String hotelName) {
-        this.hotelField = hotelField;
+    public Hotel(String hotelName) {
         this.hotelName = hotelName;
         this.owner = null;
     }
