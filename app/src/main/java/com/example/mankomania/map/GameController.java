@@ -1,6 +1,7 @@
 package com.example.mankomania.map;
 
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.example.mankomania.R;
 import com.example.mankomania.map.hotels.Hotel;
@@ -15,9 +16,9 @@ public class GameController implements Serializable {
 
     private final MapView mapView;
     private Hotel[] hotels = new Hotel[]{
-            new Hotel("SANDWIRTH"),
-            new Hotel("PLATTENWIRT"),
-            new Hotel("SEEPARKHOTEL"),
+            new Hotel(R.drawable.field_hotelsandwirth, "SANDWIRTH"),
+            new Hotel(R.drawable.field_plattenwirt, "PLATTENWIRT"),
+            new Hotel(R.drawable.field_seeparkhotel, "SEEPARKHOTEL"),
     };
     public List<Player> getPlayers() {
         return players;
@@ -46,14 +47,14 @@ public class GameController implements Serializable {
             R.drawable.field_alterplatz,
             R.drawable.field_aktie2,
             R.drawable.field_aktienboerse,
-            R.drawable.field_horserace,
+            R.drawable.field_minimundus,
             R.drawable.field_zoo,
             R.drawable.field_stadium,
             R.drawable.field_casino,
             R.drawable.field_alterplatz,
             R.drawable.field_lindwurm,
             R.drawable.field_hotelsandwirth,
-            R.drawable.field_horserace,
+            R.drawable.field_lottery,
             R.drawable.field_minimundus,
             R.drawable.field_getsomemoney,
             R.drawable.field_aktie3,
@@ -93,7 +94,8 @@ public class GameController implements Serializable {
 
         this.initReceiver();
         client = new Client();
-        Client.init(ip, mapView);
+        client.init(ip, mapView);
+        Log.i("JONTEST", "Start Client with IP " + ip);
     }
 
     void startClient() {
@@ -217,27 +219,27 @@ public class GameController implements Serializable {
         client.endTurn();
 
     }
-     void stockexchange(){
-         int aktie = randstock.nextInt(2);//
-         int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
+    void stockexchange(){
+        int aktie = randstock.nextInt(2);//
+        int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
 
-         for (Player p:players) {
-             int[] aktien = p.getAktien();
-             if (riseordecrease==0){
-                 if (aktien[aktie]>0){
-                     client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
-                 }
-             }else if (riseordecrease==1){
-                 client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
-             }
-             else {
-                 if (aktien[aktie]>0){
-                     client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()-100000);
-                 }
-             }
-         }
-         client.endTurn();
-     }
+        for (Player p:players) {
+            int aktien[] = p.getAktien();
+            if (riseordecrease==0){
+                if (aktien[aktie]>0){
+                    client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
+                }
+            }else if (riseordecrease==1){
+                client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
+            }
+            else {
+                if (aktien[aktie]>0){
+                    client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()-100000);
+                }
+            }
+        }
+        client.endTurn();
+    }
 
     void setLotto(int amount) {
         this.lotto = amount;
@@ -301,9 +303,6 @@ public class GameController implements Serializable {
         this.players.get(player).setIP(ip);
     }
 
-    void startHorseRace() {
-        client.endTurn();
-    }
 
 
     void justEndTurn() {
@@ -352,22 +351,22 @@ public class GameController implements Serializable {
     }
     void lotteryAction() {
 
-        int myLotto = this.getLotto();
-        if(myLotto==0){
-            client.setLottoOnServer(myLotto+50000);
+        int lotto = this.getLotto();
+        if(lotto==0){
+            client.setLottoOnServer(lotto+50000);
             client.setMoneyOnServer(this.myID, this.players.get(this.myID).getMoney()-50000);
             mapView.showLottoLoose();
         }else{
             client.setLottoOnServer(0);
-            client.setMoneyOnServer(this.myID, this.players.get(this.myID).getMoney()+myLotto);
+            client.setMoneyOnServer(this.myID, this.players.get(this.myID).getMoney()+lotto);
             mapView.showLottoWin();
         }
         client.endTurn();
     }
     void endGame(int player){
         if (this.myID== player){
-        mapView.showMyWin();
-            }
+            mapView.showMyWin();
+        }
         else {
             mapView.showSomeonesWin(player+1);
         }
