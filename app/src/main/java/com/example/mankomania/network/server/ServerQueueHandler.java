@@ -83,9 +83,22 @@ public class ServerQueueHandler extends QueueHandler {
             case NetworkConstants.SET_NAME:
                 setName(jsonObject);
                 break;
+            case NetworkConstants.SET_ORDER:
+                setOrder(jsonObject);
+                break;
             default:
                 break;
         }
+    }
+
+    private void setOrder(JsonObject jsonObject) {
+        JsonArray orderArr = jsonObject.getAsJsonArray(NetworkConstants.ORDER);
+        int[] order = new int[orderArr.size()];
+        for (int i = 0; i < orderArr.size(); i++) {
+            order[i] = orderArr.get(i).getAsInt();
+        }
+        this.gameData.setOrder(order);
+        this.startTurn(0);
     }
 
     private void setName(JsonObject jsonObject) {
@@ -145,12 +158,13 @@ public class ServerQueueHandler extends QueueHandler {
     private void endTurn(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
 
-        player++;
-        player = player % gameData.getIPAdresses().length;
+        int playerIndex = gameData.getPlayerIndex(player);
+        playerIndex++;
+        playerIndex = playerIndex % gameData.getIPAdresses().length;
 
         int winner = checkWinner();
         if (winner < 0) {
-            startTurn(player);
+            startTurn(playerIndex);
         } else {
             sendWinner(winner);
         }
@@ -166,11 +180,11 @@ public class ServerQueueHandler extends QueueHandler {
         return -1;
     }
 
-    public void startTurn(int player) {
-        gameData.setTurn(player);
+    public void startTurn(int playerIndex) {
+        gameData.setTurn(playerIndex);
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.START_TURN);
-        json.addProperty(NetworkConstants.PLAYER, player);
+        json.addProperty(NetworkConstants.PLAYER, gameData.getOrder()[playerIndex]);
         //Send only one Player
         gameData.decrementCheater();
         sendAllClients(json.toString());

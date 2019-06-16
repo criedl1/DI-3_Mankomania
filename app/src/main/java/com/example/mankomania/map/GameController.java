@@ -388,4 +388,8 @@ public class GameController implements Serializable {
     public void showOrderSelection(String[] names) {
         mapView.showOrderSelection(names);
     }
+
+    public void sendOrder(int[] order) {
+        client.sendOrder(order);
+    }
 }

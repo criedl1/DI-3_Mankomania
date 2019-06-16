@@ -681,9 +681,15 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         startActivity(it);
     }
 
+    //show the order selection to the server player
     public void showOrderSelection(String[] names) {
-        Log.d("ORDER", "Show Order for: "+ Arrays.toString(names));
         CustomDialogClass cdd=new CustomDialogClass(this, names);
+        cdd.setCanceledOnTouchOutside(false);
+        cdd.setCancelable(false);
         cdd.show();
+    }
+
+    public void sendOrder(int[] order) {
+        this.gameController.sendOrder(order);
     }
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.map.MapView;
 import com.example.mankomania.network.NetworkConstants;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
@@ -277,6 +278,24 @@ public class Client extends Thread {
             public void run(){
                 JsonObject json = new JsonObject();
                 json.addProperty(NetworkConstants.OPERATION,NetworkConstants.AMSERVER);
+                json.addProperty(NetworkConstants.PLAYER,idx);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+
+    public void sendOrder(final int[] order) {
+        Thread thread = new Thread(){
+            @Override
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_ORDER);
+                JsonArray orderArr = new JsonArray();
+                for (int order : order) {
+                    orderArr.add(order);
+                }
+                json.add(NetworkConstants.ORDER, orderArr);
                 json.addProperty(NetworkConstants.PLAYER,idx);
                 output.println(json.toString());
             }

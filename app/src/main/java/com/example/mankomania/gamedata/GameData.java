@@ -25,6 +25,7 @@ public class GameData {
 
     private int hasTurn = 0;
     private ServerQueueHandler server;
+    private int[] order;
 
     public int getPlayerServer() throws InterruptedException {
         while(playerServer == -1){
@@ -250,5 +251,22 @@ public class GameData {
 
     synchronized public void setName(int idx, String name) {
         this.names[idx] = name;
+    }
+
+    public void setOrder(int[] order) {
+        this.order = order;
+    }
+
+    public int[] getOrder() {
+        return this.order;
+    }
+
+    public int getPlayerIndex(int player) {
+        for (int i = 0; i < this.order.length; i++) {
+            if(this.order[i]==player){
+                return i;
+            }
+        }
+        return -1;
     }
 }
