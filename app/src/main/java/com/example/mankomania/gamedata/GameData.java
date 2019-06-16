@@ -1,5 +1,7 @@
 package com.example.mankomania.gamedata;
 
+import android.util.Log;
+
 import com.example.mankomania.network.server.ServerQueueHandler;
 
 import java.util.Arrays;
@@ -24,11 +26,15 @@ public class GameData {
     private int hasTurn = 0;
     private ServerQueueHandler server;
 
-    public int getPlayerServer() {
+    public int getPlayerServer() throws InterruptedException {
+        while(playerServer == -1){
+            Thread.sleep(100);
+            Log.d("ORDER","Waiting for someone to tell me who is server");
+        }
         return playerServer;
     }
 
-    private int playerServer;
+    private int playerServer = -1;
 
     public String[] getNames() {
         return names.clone();
@@ -185,7 +191,7 @@ public class GameData {
         setIPAdresses(strArr);
 
         // set Player Names
-        Arrays.fill(namesArr,"");
+        Arrays.fill(namesArr,null);
         setNames(namesArr);
 
 

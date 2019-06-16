@@ -92,7 +92,7 @@ public class ServerQueueHandler extends QueueHandler {
         String name = jsonToString(jsonObject, NetworkConstants.NAME);
         int idx = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         // Log.d("ORDER", "SETNAME: "+name+" "+idx+" "+ Arrays.toString(gameData.getNames()));
-        this.gameData.setName(idx,name);
+        this.gameData.setName(idx, name);
         // Log.d("ORDER", "SETNAME: "+name+" "+idx+" "+ Arrays.toString(gameData.getNames()));
     }
 
@@ -101,33 +101,32 @@ public class ServerQueueHandler extends QueueHandler {
         this.gameData.setServerPlayer(player);
     }
 
-    void sendGetOrder(){
+    void sendGetOrder() throws InterruptedException {
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.GET_ORDER);
         JsonArray strArr = new JsonArray();
-        // Log.d("ORDER","Names: " + Arrays.toString(this.gameData.getNames()));
         for (String name : this.gameData.getNames()) {
-             strArr.add(name);
+            strArr.add(name);
         }
         json.add(NetworkConstants.NAME, strArr);
-        clientHandlers[this.gameData.getPlayerServer()].send(json.toString());
+        clientHandlers[gameData.getPlayerServer()].send(json.toString());
     }
 
     private void blamePerson(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int cheater = jsonToInt(jsonObject, NetworkConstants.CHEATER);
-        if(!gameData.getDidBlame()[player]){
+        if (!gameData.getDidBlame()[player]) {
             boolean[] didBlame = gameData.getDidBlame();
             didBlame[player] = true;
             gameData.setDidBlame(didBlame);
             if (gameData.getIsCheater()[cheater] > 0) {
                 int[] isCheater = gameData.getIsCheater();
-                isCheater[cheater]=0;
+                isCheater[cheater] = 0;
                 gameData.setIsCheater(isCheater);
-                gameData.setMoney(player,gameData.getMoney()[player]-100000);
-                sendBlameResult(player, cheater,true);
+                gameData.setMoney(player, gameData.getMoney()[player] - 100000);
+                sendBlameResult(player, cheater, true);
             } else {
-                gameData.setMoney(player,gameData.getMoney()[player]+100000);
+                gameData.setMoney(player, gameData.getMoney()[player] + 100000);
                 sendBlameResult(player, cheater, false);
             }
         }
@@ -139,7 +138,7 @@ public class ServerQueueHandler extends QueueHandler {
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.BLAME_RESULT);
         json.addProperty(NetworkConstants.BLAMER, player);
         json.addProperty(NetworkConstants.BLAMED, cheater);
-        json.addProperty(NetworkConstants.BLAME_RESULT, success?NetworkConstants.BLAME_SUCCESS:NetworkConstants.BLAME_FAIL);
+        json.addProperty(NetworkConstants.BLAME_RESULT, success ? NetworkConstants.BLAME_SUCCESS : NetworkConstants.BLAME_FAIL);
         sendAllClients(json.toString());
     }
 
@@ -150,17 +149,17 @@ public class ServerQueueHandler extends QueueHandler {
         player = player % gameData.getIPAdresses().length;
 
         int winner = checkWinner();
-        if(winner<0) {
+        if (winner < 0) {
             startTurn(player);
-        }else {
+        } else {
             sendWinner(winner);
         }
     }
 
-    private int checkWinner(){
+    private int checkWinner() {
         int[] money = gameData.getMoney();
-        for (int i = 0; i <money.length ; i++) {
-            if(money[i]<=0){
+        for (int i = 0; i < money.length; i++) {
+            if (money[i] <= 0) {
                 return i;
             }
         }
@@ -235,7 +234,7 @@ public class ServerQueueHandler extends QueueHandler {
         //Change GameData
         arr[player] = gameData.getPlayerCount();
         gameData.setIsCheater(arr);
-        gameData.setMoney(player,gameData.getMoney()[player]-100000);
+        gameData.setMoney(player, gameData.getMoney()[player] - 100000);
     }
 
     private void setInfineonAktieForClients(JsonObject jsonObject) {
@@ -273,38 +272,41 @@ public class ServerQueueHandler extends QueueHandler {
         //sendData
         sendHypoAktie(player, count);
     }
+
     private void setSandwirthHotelForClients(JsonObject jsonObject) {
         int[] arr = gameData.getSandwirthHotel();
         //Get Values
-        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
         //Change GameData
         arr[player] = count;
         gameData.setSandwirthHotel(arr);
         //sendData
-        sendSandwirthHotel(player,count);
+        sendSandwirthHotel(player, count);
     }
+
     private void setPlattenwirtHotelForClients(JsonObject jsonObject) {
         int[] arr = gameData.getPlattenwirtHotel();
         //Get Values
-        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
         //Change GameData
         arr[player] = count;
         gameData.setPlattenwirtHotel(arr);
         //sendData
-        sendPlattenwirtHotel(player,count);
+        sendPlattenwirtHotel(player, count);
     }
+
     private void setSeeparkHotelForClients(JsonObject jsonObject) {
         int[] arr = gameData.getSeeparkHotel();
         //Get Values
-        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
         //Change GameData
         arr[player] = count;
         gameData.setSeeparkHotel(arr);
         //sendData
-        sendSeeparkHotel(player,count);
+        sendSeeparkHotel(player, count);
     }
 
     private void setPositionForClients(JsonObject jsonObject) {
@@ -387,23 +389,25 @@ public class ServerQueueHandler extends QueueHandler {
         sendAllClients(json.toString());
     }
 
-    private void sendSandwirthHotel(int idx, int count){
+    private void sendSandwirthHotel(int idx, int count) {
         JsonObject json = new JsonObject();
-        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_SANDWIRTH);
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_SANDWIRTH);
         json.addProperty(NetworkConstants.PLAYER, idx);
         json.addProperty(NetworkConstants.COUNT, count);
         sendAllClients(json.toString());
     }
-    private void sendPlattenwirtHotel(int idx, int count){
+
+    private void sendPlattenwirtHotel(int idx, int count) {
         JsonObject json = new JsonObject();
-        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_PLATTENWIRT);
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_PLATTENWIRT);
         json.addProperty(NetworkConstants.PLAYER, idx);
         json.addProperty(NetworkConstants.COUNT, count);
         sendAllClients(json.toString());
     }
-    private void sendSeeparkHotel(int idx, int count){
+
+    private void sendSeeparkHotel(int idx, int count) {
         JsonObject json = new JsonObject();
-        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_SEEPARK);
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_SEEPARK);
         json.addProperty(NetworkConstants.PLAYER, idx);
         json.addProperty(NetworkConstants.COUNT, count);
         sendAllClients(json.toString());
@@ -443,25 +447,26 @@ public class ServerQueueHandler extends QueueHandler {
     }
 
     void waitForNames() throws InterruptedException {
-        // Log.d("ORDER", "SETNAME: "+Arrays.toString(gameData.getNames()));
-        int count = 0;
-        do{
-            String[] names = gameData.getNames();
+        int count = -1;
+        do {
+            if(count!=-1){
+                Thread.sleep(1000);
+            }
+            String[] names = this.gameData.getNames();
+            count = 0;
             for (int i = 0; i < gameData.getPlayerCount(); i++) {
-                if(!names[i].equals("")){
+                if (names[i] != null) {
                     count++;
                 }
             }
-            Thread.sleep(100);
-            // Log.d("ORDER", "Names already here: "+count);
-        }while(count<this.gameData.getPlayerCount());
+        } while (count < this.gameData.getPlayerCount());
         sendGetOrder();
     }
 
-    public void sendWinner(int player){
+    public void sendWinner(int player) {
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.GAMEEND);
-        json.addProperty(NetworkConstants.PLAYER,player);
+        json.addProperty(NetworkConstants.PLAYER, player);
         sendAllClients(json.toString());
     }
 }

@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void openMap(boolean isServer ) {
         Intent intent = new Intent(this, MapView.class);
         intent.putExtra("IP", ip);
-        intent.putExtra("isServer", true);
+        intent.putExtra("isServer", isServer);
         intent.putExtra("Name", ((TextView)findViewById(R.id.playerName)).getText().toString());
         startActivity(intent);
     }
