@@ -7,6 +7,7 @@ import com.example.mankomania.map.GameController;
 import com.example.mankomania.network.NetworkConstants;
 import com.example.mankomania.network.QueueHandler;
 import com.example.mankomania.roulette.SendMoneyClass;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -28,8 +29,7 @@ public class ServerQueueHandler extends QueueHandler {
     protected void handleMessage(String in) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(in).getAsJsonObject();
-
-        Log.i("C->S", in);
+        Log.i("C->S", "["+"X"+"]: "+in);
         switch (jsonToString(jsonObject, NetworkConstants.OPERATION)) {
             case NetworkConstants.SEND_MONEY:
                 setMoneyForClients(jsonObject);
@@ -76,29 +76,67 @@ public class ServerQueueHandler extends QueueHandler {
             case NetworkConstants.END_TURN:
                 endTurn(jsonObject);
                 break;
-            case NetworkConstants.SEND_CASINO:
-                sendCasinoUpdate(jsonObject);
+            case NetworkConstants.AMSERVER:
+                setServer(jsonObject);
+                break;
+            case NetworkConstants.SET_NAME:
+                setName(jsonObject);
+                break;
+            case NetworkConstants.SET_ORDER:
+                setOrder(jsonObject);
                 break;
             default:
                 break;
         }
     }
 
+    private void setOrder(JsonObject jsonObject) {
+        JsonArray orderArr = jsonObject.getAsJsonArray(NetworkConstants.ORDER);
+        int[] order = new int[orderArr.size()];
+        for (int i = 0; i < orderArr.size(); i++) {
+            order[i] = orderArr.get(i).getAsInt();
+        }
+        this.gameData.setOrder(order);
+        this.startTurn(0);
+    }
+
+    private void setName(JsonObject jsonObject) {
+        String name = jsonToString(jsonObject, NetworkConstants.NAME);
+        int idx = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        this.gameData.setName(idx, name);
+    }
+
+    private void setServer(JsonObject jsonObject) {
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        this.gameData.setServerPlayer(player);
+    }
+
+    private void sendGetOrder() throws InterruptedException {
+        JsonObject json = new JsonObject();
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.GET_ORDER);
+        JsonArray strArr = new JsonArray();
+        for (String name : this.gameData.getNames()) {
+            strArr.add(name);
+        }
+        json.add(NetworkConstants.NAME, strArr);
+        clientHandlers[gameData.getPlayerServer()].send(json.toString());
+    }
+
     private void blamePerson(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int cheater = jsonToInt(jsonObject, NetworkConstants.CHEATER);
-        if(!gameData.getDidBlame()[player]){
+        if (!gameData.getDidBlame()[player]) {
             boolean[] didBlame = gameData.getDidBlame();
             didBlame[player] = true;
             gameData.setDidBlame(didBlame);
             if (gameData.getIsCheater()[cheater] > 0) {
                 int[] isCheater = gameData.getIsCheater();
-                isCheater[cheater]=0;
+                isCheater[cheater] = 0;
                 gameData.setIsCheater(isCheater);
-                gameData.setMoney(player,gameData.getMoney()[player]-100000);
-                sendBlameResult(player, cheater,true);
+                gameData.setMoney(player, gameData.getMoney()[player] - 100000);
+                sendBlameResult(player, cheater, true);
             } else {
-                gameData.setMoney(player,gameData.getMoney()[player]+100000);
+                gameData.setMoney(player, gameData.getMoney()[player] + 100000);
                 sendBlameResult(player, cheater, false);
             }
         }
@@ -110,39 +148,40 @@ public class ServerQueueHandler extends QueueHandler {
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.BLAME_RESULT);
         json.addProperty(NetworkConstants.BLAMER, player);
         json.addProperty(NetworkConstants.BLAMED, cheater);
-        json.addProperty(NetworkConstants.BLAME_RESULT, success?NetworkConstants.BLAME_SUCCESS:NetworkConstants.BLAME_FAIL);
+        json.addProperty(NetworkConstants.BLAME_RESULT, success ? NetworkConstants.BLAME_SUCCESS : NetworkConstants.BLAME_FAIL);
         sendAllClients(json.toString());
     }
 
     private void endTurn(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
 
-        player++;
-        player = player % gameData.getPlayers().length;
+        int playerIndex = gameData.getPlayerIndex(player);
+        playerIndex++;
+        playerIndex = playerIndex % gameData.getIpAdresses().length;
 
         int winner = checkWinner();
-        if(winner<0) {
-            startTurn(player);
-        }else {
+        if (winner < 0) {
+            startTurn(playerIndex);
+        } else {
             sendWinner(winner);
         }
     }
 
-    private int checkWinner(){
+    private int checkWinner() {
         int[] money = gameData.getMoney();
-        for (int i = 0; i <money.length ; i++) {
-            if(money[i]<=0){
+        for (int i = 0; i < money.length; i++) {
+            if (money[i] <= 0) {
                 return i;
             }
         }
         return -1;
     }
 
-    public void startTurn(int player) {
-        gameData.setTurn(player);
+    private void startTurn(int playerIndex) {
+        gameData.setTurn(playerIndex);
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.START_TURN);
-        json.addProperty(NetworkConstants.PLAYER, player);
+        json.addProperty(NetworkConstants.PLAYER, gameData.getOrder()[playerIndex]);
         //Send only one Player
         gameData.decrementCheater();
         sendAllClients(json.toString());
@@ -150,9 +189,8 @@ public class ServerQueueHandler extends QueueHandler {
 
     private void spinWheelForClients(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
 
-        sendSpinResult(player, result);
+        sendSpinResult(player, SendMoneyClass.getMoneyAmount());
     }
 
     private void sendSpinResult(int idx, int result) {
@@ -176,14 +214,6 @@ public class ServerQueueHandler extends QueueHandler {
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.ROLL_DICE);
         json.addProperty(NetworkConstants.RESULT, result);
         json.addProperty(NetworkConstants.PLAYER, idx);
-        sendAllClients(json.toString());
-    }
-
-    private void sendCasinoUpdate(JsonObject jsonObject){
-        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
-        JsonObject json = new JsonObject();
-        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SEND_CASINO);
-        json.addProperty(NetworkConstants.RESULT, result);
         sendAllClients(json.toString());
     }
 
@@ -215,7 +245,7 @@ public class ServerQueueHandler extends QueueHandler {
         //Change GameData
         arr[player] = gameData.getPlayerCount();
         gameData.setIsCheater(arr);
-        gameData.setMoney(player,gameData.getMoney()[player]-100000);
+        gameData.setMoney(player, gameData.getMoney()[player] - 100000);
     }
 
     private void setInfineonAktieForClients(JsonObject jsonObject) {
@@ -253,38 +283,41 @@ public class ServerQueueHandler extends QueueHandler {
         //sendData
         sendHypoAktie(player, count);
     }
+
     private void setSandwirthHotelForClients(JsonObject jsonObject) {
         int[] arr = gameData.getSandwirthHotel();
         //Get Values
-        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
         //Change GameData
         arr[player] = count;
         gameData.setSandwirthHotel(arr);
         //sendData
-        sendSandwirthHotel(player,count);
+        sendSandwirthHotel(player, count);
     }
+
     private void setPlattenwirtHotelForClients(JsonObject jsonObject) {
         int[] arr = gameData.getPlattenwirtHotel();
         //Get Values
-        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
         //Change GameData
         arr[player] = count;
         gameData.setPlattenwirtHotel(arr);
         //sendData
-        sendPlattenwirtHotel(player,count);
+        sendPlattenwirtHotel(player, count);
     }
+
     private void setSeeparkHotelForClients(JsonObject jsonObject) {
         int[] arr = gameData.getSeeparkHotel();
         //Get Values
-        int player =jsonToInt(jsonObject,NetworkConstants.PLAYER);
-        int count = jsonToInt(jsonObject,NetworkConstants.COUNT);
+        int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int count = jsonToInt(jsonObject, NetworkConstants.COUNT);
         //Change GameData
         arr[player] = count;
         gameData.setSeeparkHotel(arr);
         //sendData
-        sendSeeparkHotel(player,count);
+        sendSeeparkHotel(player, count);
     }
 
     private void setPositionForClients(JsonObject jsonObject) {
@@ -335,7 +368,7 @@ public class ServerQueueHandler extends QueueHandler {
         sendAllClients(json.toString());
     }
 
-    public void sendPosition(int idx, int pos) {
+    private void sendPosition(int idx, int pos) {
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_POSITION);
         json.addProperty(NetworkConstants.PLAYER, idx);
@@ -367,23 +400,25 @@ public class ServerQueueHandler extends QueueHandler {
         sendAllClients(json.toString());
     }
 
-    private void sendSandwirthHotel(int idx, int count){
+    private void sendSandwirthHotel(int idx, int count) {
         JsonObject json = new JsonObject();
-        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_SANDWIRTH);
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_SANDWIRTH);
         json.addProperty(NetworkConstants.PLAYER, idx);
         json.addProperty(NetworkConstants.COUNT, count);
         sendAllClients(json.toString());
     }
-    private void sendPlattenwirtHotel(int idx, int count){
+
+    private void sendPlattenwirtHotel(int idx, int count) {
         JsonObject json = new JsonObject();
-        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_PLATTENWIRT);
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_PLATTENWIRT);
         json.addProperty(NetworkConstants.PLAYER, idx);
         json.addProperty(NetworkConstants.COUNT, count);
         sendAllClients(json.toString());
     }
-    private void sendSeeparkHotel(int idx, int count){
+
+    private void sendSeeparkHotel(int idx, int count) {
         JsonObject json = new JsonObject();
-        json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_SEEPARK);
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_SEEPARK);
         json.addProperty(NetworkConstants.PLAYER, idx);
         json.addProperty(NetworkConstants.COUNT, count);
         sendAllClients(json.toString());
@@ -419,12 +454,30 @@ public class ServerQueueHandler extends QueueHandler {
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SUCCESSCHEAT);
         json.addProperty(NetworkConstants.PLAYER, index);
         sendAllClients(json.toString());
+
     }
 
-    public void sendWinner(int player){
+    void waitForNames() throws InterruptedException {
+        int count = -1;
+        do {
+            if(count!=-1){
+                Thread.sleep(1000);
+            }
+            String[] names = this.gameData.getNames();
+            count = 0;
+            for (int i = 0; i < gameData.getPlayerCount(); i++) {
+                if (names[i] != null) {
+                    count++;
+                }
+            }
+        } while (count < this.gameData.getPlayerCount());
+        sendGetOrder();
+    }
+
+    private void sendWinner(int player) {
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.GAMEEND);
-        json.addProperty(NetworkConstants.PLAYER,player);
+        json.addProperty(NetworkConstants.PLAYER, player);
         sendAllClients(json.toString());
     }
 }

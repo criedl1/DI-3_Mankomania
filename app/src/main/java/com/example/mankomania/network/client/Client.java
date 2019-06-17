@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.map.MapView;
 import com.example.mankomania.network.NetworkConstants;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
@@ -19,6 +20,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 // Client class
 public class Client extends Thread {
+    private static String name;
     private final GameData gameData = new GameData();
     private static String ipHost;
     private PrintWriter output;
@@ -34,9 +36,10 @@ public class Client extends Thread {
         // just for sonarCloud
     }
 
-    public static void init(String ipHost, MapView mapView){
+    public static void init(String ipHost, MapView mapView, String name){
         Client.ipHost = ipHost;
         Client.mapView = mapView;
+        Client.name = name;
     }
 
     @Override
@@ -63,9 +66,25 @@ public class Client extends Thread {
             //Close Socket
             clientListener.join();
             clientQueueHandler.join();
+
         } catch (Exception err) {
             Log.e("CLIENT", ""+ err);
         }
+    }
+
+    public void setMyName() {
+        // new Thread because Network cant be on the UI Thread (temp Fix)
+        Thread thread = new Thread(){
+            @Override
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_NAME);
+                json.addProperty(NetworkConstants.NAME, name);
+                json.addProperty(NetworkConstants.PLAYER, idx);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
     }
 
     //Index
@@ -80,28 +99,15 @@ public class Client extends Thread {
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
-                json.addProperty("OPERATION",NetworkConstants.SEND_MONEY);
-                json.addProperty("PLAYER", idx);
-                json.addProperty("Money", money);
-                output.println(json.toString());
-            }
-        };
-        thread.start();
-    }
-    public void setPostionOnServer(final int idx,final int pos){
-        // new Thread because Network cant be on the UI Thread (temp Fix)
-        Thread thread = new Thread(){
-            @Override
-            public void run(){
-                JsonObject json = new JsonObject();
-                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_POSITION);
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SEND_MONEY);
                 json.addProperty(NetworkConstants.PLAYER, idx);
-                json.addProperty(NetworkConstants.POSITION, pos);
+                json.addProperty(NetworkConstants.MONEY, money);
                 output.println(json.toString());
             }
         };
         thread.start();
     }
+
     public void setHypoAktieOnServer(final int idx,final int count){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
@@ -232,10 +238,10 @@ public class Client extends Thread {
 
     //GameDate Requests
     public String getOwnIP(){
-        return gameData.getPlayers()[idx];
+        return gameData.getIpAdresses()[idx];
     }
     public String[] getPlayers() {
-        return gameData.getPlayers();
+        return gameData.getIpAdresses();
     }
     public int[] getPosition() {
         return gameData.getPosition();
@@ -267,6 +273,37 @@ public class Client extends Thread {
                 json.addProperty(NetworkConstants.OPERATION,NetworkConstants.BLAME_CHEATER);
                 json.addProperty(NetworkConstants.PLAYER,idx);
                 json.addProperty(NetworkConstants.CHEATER,cheater);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+
+    public void amServer() {
+        Thread thread = new Thread(){
+            @Override
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.AMSERVER);
+                json.addProperty(NetworkConstants.PLAYER,idx);
+                output.println(json.toString());
+            }
+        };
+        thread.start();
+    }
+
+    public void sendOrder(final int[] order) {
+        Thread thread = new Thread(){
+            @Override
+            public void run(){
+                JsonObject json = new JsonObject();
+                json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_ORDER);
+                JsonArray orderArr = new JsonArray();
+                for (int order : order) {
+                    orderArr.add(order);
+                }
+                json.add(NetworkConstants.ORDER, orderArr);
+                json.addProperty(NetworkConstants.PLAYER,idx);
                 output.println(json.toString());
             }
         };
