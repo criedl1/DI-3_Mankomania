@@ -447,6 +447,19 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         startActivity(it);
     }
 
+    public void showCasinoResult(int result){
+        String won;
+        if(result > 0){
+            won = "gewonnen.";
+        }
+        else{
+            result = result * (-1);
+            won = "verloren.";
+        }
+
+        Toast.makeText(this, "Im Casino wurden " + result + " " + won, Toast.LENGTH_LONG).show();
+    }
+
     public void sendRollDice() {
         gameController.rollTheDice();
     }
