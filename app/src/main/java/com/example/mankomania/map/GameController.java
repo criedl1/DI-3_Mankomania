@@ -15,6 +15,7 @@ import java.util.Random;
 public class GameController implements Serializable {
 
     private final MapView mapView;
+    private List<Player> players;
     private Hotel[] hotels = new Hotel[]{
             new Hotel(R.drawable.field_hotelsandwirth, "SANDWIRTH"),
             new Hotel(R.drawable.field_plattenwirt, "PLATTENWIRT"),
@@ -32,7 +33,6 @@ public class GameController implements Serializable {
         }
     }
 
-    private List<Player> players;
     private Random randstock =new Random();
 
 
@@ -87,15 +87,16 @@ public class GameController implements Serializable {
 
     private int lotto;
     private int hasTurn;
+    private boolean isServer;
 
-    GameController(String ip, MapView mapView) {
+    GameController(String ip, String name,boolean isServer, MapView mapView) {
         this.mapView = mapView;
         players = new ArrayList<>();
-
+        this.isServer = isServer;
         this.initReceiver();
         client = new Client();
-        client.init(ip, mapView);
-        Log.i("JONTEST", "Start Client with IP " + ip);
+        client.init(ip, mapView, name);
+        Log.i("JONTEST", "Start Client with Name " + ip);
     }
 
     void startClient() {
@@ -158,22 +159,23 @@ public class GameController implements Serializable {
         client.rollTheDice();
     }
 
-    void updateMoney(int playerIdx, int balance) {
+    void setMoneyOnServerAndEndTurn(int playerIdx, int balance) {
         int bal = currentPlayer().getMoney();
         client.setMoneyOnServer(playerIdx, bal + balance);
         client.endTurn();
     }
+
     void updateMoneyHotelOwner(int playerIdx, int balance) {
         int bal = currentPlayer().getMoney();
         client.setMoneyOnServer(playerIdx, bal + balance);
     }
 
-    public void setMyPlayerID(int player) {
+    void setMyPlayerID(int player) {
         this.myID = player;
         this.players.get(myID).initMyMoneyField(ContextCompat.getColor(mapView, R.color.moneyBGMine));
     }
 
-    public void setMoney(int player, int money) {
+    void setMoneyOnUI(int player, int money) {
         this.players.get(player).setMoney(money);
         showMoneyUpdate(player, money);
     }
@@ -193,7 +195,7 @@ public class GameController implements Serializable {
 
     void setHypoAktie(int player, int count) {
         client.setHypoAktieOnServer(player, count);
-        updateMoney(player, -100000);
+        setMoneyOnServerAndEndTurn(player, -100000);
         client.endTurn();
     }
 
@@ -204,7 +206,7 @@ public class GameController implements Serializable {
 
     void setStrabagAktie(int player, int count) {
         client.setStrabagAktieOnServer(player, count);
-        updateMoney(player, -100000);
+        setMoneyOnServerAndEndTurn(player, -100000);
         client.endTurn();
     }
 
@@ -215,7 +217,7 @@ public class GameController implements Serializable {
 
     void setInfineonAktie(int player, int count) {
         client.setInfineonAktieOnServer(player, count);
-        updateMoney(player, -100000);
+        setMoneyOnServerAndEndTurn(player, -100000);
         client.endTurn();
 
     }
@@ -272,6 +274,10 @@ public class GameController implements Serializable {
             this.players.add(new Player());
         }
         mapView.initPlayerFields();
+        if(isServer){
+            client.amServer();
+        }
+        client.setMyName();
     }
 
     Player currentPlayer() {
@@ -310,7 +316,7 @@ public class GameController implements Serializable {
     }
 
     void sendMoveOverLotto() {
-        this.setMoney(hasTurn, this.currentPlayer().getMoney() - 5000);
+        this.setMoneyOnUI(hasTurn, this.currentPlayer().getMoney() - 5000);
         this.client.setMoneyOnServer(this.myID, this.currentPlayer().getMoney() - 5000);
         this.client.setLottoOnServer(this.lotto + 5000);
     }
@@ -341,7 +347,7 @@ public class GameController implements Serializable {
 
     public void sendHotel(int hotel, int player, int price){
         this.client.setHotelOnServer(hotel,player, price);
-        updateMoney(player, -price);
+        setMoneyOnServerAndEndTurn(player, -price);
         client.endTurn();
     }
 
@@ -370,5 +376,13 @@ public class GameController implements Serializable {
         else {
             mapView.showSomeonesWin(player+1);
         }
+    }
+
+    public void showOrderSelection(String[] names) {
+        mapView.showOrderSelection(names);
+    }
+
+    public void sendOrder(int[] order) {
+        client.sendOrder(order);
     }
 }

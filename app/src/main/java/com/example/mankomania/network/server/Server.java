@@ -49,14 +49,14 @@ public class Server extends Thread {
             //Queue Handler which handles the incoming Messages
             ServerQueueHandler serverQueueHandler = new ServerQueueHandler(clientHandlers,queue,gameData);
 
+            // Start listening
+            serverQueueHandler.start();
+
             // Send GameData to all
             sendGameData(serverQueueHandler);
 
-            // Start with Player 0
-            serverQueueHandler.startTurn(0);
-
-            // Start listening
-            serverQueueHandler.start();
+            //waitForNames
+            waitForNames(serverQueueHandler);
 
             //Close Socket
             serverQueueHandler.join();
@@ -64,6 +64,10 @@ public class Server extends Thread {
         } catch (Exception err) {
             Log.e("CLIENT", "" + err);
         }
+    }
+
+    private void waitForNames(ServerQueueHandler serverQueueHandler) throws InterruptedException {
+        serverQueueHandler.waitForNames();
     }
 
     private void joinClientHandlers(ClientHandler[] clientHandlers) throws InterruptedException{
@@ -75,7 +79,7 @@ public class Server extends Thread {
     private void sendGameData(ServerQueueHandler serverQueueHandler){
 
         for (int i = 0; i< playercount; i++) {
-            serverQueueHandler.sendPlayer(i,gameData.getPlayers()[i]);
+            serverQueueHandler.sendPlayer(i,gameData.getIpAdresses()[i]);
             serverQueueHandler.sendMoney(i,gameData.getMoney()[i]);
         }
     }
@@ -93,14 +97,14 @@ public class Server extends Thread {
         int playerCount = 0;
         String[] arr;
 
-        while (playerCount< gameData.getPlayers().length) {
+        while (playerCount< gameData.getIpAdresses().length) {
             // socket object to receive incoming client requests
             sockets[playerCount] = serverSocket.accept();
 
             // Set player address in Players[]
-            arr =gameData.getPlayers();
+            arr =gameData.getIpAdresses();
             arr[playerCount] = sockets[playerCount].getInetAddress().getHostAddress();
-            gameData.setPlayers(arr);
+            gameData.setIpAdresses(arr);
             // create a new ClientHandler object and start it
             clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue,playerCount, playercount);
             clientHandlers[playerCount].start();
@@ -110,6 +114,7 @@ public class Server extends Thread {
             // increase countPlayer
             playerCount++;
         }
+
     }
 
 }
