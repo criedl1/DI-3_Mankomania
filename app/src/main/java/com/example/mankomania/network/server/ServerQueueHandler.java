@@ -12,7 +12,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.Queue;
-import java.util.Random;
 
 public class ServerQueueHandler extends QueueHandler {
     private ClientHandler[] clientHandlers;
@@ -29,8 +28,7 @@ public class ServerQueueHandler extends QueueHandler {
     protected void handleMessage(String in) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(in).getAsJsonObject();
-
-        Log.i("C->S", in);
+        Log.i("C->S", "["+"X"+"]: "+in);
         switch (jsonToString(jsonObject, NetworkConstants.OPERATION)) {
             case NetworkConstants.SEND_MONEY:
                 setMoneyForClients(jsonObject);
@@ -104,9 +102,7 @@ public class ServerQueueHandler extends QueueHandler {
     private void setName(JsonObject jsonObject) {
         String name = jsonToString(jsonObject, NetworkConstants.NAME);
         int idx = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        // Log.d("ORDER", "SETNAME: "+name+" "+idx+" "+ Arrays.toString(gameData.getNames()));
         this.gameData.setName(idx, name);
-        // Log.d("ORDER", "SETNAME: "+name+" "+idx+" "+ Arrays.toString(gameData.getNames()));
     }
 
     private void setServer(JsonObject jsonObject) {
@@ -114,7 +110,7 @@ public class ServerQueueHandler extends QueueHandler {
         this.gameData.setServerPlayer(player);
     }
 
-    void sendGetOrder() throws InterruptedException {
+    private void sendGetOrder() throws InterruptedException {
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.GET_ORDER);
         JsonArray strArr = new JsonArray();
@@ -160,7 +156,7 @@ public class ServerQueueHandler extends QueueHandler {
 
         int playerIndex = gameData.getPlayerIndex(player);
         playerIndex++;
-        playerIndex = playerIndex % gameData.getIPAdresses().length;
+        playerIndex = playerIndex % gameData.getIpAdresses().length;
 
         int winner = checkWinner();
         if (winner < 0) {
@@ -180,7 +176,7 @@ public class ServerQueueHandler extends QueueHandler {
         return -1;
     }
 
-    public void startTurn(int playerIndex) {
+    private void startTurn(int playerIndex) {
         gameData.setTurn(playerIndex);
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.START_TURN);
@@ -206,7 +202,8 @@ public class ServerQueueHandler extends QueueHandler {
 
     private void rollDiceForClients(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        int result = new Random().nextInt(11) + 2;
+        //int result = new Random().nextInt(11) + 2;
+        int result = 2;
         gameData.setPosition(player, (gameData.getPosition()[player] + result) % GameController.allfields.length);
         sendPosition(player, gameData.getPosition()[player]);
         sendDiceResult(player, result);
@@ -371,7 +368,7 @@ public class ServerQueueHandler extends QueueHandler {
         sendAllClients(json.toString());
     }
 
-    public void sendPosition(int idx, int pos) {
+    private void sendPosition(int idx, int pos) {
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SET_POSITION);
         json.addProperty(NetworkConstants.PLAYER, idx);
@@ -477,7 +474,7 @@ public class ServerQueueHandler extends QueueHandler {
         sendGetOrder();
     }
 
-    public void sendWinner(int player) {
+    private void sendWinner(int player) {
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.GAMEEND);
         json.addProperty(NetworkConstants.PLAYER, player);

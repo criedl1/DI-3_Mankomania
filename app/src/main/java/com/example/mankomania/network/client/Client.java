@@ -21,7 +21,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 // Client class
 public class Client extends Thread {
     private static String name;
-    private static boolean isServer;
     private final GameData gameData = new GameData();
     private static String ipHost;
     private PrintWriter output;
@@ -237,10 +236,10 @@ public class Client extends Thread {
 
     //GameDate Requests
     public String getOwnIP(){
-        return gameData.getIPAdresses()[idx];
+        return gameData.getIpAdresses()[idx];
     }
     public String[] getPlayers() {
-        return gameData.getIPAdresses();
+        return gameData.getIpAdresses();
     }
     public int[] getPosition() {
         return gameData.getPosition();

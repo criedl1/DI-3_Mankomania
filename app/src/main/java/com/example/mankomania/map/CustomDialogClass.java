@@ -17,13 +17,11 @@ public class CustomDialogClass extends Dialog implements
 
     private final String[] names;
     private final int[] order;
-    public MapView mapView;
-    public Button yes;
+    private MapView mapView;
 
-    public CustomDialogClass(MapView a, String[] names) {
-        super(a);
-        // TODO Auto-generated constructor stub
-        this.mapView = a;
+    CustomDialogClass(MapView mapView, String[] names) {
+        super(mapView);
+        this.mapView = mapView;
         this.names = names;
         this.order = new int[this.names.length];
         for (int i = 0; i < order.length; i++) {
@@ -36,7 +34,7 @@ public class CustomDialogClass extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choose_order_dialog);
-        yes = findViewById(R.id.save);
+        Button yes = findViewById(R.id.save);
         yes.setOnClickListener(this);
 
         final ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(mapView, R.layout.support_simple_spinner_dropdown_item, this.names);

@@ -67,7 +67,6 @@ public class Server extends Thread {
     }
 
     private void waitForNames(ServerQueueHandler serverQueueHandler) throws InterruptedException {
-        Log.d("ORDER", "Wait for Names now");
         serverQueueHandler.waitForNames();
     }
 
@@ -80,7 +79,7 @@ public class Server extends Thread {
     private void sendGameData(ServerQueueHandler serverQueueHandler){
 
         for (int i = 0; i< playercount; i++) {
-            serverQueueHandler.sendPlayer(i,gameData.getIPAdresses()[i]);
+            serverQueueHandler.sendPlayer(i,gameData.getIpAdresses()[i]);
             serverQueueHandler.sendMoney(i,gameData.getMoney()[i]);
         }
     }
@@ -98,14 +97,14 @@ public class Server extends Thread {
         int playerCount = 0;
         String[] arr;
 
-        while (playerCount< gameData.getIPAdresses().length) {
+        while (playerCount< gameData.getIpAdresses().length) {
             // socket object to receive incoming client requests
             sockets[playerCount] = serverSocket.accept();
 
             // Set player address in Players[]
-            arr =gameData.getIPAdresses();
+            arr =gameData.getIpAdresses();
             arr[playerCount] = sockets[playerCount].getInetAddress().getHostAddress();
-            gameData.setIPAdresses(arr);
+            gameData.setIpAdresses(arr);
             // create a new ClientHandler object and start it
             clientHandlers[playerCount] = new ClientHandler(sockets[playerCount],queue,playerCount, playercount);
             clientHandlers[playerCount].start();

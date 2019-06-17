@@ -7,7 +7,7 @@ import com.example.mankomania.network.server.ServerQueueHandler;
 import java.util.Arrays;
 
 public class GameData {
-    private String[] IPAdresses;
+    private String[] ipAdresses;
     private int[] position;
     private int[] money;
     private int lotto;
@@ -47,12 +47,12 @@ public class GameData {
 
     private String[] names;
 
-    public String[] getIPAdresses() {
-        return IPAdresses.clone();
+    public String[] getIpAdresses() {
+        return ipAdresses.clone();
     }
 
-    public void setIPAdresses(String[] player) {
-        IPAdresses = player;
+    public void setIpAdresses(String[] player) {
+        ipAdresses = player;
     }
 
     public int[] getPosition() {
@@ -86,7 +86,7 @@ public class GameData {
 
     public int getPlayerCount() {
         int count = 0;
-        for (String player : this.IPAdresses) {
+        for (String player : this.ipAdresses) {
             if (player != null) {
                 count++;
             }
@@ -184,12 +184,11 @@ public class GameData {
         int[] boolArr = new int[playerCount];
         String[] strArr = new String[playerCount];
         boolean[] blameArr = new boolean[playerCount];
-        boolean[] didBlame = new boolean[playerCount];
         String[] namesArr = new String[playerCount];
 
         // Set Player[] (fills in ConnectPlayers)
         Arrays.fill(strArr, "");
-        setIPAdresses(strArr);
+        setIpAdresses(strArr);
 
         // set Player Names
         Arrays.fill(namesArr,null);
@@ -249,7 +248,7 @@ public class GameData {
         this.playerServer = player;
     }
 
-    synchronized public void setName(int idx, String name) {
+    public synchronized void setName(int idx, String name) {
         this.names[idx] = name;
     }
 

@@ -174,13 +174,13 @@ public class ClientQueueHandler extends QueueHandler {
         publishUpdate(jsonObject);
     }
     private void setPlayerId(JsonObject jsonObject) {
-        String[] arr = gameData.getIPAdresses();
+        String[] arr = gameData.getIpAdresses();
         //Get Values
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         String ip = jsonToString(jsonObject, NetworkConstants.IP);
         //Change GameData
         arr[player] = ip;
-        gameData.setIPAdresses(arr);
+        gameData.setIpAdresses(arr);
         publishUpdate(jsonObject);
     }
 

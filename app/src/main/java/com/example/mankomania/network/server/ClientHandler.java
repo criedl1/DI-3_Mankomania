@@ -56,7 +56,7 @@ class ClientHandler extends Thread {
     }
 
     void send(String string){
-        Log.i("S->C",string);
+        Log.i("S->C","["+id+"]: "+string);
         output.println(string);
     }
 }

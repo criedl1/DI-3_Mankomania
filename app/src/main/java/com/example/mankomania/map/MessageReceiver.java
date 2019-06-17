@@ -167,7 +167,7 @@ class MessageReceiver {
 
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int money = jsonToInt(jsonObject, NetworkConstants.MONEY);
-        gameController.setMoney(player, money);
+        gameController.setMoneyOnUI(player, money);
     }
 
 
