@@ -1,11 +1,13 @@
 package com.example.mankomania.gamedata;
 
+import android.util.Log;
+
 import com.example.mankomania.network.server.ServerQueueHandler;
 
 import java.util.Arrays;
 
 public class GameData {
-    private String[] players;
+    private String[] ipAdresses;
     private int[] position;
     private int[] money;
     private int lotto;
@@ -23,13 +25,34 @@ public class GameData {
 
     private int hasTurn = 0;
     private ServerQueueHandler server;
+    private int[] order;
 
-    public String[] getPlayers() {
-        return players.clone();
+    public int getPlayerServer() throws InterruptedException {
+        while(playerServer == -1){
+            Thread.sleep(100);
+            Log.d("ORDER","Waiting for someone to tell me who is server");
+        }
+        return playerServer;
     }
 
-    public void setPlayers(String[] player) {
-        players = player;
+    private int playerServer = -1;
+
+    public String[] getNames() {
+        return names.clone();
+    }
+
+    public void setNames(String[] names) {
+        this.names = names;
+    }
+
+    private String[] names;
+
+    public String[] getIpAdresses() {
+        return ipAdresses.clone();
+    }
+
+    public void setIpAdresses(String[] player) {
+        ipAdresses = player;
     }
 
     public int[] getPosition() {
@@ -63,7 +86,7 @@ public class GameData {
 
     public int getPlayerCount() {
         int count = 0;
-        for (String player : this.players) {
+        for (String player : this.ipAdresses) {
             if (player != null) {
                 count++;
             }
@@ -161,10 +184,15 @@ public class GameData {
         int[] boolArr = new int[playerCount];
         String[] strArr = new String[playerCount];
         boolean[] blameArr = new boolean[playerCount];
+        String[] namesArr = new String[playerCount];
 
         // Set Player[] (fills in ConnectPlayers)
         Arrays.fill(strArr, "");
-        setPlayers(strArr);
+        setIpAdresses(strArr);
+
+        // set Player Names
+        Arrays.fill(namesArr,null);
+        setNames(namesArr);
 
 
         // Set Arrays with 0
@@ -214,5 +242,30 @@ public class GameData {
             index++;
         }
         setIsCheater(cheaterArr);
+    }
+
+    public void setServerPlayer(int player) {
+        this.playerServer = player;
+    }
+
+    public synchronized void setName(int idx, String name) {
+        this.names[idx] = name;
+    }
+
+    public void setOrder(int[] order) {
+        this.order = order;
+    }
+
+    public int[] getOrder() {
+        return this.order;
+    }
+
+    public int getPlayerIndex(int player) {
+        for (int i = 0; i < this.order.length; i++) {
+            if(this.order[i]==player){
+                return i;
+            }
+        }
+        return -1;
     }
 }

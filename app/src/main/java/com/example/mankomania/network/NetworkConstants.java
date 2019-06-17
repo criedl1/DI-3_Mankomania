@@ -1,6 +1,7 @@
 package com.example.mankomania.network;
 
 public class NetworkConstants {
+
     private NetworkConstants(){}
 
     //Operations
@@ -27,7 +28,12 @@ public class NetworkConstants {
     public static final String MONEY_UPDATE = "updateMoney";
     public static final String ROULETTE = "ROULETTERESULT";
     public static final String SUCCESSCHEAT = "SuccessCheat";
+    public static final String AMSERVER = "iAmServer";
+    public static final String GET_ORDER = "getOrder";
+    public static final String SET_NAME = "setName";
+    public static final String NAME = "name";
     public static final String GAMEEND = "GameEnd";
+    public static final String SET_ORDER = "SET_ORDER";
     //Values
     public static final String OPERATION = "OPERATION";
     public static final String ID = "ID";
@@ -46,4 +52,5 @@ public class NetworkConstants {
     public static final String BLAME_FAIL = "blameSuccess";
     public static final String BLAMER = "blamer";
     public static final String BLAMED = "blamed";
+    public static final String ORDER = "ORDER";
 }

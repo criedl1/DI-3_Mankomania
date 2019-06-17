@@ -1,6 +1,7 @@
 package com.example.mankomania.map;
 
 import com.example.mankomania.network.NetworkConstants;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -72,9 +73,21 @@ class MessageReceiver {
             case NetworkConstants.GAMEEND:
                 showGameEnd(jsonObject);
                 break;
+            case NetworkConstants.GET_ORDER:
+                showOrderSelection(jsonObject);
+                break;
             default:
                 throw new IllegalStateException("Network Object should not be here: " + message);
         }
+    }
+
+    private void showOrderSelection(JsonObject jsonObject) {
+        JsonArray namesArr = jsonObject.getAsJsonArray(NetworkConstants.NAME);
+        String[] names = new String[namesArr.size()];
+        for (int i = 0; i < namesArr.size(); i++) {
+            names[i] = namesArr.get(i).getAsString();
+        }
+        gameController.showOrderSelection(names);
     }
 
     private void showGameEnd(JsonObject jsonObject){
@@ -154,7 +167,7 @@ class MessageReceiver {
 
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int money = jsonToInt(jsonObject, NetworkConstants.MONEY);
-        gameController.setMoney(player, money);
+        gameController.setMoneyOnUI(player, money);
     }
 
 
