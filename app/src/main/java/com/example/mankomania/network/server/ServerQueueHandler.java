@@ -6,7 +6,7 @@ import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.map.GameController;
 import com.example.mankomania.network.NetworkConstants;
 import com.example.mankomania.network.QueueHandler;
-import com.example.mankomania.roulette.sendMoneyClass;
+import com.example.mankomania.roulette.SendMoneyClass;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -193,7 +193,7 @@ public class ServerQueueHandler extends QueueHandler {
     private void spinWheelForClients(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
 
-        sendSpinResult(player, sendMoneyClass.getMoneyAmount());
+        sendSpinResult(player, SendMoneyClass.getMoneyAmount());
     }
 
     private void sendSpinResult(int idx, int result) {

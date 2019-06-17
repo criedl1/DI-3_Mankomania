@@ -27,16 +27,16 @@
     <string name="casino_ok">OK</string>
     <string name="display_ip">Display IP</string>
     <string name="to_game">zum Spielfeld</string>
-    <string name="connect_to_lobby">Connect to Lobby</string>
-    <string name="create_lobby">Create Lobby</string>
-    <string name="display_server_ip">Server started on IP %1$s</string>
+    <string name="connect_to_lobby">Einem Spiel beitreten</string>
+    <string name="create_lobby">Ein Spiel erstellen</string>
+    <string name="display_server_ip">Server wurde mit der IP %1$s gestartet</string>
     <string-array name="player_array">
-        <item>SinglePlayer</item>
-        <item>Two Player</item>
-        <item>3 Player</item>
-        <item>4 Player</item>
+        <item>Einzelspieler</item>
+        <item>Zwei Spieler</item>
+        <item>Drei Spieler</item>
+        <item>Vier Spieler</item>
     </string-array>
-    <string name="lobby_wait">Waiting for Players</string>
+    <string name="lobby_wait">Auf Spieler warten</string>
     <string name="image_of_dice">Image of Dice</string>
     <string name="left_player_field">Left Player Field</string>
     <string name="right_player_field">Right Player Field</string>
@@ -45,8 +45,6 @@
     <string name="figure_of_player_2">Figure of player 2</string>
     <string name="figure_of_player_3">Figure of Player 3</string>
     <string name="figure_of_player_4">Figure of Player 4</string>
-    <string name="movetest">moveTest</string>
-    <string name="setmoney">setmoney</string>
     <string name="lottery_toast">Du bist über die Lotterie gegangen, du verlierst 5000</string>
     <string name="mini_map_OK">OK</string>
     <string name="mini_map_title">Mini Map</string>
@@ -67,6 +65,9 @@
     <string name="cheated_successfully">Spieler %d hat geschummelt, ohne dass ihr es gemerkt habt!!</string>
     <string name="want_hotel">Wollen sie das Hotel %s kaufen?</string>
     <string name="title_activity_you_win">YouWin</string>
+    <string name="player_own">Spieler %d hat gewonnen!</string>
+    <string name="pay_rent">Du musst 1000€ miete zahlen!</string>
+    <string name="einem_spiel_beitreten">Einem Spiel beitreten</string>
     <string name="name_label">Name</string>
     <string name="save">Speichern</string>
 </resources>

@@ -81,7 +81,7 @@ public class Dice extends Fragment implements SensorEventListener {
         Button btnRoll = getActivity().findViewById(R.id.btnRoll);
         btnRoll.setVisibility(View.INVISIBLE);
 
-        @DrawableRes int wuerfelImages[] = {
+        @DrawableRes int[] wuerfelImages = {
                 R.drawable.dice1,
                 R.drawable.dice2,
                 R.drawable.dice3,

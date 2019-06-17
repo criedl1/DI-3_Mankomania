@@ -14,6 +14,6 @@ public class SomeoneWin extends AppCompatActivity {
         setContentView(R.layout.activity_someone_win);
         int player = getIntent().getIntExtra("Player",0);
         TextView txt = findViewById(R.id.txtSomeoneWin);
-        txt.setText("Player " + player + " won!");
+        txt.setText(String.format(getString(R.string.player_own), player));
     }
 }

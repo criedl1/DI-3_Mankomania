@@ -37,7 +37,7 @@ public class GameController implements Serializable {
 
 
 
-    public static int[] allfields = {
+    public static final int[] allfields = {
             R.drawable.field_start,
             R.drawable.field_aktie1,
             R.drawable.field_lindwurm,
@@ -47,14 +47,14 @@ public class GameController implements Serializable {
             R.drawable.field_alterplatz,
             R.drawable.field_aktie2,
             R.drawable.field_aktienboerse,
-            R.drawable.field_horserace,
+            R.drawable.field_minimundus,
             R.drawable.field_zoo,
             R.drawable.field_stadium,
             R.drawable.field_casino,
             R.drawable.field_alterplatz,
             R.drawable.field_lindwurm,
             R.drawable.field_hotelsandwirth,
-            R.drawable.field_horserace,
+            R.drawable.field_lottery,
             R.drawable.field_minimundus,
             R.drawable.field_getsomemoney,
             R.drawable.field_aktie3,
@@ -181,7 +181,7 @@ public class GameController implements Serializable {
 
 
     void setPosition(int player, int position) {
-        this.mapView.step1();
+        this.mapView.setPlayerOnCurrentScreen();
         this.players.get(player).setPosition(position);
 
     }
@@ -220,27 +220,27 @@ public class GameController implements Serializable {
         client.endTurn();
 
     }
-     void stockexchange(){
-         int aktie = randstock.nextInt(2);//
-         int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
+    void stockexchange(){
+        int aktie = randstock.nextInt(2);//
+        int riseordecrease = randstock.nextInt(4); //0 = steigen, 1 = dividende, 2,3 = fallen
 
-         for (Player p:players) {
-             int aktien[] = p.getAktien();
-             if (riseordecrease==0){
-                 if (aktien[aktie]>0){
-                     client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
-                 }
-             }else if (riseordecrease==1){
-                 client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
-             }
-             else {
-                 if (aktien[aktie]>0){
-                     client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()-100000);
-                 }
-             }
-         }
-         client.endTurn();
-     }
+        for (Player p:players) {
+            int aktien[] = p.getAktien();
+            if (riseordecrease==0){
+                if (aktien[aktie]>0){
+                    client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
+                }
+            }else if (riseordecrease==1){
+                client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()+100000);
+            }
+            else {
+                if (aktien[aktie]>0){
+                    client.setMoneyOnServer(getPlayerIndex(p),p.getMoney()-100000);
+                }
+            }
+        }
+        client.endTurn();
+    }
 
     void setLotto(int amount) {
         this.lotto = amount;
@@ -308,15 +308,7 @@ public class GameController implements Serializable {
         this.players.get(player).setIP(ip);
     }
 
-    void startHorseRace() {
-        // TODO - horse race
-        client.endTurn();
-    }
 
-    public void getShare() {
-        // TODO - add share
-        client.endTurn();
-    }
 
     void justEndTurn() {
         client.endTurn();
@@ -378,8 +370,8 @@ public class GameController implements Serializable {
     }
     void endGame(int player){
         if (this.myID== player){
-        mapView.showMyWin();
-            }
+            mapView.showMyWin();
+        }
         else {
             mapView.showSomeonesWin(player+1);
         }
