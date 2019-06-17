@@ -1,6 +1,7 @@
 package com.example.mankomania.slotmachine;
 
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -54,6 +55,8 @@ public class SlotMachineActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startMachine();
+                MediaPlayer mediaPlayer = MediaPlayer.create(SlotMachineActivity.this, R.raw.pokemon);
+                mediaPlayer.start();
             }
         });
     }

@@ -1,4 +1,3 @@
 
-n
-squid:S128O"LEnd this switch case with an unconditional break, return or throw statement.(­÷Ìşÿÿÿÿ8ñ³ª°µ-
-{squid:UselessImportCheck	"KRemove this unused import 'com.example.mankomania.roulette.SendMoneyClass'.(ş¨‘òúÿÿÿÿ8Ø¹ç¯µ-
+Nsquid:S4524X"+Move this default to the end of the switch.(İ–Ò˜ÿÿÿÿÿ8ÂŠ­º¶-
+{squid:UselessImportCheck	"KRemove this unused import 'com.example.mankomania.roulette.SendMoneyClass'.(ş¨‘òúÿÿÿÿ8ã®º¶-

@@ -360,52 +360,52 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
                     startCasino();
                     break;
                 case R.drawable.field_getsomemoney:
-                    showMoneyUpdate(10000);
+                    startCasino();
                     break;
                 case R.drawable.field_lindwurm:
-                    showMoneyUpdate(-100000);
+                    startCasino();
                     break;
                 case R.drawable.field_stadium:
-                    showMoneyUpdate(-5000);
+                    startCasino();
                     break;
                 case R.drawable.field_zoo:
-                    showMoneyUpdate(-50000);
+                    startCasino();
                     break;
                 case R.drawable.field_alterplatz:
-                    showMoneyUpdate(10000);
+                    startCasino();
                     break;
                 case R.drawable.field_klage:
-                    showMoneyUpdate(25000);
+                    startCasino();
                     break;
                 case R.drawable.field_woerthersee:
-                    showMoneyUpdate(-10000);
+                    startCasino();
                     break;
                 case R.drawable.field_minimundus:
-                    showMoneyUpdate(-30000);
+                    startCasino();
                     break;
                 case R.drawable.field_aktie1:
-                    buyAktie(HYPO);
+                    startCasino();
                     break;
                 case R.drawable.field_aktie2:
-                    buyAktie(INFINEON);
+                    startCasino();
                     break;
                 case R.drawable.field_aktie3:
-                    buyAktie(STRABAG);
+                    startCasino();
                     break;
                 case R.drawable.field_aktienboerse:
-                    gameController.stockexchange();
+                    startCasino();
                     break;
                 case R.drawable.field_hotelsandwirth:
-                    buyHotel(gameController.getHotels()[0]);
+                    startCasino();
                     break;
                 case R.drawable.field_plattenwirt:
-                    buyHotel(gameController.getHotels()[1]);
+                    startCasino();
                     break;
                 case R.drawable.field_seeparkhotel:
-                    buyHotel(gameController.getHotels()[2]);
+                    startCasino();
                     break;
                 case R.drawable.field_lottery:
-                    onLotteryAction();
+                    startCasino();
                     break;
                 default:
                     return;
