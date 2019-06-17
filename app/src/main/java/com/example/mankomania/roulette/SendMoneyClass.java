@@ -30,6 +30,5 @@ public class SendMoneyClass {
 
         LocalBroadcastManager.getInstance(Client.getMapView())
                 .sendBroadcast(intent2);
-
     }
 }

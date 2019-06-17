@@ -34,6 +34,12 @@ public class GameController implements Serializable {
     private List<Player> players;
     private Random randstock =new Random();
 
+    //this wonderful boolean prevents Toast
+    //from an infitity loop
+    //I know its not the prettiest solution
+    //but i tried to hard for that toast to
+    //screw it in the last week.
+    static boolean toastOnOf = false;
 
 
     public static final int[] allfields = {
@@ -123,7 +129,6 @@ public class GameController implements Serializable {
     }
 
     void casinoUpdate(int result) {
-        client.sendCasinoResult();
         this.mapView.showCasinoResult(result);
     }
 
@@ -254,7 +259,7 @@ public class GameController implements Serializable {
     }
 
     void spinWheelUpdate(int player, int outcome) {
-        //TODO: Implement Method
+
     }
 
     void setTurn(int player) {
@@ -283,6 +288,7 @@ public class GameController implements Serializable {
 
     void setRouletteResult(int moneyChange) {
         client.setMoneyOnServer(this.myID, this.currentPlayer().getMoney() + moneyChange);
+        client.sendCasinoResult(moneyChange);
         client.endTurn();
     }
 

@@ -57,3 +57,5 @@ Capp/src/main/java/com/example/mankomania/network/client/Client.java,9/4/94ecd9
 Oapp/src/main/java/com/example/mankomania/network/client/ClientQueueHandler.java,8/7/879493e434a00b8fcf12b7417e1bb6c9be7c70de
 v
 Fapp/src/main/java/com/example/mankomania/network/NetworkConstants.java,a/1/a10678a79d805bd8e5dd01f5c7a74159ec5e64a2
+m
+=app/src/test/java/com/example/mankomania/ServerLogicTest.java,1/5/15cac9e560167d7ea1e9a46c82aa9dca5dafe533

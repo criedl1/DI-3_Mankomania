@@ -78,6 +78,7 @@ public class ServerQueueHandler extends QueueHandler {
                 break;
             case NetworkConstants.SEND_CASINO:
                 sendCasinoUpdate(jsonObject);
+                break;
             default:
                 break;
         }

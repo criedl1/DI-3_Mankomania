@@ -202,19 +202,20 @@ public class Client extends Thread {
     }
 
 
-    public void sendCasinoResult(){
+    public void sendCasinoResult(final int result){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
                 json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SEND_CASINO);
-                json.addProperty(NetworkConstants.OPERATION, NetworkConstants.RESULT);
+                json.addProperty(NetworkConstants.RESULT, result);
                 output.println(json.toString());
             }
         };
         thread.start();
     }
+
     public void endTurn(){
         // new Thread because Network cant be on the UI Thread (temp Fix)
         Thread thread = new Thread(){

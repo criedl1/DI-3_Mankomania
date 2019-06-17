@@ -186,6 +186,11 @@ class MessageReceiver {
         gameController.casinoUpdate(result);
     }
 
+    private void showCasino (JsonObject jsonObject){
+        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
+        gameController.casinoUpdate(result);
+    }
+
     private void showMoneyUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
@@ -204,5 +209,4 @@ class MessageReceiver {
     private int jsonToInt(JsonObject jsonObject, String key) {
         return Integer.parseInt(jsonObject.get(key).getAsString());
     }
-
 }
