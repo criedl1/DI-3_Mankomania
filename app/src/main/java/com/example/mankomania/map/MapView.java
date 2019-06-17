@@ -451,9 +451,6 @@ public class MapView extends AppCompatActivity implements BuyHotelDialog.NoticeD
         gameController.rollTheDice();
     }
 
-    public void rollForce(View view) {
-        gameController.rollTheDice();
-    }
 
     public void closeDiceFragment(View view) {
         getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.diceContainer)).commit();

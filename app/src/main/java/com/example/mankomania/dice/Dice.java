@@ -46,6 +46,7 @@ public class Dice extends Fragment implements SensorEventListener {
         // initialize Random and bool
         diceRolled = false;
         random = new Random();
+
         Toast.makeText(getActivity(), "Bitte schütteln", Toast.LENGTH_SHORT).show();
         return inflater.inflate(R.layout.activity_dice, container, false);
     }
@@ -78,8 +79,7 @@ public class Dice extends Fragment implements SensorEventListener {
         ImageView ivDice1 = getActivity().findViewById(R.id.ivDice1);
         ImageView ivDice2 = getActivity().findViewById(R.id.ivDice2);
         Button btnClose = getActivity().findViewById(R.id.btnClose);
-        Button btnRoll = getActivity().findViewById(R.id.btnRoll);
-        btnRoll.setVisibility(View.INVISIBLE);
+
 
         @DrawableRes int[] wuerfelImages = {
                 R.drawable.dice1,
