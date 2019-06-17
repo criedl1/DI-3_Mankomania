@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.Queue;
+import java.util.Random;
 
 public class ServerQueueHandler extends QueueHandler {
     private ClientHandler[] clientHandlers;
@@ -202,8 +203,7 @@ public class ServerQueueHandler extends QueueHandler {
 
     private void rollDiceForClients(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        //int result = new Random().nextInt(11) + 2;
-        int result = 2;
+        int result = new Random().nextInt(11) + 2;
         gameData.setPosition(player, (gameData.getPosition()[player] + result) % GameController.allfields.length);
         sendPosition(player, gameData.getPosition()[player]);
         sendDiceResult(player, result);

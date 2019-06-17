@@ -18,8 +18,6 @@ public class Player implements Serializable {
     private int money = 0;
     private TextView currentmoney;
     private int[] aktien = new int[3];
-    private String ip;
-    private int[] hotel = new int[3];
     private boolean didCheat = false;
     private boolean didBlame = false;
 
