@@ -12,10 +12,7 @@ import android.support.v4.app.DialogFragment;
 import com.example.mankomania.map.GameController;
 import com.example.mankomania.map.Player;
 
-import java.util.List;
-
 public class BuyHotelDialog extends DialogFragment {
-    private List<Player> players;
     private Player cPlayer;
     private Hotel hotel;
 
@@ -51,7 +48,6 @@ public class BuyHotelDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
         GameController controller = (GameController) args.getSerializable("PLAYERS");
-        players = controller.getPlayers();
         cPlayer = (Player) args.getSerializable("CPLAYER");
         hotel = (Hotel) args.getSerializable("HOTEL");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

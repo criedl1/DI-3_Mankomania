@@ -37,7 +37,7 @@ public class CustomDialogClass extends Dialog implements
         Button yes = findViewById(R.id.save);
         yes.setOnClickListener(this);
 
-        final ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(mapView, R.layout.support_simple_spinner_dropdown_item, this.names);
+        final ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(mapView, R.layout.support_simple_spinner_dropdown_item, this.names);
         //fill with names
         DragSortListView dragSortListView = findViewById(R.id.chose_order);
         dragSortListView.setAdapter(itemAdapter);
