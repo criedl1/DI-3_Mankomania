@@ -199,11 +199,6 @@ class MessageReceiver {
         gameController.casinoUpdate(result);
     }
 
-    private void showCasino (JsonObject jsonObject){
-        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
-        gameController.casinoUpdate(result);
-    }
-
     private void showMoneyUpdate(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);

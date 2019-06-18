@@ -47,7 +47,7 @@ public class BuyHotelDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
-        GameController controller = (GameController) args.getSerializable("PLAYERS");
+        args.getSerializable("PLAYERS");
         cPlayer = (Player) args.getSerializable("CPLAYER");
         hotel = (Hotel) args.getSerializable("HOTEL");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

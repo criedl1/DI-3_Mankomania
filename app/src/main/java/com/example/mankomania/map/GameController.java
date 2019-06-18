@@ -21,7 +21,7 @@ public class GameController implements Serializable {
             new Hotel("PLATTENWIRT"),
             new Hotel("SEEPARKHOTEL"),
     };
-    public List<Player> getPlayers() {
+    List<Player> getPlayers() {
         return players;
     }
 
@@ -43,7 +43,11 @@ public class GameController implements Serializable {
     static boolean toastOnOf = false;
 
 
-    public static final int[] allfields = {
+    public static int[] getAllfields() {
+        return allfields;
+    }
+
+    protected static final int[] allfields = {
             R.drawable.field_start,
             R.drawable.field_aktie1,
             R.drawable.field_lindwurm,
@@ -263,7 +267,7 @@ public class GameController implements Serializable {
     }
 
     void spinWheelUpdate(int player, int outcome) {
-
+        // not needed yet
     }
 
     void setTurn(int player) {
