@@ -6,7 +6,7 @@ import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.map.GameController;
 import com.example.mankomania.network.NetworkConstants;
 import com.example.mankomania.network.QueueHandler;
-import com.example.mankomania.roulette.SendMoneyClass;
+import com.example.mankomania.network.server.cheating.CheatLogic;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -15,6 +15,7 @@ import java.util.Queue;
 import java.util.Random;
 
 public class ServerQueueHandler extends QueueHandler {
+    private final CheatLogic cheatLogic;
     private ClientHandler[] clientHandlers;
 
     private GameData gameData;
@@ -24,12 +25,13 @@ public class ServerQueueHandler extends QueueHandler {
         this.clientHandlers = clientHandlers;
         this.gameData = gameData;
         this.gameData.setServer(this);
+        this.cheatLogic = new CheatLogic(this, gameData.getPlayerCount());
     }
 
     protected void handleMessage(String in) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(in).getAsJsonObject();
-        Log.i("C->S", "["+"X"+"]: "+in);
+        Log.i("C->S", "[" + "X" + "]: " + in);
         switch (jsonToString(jsonObject, NetworkConstants.OPERATION)) {
             case NetworkConstants.SEND_MONEY:
                 setMoneyForClients(jsonObject);
@@ -128,20 +130,12 @@ public class ServerQueueHandler extends QueueHandler {
     private void blamePerson(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int cheater = jsonToInt(jsonObject, NetworkConstants.CHEATER);
-        if (!gameData.getDidBlame()[player]) {
-            boolean[] didBlame = gameData.getDidBlame();
-            didBlame[player] = true;
-            gameData.setDidBlame(didBlame);
-            if (gameData.getIsCheater()[cheater] > 0) {
-                int[] isCheater = gameData.getIsCheater();
-                isCheater[cheater] = 0;
-                gameData.setIsCheater(isCheater);
-                gameData.setMoney(player, gameData.getMoney()[player] - 100000);
-                sendBlameResult(player, cheater, true);
-            } else {
-                gameData.setMoney(player, gameData.getMoney()[player] + 100000);
-                sendBlameResult(player, cheater, false);
-            }
+        if (cheatLogic.blamePerson(player, cheater)) {
+            gameData.setMoney(player, gameData.getMoney()[player] - 100000);
+            sendBlameResult(player, cheater, true);
+        } else {
+            gameData.setMoney(player, gameData.getMoney()[player] + 100000);
+            sendBlameResult(player, cheater, false);
         }
 
     }
@@ -186,7 +180,7 @@ public class ServerQueueHandler extends QueueHandler {
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.START_TURN);
         json.addProperty(NetworkConstants.PLAYER, gameData.getOrder()[playerIndex]);
         //Send only one Player
-        gameData.decrementCheater();
+        cheatLogic.decrementCheater();
         sendAllClients(json.toString());
     }
 
@@ -197,7 +191,7 @@ public class ServerQueueHandler extends QueueHandler {
         sendSpinResult(player, result);
     }
 
-    private void sendCasinoUpdate(JsonObject jsonObject){
+    private void sendCasinoUpdate(JsonObject jsonObject) {
         int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
         JsonObject json = new JsonObject();
         json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SEND_CASINO);
@@ -251,13 +245,12 @@ public class ServerQueueHandler extends QueueHandler {
     }
 
     private void setCheater(JsonObject jsonObject) {
-        int[] arr = gameData.getIsCheater();
         //Get Values
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
-        //Change GameData
-        arr[player] = gameData.getPlayerCount();
-        gameData.setIsCheater(arr);
-        gameData.setMoney(player, gameData.getMoney()[player] - 100000);
+        if (cheatLogic.neverCheated(player)) {
+            cheatLogic.setCheater(player);
+            gameData.setMoney(player, gameData.getMoney()[player] - 100000);
+        }
     }
 
     private void setInfineonAktieForClients(JsonObject jsonObject) {
@@ -472,7 +465,7 @@ public class ServerQueueHandler extends QueueHandler {
     void waitForNames() throws InterruptedException {
         int count = -1;
         do {
-            if(count!=-1){
+            if (count != -1) {
                 Thread.sleep(1000);
             }
             String[] names = this.gameData.getNames();

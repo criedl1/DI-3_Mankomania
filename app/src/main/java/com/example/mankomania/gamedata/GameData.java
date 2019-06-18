@@ -20,8 +20,6 @@ public class GameData {
     private int[] plattenwirtHotel;
     private int[] seeparkHotel;
 
-    private int[] isCheater;
-    private boolean[] didBlame;
 
     private int hasTurn = 0;
     private ServerQueueHandler server;
@@ -158,14 +156,7 @@ public class GameData {
         this.seeparkHotel = seeparkHotel;
     }
 
-    public int[] getIsCheater() {
 
-        return isCheater.clone();
-    }
-
-    public void setIsCheater(int[] isCheater) {
-        this.isCheater = isCheater;
-    }
 
     public void setTurn(int player) {
         this.hasTurn = player;
@@ -181,9 +172,7 @@ public class GameData {
 
     public void initEmptyGameData(int playerCount) {
         int[] intArr = new int[playerCount];
-        int[] boolArr = new int[playerCount];
         String[] strArr = new String[playerCount];
-        boolean[] blameArr = new boolean[playerCount];
         String[] namesArr = new String[playerCount];
 
         // Set Player[] (fills in ConnectPlayers)
@@ -203,14 +192,6 @@ public class GameData {
         setStrabagAktie(intArr);
         setInfineonAktie(intArr);
 
-        // Set Array with -1
-        Arrays.fill(boolArr, -1);
-        setIsCheater(boolArr);
-
-
-        Arrays.fill(blameArr, false);
-        setDidBlame(blameArr);
-
         // Set Lotto to 0
         setLotto(0);
 
@@ -220,29 +201,7 @@ public class GameData {
         setHotels(intArr);
     }
 
-    public boolean[] getDidBlame() {
-        return didBlame;
-    }
 
-    public void setDidBlame(boolean[] didBlame) {
-        this.didBlame = didBlame;
-    }
-
-    public void decrementCheater() {
-        int[] cheaterArr = this.getIsCheater();
-        int index = 0;
-        for (int i : this.isCheater) {
-            if (i > 0) {
-                i--;
-                if(i==0){
-                    server.sendDidCheatSuccessfully(index);
-                }
-                cheaterArr[index] = i;
-            }
-            index++;
-        }
-        setIsCheater(cheaterArr);
-    }
 
     public void setServerPlayer(int player) {
         this.playerServer = player;
