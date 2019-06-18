@@ -99,9 +99,9 @@ public class CheatLogic {
      */
     private void setDidBlame(int player) {
         if(this.neverBlamed(player)){
-            boolean[] tmp_didBlame = this.getDidBlame();
-            tmp_didBlame[player] = true;
-            this.setDidBlame(tmp_didBlame);
+            boolean[] tmpdidBlame = this.getDidBlame();
+            tmpdidBlame[player] = true;
+            this.setDidBlame(tmpdidBlame);
         }
     }
 
