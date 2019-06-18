@@ -59,7 +59,7 @@ public class Dice extends Fragment implements SensorEventListener {
         // sum of sensors
         float acceleration = (x + y + z);
         // if sum > 70 --> roll the Dice
-        if (acceleration > 20 && !diceRolled) {
+        if (acceleration > 10 && !diceRolled) {
             diceRolled = true;
             ((MapView) getActivity()).sendRollDice();
         }
