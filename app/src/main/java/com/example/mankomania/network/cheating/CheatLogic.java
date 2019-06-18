@@ -99,15 +99,14 @@ public class CheatLogic {
      */
     private void setDidBlame(int player) {
         if(this.neverBlamed(player)){
-            boolean[] didBlame = this.getDidBlame();
-            didBlame[player] = true;
-            this.setDidBlame(didBlame);
+            boolean[] tmpdidBlame = this.getDidBlame();
+            tmpdidBlame[player] = true;
+            this.setDidBlame(tmpdidBlame);
         }
     }
 
     public boolean isCurrentlyCheating(int cheater) {
-        int[] cheatArr = this.getCheaterArr();
-        return cheatArr[cheater]>0;
+        return this.getCheaterArr()[cheater]>0;
     }
 
     /**

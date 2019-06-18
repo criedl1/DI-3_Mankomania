@@ -87,10 +87,10 @@ public class ServerQueueHandler extends QueueHandler {
             case NetworkConstants.SET_ORDER:
                 setOrder(jsonObject);
                 break;
-            default:
-                break;
             case NetworkConstants.SEND_CASINO:
                 sendCasinoUpdate(jsonObject);
+                break;
+            default:
                 break;
         }
     }
@@ -210,7 +210,7 @@ public class ServerQueueHandler extends QueueHandler {
     private void rollDiceForClients(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int result = new Random().nextInt(11) + 2;
-        gameData.setPosition(player, (gameData.getPosition()[player] + result) % GameController.allfields.length);
+        gameData.setPosition(player, (gameData.getPosition()[player] + result) % GameController.getAllfields().length);
         sendPosition(player, gameData.getPosition()[player]);
         sendDiceResult(player, result);
     }

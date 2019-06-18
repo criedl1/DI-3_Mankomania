@@ -292,14 +292,14 @@ public class Client extends Thread {
         thread.start();
     }
 
-    public void sendOrder(final int[] order) {
+    public void sendOrder(final int[] pOrder) {
         Thread thread = new Thread(){
             @Override
             public void run(){
                 JsonObject json = new JsonObject();
                 json.addProperty(NetworkConstants.OPERATION,NetworkConstants.SET_ORDER);
                 JsonArray orderArr = new JsonArray();
-                for (int order : order) {
+                for (int order : pOrder) {
                     orderArr.add(order);
                 }
                 json.add(NetworkConstants.ORDER, orderArr);

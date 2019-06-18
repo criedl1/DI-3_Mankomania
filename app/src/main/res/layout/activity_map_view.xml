@@ -11,7 +11,7 @@
 
     <ImageView
         android:id="@+id/background"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/background_of_game"
         android:scaleType="centerCrop"
@@ -64,8 +64,8 @@
 
         <ImageView
             android:id="@+id/wuerfeln"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/image_of_dice"
