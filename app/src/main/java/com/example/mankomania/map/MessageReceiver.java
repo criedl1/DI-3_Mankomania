@@ -76,6 +76,9 @@ class MessageReceiver {
             case NetworkConstants.GET_ORDER:
                 showOrderSelection(jsonObject);
                 break;
+            case NetworkConstants.SEND_CASINO:
+                casinoUpdate(jsonObject);
+                break;
             default:
                 throw new IllegalStateException("Network Object should not be here: " + message);
         }
@@ -114,7 +117,7 @@ class MessageReceiver {
     }
 
     private void setRouletteResult(JsonObject jsonObject) {
-        int moneyChange = jsonToInt(jsonObject, "result");
+        int moneyChange = jsonToInt(jsonObject, NetworkConstants.RESULT);
         gameController.setRouletteResult(moneyChange);
     }
 
@@ -189,6 +192,16 @@ class MessageReceiver {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
         int outcome = jsonToInt(jsonObject, NetworkConstants.RESULT);
         gameController.rollDiceUpdate(player, outcome);
+    }
+
+    private void casinoUpdate(JsonObject jsonObject) {
+        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
+        gameController.casinoUpdate(result);
+    }
+
+    private void showCasino (JsonObject jsonObject){
+        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
+        gameController.casinoUpdate(result);
     }
 
     private void showMoneyUpdate(JsonObject jsonObject) {

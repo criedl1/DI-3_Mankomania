@@ -8,7 +8,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.mankomania.R;
@@ -38,22 +37,11 @@ public class RotateActivity extends AppCompatActivity {
         degree = extras.getFloat("degree");
         money = extras.getInt("money");
 
-
-        Button btnBack = findViewById(R.id.btnBack);
-        btnBack.setText(getString(R.string.roulette_back));
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) { //since this is an override method, i am not able
+            public boolean onTouch(View v, MotionEvent event) {
+                //since this is an override method, i am not able
                 //to make the return type void.
-
                if(event.getAction() == MotionEvent.ACTION_MOVE) {
                    if (event.getX() <= imageView.getX()) {
                        float degrees = (1080+degree)*-1;
@@ -95,15 +83,16 @@ public class RotateActivity extends AppCompatActivity {
     }
 
     private void openPopUp() {
-        PopUp popClass = new PopUp();
-        popClass.show(getSupportFragmentManager(), "alert");
-
+        PopUp popUp = new PopUp();
         Bundle extras = new Bundle();
+        extras.putString("popUpFor", "RouletteResult");
         extras.putString("returnString", returnString);
         extras.putInt("randomNumber", randomNumber); //toString() is not possible here
         extras.putString("color", colorString);
         extras.putInt("money", money);
-        popClass.setArguments(extras);
+        popUp.setArguments(extras);
+
+        popUp.show(getSupportFragmentManager(), "alert");
     }
 
     protected ColorEnum getColor() {

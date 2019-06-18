@@ -34,6 +34,8 @@ public class NetworkConstants {
     public static final String NAME = "name";
     public static final String GAMEEND = "GameEnd";
     public static final String SET_ORDER = "SET_ORDER";
+    public static final String SEND_CASINO = "sendCasino";
+    public static final String SHOW_CASINO = "showCasino";
     //Values
     public static final String OPERATION = "OPERATION";
     public static final String ID = "ID";

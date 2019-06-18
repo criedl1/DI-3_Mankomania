@@ -79,6 +79,8 @@ public class ClientQueueHandler extends QueueHandler {
             case NetworkConstants.GAMEEND:
                 gameEnd(jsonObject);
                 break;
+            case NetworkConstants.SEND_CASINO:
+                sendCasinoUpdate(jsonObject);
             default:
                 break;
         }
@@ -105,6 +107,7 @@ public class ClientQueueHandler extends QueueHandler {
     private void rollDice(JsonObject jsonObject) {
         publishUpdate(jsonObject);
     }
+    private void sendCasinoUpdate(JsonObject json){ publishUpdate(json); }
     private void setHotel(JsonObject jsonObject) {
         int[] arr = gameData.getHotels();
         //Get Values

@@ -7,6 +7,36 @@
     android:background="@drawable/slotmachine"
     tools:context=".slotmachine.SlotMachineActivity">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="0dp"
+        app:layout_constraintGuide_percent="0.470" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.11" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.37" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.625" />
+
     <Button
         android:id="@+id/btnSpin"
         android:layout_width="134dp"
@@ -24,41 +54,31 @@
 
     <ImageView
         android:id="@+id/ivSlot1"
-        android:layout_width="149dp"
-        android:layout_height="175dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="108dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="164dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="@id/horizontalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintTop_toTopOf="@id/horizontalGuideline"
         app:srcCompat="@drawable/cherry" />
 
     <ImageView
         android:id="@+id/ivSlot2"
-        android:layout_width="131dp"
-        android:layout_height="165dp"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="120dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/star" />
+        android:layout_width="164dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="@id/horizontalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/horizontalGuideline"
+        app:srcCompat="@drawable/dollar" />
 
     <ImageView
         android:id="@+id/ivSlot3"
-        android:layout_width="138dp"
-        android:layout_height="166dp"
-        android:layout_marginStart="488dp"
-        android:layout_marginTop="116dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dollar" />
+        android:layout_width="164dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="@id/horizontalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/horizontalGuideline"
+        app:srcCompat="@drawable/star" />
+
+
 
 </android.support.constraint.ConstraintLayout>

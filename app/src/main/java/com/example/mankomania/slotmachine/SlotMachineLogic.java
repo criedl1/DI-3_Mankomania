@@ -5,14 +5,14 @@ public class SlotMachineLogic {
     private static final String YOU_HAVE = "Du hast ";
     private static final String WON = " Gewonnen!";
     private static final String LOST = " Verloren";
-    private static final String BIGWIN = "Hauptgewinn! ";
-    private static final String THREESYMBOLS = "Drei gleiche Symbole! ";
-    private static final String TWOSYMBOLS = "Zwei gleiche Symbole! ";
+    private static final String BIG_WIN = "Hauptgewinn! ";
+    private static final String THREE_SYMBOLS = "Drei gleiche Symbole! ";
+    private static final String TWO_SYMBOLS = "Zwei gleiche Symbole! ";
 
-    private int id1;
-    private int id2;
-    private int id3;
-    private SlotMachineActivity sma;
+    int id1;
+    int id2;
+    int id3;
+    SlotMachineActivity sma;
 
     public SlotMachineLogic(int id1, int id2, int id3, SlotMachineActivity sma) {
         this.id1 = id1;
@@ -25,25 +25,21 @@ public class SlotMachineLogic {
         if (id1 == id2 && id2 == id3) {
             if (id1 == 3) { //When player has three dollar signs
                 setMoney(230000);
-                sma.setMoneyamout(getMoney());
                 setWinString(WON);
-                setReturnString(BIGWIN + YOU_HAVE + getMoney() + WON);
+                setReturnString(BIG_WIN + YOU_HAVE + getMoney() + WON);
 
             } else {
-                setMoney(120000);
-                sma.setMoneyamout(getMoney());
+                setMoney(130000);
                 setWinString(WON);
-                setReturnString(THREESYMBOLS + getMoney() + WON);
+                setReturnString(THREE_SYMBOLS + getMoney() + WON);
             }
         } else if (id1 == id2 || id2 == id3 || id1 == id3) {
-            setMoney(50000);
-            sma.setMoneyamout(getMoney());
+            setMoney(30000);
             setWinString(WON);
-            setReturnString(TWOSYMBOLS + getMoney() + WON);
+            setReturnString(TWO_SYMBOLS + getMoney() + WON);
         }
         else{
             setMoney(-20000);
-            sma.setMoneyamout(getMoney());
             setWinString(LOST);
             setReturnString(YOU_HAVE + getMoney()*-1 + LOST);
         }

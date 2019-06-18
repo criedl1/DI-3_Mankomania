@@ -15,6 +15,7 @@ public class QuestionActivity extends AppCompatActivity {
     private ColorEnum choosenColor;
     private String choosenDozen;
     private RouletteLogic roulette;
+    private int slotMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,30 +24,30 @@ public class QuestionActivity extends AppCompatActivity {
         Intent it = getIntent();
         Bundle extras = it.getExtras();
         String choosenActivity = extras.getString("choosenActivity");
+        slotMoney = extras.getInt("slotMoney");
 
         if (choosenActivity.equals("Number")) {
             getNumberSetUp();
-        }
-
-        else if(choosenActivity.equals("Color")){
+        } else if (choosenActivity.equals("Color")) {
             getColorSetUp();
-        }
-
-        else if (choosenActivity.equals("Dozen")){
+        } else if (choosenActivity.equals("Dozen")) {
             getDozenSetUp();
-        }
-
-        else {
+        } else {
             throw new IllegalArgumentException();
         }
     }
 
     private void openErrorPopUp() {
-        ErrorPopUp error = new ErrorPopUp();
+        PopUp error = new PopUp();
+        Bundle extras = new Bundle();
+        extras.putString("popUpFor", "Error");
+        error.setArguments(extras);
+
         error.show(getSupportFragmentManager(), "alert");
+
     }
 
-    public void getNumberSetUp(){
+    public void getNumberSetUp() {
         final EditText number = findViewById(R.id.etInsertNumber);
         number.setVisibility(View.VISIBLE);
         final TextView selectNumber = findViewById(R.id.tvSelectNumber);
@@ -61,18 +62,23 @@ public class QuestionActivity extends AppCompatActivity {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                choosenNumber = Integer.valueOf(number.getText().toString());
-                if (choosenNumber > 36 || choosenNumber < 0 || number.getText().toString().isEmpty()) {
+                try {
+                    choosenNumber = Integer.valueOf(number.getText().toString());
+
+                    if (choosenNumber <= 36 && choosenNumber >= 0) {
+                        roulette = new RouletteLogic(choosenNumber, slotMoney);
+                        startRotating();
+                    } else {
+                        throw new NumberFormatException();
+                    }
+                } catch (NumberFormatException e) {
                     openErrorPopUp();
-                } else {
-                    roulette = new RouletteLogic(choosenNumber);
-                    startRotating();
                 }
             }
         });
     }
 
-    public void getColorSetUp(){
+    public void getColorSetUp() {
         Button red = findViewById(R.id.btnRed);
         red.setVisibility(View.VISIBLE);
         Button black = findViewById(R.id.btnBlack);
@@ -88,7 +94,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 choosenColor = ColorEnum.RED;
-                roulette = new RouletteLogic(choosenColor);
+                roulette = new RouletteLogic(choosenColor, slotMoney);
                 startRotating();
             }
         });
@@ -97,13 +103,13 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 choosenColor = ColorEnum.BLACK;
-                roulette = new RouletteLogic(choosenColor);
+                roulette = new RouletteLogic(choosenColor, slotMoney);
                 startRotating();
             }
         });
     }
 
-    public void getDozenSetUp(){
+    public void getDozenSetUp() {
         TextView selectDozen = findViewById(R.id.tvSelectDozen);
 
         Button btn1 = findViewById(R.id.btn1_12);
@@ -124,7 +130,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 choosenDozen = "1";
-                roulette = new RouletteLogic(choosenDozen);
+                roulette = new RouletteLogic(choosenDozen, slotMoney);
                 startRotating();
             }
         });
@@ -133,7 +139,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 choosenDozen = "2";
-                roulette = new RouletteLogic(choosenDozen);
+                roulette = new RouletteLogic(choosenDozen, slotMoney);
                 startRotating();
             }
         });
@@ -142,7 +148,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 choosenDozen = "3";
-                roulette = new RouletteLogic(choosenDozen);
+                roulette = new RouletteLogic(choosenDozen, slotMoney);
                 startRotating();
             }
         });

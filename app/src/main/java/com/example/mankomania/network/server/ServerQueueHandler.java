@@ -87,6 +87,9 @@ public class ServerQueueHandler extends QueueHandler {
                 break;
             default:
                 break;
+            case NetworkConstants.SEND_CASINO:
+                sendCasinoUpdate(jsonObject);
+                break;
         }
     }
 
@@ -189,8 +192,17 @@ public class ServerQueueHandler extends QueueHandler {
 
     private void spinWheelForClients(JsonObject jsonObject) {
         int player = jsonToInt(jsonObject, NetworkConstants.PLAYER);
+        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
 
-        sendSpinResult(player, SendMoneyClass.getMoneyAmount());
+        sendSpinResult(player, result);
+    }
+
+    private void sendCasinoUpdate(JsonObject jsonObject){
+        int result = jsonToInt(jsonObject, NetworkConstants.RESULT);
+        JsonObject json = new JsonObject();
+        json.addProperty(NetworkConstants.OPERATION, NetworkConstants.SEND_CASINO);
+        json.addProperty(NetworkConstants.RESULT, result);
+        sendAllClients(json.toString());
     }
 
     private void sendSpinResult(int idx, int result) {

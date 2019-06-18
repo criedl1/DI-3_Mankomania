@@ -11,7 +11,8 @@ import static org.junit.Assert.assertEquals;
 public class SlotMachineTest {
 
     SlotMachineLogic sml;
-    SlotMachineActivity sma;
+    SlotMachineActivity sma; //i want to test this too, because i want to see if SlotMachineLogic
+                            //changes the values in SlotMachineActivity correctly.
 
     @Before
     public void setUp(){
@@ -30,16 +31,35 @@ public class SlotMachineTest {
     public void testThreeEqualSymbols(){
         sml = new SlotMachineLogic(1, 1, 1, sma);
         sml.checkWin();
-        assertEquals(120000, sml.getMoney());
-        assertEquals(120000, sma.getMoney());
+        assertEquals(130000, sml.getMoney());
+        assertEquals(130000, sma.getMoney());
     }
 
     @Test
-    public void testTwoEqualSymbols(){
-        sml = new SlotMachineLogic(2, 0, 2, sma);
+    public void testTwoEqualSymbolsVar1(){
+        //condition id1 == id2
+        sml = new SlotMachineLogic(2, 2, 0, sma);
         sml.checkWin();
-        assertEquals(50000, sml.getMoney());
-        assertEquals(50000, sma.getMoney());
+        assertEquals(30000, sml.getMoney());
+        assertEquals(30000, sma.getMoney());
+    }
+
+    @Test
+    public void testTwoEqualSymbolsVar2(){
+        //condition id2 == id3
+        sml = new SlotMachineLogic(0, 1, 1, sma);
+        sml.checkWin();
+        assertEquals(30000, sml.getMoney());
+        assertEquals(30000, sma.getMoney());
+    }
+
+    @Test
+    public void testTwoEqualSymbolsVar3(){
+        //condition id1 == id3
+        sml = new SlotMachineLogic(3, 0, 3, sma);
+        sml.checkWin();
+        assertEquals(30000, sml.getMoney());
+        assertEquals(30000, sma.getMoney());
     }
 
     @Test

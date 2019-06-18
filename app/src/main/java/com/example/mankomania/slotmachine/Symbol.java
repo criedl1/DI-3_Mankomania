@@ -13,10 +13,6 @@ public class Symbol {
         return this.image;
     }
 
-    protected void setImage(int image){
-        this.image = image;
-    }
-
     protected int getId(){
         return this.id;
     }
