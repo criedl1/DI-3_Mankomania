@@ -35,13 +35,6 @@ public class GameController implements Serializable {
 
     private Random randstock =new Random();
 
-    //this wonderful boolean prevents Toast
-    //from an infitity loop
-    //I know its not the prettiest solution
-    //but i tried to hard for that toast to
-    //screw it in the last week.
-    static boolean toastOnOf = false;
-
 
     public static int[] getAllfields() {
         return allfields;
