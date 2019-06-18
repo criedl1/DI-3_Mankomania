@@ -1,4 +1,4 @@
-package com.example.mankomania.network.server.cheating;
+package com.example.mankomania.network.cheating;
 
 import com.example.mankomania.network.server.ServerQueueHandler;
 

@@ -6,7 +6,7 @@ import com.example.mankomania.gamedata.GameData;
 import com.example.mankomania.map.GameController;
 import com.example.mankomania.network.NetworkConstants;
 import com.example.mankomania.network.QueueHandler;
-import com.example.mankomania.network.server.cheating.CheatLogic;
+import com.example.mankomania.network.cheating.CheatLogic;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

@@ -1,10 +1,9 @@
 package com.example.mankomania;
 
 import com.example.mankomania.network.server.ServerQueueHandler;
-import com.example.mankomania.network.server.cheating.CheatLogic;
+import com.example.mankomania.network.cheating.CheatLogic;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
